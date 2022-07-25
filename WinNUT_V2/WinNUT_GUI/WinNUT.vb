@@ -428,27 +428,27 @@ Public Class WinNUT
         End If
     End Sub
 
-    Private Shared Sub NewRetry_NotifyIcon() Handles UPS_Device.New_Retry
-        Dim Message As String = String.Format(WinNUT_Globals.StrLog.Item(AppResxStr.STR_MAIN_RETRY), WinNUT.UPS_Device.Retry, WinNUT.UPS_Device.MaxRetry)
+    Private Sub NewRetry_NotifyIcon() Handles UPS_Device.New_Retry
+        Dim Message As String = String.Format(WinNUT_Globals.StrLog.Item(AppResxStr.STR_MAIN_RETRY), UPS_Device.Retry, UPS_Device.MaxRetry)
         RaiseEvent UpdateNotifyIconStr("Retry", Message)
-        WinNUT.UpdateIcon_NotifyIcon()
-        LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, WinNUT)
+        UpdateIcon_NotifyIcon()
+        LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
     End Sub
 
-    Private Shared Sub Reconnect_NotifyIcon() Handles UPS_Device.Connected
-        WinNUT.Menu_UPS_Var.Enabled = True
-        WinNUT.UpdateIcon_NotifyIcon()
-        LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, WinNUT)
+    Private Sub Reconnect_NotifyIcon() Handles UPS_Device.Connected
+        Menu_UPS_Var.Enabled = True
+        UpdateIcon_NotifyIcon()
+        LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
         RaiseEvent UpdateNotifyIconStr("Connected", Nothing)
     End Sub
 
-    Private Shared Sub Deconnected_NotifyIcon() Handles UPS_Device.Deconnected
-        WinNUT.ActualAppIconIdx = AppIconIdx.IDX_ICO_OFFLINE
-        LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, WinNUT)
-        WinNUT.UpdateIcon_NotifyIcon()
+    Private Sub Deconnected_NotifyIcon() Handles UPS_Device.Deconnected
+        ActualAppIconIdx = AppIconIdx.IDX_ICO_OFFLINE
+        LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
+        UpdateIcon_NotifyIcon()
         RaiseEvent UpdateNotifyIconStr("Deconnected", Nothing)
         RaiseEvent UpdateBatteryState("Deconnected")
-        WinNUT.Update_Data.Stop()
+        Update_Data.Stop()
     End Sub
 
     Private Sub Event_UpdateNotifyIconStr(ByVal Optional Reason As String = Nothing, ByVal Optional Message As String = Nothing) Handles Me.UpdateNotifyIconStr
@@ -537,13 +537,13 @@ Public Class WinNUT
         LogFile.LogTracing("Battery Status => " & Status, LogLvl.LOG_DEBUG, WinNUT)
     End Sub
 
-    Public Shared Sub Event_Unknown_UPS() Handles UPS_Device.Unknown_UPS, UPS_Device.Unknown_UPS
-        WinNUT.ActualAppIconIdx = AppIconIdx.IDX_ICO_OFFLINE
-        LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, WinNUT)
-        WinNUT.UpdateIcon_NotifyIcon()
+    Public Sub Event_Unknown_UPS() Handles UPS_Device.Unknown_UPS, UPS_Device.Unknown_UPS
+        ActualAppIconIdx = AppIconIdx.IDX_ICO_OFFLINE
+        LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
+        UpdateIcon_NotifyIcon()
         RaiseEvent UpdateNotifyIconStr("Unknown UPS", Nothing)
-        LogFile.LogTracing("Cannot Connect : Unknow UPS Name", LogLvl.LOG_DEBUG, WinNUT, WinNUT_Globals.StrLog.Item(AppResxStr.STR_MAIN_UNKNOWN_UPS))
-        WinNUT.Menu_UPS_Var.Enabled = False
+        LogFile.LogTracing("Cannot Connect : Unknow UPS Name", LogLvl.LOG_DEBUG, Me, WinNUT_Globals.StrLog.Item(AppResxStr.STR_MAIN_UNKNOWN_UPS))
+        Menu_UPS_Var.Enabled = False
     End Sub
 
     Private Sub Menu_About_Click(sender As Object, e As EventArgs) Handles Menu_About.Click
@@ -560,27 +560,25 @@ Public Class WinNUT
         HasFocus = False
     End Sub
 
-    Private Shared Sub UPS_Lostconnect() Handles UPS_Device.Lost_Connect
-        With WinNUT
-            Dim Host = .Nut_Config.Host
-            Dim Port = .Nut_Config.Port
-            .Update_Data.Stop()
-            LogFile.LogTracing("Nut Server Lost Connection", LogLvl.LOG_ERROR, WinNUT, String.Format(WinNUT_Globals.StrLog.Item(AppResxStr.STR_MAIN_LOSTCONNECT), Host, Port))
-            LogFile.LogTracing("Fix All data to null/empty String", LogLvl.LOG_DEBUG, WinNUT)
-            LogFile.LogTracing("Fix All Dial Data to Min Value/0", LogLvl.LOG_DEBUG, WinNUT)
+    Private Sub UPS_Lostconnect() Handles UPS_Device.Lost_Connect
+        Dim Host = Nut_Config.Host
+        Dim Port = Nut_Config.Port
+        Update_Data.Stop()
+        LogFile.LogTracing("Nut Server Lost Connection", LogLvl.LOG_ERROR, Me, String.Format(WinNUT_Globals.StrLog.Item(AppResxStr.STR_MAIN_LOSTCONNECT), Host, Port))
+        LogFile.LogTracing("Fix All data to null/empty String", LogLvl.LOG_DEBUG, Me)
+        LogFile.LogTracing("Fix All Dial Data to Min Value/0", LogLvl.LOG_DEBUG, Me)
 
-            .ReInitDisplayValues()
-            If .AutoReconnect And .UPS_Retry <= .UPS_MaxRetry Then
-                .ActualAppIconIdx = AppIconIdx.IDX_ICO_RETRY
-            Else
-                .ActualAppIconIdx = AppIconIdx.IDX_ICO_OFFLINE
-            End If
+        ReInitDisplayValues()
+        If AutoReconnect And UPS_Retry <= UPS_MaxRetry Then
+            ActualAppIconIdx = AppIconIdx.IDX_ICO_RETRY
+        Else
+            ActualAppIconIdx = AppIconIdx.IDX_ICO_OFFLINE
+        End If
 
-            .UpdateIcon_NotifyIcon()
-            RaiseEvent UpdateNotifyIconStr("Lost Connect", Nothing)
-            RaiseEvent UpdateBatteryState("Lost Connect")
-            LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, WinNUT)
-        End With
+        UpdateIcon_NotifyIcon()
+        RaiseEvent UpdateNotifyIconStr("Lost Connect", Nothing)
+        RaiseEvent UpdateBatteryState("Lost Connect")
+        LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
     End Sub
 
     Public Shared Sub Event_ChangeStatus() Handles Me.On_Battery, Me.On_Line,
