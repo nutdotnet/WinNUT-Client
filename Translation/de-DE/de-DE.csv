@@ -20,12 +20,12 @@ Valid,Gawindx,Check for updates.,Auf Updates prüfen.
 Valid,Gawindx,Checks for updates at startup.,Sucht beim Start nach Updates.
 Valid,Lineflyer,Clear,Leeren
 Valid,Gawindx,Close,Schließen
-Valid,Lineflyer,Close to Systray,Auf Systray minimieren
+Valid,Lineflyer,Close to Systray,In Systray minimieren
 To validate,Lineflyer,Conditions met for launching the Extinguishing Process,Voraussetzungen für den Start des Löschprozesses liegen vor
 Valid,Lineflyer,Connected,Verbunden
 Valid,Gawindx,Connection,Verbindung
-Valid,Gawindx,Connection to Nut Host {0}:{1} Established,Verbindung zum Nut Host {0}:{1} hergestellt
-Valid,Gawindx,Connection to Nut Host {0}:{1} Failed: {2},Verbindung zum Nut-Host {0}:{1} fehlgeschlagen: {2}
+Valid,Gawindx,Connection to Nut Host {0}:{1} Established,Verbindung zum NUT-Host {0}:{1} hergestellt
+Valid,Gawindx,Connection to Nut Host {0}:{1} Failed: {2},Verbindung zum NUT-Host {0}:{1} fehlgeschlagen: {2}
 Valid,Gawindx,Copy,Kopieren
 Valid,Lineflyer,Create a log file (WinNUT-client.log file in the WinNUT installation directory).,Eine Logdatei (Datei WinNUT-client.log im WinNUT-Installationsverzeichnis) erstellen.
 Valid,Lineflyer,Create LogFile,Logdatei erstellen
@@ -37,7 +37,7 @@ Valid,Lineflyer,Delete log file.,Logdatei löschen.
 Valid,Gawindx,Description :,Beschreibung :
 Valid,Gawindx,Devellopement,Entwicklung
 Valid,Gawindx,Disconnect,Trennen
-Valid,Lineflyer,Disconnected from Nut Host,Vom Nut-Host getrennt
+Valid,Lineflyer,Disconnected from Nut Host,Vom NUT-Host getrennt
 Valid,Gawindx,Download New Version from :,Neue Version herunterladen von :
 Valid,Lineflyer,Error,Fehler
 Valid,Lineflyer,Exit,Beenden
@@ -64,7 +64,7 @@ Valid,Lineflyer,Log file log level,Detailstufe für die Logdatei
 Valid,Lineflyer,Logging level,Detailstufe
 Valid,Lineflyer,Logging level.,Detailstufe.
 Valid,Lineflyer,Login,Anmeldung
-Valid,Lineflyer,Login credentials to the Nut server (leave blank if not required),Anmeldeinformationen des Nut-Server (Leer lassen wenn nicht erforderlich)
+Valid,Lineflyer,Login credentials to the Nut server (leave blank if not required),Anmeldeinformationen des NUT-Server (Leer lassen wenn nicht erforderlich)
 Valid,Lineflyer,Lost Connect To {0}:{1},Verbindung zu {0}:{1} verloren
 Valid,Gawindx,Low Battery,Niedriger Batteriestatus
 Valid,Lineflyer,Lower backup time limit triggering the shutdown procedure. Accepted value: Numeric value from 0 to 3600.,Unteres Backup-Zeitlimit welches das Herunterfahren auslöst. Wertebereich: Numerischer Wert von 0 bis 3600.
@@ -78,7 +78,7 @@ Valid,Lineflyer,Maximum input voltage. Accepted value: Numeric value from 0 to 9
 Valid,Lineflyer,Maximum Load Level of the UPS. Accepted value: Numeric value from 0 to 100.,Maximaler Last der USV. Wertebereich: Numerischer Wert von 0 bis 100.
 Valid,Lineflyer,Maximum Output Voltage. Accepted value: Numeric value from 0 to 999.,Maximale Ausgangsspannung. Wertebereich: Numerischer Wert von 0 bis 999.
 Valid,Gawindx,Min,Min
-Valid,Gawindx,Minimize to Systray,Auf Systray minimieren
+Valid,Gawindx,Minimize to Systray,In Systray minimieren
 Valid,Lineflyer,Minimum Battery Voltage. Accepted value: Numeric value from 0 to 100.,Minimale Batteriespannung. Wertebereich: Numerischer Wert von 0 bis 100.
 Valid,Lineflyer,Minimum Charge Level of the UPS. Accepted value: Numeric value from 0 to 100.,Mindestladezustand der USV. Wertebereich: Numerischer Wert von 0 bis 100.
 Valid,Lineflyer,Minimum input frequency. Accepted value: Numeric value from 0 to 100.,Minimale Eingangsfrequenz. Wertebereich: Numerischer Wert von 0 bis 100.
@@ -92,15 +92,15 @@ Valid,Gawindx,Not Connected,Nicht verbunden
 Valid,Lineflyer,Notice,Hinweis
 Valid,Lineflyer,NUT host,NUT-Host
 Valid,Lineflyer,NUT Port,NUT-Port
-Valid,Lineflyer,Nut server address. Accepted value: IPV4 / IPV6 / FQDN address.,Nut-Serveradresse. Wertebereich: IPV4 / IPV6 / FQDN-Adresse.
+Valid,Lineflyer,Nut server address. Accepted value: IPV4 / IPV6 / FQDN address.,NUT-Serveradresse. Wertebereich: IPV4 / IPV6 / FQDN-Adresse.
 Valid,Gawindx,NUT server connection identifier,Verbindungskennung des NUT-Servers
 Valid,Gawindx,NUT server login password,Anmeldekennwort des NUT-Servers
-Valid,Lineflyer,Nut Server Port Number (default = 3493). Accepted value: Numeric value from 1 to 65535.,Nut-Server Portnummer (Standard = 3493). Wertebereich: Numerischer Wert von 1 bis 65535.
+Valid,Lineflyer,Nut Server Port Number (default = 3493). Accepted value: Numeric value from 1 to 65535.,NUT-Server Portnummer (Standard = 3493). Wertebereich: Numerischer Wert von 1 bis 65535.
 Valid,Gawindx,Ok,OK
 Valid,Gawindx,Old ups.ini imported,Alte ups.ini importiert
 Valid,Lineflyer,Old ups.ini imported Ini File Moved to {0}.old,Alte ups.ini importiert INI-Datei nach {0}.old verschoben
-To validate,Lineflyer,On Battery ({0}%),Auf Batterie ({0}%)
-To validate,Lineflyer,On Line,Auf Netzbetrieb
+To validate,Lineflyer,On Battery ({0}%),Im Batteriebetrieb ({0}%)
+To validate,Lineflyer,On Line,Im Netzbetrieb
 Valid,Lineflyer,Open the log file.,Logdatei öffnen.
 Valid,Gawindx,Options,Optionen
 Valid,Gawindx,Output Voltage,Ausgangsspannung
@@ -108,7 +108,7 @@ Valid,Gawindx,Password,Passwort
 Valid,Gawindx,Polling Interval,Abrufintervall
 Valid,Gawindx,Reconnect,Erneut verbinden
 Valid,Gawindx,Reconnection In Progress,Wiederverbindung läuft
-Valid,Lineflyer,Reduced to the taskbar or Systray.,Auf Taskleiste oder Systray minimieren.
+Valid,Lineflyer,Reduced to the taskbar or Systray.,In Taskleiste oder Systray minimieren.
 Valid,Lineflyer,Re-establish connection,Verbindung wiederherstellen
 Valid,Gawindx,Reload,Neu laden
 Valid,Gawindx,Remaining Time :,Verbleibende Zeit :
@@ -129,7 +129,7 @@ Valid,Lineflyer,Stable Or Dev Branch,Stabiler- oder Entwicklungszweig
 Valid,Gawindx,Start Minimized,Minimiert starten
 Valid,Lineflyer,Start with Windows,Mit Windows starten
 Valid,Gawindx,Starts the shutdown procedure immediately or timed.,Startet das Herunterfahren sofort oder zeitgesteuert.
-Valid,Lineflyer,Starts WinNut Minimized.,Startet WinNut minimiert.
+Valid,Lineflyer,Starts WinNut Minimized.,Startet WinNUT minimiert.
 Valid,Gawindx,Starts WinNUT when Windows starts.,Startet WinNUT beim Start von Windows.
 Valid,Lineflyer,Stop condition imposed by the NUT server,Vom NUT-Server auferlegte Stopp-Bedingung
 To validate,Lineflyer,Stop procedure delay if delayed. Accepted value: Numeric value from 0 to 3600.,Prozedurverzögerung bei Verzögerung stoppen. Wertebereich: Numerischer Wert von 0 bis 3600.
@@ -141,12 +141,12 @@ Valid,Gawindx,Type of stop at the end of the stop procedure.,Art des Stopps am E
 Valid,Gawindx,Unknown UPS Name,Unbekannter USV-Name
 Valid,Gawindx,Update,Aktualisieren
 Valid,Gawindx,Update Available : Version {0},Update verfügbar : Version {0}
-Valid,Lineflyer,Update WinNUT-Client Now? Ok to Close WinNut and Install New Version Cancel to Save Msi and Install Later,WinNUT-Client jetzt aktualisieren? OK um WinNut zu schließen und neue Version zu installieren Abbrechen um MSI-Datei zu speichern und später zu installieren
+Valid,Lineflyer,Update WinNUT-Client Now? Ok to Close WinNut and Install New Version Cancel to Save Msi and Install Later,WinNUT-Client jetzt aktualisieren? OK um WinNUT zu schließen und neue Version zu installieren Abbrechen um MSI-Datei zu speichern und später zu installieren
 Valid,Gawindx,UPS Battery Low,USV-Batterie schwach
 Valid,Lineflyer,UPS Load,USV-Last
 Valid,Lineflyer,UPS Name,USV-Name
-Valid,Lineflyer,UPS name to monitor. Accepted Value: Name of the UPS configured in the Nut server.,Name der zu überwachenden USV. Wertebereich: Name der auf dem Nut-Server konfigurierten USV.
-Valid,Gawindx,UPS On Battery,USV im Akkubetrieb
+Valid,Lineflyer,UPS name to monitor. Accepted Value: Name of the UPS configured in the Nut server.,Name der zu überwachenden USV. Wertebereich: Name der auf dem NUT-Server konfigurierten USV.
+Valid,Gawindx,UPS On Battery,USV im Batteriebetrieb
 Valid,Lineflyer,UPS On Line,USV im Netzbetrieb
 Valid,Gawindx,UPS Overload,USV-Überlastung
 Valid,Lineflyer,UPS Variable,USV-Variablen
@@ -156,6 +156,6 @@ Valid,Lineflyer,Verify Update,Auf Update prüfen
 Valid,Lineflyer,Verify Update At Start,Beim Start auf Updates prüfen
 Valid,Lineflyer,Version {0} Available,Version {0} verfügbar
 Valid,Gawindx,Weekly,Wöchentlich
-Valid,Gawindx,WinNut Preferences Changed,WinNut-Einstellungen geändert
+Valid,Gawindx,WinNut Preferences Changed,WinNUT-Einstellungen geändert
 Valid,Gawindx,Windows standby. WinNUT will disconnect.,Windows Standby. WinNUT wird getrennt.
 Valid,Gawindx,Wrong Login ID (Username or Password),Falsche Login-ID (Benutzername oder Passwort)
