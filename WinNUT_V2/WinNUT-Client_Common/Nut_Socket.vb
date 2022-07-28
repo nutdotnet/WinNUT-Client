@@ -375,17 +375,33 @@ Public Class Nut_Socket
             Me.ConnectionStatus = True
         End If
     End Sub
+
     Private Sub Close_Socket()
         Try
-            Me.WriterStream.Close()
-            Me.ReaderStream.Close()
-            Me.NutStream.Close()
-            Me.NutTCP.Close()
-            Me.NutSocket.Close()
+            If WriterStream IsNot Nothing Then
+                WriterStream.Close()
+            End If
+
+            If ReaderStream IsNot Nothing Then
+                ReaderStream.Close()
+            End If
+
+            If NutStream IsNot Nothing Then
+                NutStream.Close()
+            End If
+
+            If NutTCP IsNot Nothing Then
+                NutTCP.Close()
+            End If
+
+            If NutSocket IsNot Nothing Then
+                NutSocket.Close()
+            End If
         Catch Excep As Exception
         End Try
         Me.ConnectionStatus = False
     End Sub
+
     Public Sub Disconnect(Optional ByVal ForceDisconnect = False)
         Query_Data("LOGOUT")
         Close_Socket()
