@@ -4,7 +4,7 @@
 
 ## Installation
 To use it, please follow the following steps:
-1. Get the [last available Releases](https://github.com/gawindx/WinNUT-Client/releases)
+1. Get the [last available Releases](https://github.com/nutdotnet/WinNUT-Client/releases)
 2. Install WinNUT-Client using the "WinNUT-Setup.msi" file obtained previously
 3. If you were using an older version of WinNUT (v1.x), copy your "ups.ini" configuration file to the WinNUT-Client installation directory (by default "C:\Program Files(x86)\WinNUT-Client ") for an automatic import of your parameters during the first launch
 4. Start WinNUT V2 and modify the parameters according to your needs
@@ -32,7 +32,7 @@ Currently, WinNUT-Client supports:
 #### To add / correct a language
 
 ##### Method 1 (preferred)
-1. Fork this repository
+1. [Fork](https://github.com/nutdotnet/WinNUT-Client/fork) this repository
 2. In the translation directory:
 
 	For a new translation:
