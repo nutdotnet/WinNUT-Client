@@ -20,8 +20,8 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyCompany("Gawindx")>
 <Assembly: AssemblyProduct("WinNUT-Client")>
-<Assembly: AssemblyCopyright("Copyright Gawinx (Decaux Nicolas) ©  2019-2021")>
-<Assembly: AssemblyTrademark("https://github.com/gawindx/WinNUT-Client")>
+<Assembly: AssemblyCopyright("Copyright Gawindx (Decaux Nicolas) ©  2019-2021")>
+<Assembly: AssemblyTrademark("https://github.com/nutdotnet/WinNUT-Client")>
 
 ' Les informations de version pour un assembly se composent des quatre valeurs suivantes :
 '

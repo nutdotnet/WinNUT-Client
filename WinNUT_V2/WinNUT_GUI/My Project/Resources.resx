@@ -279,7 +279,7 @@ Cancel to Save Msi and Install Later</value>
     <value>Download New Version from :</value>
   </data>
   <data name="GitHub_URL" xml:space="preserve">
-    <value>https://github.com/gawindx/WinNUT-Client</value>
+    <value>https://github.com/nutdotnet/WinNUT-Client</value>
   </data>
   <data name="Log_Str_01" xml:space="preserve">
     <value>WinNut Preferences Changed</value>

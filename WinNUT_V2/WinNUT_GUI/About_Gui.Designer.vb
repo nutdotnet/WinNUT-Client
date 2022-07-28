@@ -61,7 +61,7 @@ Partial Class About_Gui
         Me.LkLbl_Github.Size = New System.Drawing.Size(215, 13)
         Me.LkLbl_Github.TabIndex = 6
         Me.LkLbl_Github.TabStop = True
-        Me.LkLbl_Github.Text = "https://github.com/gawindx/WinNUT-Client"
+        Me.LkLbl_Github.Text = "https://github.com/nutdotnet/WinNUT-Client"
         '
         'Lbl_Github
         '
