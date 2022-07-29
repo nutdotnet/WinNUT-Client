@@ -66,7 +66,7 @@ Public Class WinNUT
     Private Event UpdateBatteryState(ByVal Reason As String)
 
     'Handle sleep/hibernate mode from windows API
-	Declare Function SetSuspendState Lib "PowrProf" (ByVal Hibernate As Integer, ByVal ForceCritical As Integer, ByVal DisableWakeEvent As Integer) As Integer    
+    Declare Function SetSuspendState Lib "PowrProf" (ByVal Hibernate As Integer, ByVal ForceCritical As Integer, ByVal DisableWakeEvent As Integer) As Integer
 
     Public Property UpdateMethod() As String
         Get
@@ -661,38 +661,44 @@ Public Class WinNUT
             '    End If
 
             Select Case Me.UPS_BattCh
-                    Case 76 To 100
-                        Lbl_VBL.BackColor = Color.White
-                        ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_100
-                        LogFile.LogTracing("Battery Charged", LogLvl.LOG_DEBUG, Me)
-                    Case 51 To 75
-                        Lbl_VBL.BackColor = Color.White
-                        ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_75
-                        LogFile.LogTracing("Battery Charged", LogLvl.LOG_DEBUG, Me)
-                    Case 40 To 50
-                        Lbl_VBL.BackColor = Color.White
-                        ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_50
-                        LogFile.LogTracing("Battery Charged", LogLvl.LOG_DEBUG, Me)
-                    Case 26 To 39
-                        Lbl_VBL.BackColor = Color.Red
-                        ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_50
-                        LogFile.LogTracing("Low Battery", LogLvl.LOG_DEBUG, Me)
-                    Case 11 To 25
-                        Lbl_VBL.BackColor = Color.Red
-                        ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_25
-                        LogFile.LogTracing("Low Battery", LogLvl.LOG_DEBUG, Me)
-                    Case 0 To 10
-                        Lbl_VBL.BackColor = Color.Red
-                        ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_0
-                        LogFile.LogTracing("Low Battery", LogLvl.LOG_DEBUG, Me)
-                End Select
+                Case 76 To 100
+                    Lbl_VBL.BackColor = Color.White
+                    ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_100
+                    LogFile.LogTracing("Battery Charged", LogLvl.LOG_DEBUG, Me)
+                Case 51 To 75
+                    Lbl_VBL.BackColor = Color.White
+                    ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_75
+                    LogFile.LogTracing("Battery Charged", LogLvl.LOG_DEBUG, Me)
+                Case 40 To 50
+                    Lbl_VBL.BackColor = Color.White
+                    ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_50
+                    LogFile.LogTracing("Battery Charged", LogLvl.LOG_DEBUG, Me)
+                Case 26 To 39
+                    Lbl_VBL.BackColor = Color.Red
+                    ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_50
+                    LogFile.LogTracing("Low Battery", LogLvl.LOG_DEBUG, Me)
+                Case 11 To 25
+                    Lbl_VBL.BackColor = Color.Red
+                    ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_25
+                    LogFile.LogTracing("Low Battery", LogLvl.LOG_DEBUG, Me)
+                Case 0 To 10
+                    Lbl_VBL.BackColor = Color.Red
+                    ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_0
+                    LogFile.LogTracing("Low Battery", LogLvl.LOG_DEBUG, Me)
+            End Select
 
-                Dim iSpan As TimeSpan = TimeSpan.FromSeconds(Me.UPS_BattRuntime)
+            ' Calculate and display estimated remaining time on battery.
+            Dim iSpan As TimeSpan = TimeSpan.FromSeconds(Me.UPS_BattRuntime)
+            LogFile.LogTracing("Calculated estimated remaining battery time: " & iSpan.ToString(), LogLvl.LOG_DEBUG, Me)
 
+            ' Format the TimeSpan using a standard format (g = 0:00:00)
+            ' https://docs.microsoft.com/en-us/dotnet/api/system.timespan.tostring
+            Lbl_VRTime.Text = iSpan.ToString("g")
             'Lbl_VRTime.Text = iSpan.Hours.ToString.PadLeft(2, "0"c) & ":" &
             'iSpan.Minutes.ToString.PadLeft(2, "0"c) & ":" &
             'iSpan.Seconds.ToString.PadLeft(2, "0"c)
             'End If
+
             LogFile.LogTracing("Update Dial", LogLvl.LOG_DEBUG, Me)
             AG_InV.Value1 = Me.UPS_InputV
             AG_InF.Value1 = Me.UPS_InputF
