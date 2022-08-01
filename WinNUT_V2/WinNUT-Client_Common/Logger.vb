@@ -7,15 +7,21 @@
 '
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
+Imports System.IO
+
 Public Class Logger
-    Private ReadOnly LogFile As New Microsoft.VisualBasic.Logging.FileLogTraceListener()
+    Private Const BaseFileName = "WinNUT-CLient"
+    ' Logs will be stored in the program's appdata folder, in a Logs subdirectory.
+    Public Shared ReadOnly LogFolder = Path.Combine(ApplicationData, "Logs")
+
+    Private LogFile As Logging.FileLogTraceListener
     Private ReadOnly TEventCache As New TraceEventCache()
-    ' Enable writing to a log file.
-    Public WriteToFile As Boolean
     Public LogLevelValue As LogLvl
     Private L_CurrentLogData As String
     Private LastEventsList As New List(Of Object)
     Public Event NewData(ByVal sender As Object)
+
+#Region "Properties"
 
     Public Property CurrentLogData() As String
         Get
@@ -32,30 +38,36 @@ Public Class Logger
             Return Me.LastEventsList
         End Get
     End Property
-    Public Sub New(ByVal WriteLog As Boolean, ByVal LogLevel As LogLvl)
-        Me.WriteToFile = WriteLog
-        Me.LogLevelValue = LogLevel
-        Me.LogFile.TraceOutputOptions = TraceOptions.DateTime Or TraceOptions.ProcessId
-        Me.LogFile.Append = True
-        Me.LogFile.AutoFlush = True
-        Me.LogFile.BaseFileName = "WinNUT-CLient"
-        Me.LogFile.LogFileCreationSchedule = Logging.LogFileCreationScheduleOption.Daily
-        Me.LogFile.Location = Microsoft.VisualBasic.Logging.LogFileLocation.Custom
-        Me.LogFile.CustomLocation = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\WinNUT-Client"
-        Me.LastEventsList.Capacity = 50
-        ' WinNUT_Globals.LogFilePath = Me.LogFile.FullLogFileName
-    End Sub
 
-    Public Property WriteLog() As Boolean
+    ''' <summary>
+    ''' Returns if data is being written to a file. Also allows for file logging to be setup or stopped.
+    ''' </summary>
+    ''' <returns>True when the <see cref="LogFile"/> object is instantiated, false if not.</returns>
+    Public Property IsWritingToFile() As Boolean
         Get
-            Return Me.WriteToFile
+            Return Not (LogFile Is Nothing)
         End Get
-        Set(ByVal Value As Boolean)
-            Me.WriteToFile = Value
-            If Not Me.WriteToFile Then
+
+        Set(Value As Boolean)
+            If Value = False And LogFile IsNot Nothing Then
+                LogFile.Close()
                 LogFile.Dispose()
+                LogFile = Nothing
+                LogTracing("Logging to file has been disabled.", LogLvl.LOG_NOTICE, Me)
+            ElseIf Value Then
+                SetupLogfile()
             End If
         End Set
+    End Property
+
+    Public ReadOnly Property LogFileLocation() As String
+        Get
+            If IsWritingToFile Then
+                Return LogFile.FullLogFileName
+            Else
+                Return String.Empty
+            End If
+        End Get
     End Property
 
     Public Property LogLevel() As LogLvl
@@ -67,10 +79,42 @@ Public Class Logger
         End Set
     End Property
 
+#End Region
+
+    Public Sub New(WriteLog As Boolean, LogLevel As LogLvl)
+        IsWritingToFile = WriteLog
+        LogLevelValue = LogLevel
+        LastEventsList.Capacity = 50
+    End Sub
+
+    Public Sub SetupLogfile()
+        LogFile = New Logging.FileLogTraceListener(BaseFileName) With {
+            .TraceOutputOptions = TraceOptions.DateTime Or TraceOptions.ProcessId,
+            .Append = True,
+            .AutoFlush = True,
+            .LogFileCreationSchedule = Logging.LogFileCreationScheduleOption.Daily,
+            .CustomLocation = LogFolder,
+            .Location = Logging.LogFileLocation.Custom
+        }
+
+        LogTracing("Log file is initialized at " & LogFile.FullLogFileName, LogLvl.LOG_NOTICE, Me)
+    End Sub
+
+    Public Function DeleteLogFile() As Boolean
+        Try
+            Dim fileLocation = LogFile.FullLogFileName
+            IsWritingToFile = False
+            File.Delete(fileLocation)
+            Return True
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
+
     ''' <summary>
-    ''' Insert an event into the <see cref="LastEventsList" /> for report generating, write a line to the
-    ''' <see cref="LogFile"/> if the event is as or more important than the <see cref="LogLevel"/>, and notify any
-    ''' listeners if <paramref name="LogToDisplay"/> is specified.
+    ''' Write the <paramref name="message"/> to the Debug tracer is debugging, into the <see cref="LastEventsList" />
+    ''' for report generating, to the <see cref="LogFile"/> if appropriate, and notify any listeners if
+    ''' <paramref name="LogToDisplay"/> is specified.
     ''' </summary>
     ''' <param name="message">The raw information that needs to be recorded.</param>
     ''' <param name="LvlError">How important the information is.</param>
@@ -100,7 +144,7 @@ Public Class Logger
 
         Me.LastEventsList.Add(FinalMsg)
 
-        If Me.WriteToFile AndAlso Me.LogLevel >= LvlError Then
+        If IsWritingToFile AndAlso Me.LogLevel >= LvlError Then
             LogFile.WriteLine(FinalMsg)
         End If
         'If LvlError = LogLvl.LOG_NOTICE Then
