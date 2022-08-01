@@ -46,7 +46,7 @@ Public Class Update_Gui
             MyBase.SetVisibleCore(False)
             WinNUT.NotifyIcon.Visible = False
             Me.Icon = WinNUT.Icon
-            LogFile = WinNUT.LogFile
+            ' LogFile = WinNUT.LogFile
             VerifyUpdate()
         End If
     End Sub
@@ -136,7 +136,7 @@ Public Class Update_Gui
                 End If
             End If
         Catch excep As Exception
-            WinNUT.LogFile.LogTracing(excep.Message, LogLvl.LOG_ERROR, Me)
+            LogFile.LogTracing(excep.Message, LogLvl.LOG_ERROR, Me)
         End Try
         WinNUT_Params.Arr_Reg_Key.Item("LastDateVerification") = Now.ToString
         WinNUT_Params.Save_Params()

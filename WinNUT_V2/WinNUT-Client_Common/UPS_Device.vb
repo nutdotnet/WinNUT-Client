@@ -10,7 +10,7 @@
 Imports System.Globalization
 Public Class UPS_Device
     'Private Nut_Conn As Nut_Comm
-    Private LogFile As Logger
+    ' Private LogFile As Logger
     Private Freq_Fallback As Double
     Private ciClone As System.Globalization.CultureInfo
     Private Const CosPhi As Double = 0.6
@@ -107,7 +107,7 @@ Public Class UPS_Device
     End Sub
 
     Public Sub New(ByVal Nut_Config As Nut_Parameter, ByRef LogFile As Logger)
-        Me.LogFile = LogFile
+        ' Me.LogFile = LogFile
         Me.Nut_Config = Nut_Config
         Me.ciClone = CType(CultureInfo.InvariantCulture.Clone(), CultureInfo)
         Me.ciClone.NumberFormat.NumberDecimalSeparator = "."
@@ -409,5 +409,9 @@ Public Class UPS_Device
             Reconnect_Nut.Stop()
             RaiseEvent Deconnected()
         End If
+    End Sub
+
+    Private Sub NUTSocketError(nutEx As Nut_Exception, NoticeLvl As LogLvl, sender As Object) Handles Nut_Socket.OnNUTException
+        LogFile.LogTracing("[" & Nut_Config.UPSName & "] " & nutEx.ToString(), LogLvl.LOG_WARNING, Nut_Socket)
     End Sub
 End Class

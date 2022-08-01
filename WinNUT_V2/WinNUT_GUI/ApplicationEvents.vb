@@ -7,6 +7,7 @@
 '
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
+Imports WinNUT_Client_Common
 Imports WinNUT_Params = WinNUT_Client_Common.WinNUT_Params
 
 Namespace My
@@ -121,7 +122,7 @@ Namespace My
             Crash_Report &= Msg_Error.Text & vbNewLine & vbNewLine
             Crash_Report &= "Last Events :" & vbNewLine
 
-            For Each WinNUT_Event In WinNUT.LogFile.LastEvents
+            For Each WinNUT_Event In LogFile.LastEvents
                 Crash_Report &= WinNUT_Event & vbNewLine
             Next
             My.Computer.Clipboard.SetText(Crash_Report)

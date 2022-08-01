@@ -16,7 +16,7 @@ Public Class List_Var_Gui
     Private LogFile As Logger
     Private UPS_Name = WinNUT.Nut_Config.UPSName
     Private Sub List_Var_Gui_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Me.LogFile = WinNUT.LogFile
+        ' Me.LogFile = WinNUT.LogFile
         LogFile.LogTracing("Load List Var Gui", LogLvl.LOG_DEBUG, Me)
         Me.Icon = WinNUT.Icon
         Me.Visible = False

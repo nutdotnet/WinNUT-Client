@@ -38,6 +38,7 @@ Public Class Nut_Socket
     Public Event OnNotice(Message As String, NoticeLvl As LogLvl, sender As Object)
     'Public Event OnError(Excep As Exception, NoticeLvl As LogLvl, sender As Object, ReportToGui As Boolean)
     Public Event OnError(Excep As Exception, NoticeLvl As LogLvl, sender As Object)
+    Public Event OnNUTException(ex As Nut_Exception, NoticeLvl As LogLvl, sender As Object)
 
     Public Event Unknown_UPS()
     Public Event Socket_Broken()
@@ -94,10 +95,11 @@ Public Class Nut_Socket
             Dim Port = Me.Nut_Config.Port
             Dim Login = Me.Nut_Config.Login
             Dim Password = Me.Nut_Config.Password
-            Dim Response As Boolean = False
+
             If Not String.IsNullOrEmpty(Host) And Not IsNothing(Port) Then
                 If Not Create_Socket(Host, Port) Then
-                    Throw New Nut_Exception(Nut_Exception_Value.CONNECT_ERROR)
+                    ' Don't duplicate/override Create_Socket's error throwing functionality.
+                    ' Throw New Nut_Exception(Nut_Exception_Value.CONNECT_ERROR)
                     Disconnect()
                 Else
                     If Not AuthLogin(Login, Password) Then
@@ -113,15 +115,22 @@ Public Class Nut_Socket
                     If Nut_Query.Response = NUTResponse.OK Then
                         Me.Net_Ver = Nut_Query.Data
                     End If
-                    Response = True
+                    Return True
                 End If
             End If
-            Return Response
+
+        Catch nutEx As Nut_Exception
+            ' Handle NUT exceptions specifically, without variable boxing/unboxing
+            RaiseEvent OnNUTException(nutEx, LogLvl.LOG_ERROR, Me)
+            Return False
         Catch Excep As Exception
             RaiseEvent OnError(Excep, LogLvl.LOG_ERROR, Me)
             Return False
+        Finally
+
         End Try
     End Function
+
     Private Function Create_Socket(ByVal Host As String, ByVal Port As Integer) As Boolean
         Try
             Me.NutSocket = New Socket(AddressFamily.InterNetwork, ProtocolType.IP)
@@ -131,7 +140,7 @@ Public Class Nut_Socket
             Me.WriterStream = New StreamWriter(NutStream)
             Me.ConnectionStatus = True
         Catch Excep As Exception
-            RaiseEvent OnError(New Nut_Exception(Nut_Exception_Value.CONNECT_ERROR, Excep.Message), LogLvl.LOG_ERROR, Me)
+            RaiseEvent OnNUTException(New Nut_Exception(Nut_Exception_Value.CONNECT_ERROR, Excep.Message), LogLvl.LOG_ERROR, Me)
             Me.ConnectionStatus = False
         End Try
         Return Me.ConnectionStatus

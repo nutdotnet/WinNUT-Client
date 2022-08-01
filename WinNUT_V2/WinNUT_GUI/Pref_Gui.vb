@@ -10,11 +10,13 @@
 Imports WinNUT_Params = WinNUT_Client_Common.WinNUT_Params
 Imports Logger = WinNUT_Client_Common.Logger
 Imports LogLvl = WinNUT_Client_Common.LogLvl
-Imports WinNUT_Globals = WinNUT_Client_Common.WinNUT_Globals
+Imports WinNUT_Client_Common.WinNUT_Globals
+Imports System.IO
+
 Public Class Pref_Gui
     Private IsShowed As Boolean = False
     Private IsSaved As Boolean = False
-    Private LogFile As Logger
+
     Private Sub Btn_Cancel_Click(sender As Object, e As EventArgs) Handles Btn_Cancel.Click
         LogFile.LogTracing("Close Pref Gui from Button Cancel", LogLvl.LOG_DEBUG, Me)
         Me.Close()
@@ -72,23 +74,13 @@ Public Class Pref_Gui
                     LogFile.LogTracing("WinNUT Removed From Startup.", LogLvl.LOG_DEBUG, Me)
                 End If
             End If
-            If CB_Use_Logfile.Checked Then
-                WinNUT.LogFile.WriteLog = True
-                LogFile.LogTracing("LogFile Enabled.", LogLvl.LOG_DEBUG, Me)
-            Else
-                WinNUT.LogFile.WriteLog = False
-                LogFile.LogTracing("LogFile Disabled.", LogLvl.LOG_DEBUG, Me)
-            End If
-            WinNUT.LogFile.LogLevel = Cbx_LogLevel.SelectedIndex
 
-            WinNUT.LogFile.LogTracing("Pref_Gui Params Saved", 1, Me)
-            If My.Computer.FileSystem.FileExists(WinNUT_Globals.LogFilePath) Then
-                Btn_ViewLog.Enabled = True
-                Btn_DeleteLog.Enabled = True
-            Else
-                Btn_ViewLog.Enabled = False
-                Btn_DeleteLog.Enabled = False
-            End If
+            LogFile.LogLevel = Cbx_LogLevel.SelectedIndex
+            LogFile.IsWritingToFile = CB_Use_Logfile.Checked
+
+            LogFile.LogTracing("Pref_Gui Params Saved", 1, Me)
+
+            SetLogControlsStatus()
             WinNUT.WinNUT_PrefsChanged()
             Me.IsSaved = True
         Catch e As Exception
@@ -326,35 +318,28 @@ Public Class Pref_Gui
     End Sub
 
     Private Sub TabControl_Options_Selecting(sender As Object, e As TabControlCancelEventArgs) Handles TabControl_Options.Selecting
-        If My.Computer.FileSystem.FileExists(WinNUT_Globals.LogFilePath) Then
-            Btn_ViewLog.Enabled = True
-            Btn_DeleteLog.Enabled = True
-        Else
-            Btn_ViewLog.Enabled = False
-            Btn_DeleteLog.Enabled = False
+        If TabControl_Options.SelectedTab Is Tab_Miscellanous Then
+            SetLogControlsStatus()
         End If
     End Sub
 
     Private Sub Btn_DeleteLog_Click(sender As Object, e As EventArgs) Handles Btn_DeleteLog.Click
         LogFile.LogTracing("Delete LogFile", LogLvl.LOG_DEBUG, Me)
-        If My.Computer.FileSystem.FileExists(WinNUT_Globals.LogFilePath) Then
-            WinNUT.LogFile.WriteLog = False
-            My.Computer.FileSystem.DeleteFile(WinNUT_Globals.LogFilePath)
-            WinNUT.LogFile.WriteLog = WinNUT_Params.Arr_Reg_Key.Item("UseLogFile")
-            Btn_ViewLog.Enabled = True
-            Btn_DeleteLog.Enabled = True
+
+        If LogFile.DeleteLogFile() Then
             LogFile.LogTracing("LogFile Deleted", LogLvl.LOG_DEBUG, Me)
         Else
-            LogFile.LogTracing("LogFile does not exists", LogLvl.LOG_WARNING, Me)
-            Btn_ViewLog.Enabled = False
-            Btn_DeleteLog.Enabled = False
+            LogFile.LogTracing("Error deleting log file.", LogLvl.LOG_WARNING, Me)
         End If
+
+        LogFile.IsWritingToFile = WinNUT_Params.Arr_Reg_Key.Item("UseLogFile")
+        SetLogControlsStatus()
     End Sub
 
     Private Sub Btn_ViewLog_Click(sender As Object, e As EventArgs) Handles Btn_ViewLog.Click
         LogFile.LogTracing("Show LogFile", LogLvl.LOG_DEBUG, Me)
-        If My.Computer.FileSystem.FileExists(WinNUT_Globals.LogFilePath) Then
-            Process.Start(WinNUT_Globals.LogFilePath)
+        If File.Exists(LogFile.LogFileLocation) Then
+            Process.Start(LogFile.LogFileLocation)
         Else
             LogFile.LogTracing("LogFile does not exists", LogLvl.LOG_WARNING, Me)
             Btn_ViewLog.Enabled = False
@@ -364,7 +349,6 @@ Public Class Pref_Gui
 
     Private Sub Pref_Gui_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Icon = WinNUT.Icon
-        Me.LogFile = WinNUT.LogFile
         LogFile.LogTracing("Load Pref Gui", LogLvl.LOG_DEBUG, Me)
     End Sub
 
@@ -373,5 +357,20 @@ Public Class Pref_Gui
             Me.IsSaved = False
             Me.Btn_Apply.Enabled = True
         End If
+    End Sub
+
+    ''' <summary>
+    ''' Enable or disable controls to view and delete log data if it's available.
+    ''' </summary>
+    Private Sub SetLogControlsStatus()
+        If WinNUT_Params.Arr_Reg_Key.Item("UseLogFile") Then ' Directory.Exists(Logger.LogFolder)
+            Btn_ViewLog.Enabled = True
+            Btn_DeleteLog.Enabled = True
+        Else
+            Btn_ViewLog.Enabled = False
+            Btn_DeleteLog.Enabled = False
+        End If
+
+        LogFile.LogTracing("Setting LogControl statuses.", LogLvl.LOG_DEBUG, Me)
     End Sub
 End Class
