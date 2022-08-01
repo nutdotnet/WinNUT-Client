@@ -11,7 +11,7 @@ Public Class Logger
     Private ReadOnly LogFile As New Microsoft.VisualBasic.Logging.FileLogTraceListener()
     Private ReadOnly TEventCache As New TraceEventCache()
     ' Enable writing to a log file.
-    Public WriteLogValue As Boolean
+    Public WriteToFile As Boolean
     Public LogLevelValue As LogLvl
     Private L_CurrentLogData As String
     Private LastEventsList As New List(Of Object)
@@ -33,7 +33,7 @@ Public Class Logger
         End Get
     End Property
     Public Sub New(ByVal WriteLog As Boolean, ByVal LogLevel As LogLvl)
-        Me.WriteLogValue = WriteLog
+        Me.WriteToFile = WriteLog
         Me.LogLevelValue = LogLevel
         Me.LogFile.TraceOutputOptions = TraceOptions.DateTime Or TraceOptions.ProcessId
         Me.LogFile.Append = True
@@ -43,16 +43,16 @@ Public Class Logger
         Me.LogFile.Location = Microsoft.VisualBasic.Logging.LogFileLocation.Custom
         Me.LogFile.CustomLocation = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\WinNUT-Client"
         Me.LastEventsList.Capacity = 50
-        WinNUT_Globals.LogFilePath = Me.LogFile.FullLogFileName
+        ' WinNUT_Globals.LogFilePath = Me.LogFile.FullLogFileName
     End Sub
 
     Public Property WriteLog() As Boolean
         Get
-            Return Me.WriteLogValue
+            Return Me.WriteToFile
         End Get
         Set(ByVal Value As Boolean)
-            Me.WriteLogValue = Value
-            If Not Me.WriteLogValue Then
+            Me.WriteToFile = Value
+            If Not Me.WriteToFile Then
                 LogFile.Dispose()
             End If
         End Set
@@ -67,6 +67,15 @@ Public Class Logger
         End Set
     End Property
 
+    ''' <summary>
+    ''' Insert an event into the <see cref="LastEventsList" /> for report generating, write a line to the
+    ''' <see cref="LogFile"/> if the event is as or more important than the <see cref="LogLevel"/>, and notify any
+    ''' listeners if <paramref name="LogToDisplay"/> is specified.
+    ''' </summary>
+    ''' <param name="message">The raw information that needs to be recorded.</param>
+    ''' <param name="LvlError">How important the information is.</param>
+    ''' <param name="sender"></param>
+    ''' <param name="LogToDisplay">A user-friendly, translated string to be shown.</param>
     Public Sub LogTracing(ByVal message As String, ByVal LvlError As Int16, sender As Object, Optional ByVal LogToDisplay As String = Nothing)
         Dim Pid = TEventCache.ProcessId
         Dim SenderName = sender.GetType.Name
@@ -74,11 +83,14 @@ Public Class Logger
         Dim FinalMsg = EventTime & " Pid: " & Pid & " " & SenderName & " : " & message
 
         'Update LogFilePath to make sure it's still the correct path
-        WinNUT_Globals.LogFilePath = Me.LogFile.FullLogFileName
+        ' gbakeman 31/7/2022: Disabling since the LogFilePath should never change throughout the lifetime of this
+        '   object, unless proper initialization has occured.
+
+        ' WinNUT_Globals.LogFilePath = Me.LogFile.FullLogFileName
 
         ' Always write log messages to the attached debug messages window.
 #If DEBUG Then
-       Debug.WriteLine(FinalMsg)
+        Debug.WriteLine(FinalMsg)
 #End If
 
         'Create Event in EventList in case of crash for generate Report
@@ -88,7 +100,7 @@ Public Class Logger
 
         Me.LastEventsList.Add(FinalMsg)
 
-        If Me.WriteLogValue AndAlso Me.LogLevel >= LvlError Then
+        If Me.WriteToFile AndAlso Me.LogLevel >= LvlError Then
             LogFile.WriteLine(FinalMsg)
         End If
         'If LvlError = LogLvl.LOG_NOTICE Then
