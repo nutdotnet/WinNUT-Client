@@ -51,4 +51,14 @@ Public Class Nut_Parameter
     Public Password As String = ""
     Public UPSName As String = ""
     Public AutoReconnect As Boolean = False
+
+    ''' <summary>
+    ''' Generate an informative String representing this Parameter object. Note password is not printed.
+    ''' </summary>
+    ''' <returns></returns>
+    Public Overrides Function ToString() As String
+        Return String.Format("{0}@{1}:{2}, Name: {3}" & If(AutoReconnect, " [AutoReconnect]", Nothing),
+                             Login, Host, Port, AutoReconnect)
+        ' Return MyBase.ToString())
+    End Function
 End Class

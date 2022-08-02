@@ -91,10 +91,10 @@ Public Class Nut_Socket
     Public Function Connect() As Boolean
         Try
             'TODO: Use LIST UPS protocol command to get valid UPSs.
-            Dim Host = Me.Nut_Config.Host
-            Dim Port = Me.Nut_Config.Port
-            Dim Login = Me.Nut_Config.Login
-            Dim Password = Me.Nut_Config.Password
+            Dim Host = Nut_Config.Host
+            Dim Port = Nut_Config.Port
+            Dim Login = Nut_Config.Login
+            Dim Password = Nut_Config.Password
 
             If Not String.IsNullOrEmpty(Host) And Not IsNothing(Port) Then
                 If Not Create_Socket(Host, Port) Then
@@ -133,12 +133,13 @@ Public Class Nut_Socket
 
     Private Function Create_Socket(ByVal Host As String, ByVal Port As Integer) As Boolean
         Try
-            Me.NutSocket = New Socket(AddressFamily.InterNetwork, ProtocolType.IP)
-            Me.NutTCP = New TcpClient(Host, Port)
-            Me.NutStream = NutTCP.GetStream
-            Me.ReaderStream = New StreamReader(NutStream)
-            Me.WriterStream = New StreamWriter(NutStream)
-            Me.ConnectionStatus = True
+            ' NutSocket = New Socket(AddressFamily.InterNetwork, ProtocolType.IP)
+            NutSocket = New Socket(SocketType.Stream, ProtocolType.IP)
+            NutTCP = New TcpClient(Host, Port)
+            NutStream = NutTCP.GetStream
+            ReaderStream = New StreamReader(NutStream)
+            WriterStream = New StreamWriter(NutStream)
+            ConnectionStatus = True
         Catch Excep As Exception
             RaiseEvent OnNUTException(New Nut_Exception(Nut_Exception_Value.CONNECT_ERROR, Excep.Message), LogLvl.LOG_ERROR, Me)
             Me.ConnectionStatus = False
