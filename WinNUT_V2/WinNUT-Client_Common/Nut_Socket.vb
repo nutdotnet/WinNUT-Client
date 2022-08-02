@@ -126,9 +126,9 @@ Public Class Nut_Socket
         Catch Excep As Exception
             RaiseEvent OnError(Excep, LogLvl.LOG_ERROR, Me)
             Return False
-        Finally
-
         End Try
+
+        Return False
     End Function
 
     Private Function Create_Socket(ByVal Host As String, ByVal Port As Integer) As Boolean

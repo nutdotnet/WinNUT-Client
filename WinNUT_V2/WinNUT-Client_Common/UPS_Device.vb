@@ -27,7 +27,7 @@ Public Class UPS_Device
     Private Socket_Status As Boolean = False
 
 
-    'Private LogFile As Logger
+    Private LogFile As Logger
     'Private ConnectionStatus As Boolean = False
     'Private Server As String
     'Private Port As Integer
@@ -107,7 +107,7 @@ Public Class UPS_Device
     End Sub
 
     Public Sub New(ByVal Nut_Config As Nut_Parameter, ByRef LogFile As Logger)
-        ' Me.LogFile = LogFile
+        Me.LogFile = LogFile
         Me.Nut_Config = Nut_Config
         Me.ciClone = CType(CultureInfo.InvariantCulture.Clone(), CultureInfo)
         Me.ciClone.NumberFormat.NumberDecimalSeparator = "."

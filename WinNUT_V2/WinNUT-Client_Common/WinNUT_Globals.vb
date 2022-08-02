@@ -32,7 +32,7 @@ Public Module WinNUT_Globals
     Public IsConnected As Boolean
     ' Public LogFile As String
     ' Handle application messages and debug events.
-    Public WithEvents LogFile As Logger '  As New Logger(False, 0)
+    ' Public WithEvents LogFile As Logger '  As New Logger(False, 0)
     Public AppIcon As Dictionary(Of Integer, System.Drawing.Icon)
     Public StrLog As New List(Of String)
     ' Public LogFilePath As String

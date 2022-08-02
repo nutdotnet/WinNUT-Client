@@ -23,6 +23,7 @@ Namespace My
         Private BtnGenerate As New Button
         Private Msg_Crash As New Label
         Private Msg_Error As New TextBox
+
         Private Sub MyApplication_UnhandledException(ByVal sender As Object, ByVal e As ApplicationServices.UnhandledExceptionEventArgs) Handles Me.UnhandledException
             e.ExitApplication = False
 
@@ -81,7 +82,7 @@ Namespace My
             End With
 
             AddHandler BtnClose.Click, AddressOf My.Application.Close_Button_Click
-            AddHandler BtnGenerate.Click, AddressOf My.Application.Generate_Button_Click
+            AddHandler BtnGenerate.Click, AddressOf Application.Generate_Button_Click
             AddHandler CrashBug_Form.FormClosing, AddressOf My.Application.CrashBug_FormClosing
 
             CrashBug_Form.Show()
@@ -122,7 +123,7 @@ Namespace My
             Crash_Report &= Msg_Error.Text & vbNewLine & vbNewLine
             Crash_Report &= "Last Events :" & vbNewLine
 
-            For Each WinNUT_Event In LogFile.LastEvents
+            For Each WinNUT_Event In WinNUT.LogFile.LastEvents
                 Crash_Report &= WinNUT_Event & vbNewLine
             Next
             My.Computer.Clipboard.SetText(Crash_Report)

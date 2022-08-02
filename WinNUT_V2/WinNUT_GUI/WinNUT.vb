@@ -14,7 +14,7 @@ Public Class WinNUT
 
 #End Region
     ' Logging
-    Private WithEvents ClientLogger As Logger
+    Public Shared WithEvents LogFile As Logger
 
     'Object for UPS management
     Public WithEvents UPS_Device As UPS_Device
@@ -158,7 +158,7 @@ Public Class WinNUT
         ' Setup logging preferences
         LogFile.LogLevel = Arr_Reg_Key.Item("Log Level")
         LogFile.IsWritingToFile = Arr_Reg_Key.Item("UseLogFile")
-        ClientLogger = LogFile
+
         LogFile.LogTracing("Logging is configured.", LogLvl.LOG_DEBUG, Me)
 
         'Init Systray
@@ -1011,7 +1011,7 @@ Public Class WinNUT
         HasFocus = False
     End Sub
 
-    Public Shared Sub Update_InstantLog(ByVal sender As System.Object) Handles ClientLogger.NewData
+    Public Shared Sub Update_InstantLog(sender As Object) Handles LogFile.NewData
         Dim Message As String = LogFile.CurrentLogData
         Static Dim Event_Id = 1
         LogFile.LogTracing("New Log to CB_Current Log : " & Message, LogLvl.LOG_DEBUG, sender.ToString)
