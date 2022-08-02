@@ -15,7 +15,7 @@ Public Class UPS_Device
     Private ciClone As System.Globalization.CultureInfo
     Private Const CosPhi As Double = 0.6
 
-    Private Nut_Config As Nut_Parameter
+    Public Nut_Config As Nut_Parameter
 
     Public UPS_Datas As New UPS_Datas
     Public WithEvents Nut_Socket As Nut_Socket
@@ -111,7 +111,7 @@ Public Class UPS_Device
         Me.Nut_Config = Nut_Config
         Me.ciClone = CType(CultureInfo.InvariantCulture.Clone(), CultureInfo)
         Me.ciClone.NumberFormat.NumberDecimalSeparator = "."
-        Me.Nut_Socket = New Nut_Socket(Me.Nut_Config)
+        Me.Nut_Socket = New Nut_Socket(Me.Nut_Config, LogFile)
         With Me.Reconnect_Nut
             .Interval = 30000
             .Enabled = False
@@ -123,14 +123,17 @@ Public Class UPS_Device
             AddHandler .Tick, AddressOf Event_WatchDog
         End With
         AddHandler Nut_Socket.Socket_Deconnected, AddressOf Socket_Deconnected
-        Connect_UPS()
+        ' Connect_UPS()
     End Sub
+
     Public Sub Connect_UPS()
-        Dim UPSName = Me.Nut_Config.UPSName
+        ' Dim UPSName = Me.Nut_Config.UPSName
+        LogFile.LogTracing("Beginning connection: " & Nut_Config.ToString(), LogLvl.LOG_DEBUG, Me)
+
         If Me.Nut_Socket.Connect() And Me.Nut_Socket.IsConnected Then
             LogFile.LogTracing("TCP Socket Created", LogLvl.LOG_NOTICE, Me)
             Me.Socket_Status = True
-            If Nut_Socket.IsKnownUPS(UPSName) Then
+            If Nut_Socket.IsKnownUPS(Nut_Config.UPSName) Then
                 Me.UPS_Datas = GetUPSProductInfo()
                 Init_Constant(Nut_Socket)
                 RaiseEvent Connected()
@@ -146,11 +149,13 @@ Public Class UPS_Device
             '    End If
         End If
     End Sub
-    Public Sub ReConnect()
-        If Not Me.IsConnected Then
-            Nut_Socket.Connect()
-        End If
-    End Sub
+
+    'Public Sub ReConnect()
+    '    If Not Me.IsConnected Then
+    '        Nut_Socket.Connect()
+    '    End If
+    'End Sub
+
     Private Function GetUPSProductInfo() As UPS_Datas
         Dim UDatas As New UPS_Datas
         Dim UPSName = Me.Nut_Config.UPSName

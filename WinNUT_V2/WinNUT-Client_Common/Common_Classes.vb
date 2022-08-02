@@ -58,7 +58,7 @@ Public Class Nut_Parameter
     ''' <returns></returns>
     Public Overrides Function ToString() As String
         Return String.Format("{0}@{1}:{2}, Name: {3}" & If(AutoReconnect, " [AutoReconnect]", Nothing),
-                             Login, Host, Port, AutoReconnect)
+                             Login, Host, Port, UPSName, AutoReconnect)
         ' Return MyBase.ToString())
     End Function
 End Class

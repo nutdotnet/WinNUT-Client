@@ -15,6 +15,19 @@ Imports System.IO
 Imports System.Windows.Forms
 
 Public Class Nut_Socket
+#Region "Properties"
+    Public ReadOnly Property ConnectionStatus
+        Get
+            If NutSocket IsNot Nothing Then
+                Return NutSocket.Connected
+            Else
+                Return False
+            End If
+        End Get
+    End Property
+#End Region
+
+    Private LogFile As Logger
     'Socket Variables
     Private NutSocket As Socket
     Private NutTCP As TcpClient
@@ -26,8 +39,6 @@ Public Class Nut_Socket
 
     Private Nut_Ver As String
     Private Net_Ver As String
-
-    Private ConnectionStatus As Boolean = False
 
     Private Nut_Config As Nut_Parameter
 
@@ -44,8 +55,8 @@ Public Class Nut_Socket
     Public Event Socket_Broken()
     Public Event Socket_Deconnected()
 
-    Public Sub New(ByVal Nut_Config As Nut_Parameter)
-
+    Public Sub New(ByVal Nut_Config As Nut_Parameter, ByRef logger As Logger)
+        LogFile = logger
         With Me.WatchDog
             .Interval = 1000
             .Enabled = False
@@ -88,6 +99,7 @@ Public Class Nut_Socket
     Public Sub Update_Config(ByVal New_Nut_Config As Nut_Parameter)
         Me.Nut_Config = New_Nut_Config
     End Sub
+
     Public Function Connect() As Boolean
         Try
             'TODO: Use LIST UPS protocol command to get valid UPSs.
@@ -97,24 +109,26 @@ Public Class Nut_Socket
             Dim Password = Nut_Config.Password
 
             If Not String.IsNullOrEmpty(Host) And Not IsNothing(Port) Then
-                If Not Create_Socket(Host, Port) Then
-                    ' Don't duplicate/override Create_Socket's error throwing functionality.
-                    ' Throw New Nut_Exception(Nut_Exception_Value.CONNECT_ERROR)
-                    Disconnect()
-                Else
-                    If Not AuthLogin(Login, Password) Then
-                        Throw New Nut_Exception(Nut_Exception_Value.INVALID_AUTH_DATA)
-                    End If
+                Create_Socket(Host, Port)
+
+                If ConnectionStatus Then
+                    AuthLogin(Login, Password)
+                    'If Not AuthLogin(Login, Password) Then
+                    '    ' Throw New Nut_Exception(Nut_Exception_Value.INVALID_AUTH_DATA)
+                    '    RaiseEvent OnNUTException()
+                    'End If
                     Dim Nut_Query = Query_Data("VER")
 
                     If Nut_Query.Response = NUTResponse.OK Then
-                        Me.Nut_Ver = (Nut_Query.Data.Split(" "c))(4)
+                        Nut_Ver = (Nut_Query.Data.Split(" "c))(4)
                     End If
                     Nut_Query = Query_Data("NETVER")
 
                     If Nut_Query.Response = NUTResponse.OK Then
-                        Me.Net_Ver = Nut_Query.Data
+                        Net_Ver = Nut_Query.Data
                     End If
+
+                    LogFile.LogTracing(String.Format("NUT server reports VER: {0} NETVER: {1}", Nut_Ver, Net_Ver), LogLvl.LOG_NOTICE, Me)
                     Return True
                 End If
             End If
@@ -131,21 +145,23 @@ Public Class Nut_Socket
         Return False
     End Function
 
-    Private Function Create_Socket(ByVal Host As String, ByVal Port As Integer) As Boolean
+    Private Sub Create_Socket(ByVal Host As String, ByVal Port As Integer)
         Try
             ' NutSocket = New Socket(AddressFamily.InterNetwork, ProtocolType.IP)
             NutSocket = New Socket(SocketType.Stream, ProtocolType.IP)
+            LogFile.LogTracing(String.Format("Attempting TCP socket connection to {0}:{1}...", Host, Port), LogLvl.LOG_NOTICE, Me)
             NutTCP = New TcpClient(Host, Port)
             NutStream = NutTCP.GetStream
             ReaderStream = New StreamReader(NutStream)
             WriterStream = New StreamWriter(NutStream)
-            ConnectionStatus = True
+            ' ConnectionStatus = True
+            LogFile.LogTracing(String.Format("Connection established and streams ready for {0}:{1}", Host, Port), LogLvl.LOG_NOTICE, Me)
         Catch Excep As Exception
+            Disconnect(True)
             RaiseEvent OnNUTException(New Nut_Exception(Nut_Exception_Value.CONNECT_ERROR, Excep.Message), LogLvl.LOG_ERROR, Me)
-            Me.ConnectionStatus = False
         End Try
-        Return Me.ConnectionStatus
-    End Function
+    End Sub
+
     Public Function Query_Data(Query_Msg As String) As (Data As String, Response As NUTResponse)
         Dim Response As NUTResponse = NUTResponse.NORESPONSE
         Dim DataResult As String = ""
@@ -338,9 +354,11 @@ Public Class Nut_Socket
         End Select
         Return Response
     End Function
-    Private Function AuthLogin(ByVal Login As String, ByVal Password As String) As Boolean
+
+    Private Sub AuthLogin(Login As String, Password As String)
         Try
-            Me.Auth_Success = False
+            LogFile.LogTracing("Attempting authentication...", LogLvl.LOG_NOTICE, Me)
+            Auth_Success = False
             If Not String.IsNullOrEmpty(Login) AndAlso String.IsNullOrEmpty(Password) Then
                 Dim Nut_Query = Query_Data("USERNAME " & Login)
 
@@ -366,23 +384,27 @@ Public Class Nut_Socket
                     End If
                 End If
             End If
-            Me.Auth_Success = True
-            Return Me.Auth_Success
+
+            LogFile.LogTracing("Authenticated successfully.", LogLvl.LOG_NOTICE, Me)
+            Auth_Success = True
+            ' Return Me.Auth_Success
+        Catch nutEx As Nut_Exception
+            ' Auth issues aren't necessarily fatal - some interaction can still occur unauthenticated.
+            RaiseEvent OnNUTException(nutEx, LogLvl.LOG_ERROR, Me)
+            ' Auth_Success = False
+            ' Disconnect(True)
         Catch Excep As Exception
             RaiseEvent OnError(Excep, LogLvl.LOG_ERROR, Me)
-            Me.Disconnect()
-            Return False
+            Disconnect(True)
+            ' Auth_Success = False
         End Try
-    End Function
+    End Sub
 
     Private Sub Event_WatchDog(sender As Object, e As EventArgs)
         Dim Nut_Query = Query_Data("")
         If Nut_Query.Response = NUTResponse.NORESPONSE Then
-            Me.ConnectionStatus = False
             Disconnect(True)
             RaiseEvent Socket_Broken()
-        ElseIf Nut_Query.Response = NUTResponse.UNKNOWNCOMMAND Then
-            Me.ConnectionStatus = True
         End If
     End Sub
 
@@ -408,10 +430,15 @@ Public Class Nut_Socket
                 NutSocket.Close()
             End If
         Catch Excep As Exception
+            LogFile.LogTracing("Error encountered while shutting down socket: " & vbNewLine & Excep.ToString(),
+                               LogLvl.LOG_ERROR, Me)
         End Try
-        Me.ConnectionStatus = False
     End Sub
 
+    ''' <summary>
+    ''' Gracefully disconnect the socket from the NUT server.
+    ''' </summary>
+    ''' <param name="ForceDisconnect">Skip raising the <see cref="Socket_Deconnected"/> event if true.</param>
     Public Sub Disconnect(Optional ByVal ForceDisconnect = False)
         Query_Data("LOGOUT")
         Close_Socket()
