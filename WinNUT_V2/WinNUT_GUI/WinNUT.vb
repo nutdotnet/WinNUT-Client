@@ -10,8 +10,11 @@
 Imports WinNUT_Client_Common
 
 Public Class WinNUT
-    'Logger Class Object
-    Public Shared WithEvents LogFile As New Logger(False, 0)
+#Region "Properties"
+
+#End Region
+    ' Logging
+    Private WithEvents ClientLogger As Logger
 
     'Object for UPS management
     Public WithEvents UPS_Device As UPS_Device
@@ -66,7 +69,7 @@ Public Class WinNUT
     Private Event UpdateBatteryState(ByVal Reason As String)
 
     'Handle sleep/hibernate mode from windows API
-	Declare Function SetSuspendState Lib "PowrProf" (ByVal Hibernate As Integer, ByVal ForceCritical As Integer, ByVal DisableWakeEvent As Integer) As Integer    
+    Declare Function SetSuspendState Lib "PowrProf" (ByVal Hibernate As Integer, ByVal ForceCritical As Integer, ByVal DisableWakeEvent As Integer) As Integer
 
     Public Property UpdateMethod() As String
         Get
@@ -89,13 +92,16 @@ Public Class WinNUT
     End Property
 
     Private Sub WinNUT_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LogFile.WriteLog = True
-        LogFile.LogLevel = 3
+        ' Make sure we have an app directory to write to.
+        ' SetupAppDirectory()
+
+        LogFile = New Logger(False, LogLvl.LOG_DEBUG)
 
         AddHandler Microsoft.Win32.SystemEvents.PowerModeChanged, AddressOf SystemEvents_PowerModeChanged
 
         'Init WinNUT Variables
-        WinNUT_Globals.Init_Globals()
+        Init_Globals()
+        LogFile.LogTracing("Initialisation Globals Variables Complete", LogLvl.LOG_DEBUG, Me)
 
         'Add Main Gui's Strings
         WinNUT_Globals.StrLog.Insert(AppResxStr.STR_MAIN_OLDINI_RENAMED, My.Resources.Frm_Main_Str_01)
@@ -143,16 +149,17 @@ Public Class WinNUT
 
         'Init WinNUT Parameters
         WinNUT_Params.Init_Params()
+        LogFile.LogTracing("Initialisation Params Complete", LogLvl.LOG_DEBUG, Me)
 
         'Load WinNUT Parameters
         WinNUT_Params.Load_Params()
-
-        'Init Log File
-        LogFile.WriteLog = WinNUT_Params.Arr_Reg_Key.Item("UseLogFile")
-        LogFile.LogLevel = WinNUT_Params.Arr_Reg_Key.Item("Log Level")
-        LogFile.LogTracing("Initialisation Globals Variables Complete", LogLvl.LOG_DEBUG, Me)
-        LogFile.LogTracing("Initialisation Params Complete", LogLvl.LOG_DEBUG, Me)
         LogFile.LogTracing("Loaded Params Complete", LogLvl.LOG_DEBUG, Me)
+
+        ' Setup logging preferences
+        LogFile.LogLevel = Arr_Reg_Key.Item("Log Level")
+        LogFile.IsWritingToFile = Arr_Reg_Key.Item("UseLogFile")
+        ClientLogger = LogFile
+        LogFile.LogTracing("Logging is configured.", LogLvl.LOG_DEBUG, Me)
 
         'Init Systray
         Me.NotifyIcon.Text = WinNUT_Globals.LongProgramName & " - " & WinNUT_Globals.ShortProgramVersion
@@ -187,7 +194,7 @@ Public Class WinNUT
 
         'Nut_Socket = New Nut_Comm(Me.Nut_Parameter)
         'UPS_Device = New UPS_Device(Nut_Socket, WinNUT_Params.Arr_Reg_Key.Item("UPSName"), WinNUT.LogFile)
-        UPS_Device = New UPS_Device(Me.Nut_Config, WinNUT.LogFile)
+        UPS_Device = New UPS_Device(Me.Nut_Config, LogFile)
         Nut_Socket = UPS_Device.Nut_Socket
         Me.Polling_Interval = WinNUT_Params.Arr_Reg_Key.Item("Delay")
         With Me.Update_Data
@@ -675,33 +682,33 @@ Public Class WinNUT
             '    End If
 
             Select Case Me.UPS_BattCh
-                    Case 76 To 100
-                        Lbl_VBL.BackColor = Color.White
-                        ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_100
-                        LogFile.LogTracing("Battery Charged", LogLvl.LOG_DEBUG, Me)
-                    Case 51 To 75
-                        Lbl_VBL.BackColor = Color.White
-                        ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_75
-                        LogFile.LogTracing("Battery Charged", LogLvl.LOG_DEBUG, Me)
-                    Case 40 To 50
-                        Lbl_VBL.BackColor = Color.White
-                        ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_50
-                        LogFile.LogTracing("Battery Charged", LogLvl.LOG_DEBUG, Me)
-                    Case 26 To 39
-                        Lbl_VBL.BackColor = Color.Red
-                        ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_50
-                        LogFile.LogTracing("Low Battery", LogLvl.LOG_DEBUG, Me)
-                    Case 11 To 25
-                        Lbl_VBL.BackColor = Color.Red
-                        ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_25
-                        LogFile.LogTracing("Low Battery", LogLvl.LOG_DEBUG, Me)
-                    Case 0 To 10
-                        Lbl_VBL.BackColor = Color.Red
-                        ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_0
-                        LogFile.LogTracing("Low Battery", LogLvl.LOG_DEBUG, Me)
-                End Select
+                Case 76 To 100
+                    Lbl_VBL.BackColor = Color.White
+                    ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_100
+                    LogFile.LogTracing("Battery Charged", LogLvl.LOG_DEBUG, Me)
+                Case 51 To 75
+                    Lbl_VBL.BackColor = Color.White
+                    ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_75
+                    LogFile.LogTracing("Battery Charged", LogLvl.LOG_DEBUG, Me)
+                Case 40 To 50
+                    Lbl_VBL.BackColor = Color.White
+                    ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_50
+                    LogFile.LogTracing("Battery Charged", LogLvl.LOG_DEBUG, Me)
+                Case 26 To 39
+                    Lbl_VBL.BackColor = Color.Red
+                    ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_50
+                    LogFile.LogTracing("Low Battery", LogLvl.LOG_DEBUG, Me)
+                Case 11 To 25
+                    Lbl_VBL.BackColor = Color.Red
+                    ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_25
+                    LogFile.LogTracing("Low Battery", LogLvl.LOG_DEBUG, Me)
+                Case 0 To 10
+                    Lbl_VBL.BackColor = Color.Red
+                    ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_0
+                    LogFile.LogTracing("Low Battery", LogLvl.LOG_DEBUG, Me)
+            End Select
 
-                Dim iSpan As TimeSpan = TimeSpan.FromSeconds(Me.UPS_BattRuntime)
+            Dim iSpan As TimeSpan = TimeSpan.FromSeconds(Me.UPS_BattRuntime)
 
             'Lbl_VRTime.Text = iSpan.Hours.ToString.PadLeft(2, "0"c) & ":" &
             'iSpan.Minutes.ToString.PadLeft(2, "0"c) & ":" &
@@ -1004,7 +1011,7 @@ Public Class WinNUT
         HasFocus = False
     End Sub
 
-    Public Shared Sub Update_InstantLog(ByVal sender As System.Object) Handles LogFile.NewData
+    Public Shared Sub Update_InstantLog(ByVal sender As System.Object) Handles ClientLogger.NewData
         Dim Message As String = LogFile.CurrentLogData
         Static Dim Event_Id = 1
         LogFile.LogTracing("New Log to CB_Current Log : " & Message, LogLvl.LOG_DEBUG, sender.ToString)

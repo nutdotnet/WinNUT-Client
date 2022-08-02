@@ -19,7 +19,7 @@ Public Class About_Gui
         Lbl_Copyright_2019.Text = Strings.Replace(WinNUT_Globals.Copyright, "©", vbNewLine & "©")
         LkLbl_Github.Text = WinNUT_Globals.GitHubURL
         Me.Icon = WinNUT.Icon
-        Me.LogFile = WinNUT.LogFile
+        ' Me.LogFile = WinNUT.LogFile
         LogFile.LogTracing("Load About Gui", LogLvl.LOG_DEBUG, Me)
     End Sub
 

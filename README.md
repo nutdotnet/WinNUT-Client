@@ -20,7 +20,8 @@ It will probably be necessary to allow the WinNUT-Client IP to communicate with 
 *See issue 47 for more information, specifically [this commentary](https://github.com/gawindx/WinNUT-Client/issues/47#issuecomment-759180793).*
 
 ### 
-## Translation
+## Contributing
+### Translation
 WinNUT-Client V2 is natively multilingual, so it is no longer necessary to select your language from the software interface.
 Currently, WinNUT-Client supports:
 - English
@@ -56,6 +57,10 @@ Currently, WinNUT-Client supports:
 	- the language to create / correct
 
 Your translation / correction will be added on a new version and will thus be available to the entire community.
+
+### Code
+#### Development Environment Setup
+This project is built for **.NET Framework 4.7.2**, which is supported up to **Visual Studio 2019**. If you want to compile an installer, you will need the [Microsoft Visual Studio Installer Projects](https://marketplace.visualstudio.com/items?itemName=visualstudioclient.MicrosoftVisualStudio2017InstallerProjects) extension installed.
 
 ## Update WinNUT-Client
 

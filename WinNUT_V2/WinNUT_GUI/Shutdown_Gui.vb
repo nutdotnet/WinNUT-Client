@@ -34,7 +34,7 @@ Public Class Shutdown_Gui
 
     Private Sub Shutdown_Gui_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Icon = WinNUT.Icon
-        Me.LogFile = WinNUT.LogFile
+        ' Me.LogFile = WinNUT.LogFile
         LogFile.LogTracing("Load ShutDown Gui", LogLvl.LOG_DEBUG, Me)
         Me.Grace_Timer.Enabled = False
         Me.Grace_Timer.Stop()
