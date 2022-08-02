@@ -306,7 +306,7 @@ Public Class WinNUT
                 End If
             Case Microsoft.Win32.PowerModes.Suspend
                 LogFile.LogTracing("Windows standby, WinNUT will disconnect", LogLvl.LOG_NOTICE, Me, WinNUT_Globals.StrLog.Item(AppResxStr.STR_MAIN_GOTOSLEEP))
-                'UPS_Device.Disconnect()
+                UPSDisconnect()
         End Select
     End Sub
 
@@ -326,6 +326,20 @@ Public Class WinNUT
             Me.Device_Data = UPS_Device.Retrieve_UPS_Datas()
             RaiseEvent Data_Updated()
         End If
+    End Sub
+
+    ''' <summary>
+    ''' Prepare application for and handle disconnecting from the UPS.
+    ''' </summary>
+    Private Sub UPSDisconnect()
+        Update_Data.Stop()
+        Nut_Socket.Disconnect(True)
+        ReInitDisplayValues()
+        ActualAppIconIdx = AppIconIdx.IDX_ICO_OFFLINE
+        LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
+        UpdateIcon_NotifyIcon()
+        RaiseEvent UpdateNotifyIconStr("Deconnected", Nothing)
+        RaiseEvent UpdateBatteryState("Deconnected")
     End Sub
 
     Private Sub Retrieve_UPS_Datas(sender As Object, e As EventArgs)
@@ -368,9 +382,9 @@ Public Class WinNUT
             e.Cancel = True
         Else
             LogFile.LogTracing("Init Disconnecting Before Close WinNut", LogLvl.LOG_DEBUG, Me)
-            Nut_Socket.Disconnect(True)
-            LogFile.LogTracing("WinNut Is now Closed", LogLvl.LOG_DEBUG, Me)
             RemoveHandler Microsoft.Win32.SystemEvents.PowerModeChanged, AddressOf SystemEvents_PowerModeChanged
+            UPSDisconnect()
+            LogFile.LogTracing("WinNut Is now Closed", LogLvl.LOG_DEBUG, Me)
             End
         End If
     End Sub
@@ -718,14 +732,7 @@ Public Class WinNUT
 
     Private Sub Menu_Disconnect_Click(sender As Object, e As EventArgs) Handles Menu_Disconnect.Click
         LogFile.LogTracing("Force Disconnect from menu", LogLvl.LOG_DEBUG, Me)
-        Update_Data.Stop()
-        Nut_Socket.Disconnect(True)
-        ReInitDisplayValues()
-        ActualAppIconIdx = AppIconIdx.IDX_ICO_OFFLINE
-        LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
-        UpdateIcon_NotifyIcon()
-        RaiseEvent UpdateNotifyIconStr("Deconnected", Nothing)
-        RaiseEvent UpdateBatteryState("Deconnected")
+        UPSDisconnect()
     End Sub
 
     Private Sub ReInitDisplayValues()
@@ -1014,6 +1021,7 @@ Public Class WinNUT
 
     Private Sub Shutdown_Event() Handles UPS_Device.Shutdown_Condition
         If WinNUT_Params.Arr_Reg_Key.Item("ImmediateStopAction") Then
+            UPSDisconnect()
             Shutdown_Action()
         Else
             LogFile.LogTracing("Open Shutdown Gui", LogLvl.LOG_DEBUG, Me)
