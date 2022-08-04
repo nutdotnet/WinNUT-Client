@@ -18,8 +18,9 @@ Public Class WinNUT
 
     'Object for UPS management
     Public WithEvents UPS_Device As UPS_Device
-    Public Nut_Socket As Nut_Socket
-    Public Nut_Config As New Nut_Parameter
+    ' Public Nut_Socket As Nut_Socket
+    ' Public Nut_Config As New Nut_Parameter
+    ' ^--- Shall be referenced from inside UPS_Device object
     Public Device_Data As UPS_Datas
     Private Polling_Interval As Integer
     Private Update_Data As New System.Windows.Forms.Timer
@@ -281,7 +282,6 @@ Public Class WinNUT
             HasFocus = False
         End If
         'ToastPopup.CreateToastCollection()
-        ' UPS_Connect()
         ' RaiseEvent RequestConnect()
     End Sub
 
@@ -300,41 +300,37 @@ Public Class WinNUT
     End Sub
 
     Private Sub UPS_Connect()
-        ' LogFile.LogTracing("Beginning UPS_Connect to: " & Nut_Config.ToString(), LogLvl.LOG_NOTICE, Me)
-        LogFile.LogTracing("Client UPS_Connect subrouting beginning.", LogLvl.LOG_NOTICE, Me)
+        Dim Nut_Config As Nut_Parameter
+        ' LogFile.LogTracing("Client UPS_Connect subroutine beginning.", LogLvl.LOG_NOTICE, Me)
 
-        With Nut_Config
-            .Host = Arr_Reg_Key.Item("ServerAddress")
-            .Port = Arr_Reg_Key.Item("Port")
-            .Login = Arr_Reg_Key.Item("NutLogin")
-            .Password = Arr_Reg_Key.Item("NutPassword")
-            .UPSName = Arr_Reg_Key.Item("UPSName")
-            .AutoReconnect = Arr_Reg_Key.Item("AutoReconnect")
-        End With
+        Nut_Config = New Nut_Parameter(Arr_Reg_Key.Item("ServerAddress"),
+                                       Arr_Reg_Key.Item("Port"),
+                                       Arr_Reg_Key.Item("NutLogin"),
+                                       Arr_Reg_Key.Item("NutPassword"),
+                                       Arr_Reg_Key.Item("UPSName"),
+                                       Arr_Reg_Key.Item("AutoReconnect"))
 
+        UPS_Device = New UPS_Device(Nut_Config, LogFile)
+        UPS_Device.Connect_UPS()
+
+        ' Setup and begin polling data from UPS.
         Polling_Interval = Arr_Reg_Key.Item("Delay")
-        With Me.Update_Data
-            .Interval = Me.Polling_Interval
+        With Update_Data
+            .Interval = Polling_Interval
             .Enabled = True
         End With
 
-        'Nut_Socket = New Nut_Comm(Me.Nut_Parameter)
-        'UPS_Device = New UPS_Device(Nut_Socket, WinNUT_Params.Arr_Reg_Key.Item("UPSName"), WinNUT.LogFile)
-        UPS_Device = New UPS_Device(Nut_Config, LogFile)
-        Nut_Socket = UPS_Device.Nut_Socket
-
-        ' LogFile.LogTracing("Connect To Nut Server", LogLvl.LOG_DEBUG, Me)
-        UPS_Device.Connect_UPS()
-        Dim Host = Me.Nut_Config.Host
-        Dim Port = Me.Nut_Config.Port
-        Dim Login = Me.Nut_Config.Login
-        Dim Password = Me.Nut_Config.Password
         If Not (Me.UPS_Device.IsConnected And UPS_Device.IsAuthenticated) Then
-            LogFile.LogTracing("Error When Connection to Nut Host.", LogLvl.LOG_ERROR, Me, String.Format(WinNUT_Globals.StrLog.Item(AppResxStr.STR_LOG_CON_FAILED), Host, Port, "Connection Error"))
+            LogFile.LogTracing(String.Format("Something went wrong connecting to UPS {0}. IsConnected: {1}, IsAuthenticated: {2}",
+                               Nut_Config.UPSName, UPS_Device.IsConnected, UPS_Device.IsAuthenticated), LogLvl.LOG_ERROR, Me,
+                               String.Format(WinNUT_Globals.StrLog.Item(AppResxStr.STR_LOG_CON_FAILED), Nut_Config.Host, Nut_Config.Port, "Connection Error"))
         Else
-            LogFile.LogTracing("Connection to Nut Host Established", LogLvl.LOG_NOTICE, Me, String.Format(WinNUT_Globals.StrLog.Item(AppResxStr.STR_LOG_CONNECTED), Host, Port))
+            LogFile.LogTracing("Connection to Nut Host Established", LogLvl.LOG_NOTICE, Me,
+                               String.Format(WinNUT_Globals.StrLog.Item(AppResxStr.STR_LOG_CONNECTED),
+                                             Nut_Config.Host, Nut_Config.Port))
             Update_Data.Start()
             AddHandler Update_Data.Tick, AddressOf Retrieve_UPS_Datas
+            AddHandler UPS_Device.Lost_Connect, AddressOf UPS_Lostconnect
             Me.Device_Data = UPS_Device.Retrieve_UPS_Datas()
             RaiseEvent Data_Updated()
         End If
@@ -345,11 +341,16 @@ Public Class WinNUT
     ''' </summary>
     Private Sub UPSDisconnect()
         LogFile.LogTracing("Running Client disconnect subroutine.", LogLvl.LOG_NOTICE, Me)
-        Update_Data.Stop()
 
-        If Nut_Socket IsNot Nothing Then
-            Nut_Socket.Disconnect(True)
+        Update_Data.Stop()
+        RemoveHandler Update_Data.Tick, AddressOf Retrieve_UPS_Datas
+        If UPS_Device IsNot Nothing Then
+            RemoveHandler UPS_Device.Lost_Connect, AddressOf UPS_Lostconnect
         End If
+
+        'If UPS_Device.Nut_Socket IsNot Nothing Then
+        '    UPS_Device.Nut_Socket.Disconnect(True)
+        'End If
 
         ReInitDisplayValues()
         ActualAppIconIdx = AppIconIdx.IDX_ICO_OFFLINE
@@ -358,7 +359,7 @@ Public Class WinNUT
         RaiseEvent UpdateNotifyIconStr("Deconnected", Nothing)
         RaiseEvent UpdateBatteryState("Deconnected")
 
-        Nut_Socket = Nothing
+        ' Nut_Socket = Nothing
         ' UPS_Device.Dispose() Dispose in the future...
     End Sub
 
@@ -387,8 +388,14 @@ Public Class WinNUT
             Me.Menu_Update.Visible = False
             Me.Menu_Update.Visible = Enabled = False
         End If
-        LogFile.LogTracing("Init Connexion to NutServer", LogLvl.LOG_DEBUG, Me)
 
+        ' Begin auto-connecting if user indicated they wanted it. (Note: Will hang form because we don't do threading yet)
+        If Arr_Reg_Key.Item("AutoReconnect") Then
+            LogFile.LogTracing("Auto-connecting to UPS on startup.", LogLvl.LOG_NOTICE, Me)
+            UPS_Connect()
+        End If
+
+        LogFile.LogTracing("Completed WinNUT_Shown", LogLvl.LOG_DEBUG, Me)
     End Sub
 
     Private Sub WinNUT_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
@@ -509,8 +516,8 @@ Public Class WinNUT
                 NotifyStr &= WinNUT_Globals.StrLog.Item(AppResxStr.STR_MAIN_UNKNOWN_UPS)
                 FormText &= " - " & WinNUT_Globals.StrLog.Item(AppResxStr.STR_MAIN_UNKNOWN_UPS)
             Case "Lost Connect"
-                NotifyStr &= String.Format(WinNUT_Globals.StrLog.Item(AppResxStr.STR_MAIN_LOSTCONNECT), Me.Nut_Config.Host, Me.Nut_Config.Port)
-                FormText &= " - " & String.Format(WinNUT_Globals.StrLog.Item(AppResxStr.STR_MAIN_LOSTCONNECT), Me.Nut_Config.Host, Me.Nut_Config.Port)
+                NotifyStr &= String.Format(StrLog.Item(AppResxStr.STR_MAIN_LOSTCONNECT), UPS_Device.Nut_Config.Host, UPS_Device.Nut_Config.Port)
+                FormText &= " - " & String.Format(StrLog.Item(AppResxStr.STR_MAIN_LOSTCONNECT), UPS_Device.Nut_Config.Host, UPS_Device.Nut_Config.Port)
             Case "Update Data"
                 FormText &= " - Bat: " & Me.UPS_BattCh & "% - " & WinNUT_Globals.StrLog.Item(AppResxStr.STR_MAIN_CONN) & " - "
                 NotifyStr &= WinNUT_Globals.StrLog.Item(AppResxStr.STR_MAIN_CONN) & vbNewLine
@@ -595,15 +602,15 @@ Public Class WinNUT
     End Sub
 
     Private Sub UPS_Lostconnect() Handles UPS_Device.Lost_Connect
-        Dim Host = Nut_Config.Host
-        Dim Port = Nut_Config.Port
+        Dim Host = UPS_Device.Nut_Config.Host
+        Dim Port = UPS_Device.Nut_Config.Port
         Update_Data.Stop()
         LogFile.LogTracing("Nut Server Lost Connection", LogLvl.LOG_ERROR, Me, String.Format(WinNUT_Globals.StrLog.Item(AppResxStr.STR_MAIN_LOSTCONNECT), Host, Port))
         LogFile.LogTracing("Fix All data to null/empty String", LogLvl.LOG_DEBUG, Me)
         LogFile.LogTracing("Fix All Dial Data to Min Value/0", LogLvl.LOG_DEBUG, Me)
 
         ReInitDisplayValues()
-        If AutoReconnect And UPS_Retry <= UPS_MaxRetry Then
+        If UPS_Device.Nut_Config.AutoReconnect And UPS_Retry <= UPS_MaxRetry Then
             ActualAppIconIdx = AppIconIdx.IDX_ICO_RETRY
         Else
             ActualAppIconIdx = AppIconIdx.IDX_ICO_OFFLINE

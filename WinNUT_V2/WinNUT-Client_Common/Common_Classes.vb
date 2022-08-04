@@ -52,6 +52,16 @@ Public Class Nut_Parameter
     Public UPSName As String = ""
     Public AutoReconnect As Boolean = False
 
+    Public Sub New(Host As String, Port As Integer, Login As String, Password As String, UPSName As String,
+                   Optional AutoReconnect As Boolean = False)
+        Me.Host = Host
+        Me.Port = Port
+        Me.Login = Login
+        Me.Password = Password
+        Me.UPSName = UPSName
+        Me.AutoReconnect = AutoReconnect
+    End Sub
+
     ''' <summary>
     ''' Generate an informative String representing this Parameter object. Note password is not printed.
     ''' </summary>

@@ -12,7 +12,7 @@ Public Class UPS_Device
     'Private Nut_Conn As Nut_Comm
     ' Private LogFile As Logger
     Private Freq_Fallback As Double
-    Private ciClone As System.Globalization.CultureInfo
+    Private ciClone As CultureInfo
     Private Const CosPhi As Double = 0.6
 
     Public Nut_Config As Nut_Parameter
@@ -23,8 +23,10 @@ Public Class UPS_Device
     Public Retry As Integer = 0
     Public MaxRetry As Integer = 30
     Private ReadOnly Reconnect_Nut As New System.Windows.Forms.Timer
+
     Private ReadOnly WatchDog As New System.Windows.Forms.Timer
-    Private Socket_Status As Boolean = False
+
+    Private keepConnection As Boolean = False
 
 
     Private LogFile As Logger
@@ -84,7 +86,7 @@ Public Class UPS_Device
 
     Public ReadOnly Property IsConnected() As Boolean
         Get
-            Return (Me.Nut_Socket.IsConnected And Me.Socket_Status)
+            Return (Me.Nut_Socket.IsConnected) ' And Me.keepConnection
         End Get
     End Property
 
@@ -101,7 +103,7 @@ Public Class UPS_Device
                 LogFile.LogTracing("WatchDog Socket report a Broken State", LogLvl.LOG_WARNING, Me)
                 Nut_Socket.Disconnect(True)
                 RaiseEvent Lost_Connect()
-                Me.Socket_Status = False
+                keepConnection = False
             End If
         End If
     End Sub
@@ -122,7 +124,7 @@ Public Class UPS_Device
             .Enabled = False
             AddHandler .Tick, AddressOf Event_WatchDog
         End With
-        AddHandler Nut_Socket.Socket_Deconnected, AddressOf Socket_Deconnected
+        AddHandler Nut_Socket.SocketDisconnected, AddressOf Socket_Deconnected
         ' Connect_UPS()
     End Sub
 
@@ -131,8 +133,8 @@ Public Class UPS_Device
         LogFile.LogTracing("Beginning connection: " & Nut_Config.ToString(), LogLvl.LOG_DEBUG, Me)
 
         If Me.Nut_Socket.Connect() And Me.Nut_Socket.IsConnected Then
-            LogFile.LogTracing("TCP Socket Created", LogLvl.LOG_NOTICE, Me)
-            Me.Socket_Status = True
+            ' LogFile.LogTracing("TCP Socket Created", LogLvl.LOG_NOTICE, Me)
+            keepConnection = True
             If Nut_Socket.IsKnownUPS(Nut_Config.UPSName) Then
                 Me.UPS_Datas = GetUPSProductInfo()
                 Init_Constant(Nut_Socket)
@@ -141,11 +143,11 @@ Public Class UPS_Device
                 LogFile.LogTracing("Given UPS Name is unknown", LogLvl.LOG_NOTICE, Me)
                 RaiseEvent Unknown_UPS()
             End If
-            Me.WatchDog.Start()
+            WatchDog.Start()
             'Else
             '    If Not Reconnect_Nut.Enabled Then
             '        RaiseEvent Lost_Connect()
-            '        Me.Socket_Status = False
+            '        Me.keepConnection = False
             '    End If
         End If
     End Sub
@@ -155,6 +157,10 @@ Public Class UPS_Device
     '        Nut_Socket.Connect()
     '    End If
     'End Sub
+
+    Public Sub Disconnect()
+
+    End Sub
 
     Private Function GetUPSProductInfo() As UPS_Datas
         Dim UDatas As New UPS_Datas
@@ -377,13 +383,13 @@ Public Class UPS_Device
         Return StringArray(StringArray.Length - 1)
     End Function
 
-    Private Sub Socket_Deconnected()
+    Private Sub Socket_Deconnected() Handles Nut_Socket.SocketDisconnected
         WatchDog.Stop()
-        LogFile.LogTracing("TCP Socket Deconnected", LogLvl.LOG_WARNING, Me)
-        If Not Me.Socket_Status Then
+        LogFile.LogTracing("TCP Socket Deconnected", LogLvl.LOG_NOTICE, Me)
+        If Not IsConnected And keepConnection Then
             RaiseEvent Lost_Connect()
         End If
-        Me.Socket_Status = False
+        ' Me.keepConnection = False
         If Me.Nut_Config.AutoReconnect Then
             LogFile.LogTracing("Reconnection Process Started", LogLvl.LOG_NOTICE, Me)
             Reconnect_Nut.Enabled = True
@@ -395,6 +401,7 @@ Public Class UPS_Device
         LogFile.LogTracing("TCP Socket seems Broken", LogLvl.LOG_WARNING, Me)
         Socket_Deconnected()
     End Sub
+
     Private Sub Reconnect_Socket(sender As Object, e As EventArgs)
         Me.Retry += 1
         If Me.Retry <= Me.MaxRetry Then
