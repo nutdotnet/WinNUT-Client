@@ -8,26 +8,38 @@
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
 Imports System.Globalization
+Imports System.Windows.Forms
+
 Public Class UPS_Device
+    Private Const CosPhi As Double = 0.6
+    ' How many milliseconds to wait before the Reconnect routine tries again.
+#If DEBUG Then
+    Private Const DEFAULT_RECONNECT_WAIT_MS As Double = 3000
+#Else
+    Private Const DEFAULT_RECONNECT_WAIT_MS As Double = 30000
+#End If
+
+
     'Private Nut_Conn As Nut_Comm
     ' Private LogFile As Logger
     Private Freq_Fallback As Double
-    Private ciClone As System.Globalization.CultureInfo
-    Private Const CosPhi As Double = 0.6
+    Private ciClone As CultureInfo
 
-    Private Nut_Config As Nut_Parameter
+    Public Nut_Config As Nut_Parameter
 
     Public UPS_Datas As New UPS_Datas
     Public WithEvents Nut_Socket As Nut_Socket
 
     Public Retry As Integer = 0
     Public MaxRetry As Integer = 30
-    Private ReadOnly Reconnect_Nut As New System.Windows.Forms.Timer
-    Private ReadOnly WatchDog As New System.Windows.Forms.Timer
-    Private Socket_Status As Boolean = False
+    Private WithEvents Reconnect_Nut As New System.Windows.Forms.Timer
+    ' Private ReadOnly WatchDog As New System.Windows.Forms.Timer
+    ' Private Socket_Status As Boolean = False
 
 
-    'Private LogFile As Logger
+
+
+    Private LogFile As Logger
     'Private ConnectionStatus As Boolean = False
     'Private Server As String
     'Private Port As Integer
@@ -74,17 +86,22 @@ Public Class UPS_Device
 
     Public Event Unknown_UPS()
     Public Event DataUpdated()
-    Public Event Connected()
-    Public Event ReConnected()
-    Public Event Deconnected()
+    Public Event Connected(sender As UPS_Device)
+    Public Event ReConnected(sender As UPS_Device)
+    ' Notify that the connection was closed gracefully.
+    Public Event Disconnected()
+    ' Notify of an unexpectedly lost connection (??)
     Public Event Lost_Connect()
     Public Event New_Retry()
     Public Event Shutdown_Condition()
     Public Event Stop_Shutdown()
 
+    Private Polling_Interval As Integer
+    Private WithEvents Update_Data As New Timer
+
     Public ReadOnly Property IsConnected() As Boolean
         Get
-            Return (Me.Nut_Socket.IsConnected And Me.Socket_Status)
+            Return (Me.Nut_Socket.IsConnected) ' And Me.Socket_Status
         End Get
     End Property
 
@@ -94,51 +111,43 @@ Public Class UPS_Device
         End Get
     End Property
 
-    Private Sub Event_WatchDog(sender As Object, e As EventArgs)
-        If Me.IsConnected Then
-            Dim Nut_Query = Nut_Socket.Query_Data("")
-            If Nut_Query.Response = NUTResponse.NORESPONSE Then
-                LogFile.LogTracing("WatchDog Socket report a Broken State", LogLvl.LOG_WARNING, Me)
-                Nut_Socket.Disconnect(True)
-                RaiseEvent Lost_Connect()
-                Me.Socket_Status = False
-            End If
-        End If
+    Public Sub New(ByRef Nut_Config As Nut_Parameter, ByRef LogFile As Logger, pollInterval As Integer)
+        Me.LogFile = LogFile
+        Me.Nut_Config = Nut_Config
+        ' Polling_Interval = pollInterval
+        Update_Data.Interval = pollInterval
+        ciClone = CType(CultureInfo.InvariantCulture.Clone(), CultureInfo)
+        ciClone.NumberFormat.NumberDecimalSeparator = "."
+        Nut_Socket = New Nut_Socket(Me.Nut_Config, LogFile)
+        With Reconnect_Nut
+            .Interval = DEFAULT_RECONNECT_WAIT_MS
+            .Enabled = False
+            ' AddHandler .Tick, AddressOf Reconnect_Socket
+        End With
+        'With WatchDog
+        '    .Interval = 1000
+        '    .Enabled = False
+        '    AddHandler .Tick, AddressOf Event_WatchDog
+        'End With
     End Sub
 
-    Public Sub New(ByVal Nut_Config As Nut_Parameter, ByRef LogFile As Logger)
-        ' Me.LogFile = LogFile
-        Me.Nut_Config = Nut_Config
-        Me.ciClone = CType(CultureInfo.InvariantCulture.Clone(), CultureInfo)
-        Me.ciClone.NumberFormat.NumberDecimalSeparator = "."
-        Me.Nut_Socket = New Nut_Socket(Me.Nut_Config)
-        With Me.Reconnect_Nut
-            .Interval = 30000
-            .Enabled = False
-            AddHandler .Tick, AddressOf Reconnect_Socket
-        End With
-        With Me.WatchDog
-            .Interval = 1000
-            .Enabled = False
-            AddHandler .Tick, AddressOf Event_WatchDog
-        End With
-        AddHandler Nut_Socket.Socket_Deconnected, AddressOf Socket_Deconnected
-        Connect_UPS()
-    End Sub
     Public Sub Connect_UPS()
-        Dim UPSName = Me.Nut_Config.UPSName
+        ' Dim UPSName = Me.Nut_Config.UPSName
+        LogFile.LogTracing("Beginning connection: " & Nut_Config.ToString(), LogLvl.LOG_DEBUG, Me)
+
         If Me.Nut_Socket.Connect() And Me.Nut_Socket.IsConnected Then
             LogFile.LogTracing("TCP Socket Created", LogLvl.LOG_NOTICE, Me)
-            Me.Socket_Status = True
-            If Nut_Socket.IsKnownUPS(UPSName) Then
+            ' Me.Socket_Status = True
+            If Nut_Socket.IsKnownUPS(Nut_Config.UPSName) Then
                 Me.UPS_Datas = GetUPSProductInfo()
                 Init_Constant(Nut_Socket)
-                RaiseEvent Connected()
+                Update_Data.Start()
+                RaiseEvent Connected(Me)
             Else
                 LogFile.LogTracing("Given UPS Name is unknown", LogLvl.LOG_NOTICE, Me)
                 RaiseEvent Unknown_UPS()
             End If
-            Me.WatchDog.Start()
+            ' WatchDog.Start()
             'Else
             '    If Not Reconnect_Nut.Enabled Then
             '        RaiseEvent Lost_Connect()
@@ -146,11 +155,120 @@ Public Class UPS_Device
             '    End If
         End If
     End Sub
-    Public Sub ReConnect()
-        If Not Me.IsConnected Then
-            Nut_Socket.Connect()
+
+    'Private Sub HandleDisconnectRequest(sender As Object, Optional cancelAutoReconnect As Boolean = True) Handles Me.RequestDisconnect
+    '    If disconnectInProgress Then
+    '        Throw New InvalidOperationException("Disconnection already in progress.")
+    '    End If
+
+    '    ' WatchDog.Stop()
+
+    '    If cancelAutoReconnect And Reconnect_Nut.Enabled = True Then
+    '        Debug.WriteLine("Cancelling ")
+    '    End If
+    'End Sub
+
+    Public Sub Disconnect(Optional cancelReconnect As Boolean = True, Optional silent As Boolean = False, Optional forceful As Boolean = False)
+        LogFile.LogTracing("Processing request to disconnect...", LogLvl.LOG_DEBUG, Me)
+        ' WatchDog.Stop()
+        Update_Data.Stop()
+        If cancelReconnect And Reconnect_Nut.Enabled Then
+            LogFile.LogTracing("Stopping Reconnect timer.", LogLvl.LOG_DEBUG, Me)
+            Reconnect_Nut.Stop()
+        End If
+
+        Retry = 0
+        Nut_Socket.Disconnect(silent, forceful)
+        ' Confirmation of disconnection will come from raised Disconnected event.
+
+        'LogFile.LogTracing("Completed disconnecting UPS, notifying listeners.", LogLvl.LOG_DEBUG, Me)
+        'RaiseEvent Disconnected()
+    End Sub
+
+#Region "Socket Interaction"
+
+    Private Sub SocketDisconnected() Handles Nut_Socket.SocketDisconnected
+        ' WatchDog.Stop()
+        LogFile.LogTracing("NutSocket raised Disconnected event.", LogLvl.LOG_DEBUG, Me)
+        'If Not Me.Socket_Status Then
+        '    RaiseEvent Lost_Connect()
+        'End If
+        ' Me.Socket_Status = False
+        'If Me.Nut_Config.AutoReconnect Then
+        '    LogFile.LogTracing("Reconnection Process Started", LogLvl.LOG_NOTICE, Me)
+        '    Reconnect_Nut.Enabled = True
+        '    Reconnect_Nut.Start()
+        'End If
+        RaiseEvent Disconnected()
+    End Sub
+
+    ''' <summary>
+    ''' Check underlying connection for an error state by sending an empty query to the server.
+    ''' A watchdog may not actually be necessary under normal circumstances, since queries are regularly being sent to
+    ''' the NUT server and will catch a broken socket that way.
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub Event_WatchDog(sender As Object, e As EventArgs)
+        If Me.IsConnected Then
+            Dim Nut_Query = Nut_Socket.Query_Data("")
+            If Nut_Query.Response = NUTResponse.NORESPONSE Then
+                LogFile.LogTracing("WatchDog Socket report a Broken State", LogLvl.LOG_WARNING, Me)
+                Nut_Socket.Disconnect(True)
+                RaiseEvent Lost_Connect()
+                ' Me.Socket_Status = False
+            End If
         End If
     End Sub
+
+    Private Sub Socket_Broken() Handles Nut_Socket.Socket_Broken
+        ' LogFile.LogTracing("TCP Socket seems Broken", LogLvl.LOG_WARNING, Me)
+        LogFile.LogTracing("Socket has reported a Broken event.", LogLvl.LOG_WARNING, Me)
+        ' SocketDisconnected()
+        RaiseEvent Lost_Connect()
+
+        If Nut_Config.AutoReconnect Then
+            LogFile.LogTracing("Reconnection Process Started", LogLvl.LOG_NOTICE, Me)
+            Reconnect_Nut.Start()
+        End If
+    End Sub
+
+    Private Sub Reconnect_Socket(sender As Object, e As EventArgs) Handles Reconnect_Nut.Tick
+        Me.Retry += 1
+        If Me.Retry <= Me.MaxRetry Then
+            RaiseEvent New_Retry()
+            LogFile.LogTracing(String.Format("Try Reconnect {0} / {1}", Me.Retry, Me.MaxRetry), LogLvl.LOG_NOTICE, Me, String.Format(WinNUT_Globals.StrLog.Item(AppResxStr.STR_LOG_NEW_RETRY), Me.Retry, Me.MaxRetry))
+            Me.Connect_UPS()
+            If Me.IsConnected Then
+                LogFile.LogTracing("Nut Host Reconnected", LogLvl.LOG_DEBUG, Me)
+                Reconnect_Nut.Stop()
+                Me.Retry = 0
+                RaiseEvent ReConnected(Me)
+            End If
+        Else
+            LogFile.LogTracing("Max Retry reached. Stop Process Autoreconnect and wait for manual Reconnection", LogLvl.LOG_ERROR, Me, WinNUT_Globals.StrLog.Item(AppResxStr.STR_LOG_STOP_RETRY))
+            'Reconnect_Nut.Stop()
+            'RaiseEvent Disconnected()
+            Disconnect(True)
+        End If
+    End Sub
+
+    Private Sub NUTSocketError(nutEx As Nut_Exception, NoticeLvl As LogLvl, sender As Object) Handles Nut_Socket.OnNUTException
+        If nutEx.ExceptionValue = Nut_Exception_Value.SOCKET_BROKEN AndAlso nutEx.InnerException IsNot Nothing Then
+            LogFile.LogTracing("Socket_Broken event InnerException: " & nutEx.InnerException.ToString(), LogLvl.LOG_DEBUG, Me)
+        End If
+
+        LogFile.LogTracing("[" & Nut_Config.UPSName & "] " & nutEx.ToString(), LogLvl.LOG_WARNING, Nut_Socket)
+    End Sub
+
+#End Region
+
+    'Public Sub ReConnect()
+    '    If Not Me.IsConnected Then
+    '        Nut_Socket.Connect()
+    '    End If
+    'End Sub
+
     Private Function GetUPSProductInfo() As UPS_Datas
         Dim UDatas As New UPS_Datas
         Dim UPSName = Me.Nut_Config.UPSName
@@ -166,13 +284,14 @@ Public Class UPS_Device
         Me.UPS_Datas.UPS_Value.Batt_Capacity = Double.Parse(Me.GetUPSVar("battery.capacity", UPSName, 7), ciClone)
         Me.Freq_Fallback = Double.Parse(Me.GetUPSVar("output.frequency.nominal", UPSName, (50 + CInt(WinNUT_Params.Arr_Reg_Key.Item("FrequencySupply")) * 10)), Me.ciClone)
     End Sub
-    Public Function Retrieve_UPS_Datas() As UPS_Datas
+
+    Public Sub Retrieve_UPS_Datas() Handles Update_Data.Tick ' As UPS_Datas
         Dim UPSName = Me.Nut_Config.UPSName
         LogFile.LogTracing("Enter Retrieve_UPS_Datas", LogLvl.LOG_DEBUG, Me)
         Try
             Dim UPS_rt_Status As String
             Dim InputA As Double
-            LogFile.LogTracing("Enter Retrieve_UPS_Data", LogLvl.LOG_DEBUG, Me)
+            ' LogFile.LogTracing("Enter Retrieve_UPS_Data", LogLvl.LOG_DEBUG, Me)
             If Me.IsConnected Then
                 With Me.UPS_Datas
                     Select Case "Unknown"
@@ -288,55 +407,59 @@ Public Class UPS_Device
                 RaiseEvent DataUpdated()
             End If
         Catch Excep As Exception
+            ' Something went wrong while trying to read the data... Consider the socket broken and proceed from here.
+            LogFile.LogTracing("Something went wrong in Retrieve_UPS_Datas: " & Excep.ToString(), LogLvl.LOG_ERROR, Me)
+            Disconnect(False, True, True)
+            Socket_Broken()
             'Me.Disconnect(True)
             'Enter_Reconnect_Process(Excep, "Error When Retrieve_UPS_Data : ")
         End Try
-        Return Me.UPS_Datas
-    End Function
+        ' Return Me.UPS_Datas
+    End Sub
 
     Public Function GetUPSVar(ByVal varName As String, ByVal UPSName As String, Optional ByVal Fallback_value As Object = Nothing) As String
-        Try
-            LogFile.LogTracing("Enter GetUPSVar", LogLvl.LOG_DEBUG, Me)
-            'If Not Me.ConnectionStatus Then
-            If Not Me.IsConnected Then
-                Throw New Nut_Exception(Nut_Exception_Value.SOCKET_BROKEN, varName)
-                Return Nothing
-            Else
-                Dim Nut_Query = Me.Nut_Socket.Query_Data("GET VAR " & UPSName & " " & varName)
-
-                Select Case Nut_Query.Response
-                    Case NUTResponse.OK
-                        LogFile.LogTracing("Process Result With " & varName & " : " & Nut_Query.Data, LogLvl.LOG_DEBUG, Me)
-                        Return ExtractData(Nut_Query.Data)
-                    Case NUTResponse.UNKNOWNUPS
-                        'Me.Invalid_Data = False
-                        'Me.Unknown_UPS_Name = True
-                        RaiseEvent Unknown_UPS()
-                        Throw New Nut_Exception(Nut_Exception_Value.UNKNOWN_UPS)
-                    Case NUTResponse.VARNOTSUPPORTED
-                        'Me.Unknown_UPS_Name = False
-                        'Me.Invalid_Data = False
-                        If Not String.IsNullOrEmpty(Fallback_value) Then
-                            LogFile.LogTracing("Apply Fallback Value when retrieving " & varName, LogLvl.LOG_WARNING, Me)
-                            Dim FakeData = "VAR " & UPSName & " " & varName & " " & """" & Fallback_value & """"
-                            Return ExtractData(FakeData)
-                        Else
-                            LogFile.LogTracing("Error Result On Retrieving  " & varName & " : " & Nut_Query.Data, LogLvl.LOG_ERROR, Me)
-                            Return Nothing
-                        End If
-                    Case NUTResponse.DATASTALE
-                        'Me.Invalid_Data = True
-                        LogFile.LogTracing("Error Result On Retrieving  " & varName & " : " & Nut_Query.Data, LogLvl.LOG_ERROR, Me)
-                        Throw New System.Exception(varName & " : " & Nut_Query.Data)
-                        Return Nothing
-                    Case Else
-                        Return Nothing
-                End Select
-            End If
-        Catch Excep As Exception
-            'RaiseEvent OnError(Excep, LogLvl.LOG_ERROR, Me)
+        ' Try
+        ' LogFile.LogTracing("Enter GetUPSVar", LogLvl.LOG_DEBUG, Me)
+        'If Not Me.ConnectionStatus Then
+        If Not Me.IsConnected Then
+            Throw New Nut_Exception(Nut_Exception_Value.SOCKET_BROKEN, varName)
             Return Nothing
-        End Try
+        Else
+            Dim Nut_Query = Me.Nut_Socket.Query_Data("GET VAR " & UPSName & " " & varName)
+
+            Select Case Nut_Query.Response
+                Case NUTResponse.OK
+                    ' LogFile.LogTracing("Process Result With " & varName & " : " & Nut_Query.Data, LogLvl.LOG_DEBUG, Me)
+                    Return ExtractData(Nut_Query.Data)
+                Case NUTResponse.UNKNOWNUPS
+                    'Me.Invalid_Data = False
+                    'Me.Unknown_UPS_Name = True
+                    RaiseEvent Unknown_UPS()
+                    Throw New Nut_Exception(Nut_Exception_Value.UNKNOWN_UPS)
+                Case NUTResponse.VARNOTSUPPORTED
+                    'Me.Unknown_UPS_Name = False
+                    'Me.Invalid_Data = False
+                    If Not String.IsNullOrEmpty(Fallback_value) Then
+                        LogFile.LogTracing("Apply Fallback Value when retrieving " & varName, LogLvl.LOG_WARNING, Me)
+                        Dim FakeData = "VAR " & UPSName & " " & varName & " " & """" & Fallback_value & """"
+                        Return ExtractData(FakeData)
+                    Else
+                        LogFile.LogTracing("Error Result On Retrieving  " & varName & " : " & Nut_Query.Data, LogLvl.LOG_ERROR, Me)
+                        Return Nothing
+                    End If
+                Case NUTResponse.DATASTALE
+                    'Me.Invalid_Data = True
+                    LogFile.LogTracing("Error Result On Retrieving  " & varName & " : " & Nut_Query.Data, LogLvl.LOG_ERROR, Me)
+                    Throw New System.Exception(varName & " : " & Nut_Query.Data)
+                    Return Nothing
+                Case Else
+                    Return Nothing
+            End Select
+        End If
+        'Catch Excep As Exception
+        '    'RaiseEvent OnError(Excep, LogLvl.LOG_ERROR, Me)
+        '    Return Nothing
+        'End Try
     End Function
 
     Public Function GetUPS_ListVar() As List(Of UPS_List_Datas)
@@ -371,47 +494,4 @@ Public Class UPS_Device
         End Try
         Return StringArray(StringArray.Length - 1)
     End Function
-
-    Private Sub Socket_Deconnected()
-        WatchDog.Stop()
-        LogFile.LogTracing("TCP Socket Deconnected", LogLvl.LOG_WARNING, Me)
-        If Not Me.Socket_Status Then
-            RaiseEvent Lost_Connect()
-        End If
-        Me.Socket_Status = False
-        If Me.Nut_Config.AutoReconnect Then
-            LogFile.LogTracing("Reconnection Process Started", LogLvl.LOG_NOTICE, Me)
-            Reconnect_Nut.Enabled = True
-            Reconnect_Nut.Start()
-        End If
-    End Sub
-
-    Private Sub Socket_Broken() Handles Nut_Socket.Socket_Broken
-        LogFile.LogTracing("TCP Socket seems Broken", LogLvl.LOG_WARNING, Me)
-        Socket_Deconnected()
-    End Sub
-    Private Sub Reconnect_Socket(sender As Object, e As EventArgs)
-        Me.Retry += 1
-        If Me.Retry <= Me.MaxRetry Then
-            RaiseEvent New_Retry()
-            LogFile.LogTracing(String.Format("Try Reconnect {0} / {1}", Me.Retry, Me.MaxRetry), LogLvl.LOG_NOTICE, Me, String.Format(WinNUT_Globals.StrLog.Item(AppResxStr.STR_LOG_NEW_RETRY), Me.Retry, Me.MaxRetry))
-            Me.Connect_UPS()
-            If Me.IsConnected Then
-                LogFile.LogTracing("Nut Host Reconnected", LogLvl.LOG_DEBUG, Me)
-                Reconnect_Nut.Enabled = False
-                Reconnect_Nut.Stop()
-                Me.Retry = 0
-                RaiseEvent ReConnected()
-            End If
-        Else
-            LogFile.LogTracing("Max Retry reached. Stop Process Autoreconnect and wait for manual Reconnection", LogLvl.LOG_ERROR, Me, WinNUT_Globals.StrLog.Item(AppResxStr.STR_LOG_STOP_RETRY))
-            Reconnect_Nut.Enabled = False
-            Reconnect_Nut.Stop()
-            RaiseEvent Deconnected()
-        End If
-    End Sub
-
-    Private Sub NUTSocketError(nutEx As Nut_Exception, NoticeLvl As LogLvl, sender As Object) Handles Nut_Socket.OnNUTException
-        LogFile.LogTracing("[" & Nut_Config.UPSName & "] " & nutEx.ToString(), LogLvl.LOG_WARNING, Nut_Socket)
-    End Sub
 End Class

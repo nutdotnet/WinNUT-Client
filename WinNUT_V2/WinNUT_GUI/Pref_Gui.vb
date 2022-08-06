@@ -8,9 +8,7 @@
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
 Imports WinNUT_Params = WinNUT_Client_Common.WinNUT_Params
-Imports Logger = WinNUT_Client_Common.Logger
 Imports LogLvl = WinNUT_Client_Common.LogLvl
-Imports WinNUT_Client_Common.WinNUT_Globals
 Imports System.IO
 
 Public Class Pref_Gui
@@ -18,14 +16,14 @@ Public Class Pref_Gui
     Private IsSaved As Boolean = False
 
     Private Sub Btn_Cancel_Click(sender As Object, e As EventArgs) Handles Btn_Cancel.Click
-        LogFile.LogTracing("Close Pref Gui from Button Cancel", LogLvl.LOG_DEBUG, Me)
+        WinNUT.LogFile.LogTracing("Close Pref Gui from Button Cancel", LogLvl.LOG_DEBUG, Me)
         Me.Close()
     End Sub
 
     Private Sub Save_Params()
         Try
             Me.IsSaved = False
-            LogFile.LogTracing("Save Parameters.", LogLvl.LOG_DEBUG, Me)
+            WinNUT.LogFile.LogTracing("Save Parameters.", LogLvl.LOG_DEBUG, Me)
             WinNUT_Params.Arr_Reg_Key.Item("ServerAddress") = Tb_Server_IP.Text
             WinNUT_Params.Arr_Reg_Key.Item("Port") = CInt(Tb_Port.Text)
             WinNUT_Params.Arr_Reg_Key.Item("UPSName") = Tb_UPS_Name.Text
@@ -66,19 +64,19 @@ Public Class Pref_Gui
             If CB_Start_W_Win.Checked Then
                 If My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\", Application.ProductName, Nothing) Is Nothing Then
                     My.Computer.Registry.CurrentUser.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Run", True).SetValue(Application.ProductName, Application.ExecutablePath)
-                    LogFile.LogTracing("WinNUT Added to Startup.", LogLvl.LOG_DEBUG, Me)
+                    WinNUT.LogFile.LogTracing("WinNUT Added to Startup.", LogLvl.LOG_DEBUG, Me)
                 End If
             Else
                 If Not My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\", Application.ProductName, Nothing) Is Nothing Then
                     My.Computer.Registry.CurrentUser.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Run", True).DeleteValue(Application.ProductName)
-                    LogFile.LogTracing("WinNUT Removed From Startup.", LogLvl.LOG_DEBUG, Me)
+                    WinNUT.LogFile.LogTracing("WinNUT Removed From Startup.", LogLvl.LOG_DEBUG, Me)
                 End If
             End If
 
-            LogFile.LogLevel = Cbx_LogLevel.SelectedIndex
-            LogFile.IsWritingToFile = CB_Use_Logfile.Checked
+            WinNUT.LogFile.LogLevel = Cbx_LogLevel.SelectedIndex
+            WinNUT.LogFile.IsWritingToFile = CB_Use_Logfile.Checked
 
-            LogFile.LogTracing("Pref_Gui Params Saved", 1, Me)
+            WinNUT.LogFile.LogTracing("Pref_Gui Params Saved", 1, Me)
 
             SetLogControlsStatus()
             WinNUT.WinNUT_PrefsChanged()
@@ -184,11 +182,11 @@ Public Class Pref_Gui
             Next
             Me.Btn_Apply.Enabled = False
             Me.IsShowed = True
-            LogFile.LogTracing("Pref Gui Opened.", LogLvl.LOG_DEBUG, Me)
+            WinNUT.LogFile.LogTracing("Pref Gui Opened.", LogLvl.LOG_DEBUG, Me)
         Catch Except As Exception
             Me.IsShowed = False
             Me.Close()
-            LogFile.LogTracing("Error on Opening Pref_Gui.", LogLvl.LOG_ERROR, Me)
+            WinNUT.LogFile.LogTracing("Error on Opening Pref_Gui.", LogLvl.LOG_ERROR, Me)
         End Try
     End Sub
 
@@ -238,7 +236,7 @@ Public Class Pref_Gui
             Dim Result As Object = 0
             Dim MinValue, MaxValue As Integer
 
-            LogFile.LogTracing(String.Format("Check that the value of {0} for {1} is correct.", sender.Text, sender.Name), LogLvl.LOG_DEBUG, Me)
+            WinNUT.LogFile.LogTracing(String.Format("Check that the value of {0} for {1} is correct.", sender.Text, sender.Name), LogLvl.LOG_DEBUG, Me)
             Select Case sender.Name
                 Case "Tb_Delay_Com"
                     MinValue = 0
@@ -267,10 +265,10 @@ Public Class Pref_Gui
 
             If Integer.TryParse(sender.Text, Result) Then
                 If (Result >= MinValue And Result <= MaxValue) Then
-                    LogFile.LogTracing(String.Format("Value of {0} for {1} is valid.", Result, sender.Name), LogLvl.LOG_DEBUG, Me)
+                    WinNUT.LogFile.LogTracing(String.Format("Value of {0} for {1} is valid.", Result, sender.Name), LogLvl.LOG_DEBUG, Me)
                     sender.BackColor = Color.White
                 Else
-                    LogFile.LogTracing(String.Format("Value of {0} for {1} is invalid.", Result, sender.Name), LogLvl.LOG_ERROR, Me)
+                    WinNUT.LogFile.LogTracing(String.Format("Value of {0} for {1} is invalid.", Result, sender.Name), LogLvl.LOG_ERROR, Me)
                     e.Cancel = True
                     sender.BackColor = Color.Red
                 End If
@@ -281,7 +279,7 @@ Public Class Pref_Gui
         End If
     End Sub
     Private Sub Correct_IP_Validating(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Tb_Server_IP.Validating
-        LogFile.LogTracing("Check that the Nut Host address is valid.", LogLvl.LOG_DEBUG, Me)
+        WinNUT.LogFile.LogTracing("Check that the Nut Host address is valid.", LogLvl.LOG_DEBUG, Me)
         Dim Pattern As String
         Dim StrTest As String = sender.Text
         Dim Is_Correct As Boolean = False
@@ -289,26 +287,26 @@ Public Class Pref_Gui
         Pattern = "^(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
         If System.Text.RegularExpressions.Regex.IsMatch(sender.Text, Pattern) Then
             Is_Correct = True
-            LogFile.LogTracing("The Nut Host address is a valid IPV4 address.", LogLvl.LOG_WARNING, Me)
+            WinNUT.LogFile.LogTracing("The Nut Host address is a valid IPV4 address.", LogLvl.LOG_WARNING, Me)
         End If
         'Test IPV6
         Pattern = "^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*$"
         If (System.Text.RegularExpressions.Regex.IsMatch(sender.Text, Pattern) And Not Is_Correct) Then
             Is_Correct = True
-            LogFile.LogTracing("The Nut Host address is a valid IPV6 address.", LogLvl.LOG_WARNING, Me)
+            WinNUT.LogFile.LogTracing("The Nut Host address is a valid IPV6 address.", LogLvl.LOG_WARNING, Me)
         End If
         'Test fqdn
         Pattern = "^(?:(?!\d+\.|-)[a-zA-Z0-9_\-]{1,63}(?<!-)\.?)+(?:[a-zA-Z]{2,})$"
         If (System.Text.RegularExpressions.Regex.IsMatch(sender.Text, Pattern) And Not Is_Correct) Then
             Is_Correct = True
-            LogFile.LogTracing("The Nut Host address is a valid FQDN address.", LogLvl.LOG_WARNING, Me)
+            WinNUT.LogFile.LogTracing("The Nut Host address is a valid FQDN address.", LogLvl.LOG_WARNING, Me)
         End If
 
         'Result
         If Is_Correct Then
             sender.BackColor = Color.White
         Else
-            LogFile.LogTracing("The Nut Host address is a invalid", LogLvl.LOG_ERROR, Me)
+            WinNUT.LogFile.LogTracing("The Nut Host address is a invalid", LogLvl.LOG_ERROR, Me)
             e.Cancel = True
             sender.BackColor = Color.Red
         End If
@@ -324,24 +322,24 @@ Public Class Pref_Gui
     End Sub
 
     Private Sub Btn_DeleteLog_Click(sender As Object, e As EventArgs) Handles Btn_DeleteLog.Click
-        LogFile.LogTracing("Delete LogFile", LogLvl.LOG_DEBUG, Me)
+        WinNUT.LogFile.LogTracing("Delete LogFile", LogLvl.LOG_DEBUG, Me)
 
-        If LogFile.DeleteLogFile() Then
-            LogFile.LogTracing("LogFile Deleted", LogLvl.LOG_DEBUG, Me)
+        If WinNUT.LogFile.DeleteLogFile() Then
+            WinNUT.LogFile.LogTracing("LogFile Deleted", LogLvl.LOG_DEBUG, Me)
         Else
-            LogFile.LogTracing("Error deleting log file.", LogLvl.LOG_WARNING, Me)
+            WinNUT.LogFile.LogTracing("Error deleting log file.", LogLvl.LOG_WARNING, Me)
         End If
 
-        LogFile.IsWritingToFile = WinNUT_Params.Arr_Reg_Key.Item("UseLogFile")
+        WinNUT.LogFile.IsWritingToFile = WinNUT_Params.Arr_Reg_Key.Item("UseLogFile")
         SetLogControlsStatus()
     End Sub
 
     Private Sub Btn_ViewLog_Click(sender As Object, e As EventArgs) Handles Btn_ViewLog.Click
-        LogFile.LogTracing("Show LogFile", LogLvl.LOG_DEBUG, Me)
-        If File.Exists(LogFile.LogFileLocation) Then
-            Process.Start(LogFile.LogFileLocation)
+        WinNUT.LogFile.LogTracing("Show LogFile", LogLvl.LOG_DEBUG, Me)
+        If File.Exists(WinNUT.LogFile.LogFileLocation) Then
+            Process.Start(WinNUT.LogFile.LogFileLocation)
         Else
-            LogFile.LogTracing("LogFile does not exists", LogLvl.LOG_WARNING, Me)
+            WinNUT.LogFile.LogTracing("LogFile does not exists", LogLvl.LOG_WARNING, Me)
             Btn_ViewLog.Enabled = False
             Btn_DeleteLog.Enabled = False
         End If
@@ -349,7 +347,7 @@ Public Class Pref_Gui
 
     Private Sub Pref_Gui_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Icon = WinNUT.Icon
-        LogFile.LogTracing("Load Pref Gui", LogLvl.LOG_DEBUG, Me)
+        WinNUT.LogFile.LogTracing("Load Pref Gui", LogLvl.LOG_DEBUG, Me)
     End Sub
 
     Private Sub Event_Ctrl_Value_Changed(sender As Object, e As EventArgs)
@@ -371,6 +369,6 @@ Public Class Pref_Gui
             Btn_DeleteLog.Enabled = False
         End If
 
-        LogFile.LogTracing("Setting LogControl statuses.", LogLvl.LOG_DEBUG, Me)
+        WinNUT.LogFile.LogTracing("Setting LogControl statuses.", LogLvl.LOG_DEBUG, Me)
     End Sub
 End Class
