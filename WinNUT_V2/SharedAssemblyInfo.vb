@@ -8,9 +8,7 @@
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
 Imports System.Resources
-Imports System
 Imports System.Reflection
-Imports System.Runtime.InteropServices
 
 ' Les informations générales relatives à un assembly dépendent de
 ' l'ensemble d'attributs suivant. Changez les valeurs de ces attributs pour modifier les informations
@@ -18,9 +16,9 @@ Imports System.Runtime.InteropServices
 
 ' Vérifiez les valeurs des attributs de l'assembly
 
-<Assembly: AssemblyCompany("Gawindx")>
+<Assembly: AssemblyCompany("NUTDotNet")>
 <Assembly: AssemblyProduct("WinNUT-Client")>
-<Assembly: AssemblyCopyright("Copyright Gawindx (Decaux Nicolas) ©  2019-2021")>
+<Assembly: AssemblyCopyright("NUTDotNet contributors © 2019-2022")>
 <Assembly: AssemblyTrademark("https://github.com/nutdotnet/WinNUT-Client")>
 
 ' Les informations de version pour un assembly se composent des quatre valeurs suivantes :
@@ -34,5 +32,5 @@ Imports System.Runtime.InteropServices
 ' en utilisant '*', comme indiqué ci-dessous :
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("2.1.*")>
+<Assembly: AssemblyVersion("2.2.*")>
 <Assembly: NeutralResourcesLanguage("en-US")>
