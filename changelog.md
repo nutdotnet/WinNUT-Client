@@ -1,11 +1,24 @@
 ## History:
 
+### Version 2.2.8253
+Beta Release
+#### Fix :
+  - Many functionality changes throughout the program and library, in an attempt to make code cleaner, more understandable, and less error-prone.
+  - Special attention is paid to connection and disconnection subroutines, and what happens in the Socket, UPS, and WinForm.
+  - Updated de_DE German translations
+  - Implemented suspend states not working correctly ([#2](https://github.com/nutdotnet/WinNUT-Client/issues/2))
+
+#### Changed :
+  - Small updates to Logging backend to make errors more informative
+  - Many changes to where debug information is printed to the log
+  - Disabled WatchDog functionality, since this is essentially handled by value updates.
+
 ### Version 2.1.7740
 Beta Release
 #### Fix :
   - Fixed a string length error for the German language (this problem should also exist with other languages but only if the strings were long enough) - related to issue #74
 
-### Changed
+#### Changed
   - Redesign of the connection functions to the Nut server
   - Creation of a DLL containing functions not essential to the GUI in order to prepare for the upcoming arrival of service mode
   - Modification of the instantaneous power calculation method in the case of inverters not supporting the variables previously used - in conjunction with issue #68 (thanks to faugusztin)
