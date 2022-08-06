@@ -35,12 +35,15 @@ End Class
 Public Class Nut_Exception
     Inherits System.ApplicationException
 
+    Public Property ExceptionValue As Nut_Exception_Value
+
     Public Sub New(ByVal Nut_Error_Lvl As Nut_Exception_Value)
         MyBase.New(StringEnum.GetStringValue(Nut_Error_Lvl))
     End Sub
 
-    Public Sub New(ByVal Nut_Error_Lvl As Nut_Exception_Value, ByVal Message As String)
-        MyBase.New(StringEnum.GetStringValue(Nut_Error_Lvl) & Message)
+    Public Sub New(ByVal Nut_Error_Lvl As Nut_Exception_Value, ByVal Message As String, Optional innerEx As Exception = Nothing)
+        MyBase.New(StringEnum.GetStringValue(Nut_Error_Lvl) & Message, innerEx)
+        ExceptionValue = Nut_Error_Lvl
     End Sub
 End Class
 
