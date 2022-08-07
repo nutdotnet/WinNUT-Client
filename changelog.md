@@ -1,4 +1,12 @@
 ## History:
+### Version 2.2.8254
+Beta Release - **HOTFIX**
+
+*The previous release had a few critical bugs, this aims to fix those:*
+  - Fix crash (NullRefException) when closing form before making a connection.
+  - Fix ArgumentOutOfRangeException for de-DE users - NotifyIcon now clamps Text to within required bounds.
+  - Fix Update routine crashing with NullRefException because Logger variable was not set.
+  - Small tweaks to the Release building system.
 
 ### Version 2.2.8253
 Beta Release
