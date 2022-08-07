@@ -16,7 +16,7 @@ Imports WinNUT_Globals = WinNUT_Client_Common.WinNUT_Globals
 Public Class Update_Gui
 
     Private ChangeLogByteSize As Long
-    Public Shared WithEvents LogFile As Logger
+    Private LogFile As Logger = WinNUT.LogFile
     Private Const GitApiURL As String = "https://api.github.com/repos/nutdotnet/WinNUT-Client/releases"
     Private WithEvents WebC As New System.Net.WebClient
     Private JSONReleaseFile As Object
