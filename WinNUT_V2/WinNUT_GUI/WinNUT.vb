@@ -437,7 +437,10 @@ Public Class WinNUT
             LogFile.LogTracing("Init Disconnecting Before Close WinNut", LogLvl.LOG_DEBUG, Me)
             RemoveHandler Microsoft.Win32.SystemEvents.PowerModeChanged, AddressOf SystemEvents_PowerModeChanged
             ' UPSDisconnect()
-            UPS_Device.Disconnect()
+            If UPS_Device IsNot Nothing Then
+                UPS_Device.Disconnect()
+            End If
+
             LogFile.LogTracing("WinNut Is now Closed", LogLvl.LOG_DEBUG, Me)
             End
         End If
@@ -554,8 +557,8 @@ Public Class WinNUT
                         FormText &= WinNUT_Globals.StrLog.Item(AppResxStr.STR_MAIN_BATOK)
                 End Select
         End Select
-        If NotifyStr.Length > 64 Then
-            NotifyStr = NotifyStr.Substring(0, (64 - NotifyStr.Length - 4)) & "..."
+        If NotifyStr.Length > 63 Then
+            NotifyStr = NotifyStr.Substring(0, 60) & "..."
         End If
         NotifyIcon.Text = NotifyStr
         If Me.WindowState = System.Windows.Forms.FormWindowState.Minimized And NotifyIcon.Visible = False Then
