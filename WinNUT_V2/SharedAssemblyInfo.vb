@@ -17,7 +17,7 @@ Imports System.Reflection
 ' Vérifiez les valeurs des attributs de l'assembly
 
 <Assembly: AssemblyCompany("NUTDotNet")>
-<Assembly: AssemblyProduct("WinNUT-Client")>
+<Assembly: AssemblyProduct("WinNUT Client")>
 <Assembly: AssemblyCopyright("NUTDotNet contributors © 2019-2022")>
 <Assembly: AssemblyTrademark("https://github.com/nutdotnet/WinNUT-Client")>
 

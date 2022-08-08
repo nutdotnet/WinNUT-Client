@@ -7,8 +7,8 @@
 '
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports WinNUT_Client_Common
-Imports WinNUT_Params = WinNUT_Client_Common.WinNUT_Params
 
 Namespace My
     ' Les événements suivants sont disponibles pour MyApplication :
@@ -24,7 +24,13 @@ Namespace My
         Private Msg_Crash As New Label
         Private Msg_Error As New TextBox
 
-        Private Sub MyApplication_UnhandledException(ByVal sender As Object, ByVal e As ApplicationServices.UnhandledExceptionEventArgs) Handles Me.UnhandledException
+        Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+            'Init WinNUT Variables
+            Init_Globals()
+            LogFile.LogTracing("Init Globals Variables Complete", LogLvl.LOG_DEBUG, Me)
+        End Sub
+
+        Private Sub MyApplication_UnhandledException(ByVal sender As Object, ByVal e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
             e.ExitApplication = False
 
             Dim Frms As New FormCollection
@@ -81,9 +87,9 @@ Namespace My
                 .Controls.Add(BtnGenerate)
             End With
 
-            AddHandler BtnClose.Click, AddressOf My.Application.Close_Button_Click
+            AddHandler BtnClose.Click, AddressOf Application.Close_Button_Click
             AddHandler BtnGenerate.Click, AddressOf Application.Generate_Button_Click
-            AddHandler CrashBug_Form.FormClosing, AddressOf My.Application.CrashBug_FormClosing
+            AddHandler CrashBug_Form.FormClosing, AddressOf Application.CrashBug_FormClosing
 
             CrashBug_Form.Show()
             CrashBug_Form.BringToFront()
@@ -100,21 +106,21 @@ Namespace My
         Private Sub Generate_Button_Click(sender As Object, e As EventArgs)
             'Generate a bug report with all essential datas 
             Dim Crash_Report As String = "WinNUT Bug Report" & vbNewLine
-            Dim WinNUT_Config As New Dictionary(Of String, Object)(WinNUT_Params.Arr_Reg_Key)
-            Dim WinNUT_UserData_Dir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\WinNUT-Client"
+            Dim WinNUT_Config As New Dictionary(Of String, Object)(Arr_Reg_Key)
+            Dim WinNUT_UserData_Dir = ApplicationData ' Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\WinNUT-Client"
             Dim CrashLog_Dir = WinNUT_UserData_Dir & "\CrashLog"
             Dim CrashLog_Filename As String = "Crash_Report_" & Format(Now, "dd-MM-yyyy") & "_" &
                 String.Format("{0}-{1}-{2}.txt", Now.Hour.ToString("00"), Now.Minute.ToString("00"), Now.Second.ToString("00"))
 
-            For Each kvp As KeyValuePair(Of String, Object) In WinNUT_Params.Arr_Reg_Key
+            For Each kvp As KeyValuePair(Of String, Object) In Arr_Reg_Key
                 Select Case kvp.Key
                     Case "ServerAddress", "Port", "UPSName", "NutLogin", "NutPassword"
                         WinNUT_Config.Remove(kvp.Key)
                 End Select
             Next
 
-            Crash_Report &= "Os Version : " & My.Computer.Info.OSVersion & vbNewLine
-            Crash_Report &= "WinNUT Version : " & System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString & vbNewLine
+            Crash_Report &= "Os Version : " & Computer.Info.OSVersion & vbNewLine
+            Crash_Report &= "WinNUT Version : " & Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString & vbNewLine
 
             Crash_Report &= vbNewLine & "WinNUT Parameters : " & vbNewLine
 
@@ -123,19 +129,26 @@ Namespace My
             Crash_Report &= Msg_Error.Text & vbNewLine & vbNewLine
             Crash_Report &= "Last Events :" & vbNewLine
 
-            For Each WinNUT_Event In WinNUT.LogFile.LastEvents
+            For Each WinNUT_Event In LogFile.LastEvents
                 Crash_Report &= WinNUT_Event & vbNewLine
             Next
-            My.Computer.Clipboard.SetText(Crash_Report)
 
-            If Not My.Computer.FileSystem.DirectoryExists(CrashLog_Dir) Then
-                My.Computer.FileSystem.CreateDirectory(CrashLog_Dir)
+            Computer.Clipboard.SetText(Crash_Report)
+
+            If Not Computer.FileSystem.DirectoryExists(CrashLog_Dir) Then
+                Computer.FileSystem.CreateDirectory(CrashLog_Dir)
             End If
 
-            Dim CrashLog_Report As System.IO.StreamWriter
-            CrashLog_Report = My.Computer.FileSystem.OpenTextFileWriter(CrashLog_Dir & "\" & CrashLog_Filename, True)
+            Dim CrashLog_Report As IO.StreamWriter
+            CrashLog_Report = Computer.FileSystem.OpenTextFileWriter(CrashLog_Dir & "\" & CrashLog_Filename, True)
             CrashLog_Report.WriteLine(Crash_Report)
             CrashLog_Report.Close()
+
+            ' Open an Explorer window to the crash log.
+            ' Dim fullFilepath As String = CrashLog_Dir & "\" & CrashLog_Filename
+            ' If WinNUT IsNot Nothing Then
+            Process.Start(CrashLog_Dir)
+            ' End If
             End
         End Sub
     End Class
