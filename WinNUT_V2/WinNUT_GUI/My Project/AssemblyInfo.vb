@@ -7,8 +7,6 @@
 '
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
-Imports System.Resources
-Imports System
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 
@@ -18,7 +16,7 @@ Imports System.Runtime.InteropServices
 
 ' Vérifiez les valeurs des attributs de l'assembly
 
-<Assembly: AssemblyTitle("WinNUT-Client")>
+<Assembly: AssemblyTitle("WinNUT Client")>
 <Assembly: AssemblyDescription("Windows NUT Client")>
 
 <Assembly: ComVisible(False)>

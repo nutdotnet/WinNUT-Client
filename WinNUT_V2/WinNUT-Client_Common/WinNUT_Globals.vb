@@ -33,14 +33,16 @@ Public Module WinNUT_Globals
     ' Public LogFile As String
     ' Handle application messages and debug events.
     ' Public WithEvents LogFile As Logger '  As New Logger(False, 0)
-    Public AppIcon As Dictionary(Of Integer, System.Drawing.Icon)
+    ' Logging
+    Public WithEvents LogFile As Logger
+    Public AppIcon As Dictionary(Of Integer, Drawing.Icon)
     Public StrLog As New List(Of String)
     ' Public LogFilePath As String
 
     Public Sub Init_Globals()
         LongProgramName = My.Application.Info.Description
         ProgramName = My.Application.Info.ProductName
-        ProgramVersion = System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString
+        ProgramVersion = Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString
         ShortProgramVersion = ProgramVersion.Substring(0, ProgramVersion.IndexOf(".", ProgramVersion.IndexOf(".") + 1))
         GitHubURL = My.Application.Info.Trademark
         Copyright = My.Application.Info.Copyright
@@ -89,6 +91,8 @@ Public Module WinNUT_Globals
         'StrLog.Insert(AppResxStr.STR_LOG_NO_UPDATE, Resources.Log_Str_10)
         'StrLog.Insert(AppResxStr.STR_LOG_UPDATE, Resources.Log_Str_11)
         'StrLog.Insert(AppResxStr.STR_LOG_NUT_FSD, Resources.Log_Str_12)
+
+        LogFile = New Logger(False, LogLvl.LOG_DEBUG)
     End Sub
 
     'Sub SetupAppDirectory()
