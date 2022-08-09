@@ -19,7 +19,7 @@ Public Module WinNUT_Params
             .Add("ServerAddress", "")
             .Add("Port", 0)
             .Add("UPSName", "")
-            .Add("Delay", 0)
+            .Add("Delay", 1)
             .Add("NutLogin", Cryptor.EncryptData(""))
             .Add("NutPassword", Cryptor.EncryptData(""))
             .Add("AutoReconnect", vbFalse)
@@ -161,6 +161,7 @@ Public Module WinNUT_Params
     Public Function Save_Params() As Boolean
         Dim Cryptor As New CryptData()
         Dim Result As Boolean = False
+
         Try
             For Each RegKeys As KeyValuePair(Of String, Dictionary(Of String, Object)) In Arr_Reg_Key_Base
                 For Each RegValue As KeyValuePair(Of String, Object) In RegKeys.Value

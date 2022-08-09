@@ -151,7 +151,7 @@ Public Class WinNUT
 
         'Load WinNUT Parameters
         Load_Params()
-        WinNUT_PrefsChanged()
+        WinNUT_PrefsChanged(True)
         LogFile.LogTracing("Loaded Params Complete", LogLvl.LOG_DEBUG, Me)
 
         ' Setup logging preferences
@@ -290,13 +290,11 @@ Public Class WinNUT
             Case Microsoft.Win32.PowerModes.Resume
                 LogFile.LogTracing("Restarting WinNUT after waking up from Windows", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_MAIN_EXITSLEEP))
                 If Arr_Reg_Key.Item("AutoReconnect") = True Then
-                    'UPS_Device.Connect()
                     UPS_Connect()
                 End If
             Case Microsoft.Win32.PowerModes.Suspend
                 LogFile.LogTracing("Windows standby, WinNUT will disconnect", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_MAIN_GOTOSLEEP))
-                ' UPSDisconnect()
-                UPS_Device.Disconnect()
+                UPSDisconnect()
         End Select
     End Sub
 
@@ -333,45 +331,35 @@ Public Class WinNUT
             LogFile.LogTracing(String.Format("Something went wrong connecting to UPS {0}. IsConnected: {1}, IsAuthenticated: {2}",
                                upsConf.UPSName, UPS_Device.IsConnected, UPS_Device.IsAuthenticated), LogLvl.LOG_ERROR, Me,
                                String.Format(StrLog.Item(AppResxStr.STR_LOG_CON_FAILED), upsConf.Host, upsConf.Port, "Connection Error"))
-            ' UPSDisconnect()
-            UPS_Device.Disconnect()
+            UPSDisconnect()
         Else
-            LogFile.LogTracing("Connection to Nut Host Established", LogLvl.LOG_NOTICE, Me,
-                               String.Format(StrLog.Item(AppResxStr.STR_LOG_CONNECTED),
-                                             upsConf.Host, upsConf.Port))
-
-            ' AddHandler Update_Data.Tick, AddressOf Retrieve_UPS_Datas
-            ' AddHandler UPS_Device.Lost_Connect, AddressOf UPS_Lostconnect
-            ' Me.Device_Data = UPS_Device.Retrieve_UPS_Datas()
-            ' RaiseEvent Data_Updated()
-            ' Update_Data.Start()
             Menu_UPS_Var.Enabled = True
-
             UpdateIcon_NotifyIcon()
             LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
             RaiseEvent UpdateNotifyIconStr("Connected", Nothing)
+            LogFile.LogTracing("Connection to Nut Host Established", LogLvl.LOG_NOTICE, Me,
+                               String.Format(StrLog.Item(AppResxStr.STR_LOG_CONNECTED),
+                                             upsConf.Host, upsConf.Port))
         End If
     End Sub
 
     ''' <summary>
     ''' Prepare application for and handle disconnecting from the UPS.
     ''' </summary>
-    Private Sub UPSDisconnectedEvent() Handles UPS_Device.Disconnected
+    Private Sub UPSDisconnect() ' Handles UPS_Device.Disconnected
         ' LogFile.LogTracing("Running Client disconnect subroutine.", LogLvl.LOG_DEBUG, Me)
 
-        ' Update_Data.Stop()
-        ' Update_Data.
-        ' RemoveHandler Update_Data.Tick, AddressOf Retrieve_UPS_Datas
+        If UPS_Device IsNot Nothing Then
+            UPS_Device.Disconnect(True)
+        Else
+            LogFile.LogTracing("Attempted to disconnect when UPS_Device is Nothing.", LogLvl.LOG_DEBUG, Me)
+        End If
+    End Sub
 
-        'If UPS_Device IsNot Nothing Then
-        '    ' RemoveHandler UPS_Device.Connected, AddressOf UPSReady
-        '    RemoveHandler UPS_Device.Lost_Connect, AddressOf UPS_Lostconnect
-        'End If
-
-        'If UPS_Device.Nut_Socket IsNot Nothing Then
-        '    UPS_Device.Nut_Socket.Disconnect(True)
-        'End If
-
+    ''' <summary>
+    ''' Perform final actions to wrap up a disconnected UPS.
+    ''' </summary>
+    Private Sub UPSDisconnectedEvent() Handles UPS_Device.Disconnected
         ReInitDisplayValues()
         ActualAppIconIdx = AppIconIdx.IDX_ICO_OFFLINE
         LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
@@ -380,18 +368,7 @@ Public Class WinNUT
         RaiseEvent UpdateBatteryState("Deconnected")
 
         LogFile.LogTracing("Disconnected from Nut Host", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_LOG_LOGOFF))
-        ' Nut_Socket = Nothing
-        ' UPS_Device.Dispose() Dispose in the future...
     End Sub
-
-    'Private Sub Retrieve_UPS_Datas(sender As Object, e As EventArgs) Handles Update_Data.Tick
-    '    If Not Update_Data.Enabled Then
-    '        LogFile.LogTracing("Update_Data timer Ticked while disabled. Ignoring.", LogLvl.LOG_DEBUG, Me)
-    '    Else
-    '        Me.Device_Data = UPS_Device.Retrieve_UPS_Datas()
-    '        RaiseEvent Data_Updated()
-    '    End If
-    'End Sub
 
     Private Sub WinNUT_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
@@ -433,13 +410,10 @@ Public Class WinNUT
             NotifyIcon.Visible = True
             e.Cancel = True
         Else
+            ' TODO: Common shutdown subroutine? --v
             LogFile.LogTracing("Init Disconnecting Before Close WinNut", LogLvl.LOG_DEBUG, Me)
             RemoveHandler Microsoft.Win32.SystemEvents.PowerModeChanged, AddressOf SystemEvents_PowerModeChanged
-            ' UPSDisconnect()
-            If UPS_Device IsNot Nothing Then
-                UPS_Device.Disconnect()
-            End If
-
+            UPSDisconnect()
             LogFile.LogTracing("WinNut Is now Closed", LogLvl.LOG_DEBUG, Me)
             End
         End If
@@ -452,6 +426,7 @@ Public Class WinNUT
 
     Private Sub Menu_Settings_Click(sender As Object, e As EventArgs) Handles Menu_Settings.Click
         LogFile.LogTracing("Open Pref Gui From Menu", LogLvl.LOG_DEBUG, Me)
+        AddHandler Pref_Gui.SavedPreferences, AddressOf WinNUT_PrefsChanged
         Pref_Gui.Activate()
         Pref_Gui.Visible = True
         HasFocus = False
@@ -464,6 +439,7 @@ Public Class WinNUT
 
     Private Sub Menu_Sys_Settings_Click(sender As Object, e As EventArgs) Handles Menu_Sys_Settings.Click
         LogFile.LogTracing("Open Pref Gui From Systray", LogLvl.LOG_DEBUG, Me)
+        AddHandler Pref_Gui.SavedPreferences, AddressOf WinNUT_PrefsChanged
         Pref_Gui.Activate()
         Pref_Gui.Visible = True
         HasFocus = False
@@ -504,12 +480,6 @@ Public Class WinNUT
         UpdateIcon_NotifyIcon()
         LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
     End Sub
-
-    'Private Sub Reconnect_NotifyIcon() Handles UPS_Device.Connected
-
-    'End Sub
-
-
 
     Private Sub Event_UpdateNotifyIconStr(Optional Reason As String = Nothing, Optional Message As String = Nothing) Handles Me.UpdateNotifyIconStr
         Dim ShowVersion As String = ShortProgramVersion
@@ -623,12 +593,7 @@ Public Class WinNUT
     Private Sub UPS_Lostconnect() Handles UPS_Device.Lost_Connect
         LogFile.LogTracing("Notify user of lost connection", LogLvl.LOG_ERROR, Me,
             String.Format(StrLog.Item(AppResxStr.STR_MAIN_LOSTCONNECT), UPS_Device.Nut_Config.Host, UPS_Device.Nut_Config.Port))
-        UPSDisconnectedEvent()
-        'Dim Host = UPS_Device.Nut_Config.Host
-        'Dim Port = UPS_Device.Nut_Config.Port
-        'Update_Data.Stop()
-        'LogFile.LogTracing("Fix All data to null/empty String", LogLvl.LOG_DEBUG, Me)
-        'LogFile.LogTracing("Fix All Dial Data to Min Value/0", LogLvl.LOG_DEBUG, Me)
+        ' UPSDisconnect()
 
         'ReInitDisplayValues()
         If UPS_Device.Nut_Config.AutoReconnect And UPS_Retry <= UPS_MaxRetry Then
@@ -781,9 +746,8 @@ Public Class WinNUT
     End Sub
 
     Private Sub Menu_Disconnect_Click(sender As Object, e As EventArgs) Handles Menu_Disconnect.Click
-        LogFile.LogTracing("Force Disconnect from menu", LogLvl.LOG_DEBUG, Me)
-        ' UPSDisconnect()
-        UPS_Device.Disconnect()
+        LogFile.LogTracing("Disconnect from menu", LogLvl.LOG_DEBUG, Me)
+        UPSDisconnect()
     End Sub
 
     Private Sub ReInitDisplayValues()
@@ -812,11 +776,7 @@ Public Class WinNUT
 
     Private Sub Menu_Reconnect_Click(sender As Object, e As EventArgs) Handles Menu_Reconnect.Click
         LogFile.LogTracing("Force Reconnect from menu", LogLvl.LOG_DEBUG, Me)
-
-        ' UPSDisconnect()
-        If UPS_Device.IsConnected Then
-            UPS_Device.Disconnect()
-        End If
+        UPSDisconnect()
 
         UPS_Connect()
     End Sub
@@ -859,76 +819,49 @@ Public Class WinNUT
         End If
     End Sub
 
-    Public Sub WinNUT_PrefsChanged()
+    Public Sub WinNUT_PrefsChanged(isChanged As Boolean)
+        LogFile.LogTracing("Beginning WinNUT_PrefsChanged subroutine.", LogLvl.LOG_DEBUG, Me)
+
         ' Setup logging preferences
         If Arr_Reg_Key.Item("UseLogFile") Then
             LogFile.LogLevelValue = Arr_Reg_Key.Item("Log Level")
             LogFile.InitializeLogFile()
         ElseIf LogFile.IsWritingToFile Then
             LogFile.DeleteLogFile()
-
         End If
 
         'Dim NeedReconnect As Boolean = False
 
         'With UPS_Device.Nut_Config
-        '    If .AutoReconnect <> WinNUT_Params.Arr_Reg_Key.Item("autoreconnect") Then
-        '        .AutoReconnect = WinNUT_Params.Arr_Reg_Key.Item("autoreconnect")
-        '    End If
-        '    If .Host <> WinNUT_Params.Arr_Reg_Key.Item("ServerAddress") Then
+        '    If .AutoReconnect <> Arr_Reg_Key.Item("autoreconnect") Or
+        '    .Host <> Arr_Reg_Key.Item("ServerAddress") Or
+        '    .Port <> Arr_Reg_Key.Item("Port") Or
+        '    .UPSName <> Arr_Reg_Key.Item("UPSName") Or
+        '    UPS_Device.PollingInterval <> Arr_Reg_Key.Item("Delay") Or
+        '    .Login <> Arr_Reg_Key.Item("NutLogin") Or
+        '    UPS_Device.NutPassword <> Arr_Reg_Key.Item("NutPassword") Then
         '        NeedReconnect = True
-        '        .Host = WinNUT_Params.Arr_Reg_Key.Item("ServerAddress")
+        '        UPS_Device.NutPassword = Arr_Reg_Key.Item("NutPassword")
         '    End If
-        '    If .Port <> WinNUT_Params.Arr_Reg_Key.Item("Port") Then
-        '        NeedReconnect = True
-        '        .Port = WinNUT_Params.Arr_Reg_Key.Item("Port")
+        '    If UPS_Device.UPS_Follow_FSD <> Arr_Reg_Key.Item("Follow_FSD") Then
+        '        UPS_Device.UPS_Follow_FSD = Arr_Reg_Key.Item("Follow_FSD")
         '    End If
-        '    If .UPSName <> WinNUT_Params.Arr_Reg_Key.Item("UPSName") Then
-        '        NeedReconnect = True
-        '        .UPSName = WinNUT_Params.Arr_Reg_Key.Item("UPSName")
-        '    End If
-        '    If Polling_Interval <> WinNUT_Params.Arr_Reg_Key.Item("Delay") Then
-        '        NeedReconnect = True
-        '        Polling_Interval = WinNUT_Params.Arr_Reg_Key.Item("Delay")
-        '    End If
-        '    If .Login <> WinNUT_Params.Arr_Reg_Key.Item("NutLogin") Then
-        '        NeedReconnect = True
-        '        .Login = WinNUT_Params.Arr_Reg_Key.Item("NutLogin")
-        '    End If
-        '    If UPS_Device.NutPassword <> WinNUT_Params.Arr_Reg_Key.Item("NutPassword") Then
-        '        NeedReconnect = True
-        '        UPS_Device.NutPassword = WinNUT_Params.Arr_Reg_Key.Item("NutPassword")
-        '    End If
-        '    If UPS_Device.UPS_Follow_FSD <> WinNUT_Params.Arr_Reg_Key.Item("Follow_FSD") Then
-        '        UPS_Device.UPS_Follow_FSD = WinNUT_Params.Arr_Reg_Key.Item("Follow_FSD")
-        '    End If
-        '    UPS_Device.Battery_Limit = WinNUT_Params.Arr_Reg_Key.Item("ShutdownLimitBatteryCharge")
-        '    UPS_Device.Backup_Limit = WinNUT_Params.Arr_Reg_Key.Item("ShutdownLimitUPSRemainTime")
+        '    UPS_Device.Battery_Limit = Arr_Reg_Key.Item("ShutdownLimitBatteryCharge")
+        '    UPS_Device.Backup_Limit = Arr_Reg_Key.Item("ShutdownLimitUPSRemainTime")
         'End With
 
-        ' Automatically reconnect regardless
-        ' UPSDisconnect()
-        If UPS_Device IsNot Nothing Then
-            UPS_Device.Disconnect()
+        ' Automatically reconnect if already connected and prefs are changed.
+        If (UPS_Device IsNot Nothing) AndAlso UPS_Device.IsConnected And isChanged Then
+            LogFile.LogTracing("Connection parameters Changed. Force Reconnect", LogLvl.LOG_NOTICE, Me)
+            UPSDisconnect()
+            'ReInitDisplayValues()
+            'ActualAppIconIdx = AppIconIdx.IDX_ICO_OFFLINE
+            'LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
+            'UpdateIcon_NotifyIcon()
+            'LogFile.LogTracing("New Parameter Applyed. Force Reconnect", LogLvl.LOG_DEBUG, Me)
+            UPS_Connect()
         End If
 
-        ' UPS_Connect()
-        'If UPS_Device.IsConnected Then ' NeedReconnect And
-        '    LogFile.LogTracing("Connection parameters Changed. Force Disconnect", LogLvl.LOG_DEBUG, Me)
-        '    'UPS_Device.Disconnect(True, True)
-        '    ReInitDisplayValues()
-        '    ActualAppIconIdx = AppIconIdx.IDX_ICO_OFFLINE
-        '    LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
-        '    UpdateIcon_NotifyIcon()
-        '    LogFile.LogTracing("New Parameter Applyed. Force Reconnect", LogLvl.LOG_DEBUG, Me)
-        '    UPS_Connect()
-        '    'UPS_Device.Connect()
-        'ElseIf Not UPS_Device.IsConnected Then
-        '    LogFile.LogTracing("New Parameter Applyed. Force Reconnect", LogLvl.LOG_DEBUG, Me)
-        '    'UPS_Device.Connect()
-        '    UPS_Connect()
-        'End If
-        'NeedReconnect = Nothing
         With AG_InV
             If (.MaxValue <> Arr_Reg_Key.Item("MaxInputVoltage")) Or (.MinValue <> Arr_Reg_Key.Item("MinInputVoltage")) Then
                 LogFile.LogTracing("Parameter Dial Input Voltage Need to be Updated", LogLvl.LOG_DEBUG, Me)
@@ -1171,7 +1104,7 @@ Public Class WinNUT
             LogFile.LogTracing("Initialisation Params Complete", LogLvl.LOG_DEBUG, Me)
             LogFile.LogTracing("Loaded Params Complete", LogLvl.LOG_DEBUG, Me)
         End If
-        WinNUT_PrefsChanged()
+        WinNUT_PrefsChanged(True)
         UPS_Connect()
     End Sub
 End Class

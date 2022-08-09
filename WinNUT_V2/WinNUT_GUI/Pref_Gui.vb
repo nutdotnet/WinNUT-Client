@@ -14,7 +14,10 @@ Imports WinNUT_Client_Common
 
 Public Class Pref_Gui
     Private IsShowed As Boolean = False
-    Private IsSaved As Boolean = False
+    Private PrefsModified As Boolean = False
+
+    ' Indicate that parameters have been saved (and if one or more were changed)
+    Public Event SavedPreferences(isModified As Boolean)
 
     Private Sub Btn_Cancel_Click(sender As Object, e As EventArgs) Handles Btn_Cancel.Click
         LogFile.LogTracing("Close Pref Gui from Button Cancel", LogLvl.LOG_DEBUG, Me)
@@ -23,7 +26,7 @@ Public Class Pref_Gui
 
     Private Sub Save_Params()
         Try
-            IsSaved = False
+            ' PrefsModified = False
             LogFile.LogTracing("Save Parameters.", LogLvl.LOG_DEBUG, Me)
             Arr_Reg_Key.Item("ServerAddress") = Tb_Server_IP.Text
             Arr_Reg_Key.Item("Port") = CInt(Tb_Port.Text)
@@ -61,6 +64,7 @@ Public Class Pref_Gui
             Arr_Reg_Key.Item("VerifyUpdateAtStart") = Cb_Update_At_Start.Checked
             Arr_Reg_Key.Item("DelayBetweenEachVerification") = Cbx_Delay_Verif.SelectedIndex
             Arr_Reg_Key.Item("StableOrDevBranch") = Cbx_Branch_Update.SelectedIndex
+
             WinNUT_Params.Save_Params()
             If CB_Start_W_Win.Checked Then
                 If My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\", Application.ProductName, Nothing) Is Nothing Then
@@ -80,22 +84,24 @@ Public Class Pref_Gui
             LogFile.LogTracing("Pref_Gui Params Saved", 1, Me)
 
             SetLogControlsStatus()
-            WinNUT.WinNUT_PrefsChanged()
-            IsSaved = True
+            ' WinNUT.WinNUT_PrefsChanged()
+            RaiseEvent SavedPreferences(PrefsModified)
+
+            ' PrefsModified = True
         Catch e As Exception
-            IsSaved = False
+            ' PrefsModified = False
         End Try
     End Sub
 
     Private Sub Btn_Apply_Click(sender As Object, e As EventArgs) Handles Btn_Apply.Click
         Save_Params()
-        If IsSaved Then
+        If PrefsModified Then
             Btn_Apply.Enabled = False
         End If
     End Sub
 
     Private Sub Btn_Ok_Click(sender As Object, e As EventArgs) Handles Btn_Ok.Click
-        If Not IsSaved Then
+        If PrefsModified Then
             Save_Params()
         End If
         Close()
@@ -351,9 +357,14 @@ Public Class Pref_Gui
         LogFile.LogTracing("Load Pref Gui", LogLvl.LOG_DEBUG, Me)
     End Sub
 
+    ''' <summary>
+    ''' Handle any value in the form changing.
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub Event_Ctrl_Value_Changed(sender As Object, e As EventArgs)
         If IsShowed Then
-            IsSaved = False
+            PrefsModified = True
             Btn_Apply.Enabled = True
         End If
     End Sub
