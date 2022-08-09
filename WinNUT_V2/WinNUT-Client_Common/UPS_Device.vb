@@ -11,10 +11,34 @@ Imports System.Globalization
 Imports System.Windows.Forms
 
 Public Class UPS_Device
+#Region "Properties"
+
+    Public ReadOnly Property IsConnected() As Boolean
+        Get
+            Return (Nut_Socket.IsConnected) ' And Me.Socket_Status
+        End Get
+    End Property
+
+    Public ReadOnly Property IsAuthenticated() As Boolean
+        Get
+            Return Nut_Socket.Auth_Success
+        End Get
+    End Property
+
+    Public Property PollingInterval As Integer
+        Get
+            Return Update_Data.Interval
+        End Get
+        Set(value As Integer)
+            Update_Data.Interval = value
+        End Set
+    End Property
+
+#End Region
     Private Const CosPhi As Double = 0.6
     ' How many milliseconds to wait before the Reconnect routine tries again.
 #If DEBUG Then
-    Private Const DEFAULT_RECONNECT_WAIT_MS As Double = 3000
+    Private Const DEFAULT_RECONNECT_WAIT_MS As Double = 5000
 #Else
     Private Const DEFAULT_RECONNECT_WAIT_MS As Double = 30000
 #End If
@@ -96,29 +120,18 @@ Public Class UPS_Device
     Public Event Shutdown_Condition()
     Public Event Stop_Shutdown()
 
-    Private Polling_Interval As Integer
     Private WithEvents Update_Data As New Timer
 
-    Public ReadOnly Property IsConnected() As Boolean
-        Get
-            Return (Me.Nut_Socket.IsConnected) ' And Me.Socket_Status
-        End Get
-    End Property
 
-    Public ReadOnly Property IsAuthenticated() As Boolean
-        Get
-            Return Me.Nut_Socket.Auth_Success
-        End Get
-    End Property
 
     Public Sub New(ByRef Nut_Config As Nut_Parameter, ByRef LogFile As Logger, pollInterval As Integer)
         Me.LogFile = LogFile
         Me.Nut_Config = Nut_Config
-        ' Polling_Interval = pollInterval
-        Update_Data.Interval = pollInterval
+        PollingInterval = pollInterval
         ciClone = CType(CultureInfo.InvariantCulture.Clone(), CultureInfo)
         ciClone.NumberFormat.NumberDecimalSeparator = "."
         Nut_Socket = New Nut_Socket(Me.Nut_Config, LogFile)
+
         With Reconnect_Nut
             .Interval = DEFAULT_RECONNECT_WAIT_MS
             .Enabled = False
@@ -135,24 +148,19 @@ Public Class UPS_Device
         ' Dim UPSName = Me.Nut_Config.UPSName
         LogFile.LogTracing("Beginning connection: " & Nut_Config.ToString(), LogLvl.LOG_DEBUG, Me)
 
-        If Me.Nut_Socket.Connect() And Me.Nut_Socket.IsConnected Then
+        If Nut_Socket.Connect() And Nut_Socket.IsConnected Then
             LogFile.LogTracing("TCP Socket Created", LogLvl.LOG_NOTICE, Me)
-            ' Me.Socket_Status = True
+
             If Nut_Socket.IsKnownUPS(Nut_Config.UPSName) Then
-                Me.UPS_Datas = GetUPSProductInfo()
+                UPS_Datas = GetUPSProductInfo()
                 Init_Constant(Nut_Socket)
                 Update_Data.Start()
                 RaiseEvent Connected(Me)
             Else
-                LogFile.LogTracing("Given UPS Name is unknown", LogLvl.LOG_NOTICE, Me)
+                LogFile.LogTracing("Given UPS Name is unknown", LogLvl.LOG_ERROR, Me)
                 RaiseEvent Unknown_UPS()
+                Disconnect(True, False, True)
             End If
-            ' WatchDog.Start()
-            'Else
-            '    If Not Reconnect_Nut.Enabled Then
-            '        RaiseEvent Lost_Connect()
-            '        Me.Socket_Status = False
-            '    End If
         End If
     End Sub
 
@@ -188,17 +196,8 @@ Public Class UPS_Device
 #Region "Socket Interaction"
 
     Private Sub SocketDisconnected() Handles Nut_Socket.SocketDisconnected
-        ' WatchDog.Stop()
         LogFile.LogTracing("NutSocket raised Disconnected event.", LogLvl.LOG_DEBUG, Me)
-        'If Not Me.Socket_Status Then
-        '    RaiseEvent Lost_Connect()
-        'End If
-        ' Me.Socket_Status = False
-        'If Me.Nut_Config.AutoReconnect Then
-        '    LogFile.LogTracing("Reconnection Process Started", LogLvl.LOG_NOTICE, Me)
-        '    Reconnect_Nut.Enabled = True
-        '    Reconnect_Nut.Start()
-        'End If
+
         RaiseEvent Disconnected()
     End Sub
 
@@ -210,7 +209,7 @@ Public Class UPS_Device
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub Event_WatchDog(sender As Object, e As EventArgs)
-        If Me.IsConnected Then
+        If IsConnected Then
             Dim Nut_Query = Nut_Socket.Query_Data("")
             If Nut_Query.Response = NUTResponse.NORESPONSE Then
                 LogFile.LogTracing("WatchDog Socket report a Broken State", LogLvl.LOG_WARNING, Me)
@@ -234,15 +233,15 @@ Public Class UPS_Device
     End Sub
 
     Private Sub Reconnect_Socket(sender As Object, e As EventArgs) Handles Reconnect_Nut.Tick
-        Me.Retry += 1
-        If Me.Retry <= Me.MaxRetry Then
+        Retry += 1
+        If Retry <= MaxRetry Then
             RaiseEvent New_Retry()
-            LogFile.LogTracing(String.Format("Try Reconnect {0} / {1}", Me.Retry, Me.MaxRetry), LogLvl.LOG_NOTICE, Me, String.Format(WinNUT_Globals.StrLog.Item(AppResxStr.STR_LOG_NEW_RETRY), Me.Retry, Me.MaxRetry))
-            Me.Connect_UPS()
-            If Me.IsConnected Then
+            LogFile.LogTracing(String.Format("Try Reconnect {0} / {1}", Retry, MaxRetry), LogLvl.LOG_NOTICE, Me, String.Format(WinNUT_Globals.StrLog.Item(AppResxStr.STR_LOG_NEW_RETRY), Retry, MaxRetry))
+            Connect_UPS()
+            If IsConnected Then
                 LogFile.LogTracing("Nut Host Reconnected", LogLvl.LOG_DEBUG, Me)
                 Reconnect_Nut.Stop()
-                Me.Retry = 0
+                Retry = 0
                 RaiseEvent ReConnected(Me)
             End If
         Else
@@ -271,44 +270,44 @@ Public Class UPS_Device
 
     Private Function GetUPSProductInfo() As UPS_Datas
         Dim UDatas As New UPS_Datas
-        Dim UPSName = Me.Nut_Config.UPSName
-        UDatas.Mfr = Trim(Me.GetUPSVar("ups.mfr", UPSName, "Unknown"))
-        UDatas.Model = Trim(Me.GetUPSVar("ups.model", UPSName, "Unknown"))
-        UDatas.Serial = Trim(Me.GetUPSVar("ups.serial", UPSName, "Unknown"))
-        UDatas.Firmware = Trim(Me.GetUPSVar("ups.firmware", UPSName, "Unknown"))
+        Dim UPSName = Nut_Config.UPSName
+        UDatas.Mfr = Trim(GetUPSVar("ups.mfr", UPSName, "Unknown"))
+        UDatas.Model = Trim(GetUPSVar("ups.model", UPSName, "Unknown"))
+        UDatas.Serial = Trim(GetUPSVar("ups.serial", UPSName, "Unknown"))
+        UDatas.Firmware = Trim(GetUPSVar("ups.firmware", UPSName, "Unknown"))
         Return UDatas
     End Function
 
     Private Sub Init_Constant(ByRef Nut_Socket As Nut_Socket)
-        Dim UPSName = Me.Nut_Config.UPSName
-        Me.UPS_Datas.UPS_Value.Batt_Capacity = Double.Parse(Me.GetUPSVar("battery.capacity", UPSName, 7), ciClone)
-        Me.Freq_Fallback = Double.Parse(Me.GetUPSVar("output.frequency.nominal", UPSName, (50 + CInt(WinNUT_Params.Arr_Reg_Key.Item("FrequencySupply")) * 10)), Me.ciClone)
+        Dim UPSName = Nut_Config.UPSName
+        UPS_Datas.UPS_Value.Batt_Capacity = Double.Parse(GetUPSVar("battery.capacity", UPSName, 7), ciClone)
+        Freq_Fallback = Double.Parse(GetUPSVar("output.frequency.nominal", UPSName, (50 + CInt(WinNUT_Params.Arr_Reg_Key.Item("FrequencySupply")) * 10)), ciClone)
     End Sub
 
     Public Sub Retrieve_UPS_Datas() Handles Update_Data.Tick ' As UPS_Datas
-        Dim UPSName = Me.Nut_Config.UPSName
+        Dim UPSName = Nut_Config.UPSName
         LogFile.LogTracing("Enter Retrieve_UPS_Datas", LogLvl.LOG_DEBUG, Me)
         Try
             Dim UPS_rt_Status As String
             Dim InputA As Double
             ' LogFile.LogTracing("Enter Retrieve_UPS_Data", LogLvl.LOG_DEBUG, Me)
-            If Me.IsConnected Then
-                With Me.UPS_Datas
+            If IsConnected Then
+                With UPS_Datas
                     Select Case "Unknown"
                         Case .Mfr, .Model, .Serial, .Firmware
-                            Me.UPS_Datas = GetUPSProductInfo()
+                            UPS_Datas = GetUPSProductInfo()
                     End Select
                 End With
-                With Me.UPS_Datas.UPS_Value
+                With UPS_Datas.UPS_Value
                     .Batt_Charge = Double.Parse(GetUPSVar("battery.charge", UPSName, 255), ciClone)
                     .Batt_Voltage = Double.Parse(GetUPSVar("battery.voltage", UPSName, 12), ciClone)
                     .Batt_Runtime = Double.Parse(GetUPSVar("battery.runtime", UPSName, 86400), ciClone)
-                    .Power_Frequency = Double.Parse(GetUPSVar("input.frequency", UPSName, Double.Parse(Me.GetUPSVar("output.frequency", UPSName, Freq_Fallback), ciClone)), ciClone)
+                    .Power_Frequency = Double.Parse(GetUPSVar("input.frequency", UPSName, Double.Parse(GetUPSVar("output.frequency", UPSName, Freq_Fallback), ciClone)), ciClone)
                     .Input_Voltage = Double.Parse(GetUPSVar("input.voltage", UPSName, 220), ciClone)
                     .Output_Voltage = Double.Parse(GetUPSVar("output.voltage", UPSName, .Input_Voltage), ciClone)
                     .Load = Double.Parse(GetUPSVar("ups.load", UPSName, 100), ciClone)
-                    UPS_rt_Status = Me.GetUPSVar("ups.status", UPSName, "OL")
-                    .Output_Power = Double.Parse((Me.GetUPSVar("ups.realpower.nominal", UPSName, 0)), ciClone)
+                    UPS_rt_Status = GetUPSVar("ups.status", UPSName, "OL")
+                    .Output_Power = Double.Parse((GetUPSVar("ups.realpower.nominal", UPSName, 0)), ciClone)
                     If .Output_Power = 0 Then
                         .Output_Power = Double.Parse((GetUPSVar("ups.power.nominal", UPSName, 0)), ciClone)
                         If .Output_Power = 0 Then
@@ -421,11 +420,11 @@ Public Class UPS_Device
         ' Try
         ' LogFile.LogTracing("Enter GetUPSVar", LogLvl.LOG_DEBUG, Me)
         'If Not Me.ConnectionStatus Then
-        If Not Me.IsConnected Then
+        If Not IsConnected Then
             Throw New Nut_Exception(Nut_Exception_Value.SOCKET_BROKEN, varName)
             Return Nothing
         Else
-            Dim Nut_Query = Me.Nut_Socket.Query_Data("GET VAR " & UPSName & " " & varName)
+            Dim Nut_Query = Nut_Socket.Query_Data("GET VAR " & UPSName & " " & varName)
 
             Select Case Nut_Query.Response
                 Case NUTResponse.OK
@@ -464,15 +463,15 @@ Public Class UPS_Device
 
     Public Function GetUPS_ListVar() As List(Of UPS_List_Datas)
         Dim Response = New List(Of UPS_List_Datas)
-        Dim Query = "LIST VAR " & Me.Nut_Config.UPSName
+        Dim Query = "LIST VAR " & Nut_Config.UPSName
         Try
             LogFile.LogTracing("Enter GetUPS_ListVar", LogLvl.LOG_DEBUG, Me)
             'If Not Me.ConnectionStatus Then
-            If Not Me.IsConnected Then
+            If Not IsConnected Then
                 Throw New Nut_Exception(Nut_Exception_Value.SOCKET_BROKEN, Query)
                 Return Nothing
             Else
-                Dim List_Var = Me.Nut_Socket.Query_List_Datas(Query)
+                Dim List_Var = Nut_Socket.Query_List_Datas(Query)
                 If Not IsNothing(List_Var) Then
                     Response = List_Var
                 End If
