@@ -1,4 +1,13 @@
 ## History:
+### Version 2.2.8255
+Beta Release
+
+  - Logging now starts earlier in program execution, and potentially catch earlier problems.
+  - Tweaked error reporting form; reports are saved to a consistent location and Explorer is opened to the destination.
+  - Preferences system tweaks; more consistent saving, and the polling interval initializes to a valid value!
+  - Modified disconnection subroutines to each have clear purposes.
+  - Fixed NullReferenceExceptions in About_Gui, List_Var_Gui (#16, #17)
+
 ### Version 2.2.8254
 Beta Release - **HOTFIX**
 
