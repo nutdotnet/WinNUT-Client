@@ -12,6 +12,26 @@ Imports WinNUT_Client_Common
 Public Class WinNUT
 #Region "Properties"
 
+    Public Property UpdateMethod() As String
+        Get
+            If mUpdate Then
+                mUpdate = False
+                Return True
+            Else
+                Return False
+            End If
+        End Get
+        Set(Value As String)
+            mUpdate = Value
+        End Set
+    End Property
+
+    Public WriteOnly Property HasCrashed() As Boolean
+        Set(Value As Boolean)
+            WinNUT_Crashed = Value
+        End Set
+    End Property
+
 #End Region
     Private WithEvents LogFile As Logger = WinNUT_Globals.LogFile
 
@@ -29,7 +49,7 @@ Public Class WinNUT
 
     'Variable used with Toast Functionnality
     Public WithEvents FrmBuild As Update_Gui
-    Public ToastPopup As New WinNUT_Client_Common.ToastPopup
+    Public ToastPopup As New ToastPopup
     Private WindowsVersion As Version = Version.Parse(My.Computer.Info.OSVersion)
     Private MinOsVersionToast As Version = Version.Parse("10.0.18362.0")
     Private AllowToast As Boolean = False
@@ -65,32 +85,14 @@ Public Class WinNUT
     Private Event On_Battery()
     Private Event On_Line()
     ' Private Event Data_Updated()
-    Private Event UpdateNotifyIconStr(ByVal Reason As String, ByVal Message As String)
-    Private Event UpdateBatteryState(ByVal Reason As String)
+    Private Event UpdateNotifyIconStr(Reason As String, Message As String)
+    Private Event UpdateBatteryState(Reason As String)
+    ' UPS object operation 
     Private Event RequestConnect()
+    ' Private Event RequestDisconnect()
 
     'Handle sleep/hibernate mode from windows API
-    Declare Function SetSuspendState Lib "PowrProf" (ByVal Hibernate As Integer, ByVal ForceCritical As Integer, ByVal DisableWakeEvent As Integer) As Integer
-
-    Public Property UpdateMethod() As String
-        Get
-            If mUpdate Then
-                mUpdate = False
-                Return True
-            Else
-                Return False
-            End If
-        End Get
-        Set(ByVal Value As String)
-            mUpdate = Value
-        End Set
-    End Property
-
-    Public WriteOnly Property HasCrashed() As Boolean
-        Set(ByVal Value As Boolean)
-            WinNUT_Crashed = Value
-        End Set
-    End Property
+    Declare Function SetSuspendState Lib "PowrProf" (Hibernate As Integer, ForceCritical As Integer, DisableWakeEvent As Integer) As Integer
 
     Private Sub WinNUT_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' Make sure we have an app directory to write to.
@@ -283,7 +285,7 @@ Public Class WinNUT
         ' RaiseEvent RequestConnect()
     End Sub
 
-    Private Sub SystemEvents_PowerModeChanged(ByVal sender As Object, ByVal e As Microsoft.Win32.PowerModeChangedEventArgs)
+    Private Sub SystemEvents_PowerModeChanged(sender As Object, e As Microsoft.Win32.PowerModeChangedEventArgs)
         Select Case e.Mode
             Case Microsoft.Win32.PowerModes.Resume
                 LogFile.LogTracing("Restarting WinNUT after waking up from Windows", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_MAIN_EXITSLEEP))
@@ -354,7 +356,7 @@ Public Class WinNUT
     ''' <summary>
     ''' Prepare application for and handle disconnecting from the UPS.
     ''' </summary>
-    Private Sub UPSDisconnect() Handles UPS_Device.Disconnected
+    Private Sub UPSDisconnectedEvent() Handles UPS_Device.Disconnected
         ' LogFile.LogTracing("Running Client disconnect subroutine.", LogLvl.LOG_DEBUG, Me)
 
         ' Update_Data.Stop()
@@ -509,7 +511,7 @@ Public Class WinNUT
 
 
 
-    Private Sub Event_UpdateNotifyIconStr(ByVal Optional Reason As String = Nothing, ByVal Optional Message As String = Nothing) Handles Me.UpdateNotifyIconStr
+    Private Sub Event_UpdateNotifyIconStr(Optional Reason As String = Nothing, Optional Message As String = Nothing) Handles Me.UpdateNotifyIconStr
         Dim ShowVersion As String = ShortProgramVersion
         Dim NotifyStr As String = ProgramName & " - " & ShowVersion & vbNewLine
         Dim FormText As String = ProgramName
@@ -568,7 +570,7 @@ Public Class WinNUT
         LogFile.LogTracing("NotifyIcon Text => " & vbNewLine & NotifyStr, LogLvl.LOG_DEBUG, Me)
     End Sub
 
-    Private Sub Event_UpdateBatteryState(ByVal Optional Reason As String = Nothing) Handles Me.UpdateBatteryState
+    Private Sub Event_UpdateBatteryState(Optional Reason As String = Nothing) Handles Me.UpdateBatteryState
         Static Dim Old_Battery_Value As Integer = UPS_BattCh
         Dim Status As String = "Unknown"
         Select Case Reason
@@ -621,7 +623,7 @@ Public Class WinNUT
     Private Sub UPS_Lostconnect() Handles UPS_Device.Lost_Connect
         LogFile.LogTracing("Notify user of lost connection", LogLvl.LOG_ERROR, Me,
             String.Format(StrLog.Item(AppResxStr.STR_MAIN_LOSTCONNECT), UPS_Device.Nut_Config.Host, UPS_Device.Nut_Config.Port))
-        UPSDisconnect()
+        UPSDisconnectedEvent()
         'Dim Host = UPS_Device.Nut_Config.Host
         'Dim Port = UPS_Device.Nut_Config.Port
         'Update_Data.Stop()
@@ -1013,7 +1015,7 @@ Public Class WinNUT
         End If
     End Sub
 
-    Private Function GetIcon(ByVal IconIdx As Integer) As Icon
+    Private Function GetIcon(IconIdx As Integer) As Icon
         Select Case IconIdx
             Case 1025
                 Return My.Resources._1025

@@ -14,7 +14,7 @@ Public Class UPS_Device
     Private Const CosPhi As Double = 0.6
     ' How many milliseconds to wait before the Reconnect routine tries again.
 #If DEBUG Then
-    Private Const DEFAULT_RECONNECT_WAIT_MS As Double = 3000
+    Private Const DEFAULT_RECONNECT_WAIT_MS As Double = 5000
 #Else
     Private Const DEFAULT_RECONNECT_WAIT_MS As Double = 30000
 #End If
