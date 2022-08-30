@@ -92,9 +92,7 @@ Valid,TGi,Not Connected,未連線
 Valid,TGi,Notice,注意
 Valid,TGi,NUT host,NUT 主機
 Valid,TGi,NUT Port,NUT 埠號
-Valid,TGi,Nut server address. Accepted value: IPV4 / IPV6 / FQDN address.,NUT 伺服器位址，請使用 IPv4/IPv6/FQDN 位址
-Valid,TGi,NUT server connection identifier,NUT 伺服器連線指示器
-Valid,TGi,NUT server login password,NUT 伺服器登入密碼
+Valid,TGi,Nut server address. Accepted value: IPV4 / IPV6 / FQDN address.,NUT 伺服器位址，請使用 IPv4/IPv6/FQDN 位址。
 Valid,TGi,Nut Server Port Number (default = 3493). Accepted value: Numeric value from 1 to 65535.,NUT 伺服器埠號 (預設值 3493)，範圍：1-65535。
 Valid,TGi,Ok,確定
 Valid,TGi,Old ups.ini imported,匯入舊的 ups.ini
