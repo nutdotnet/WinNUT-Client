@@ -567,12 +567,19 @@ Public Class WinNUT
         LogFile.LogTracing("Battery Status => " & Status, LogLvl.LOG_DEBUG, Me)
     End Sub
 
-    Public Sub Event_Unknown_UPS() Handles UPS_Device.Unknown_UPS, UPS_Device.Unknown_UPS
+    Sub HandleNUTException(ex As Nut_Exception, sender As Object) Handles UPS_Device.EncounteredNUTException
+        If ex.ExceptionValue = Nut_Exception_Value.UNKNOWN_UPS Then
+            Event_Unknown_UPS()
+        End If
+
+    End Sub
+
+    Public Sub Event_Unknown_UPS() ' Handles UPS_Device.Unknown_UPS
         ActualAppIconIdx = AppIconIdx.IDX_ICO_OFFLINE
         LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
         UpdateIcon_NotifyIcon()
         RaiseEvent UpdateNotifyIconStr("Unknown UPS", Nothing)
-        LogFile.LogTracing("Cannot Connect : Unknow UPS Name", LogLvl.LOG_DEBUG, Me, StrLog.Item(AppResxStr.STR_MAIN_UNKNOWN_UPS))
+        LogFile.LogTracing("Unknow UPS Name", LogLvl.LOG_ERROR, Me, StrLog.Item(AppResxStr.STR_MAIN_UNKNOWN_UPS))
         Menu_UPS_Var.Enabled = False
     End Sub
 
@@ -609,9 +616,9 @@ Public Class WinNUT
     End Sub
 
     Public Shared Sub Event_ChangeStatus() Handles Me.On_Battery, Me.On_Line,
-        UPS_Device.Lost_Connect, UPS_Device.Connected, UPS_Device.Disconnected, UPS_Device.New_Retry, UPS_Device.Unknown_UPS, UPS_Device.ReConnected,
-        UPS_Device.Unknown_UPS
-        ', UPS_Device.InvalidLogin,
+        UPS_Device.Lost_Connect, UPS_Device.Connected, UPS_Device.Disconnected, UPS_Device.New_Retry, UPS_Device.ReConnected
+        ', UPS_Device.Unknown_UPS
+        ', UPS_Device.InvalidLogin
 
         WinNUT.NotifyIcon.BalloonTipText = WinNUT.NotifyIcon.Text
         If WinNUT.AllowToast And WinNUT.NotifyIcon.BalloonTipText <> "" Then
