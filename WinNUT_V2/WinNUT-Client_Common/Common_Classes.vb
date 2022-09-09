@@ -36,6 +36,7 @@ Public Class Nut_Exception
     Inherits System.ApplicationException
 
     Public Property ExceptionValue As Nut_Exception_Value
+    Public Property ProtocolError As NUTResponse
 
     Public Sub New(ByVal Nut_Error_Lvl As Nut_Exception_Value)
         MyBase.New(StringEnum.GetStringValue(Nut_Error_Lvl))
@@ -44,6 +45,16 @@ Public Class Nut_Exception
     Public Sub New(ByVal Nut_Error_Lvl As Nut_Exception_Value, ByVal Message As String, Optional innerEx As Exception = Nothing)
         MyBase.New(StringEnum.GetStringValue(Nut_Error_Lvl) & Message, innerEx)
         ExceptionValue = Nut_Error_Lvl
+    End Sub
+
+    ''' <summary>
+    ''' Raise a Nut_Exception that resulted from an error as part of the NUT protocol.
+    ''' </summary>
+    ''' <param name="protocolError"></param>
+    ''' <param name="message"></param>
+    Public Sub New(protocolError As NUTResponse, message As String)
+        MyBase.New(message)
+        Me.ProtocolError = protocolError
     End Sub
 End Class
 

@@ -108,7 +108,7 @@ Public Class UPS_Device
     'Private Invalid_Auth_Data As Boolean = False
     'Private Const CosPhi As Double = 0.6
 
-    Public Event Unknown_UPS()
+    ' Public Event Unknown_UPS()
     Public Event DataUpdated()
     Public Event Connected(sender As UPS_Device)
     Public Event ReConnected(sender As UPS_Device)
@@ -116,6 +116,9 @@ Public Class UPS_Device
     Public Event Disconnected()
     ' Notify of an unexpectedly lost connection (??)
     Public Event Lost_Connect()
+    ' Error encountered when trying to connect.
+    Public Event ConnectionError(innerException As Exception)
+    Public Event EncounteredNUTException(ex As Nut_Exception, sender As Object)
     Public Event New_Retry()
     Public Event Shutdown_Condition()
     Public Event Stop_Shutdown()
@@ -145,23 +148,30 @@ Public Class UPS_Device
     End Sub
 
     Public Sub Connect_UPS()
-        ' Dim UPSName = Me.Nut_Config.UPSName
         LogFile.LogTracing("Beginning connection: " & Nut_Config.ToString(), LogLvl.LOG_DEBUG, Me)
 
-        If Nut_Socket.Connect() And Nut_Socket.IsConnected Then
+        Try
+            Nut_Socket.Connect()
             LogFile.LogTracing("TCP Socket Created", LogLvl.LOG_NOTICE, Me)
 
-            If Nut_Socket.IsKnownUPS(Nut_Config.UPSName) Then
-                UPS_Datas = GetUPSProductInfo()
-                Init_Constant(Nut_Socket)
-                Update_Data.Start()
-                RaiseEvent Connected(Me)
-            Else
-                LogFile.LogTracing("Given UPS Name is unknown", LogLvl.LOG_ERROR, Me)
-                RaiseEvent Unknown_UPS()
-                Disconnect(True, False, True)
-            End If
-        End If
+            ' If Nut_Socket.ExistsOnServer(Nut_Config.UPSName) Then
+            UPS_Datas = GetUPSProductInfo()
+            Init_Constant(Nut_Socket)
+            Update_Data.Start()
+            RaiseEvent Connected(Me)
+            ' Else
+            ' LogFile.LogTracing("Given UPS Name is unknown", LogLvl.LOG_ERROR, Me)
+            ' RaiseEvent Unknown_UPS()
+            ' Disconnect(True)
+            ' End If
+        Catch ex As Nut_Exception
+            ' This is how we determine if we have a valid UPS name entered, among other errors.
+            RaiseEvent EncounteredNUTException(ex, Me)
+
+        Catch ex As Exception
+            RaiseEvent ConnectionError(ex)
+
+        End Try
     End Sub
 
     'Private Sub HandleDisconnectRequest(sender As Object, Optional cancelAutoReconnect As Boolean = True) Handles Me.RequestDisconnect
@@ -252,13 +262,13 @@ Public Class UPS_Device
         End If
     End Sub
 
-    Private Sub NUTSocketError(nutEx As Nut_Exception, NoticeLvl As LogLvl, sender As Object) Handles Nut_Socket.OnNUTException
-        If nutEx.ExceptionValue = Nut_Exception_Value.SOCKET_BROKEN AndAlso nutEx.InnerException IsNot Nothing Then
-            LogFile.LogTracing("Socket_Broken event InnerException: " & nutEx.InnerException.ToString(), LogLvl.LOG_DEBUG, Me)
-        End If
+    'Private Sub NUTSocketError(nutEx As Nut_Exception, NoticeLvl As LogLvl, sender As Object) Handles Nut_Socket.OnNUTException
+    '    If nutEx.ExceptionValue = Nut_Exception_Value.SOCKET_BROKEN AndAlso nutEx.InnerException IsNot Nothing Then
+    '        LogFile.LogTracing("Socket_Broken event InnerException: " & nutEx.InnerException.ToString(), LogLvl.LOG_DEBUG, Me)
+    '    End If
 
-        LogFile.LogTracing("[" & Nut_Config.UPSName & "] " & nutEx.ToString(), LogLvl.LOG_WARNING, Nut_Socket)
-    End Sub
+    '    LogFile.LogTracing("[" & Nut_Config.UPSName & "] " & nutEx.ToString(), LogLvl.LOG_WARNING, Nut_Socket)
+    'End Sub
 
 #End Region
 
@@ -416,7 +426,8 @@ Public Class UPS_Device
         ' Return Me.UPS_Datas
     End Sub
 
-    Public Function GetUPSVar(ByVal varName As String, ByVal UPSName As String, Optional ByVal Fallback_value As Object = Nothing) As String
+    Private Const MAX_VAR_RETRIES = 3
+    Public Function GetUPSVar(ByVal varName As String, ByVal UPSName As String, Optional ByVal Fallback_value As Object = Nothing, Optional recursing As Boolean = False) As String
         ' Try
         ' LogFile.LogTracing("Enter GetUPSVar", LogLvl.LOG_DEBUG, Me)
         'If Not Me.ConnectionStatus Then
@@ -433,11 +444,12 @@ Public Class UPS_Device
                 Case NUTResponse.UNKNOWNUPS
                     'Me.Invalid_Data = False
                     'Me.Unknown_UPS_Name = True
-                    RaiseEvent Unknown_UPS()
-                    Throw New Nut_Exception(Nut_Exception_Value.UNKNOWN_UPS)
+                    ' RaiseEvent Unknown_UPS()
+                    Throw New Nut_Exception(Nut_Exception_Value.UNKNOWN_UPS, "The UPS does not exist on the server.")
                 Case NUTResponse.VARNOTSUPPORTED
                     'Me.Unknown_UPS_Name = False
                     'Me.Invalid_Data = False
+
                     If Not String.IsNullOrEmpty(Fallback_value) Then
                         LogFile.LogTracing("Apply Fallback Value when retrieving " & varName, LogLvl.LOG_WARNING, Me)
                         Dim FakeData = "VAR " & UPSName & " " & varName & " " & """" & Fallback_value & """"
@@ -446,11 +458,34 @@ Public Class UPS_Device
                         LogFile.LogTracing("Error Result On Retrieving  " & varName & " : " & Nut_Query.Data, LogLvl.LOG_ERROR, Me)
                         Return Nothing
                     End If
+                ' upsd won't provide any value for the var, in case of false reading.
                 Case NUTResponse.DATASTALE
-                    'Me.Invalid_Data = True
-                    LogFile.LogTracing("Error Result On Retrieving  " & varName & " : " & Nut_Query.Data, LogLvl.LOG_ERROR, Me)
-                    Throw New System.Exception(varName & " : " & Nut_Query.Data)
-                    Return Nothing
+                    LogFile.LogTracing("DATA-STALE Error Result On Retrieving  " & varName & " : " & Nut_Query.Data, LogLvl.LOG_ERROR, Me)
+
+                    If recursing Then
+                        Return Nothing
+                    Else
+                        Dim retryNum = 1
+                        Dim returnString As String = Nothing
+
+                        While returnString Is Nothing AndAlso retryNum <= MAX_VAR_RETRIES
+                            LogFile.LogTracing("Attempting retry " & retryNum & " to get variable.", LogLvl.LOG_NOTICE, Me)
+                            returnString = GetUPSVar(varName, UPSName, Fallback_value, True)
+                        End While
+
+                        If returnString Is Nothing Then
+                            returnString = Fallback_value
+                            RaiseEvent EncounteredNUTException(New Nut_Exception(NUTResponse.DATASTALE,
+                                        "Server reported that the data is stale after " & retryNum & " retries."), Me)
+                        End If
+
+                        Return returnString
+                    End If
+
+                    ' Throw New System.Exception(varName & " : " & Nut_Query.Data)
+                    Throw New Nut_Exception(NUTResponse.DATASTALE, "Server reported that the data is stale.")
+
+                    ' Return NUTResponse.DATASTALE
                 Case Else
                     Return Nothing
             End Select
@@ -464,24 +499,24 @@ Public Class UPS_Device
     Public Function GetUPS_ListVar() As List(Of UPS_List_Datas)
         Dim Response = New List(Of UPS_List_Datas)
         Dim Query = "LIST VAR " & Nut_Config.UPSName
-        Try
-            LogFile.LogTracing("Enter GetUPS_ListVar", LogLvl.LOG_DEBUG, Me)
-            'If Not Me.ConnectionStatus Then
-            If Not IsConnected Then
-                Throw New Nut_Exception(Nut_Exception_Value.SOCKET_BROKEN, Query)
-                Return Nothing
-            Else
-                Dim List_Var = Nut_Socket.Query_List_Datas(Query)
-                If Not IsNothing(List_Var) Then
-                    Response = List_Var
-                End If
+        ' Try
+        LogFile.LogTracing("Enter GetUPS_ListVar", LogLvl.LOG_DEBUG, Me)
+        'If Not Me.ConnectionStatus Then
+        If Not IsConnected Then
+            Throw New InvalidOperationException("Attempted to list vars while disconnected.")
+        Else
+            Dim List_Var = Nut_Socket.Query_List_Datas(Query)
+            If Not IsNothing(List_Var) Then
+                Response = List_Var
             End If
+        End If
 
-        Catch Excep As Exception
-            'RaiseEvent OnError(Excep, LogLvl.LOG_ERROR, Me)
-        End Try
+        'Catch Excep As Exception
+        '    'RaiseEvent OnError(Excep, LogLvl.LOG_ERROR, Me)
+        'End Try
         Return Response
     End Function
+
     Private Function ExtractData(ByVal Var_Data As String) As String
         Dim SanitisedVar As String
         Dim StringArray(Nothing) As String
