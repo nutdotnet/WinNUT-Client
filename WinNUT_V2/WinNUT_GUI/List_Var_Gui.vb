@@ -24,7 +24,13 @@ Public Class List_Var_Gui
     Private Sub PopulateTreeView()
         Dim action As Action
         LogFile.LogTracing("Populate TreeView", LogLvl.LOG_DEBUG, Me)
-        List_Var_Datas = WinNUT.UPS_Device.GetUPS_ListVar()
+        Try
+            List_Var_Datas = WinNUT.UPS_Device.GetUPS_ListVar()
+        Catch ex As Exception
+            ' TODO: Internationalize?
+            MessageBox.Show("Error encountered trying to get variables from the UPS: " & vbNewLine & ex.Message, "Error Encountered")
+            Close()
+        End Try
 
         If List_Var_Datas Is Nothing Then
             LogFile.LogTracing("ListUPSVars return Nothing Value", LogLvl.LOG_DEBUG, Me)
