@@ -1,4 +1,7 @@
 ## History:
+### Further releases
+Please see the [releases](https://github.com/nutdotnet/WinNUT-Client/releases) page for more recent releases.
+
 ### Version 2.2.8255
 Beta Release
 
