@@ -107,9 +107,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -155,7 +152,7 @@
     <Compile Include="CProgressBar.vb">
       <SubType>Component</SubType>
     </Compile>
-    <None Include="ToastPopup.vb" />
+    <Compile Include="ToastPopup.vb" />
     <Compile Include="Update_Gui.Designer.vb">
       <DependentUpon>Update_Gui.vb</DependentUpon>
     </Compile>
@@ -315,7 +312,6 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
-    <None Include="packages.config" />
     <None Include="WinNUT-client_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -388,6 +384,11 @@
       <Project>{9074ce60-db9a-4bdf-b851-6eab8a81f366}</Project>
       <Name>WinNUT-Client_Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.1</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.ResxResources.targets" Label="MultilingualAppToolkit" Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\v$(MultilingualAppToolkitVersion)\Microsoft.Multilingual.ResxResources.targets')" />
