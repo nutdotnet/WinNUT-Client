@@ -21,6 +21,9 @@ jobs:
       matrix:
         os: [windows-latest] # Only building for Windows. Should have MSBuild.
     steps:
+    # Make MSBuild available from $PATH.
+    - name: setup-msbuild
+      uses: microsoft/setup-msbuild@v1.1
 
     - name: Checkout Code
       uses: actions/checkout@v3
