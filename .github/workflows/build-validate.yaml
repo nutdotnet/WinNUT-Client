@@ -28,10 +28,10 @@ jobs:
       run: msbuild WinNUT_V2/WinNUT_V2.sln /p:Configuration=Release
 
     - name: Upload Artifact
-          uses: actions/upload-artifact@v3
-          with:
-            name: built-winnut
-            if-no-files-found: error
-            path: |
-              WinNUT_V2/WinNUT_GUI/bin/Release
-              WinNUT_V2/Setup/Release
+      uses: actions/upload-artifact@v3
+      with:
+        name: build-winnut
+        if-no-files-found: error
+        path: |
+          WinNUT_V2/WinNUT_GUI/bin/Release
+          WinNUT_V2/Setup/Release
