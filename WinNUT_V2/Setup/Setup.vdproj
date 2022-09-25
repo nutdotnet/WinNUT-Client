@@ -39,12 +39,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_0418C0A68EC444EE896C1D543C8AFD63"
-        "OwnerKey" = "8:_70DBA11C2BF449198BA594449914C1BC"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_04CF9F50AFCFD75A7E6088F3621CA4ED"
         "OwnerKey" = "8:_70DBA11C2BF449198BA594449914C1BC"
         "MsmSig" = "8:_UNDEFINED"
@@ -255,12 +249,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_4F81608AEF82517B403CCE166E5C9E7B"
-        "OwnerKey" = "8:_70DBA11C2BF449198BA594449914C1BC"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_55900C9611A2611D3971BBB8926ECB47"
         "OwnerKey" = "8:_70DBA11C2BF449198BA594449914C1BC"
         "MsmSig" = "8:_UNDEFINED"
@@ -286,6 +274,12 @@
         "Entry"
         {
         "MsmKey" = "8:_5AF60A8FE8E5CE18A62870618E1A6464"
+        "OwnerKey" = "8:_70DBA11C2BF449198BA594449914C1BC"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_5C99D3FB8E4CBB81209F637E049611DF"
         "OwnerKey" = "8:_70DBA11C2BF449198BA594449914C1BC"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -322,7 +316,7 @@
         "Entry"
         {
         "MsmKey" = "8:_5FE446066F12393E77A2B0F5915CB43A"
-        "OwnerKey" = "8:_4F81608AEF82517B403CCE166E5C9E7B"
+        "OwnerKey" = "8:_5C99D3FB8E4CBB81209F637E049611DF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -406,6 +400,12 @@
         "Entry"
         {
         "MsmKey" = "8:_763E5255FF317196BB954450CD929A96"
+        "OwnerKey" = "8:_70DBA11C2BF449198BA594449914C1BC"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7643B2E01E55816C8BA2265FF9E9B786"
         "OwnerKey" = "8:_70DBA11C2BF449198BA594449914C1BC"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -694,13 +694,13 @@
         "Entry"
         {
         "MsmKey" = "8:_BED24066F49F1B908C4DB31C0CBA928C"
-        "OwnerKey" = "8:_70DBA11C2BF449198BA594449914C1BC"
+        "OwnerKey" = "8:_5C99D3FB8E4CBB81209F637E049611DF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_BED24066F49F1B908C4DB31C0CBA928C"
-        "OwnerKey" = "8:_4F81608AEF82517B403CCE166E5C9E7B"
+        "OwnerKey" = "8:_70DBA11C2BF449198BA594449914C1BC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -916,13 +916,19 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_70DBA11C2BF449198BA594449914C1BC"
+        "OwnerKey" = "8:_5C99D3FB8E4CBB81209F637E049611DF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_4F81608AEF82517B403CCE166E5C9E7B"
+        "OwnerKey" = "8:_7643B2E01E55816C8BA2265FF9E9B786"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_70DBA11C2BF449198BA594449914C1BC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -977,12 +983,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_DCF566685AE6F7520AB676CC882EB40F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_0418C0A68EC444EE896C1D543C8AFD63"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1852,32 +1852,6 @@
                     }
                 }
             "SourcePath" = "8:System.Linq.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0418C0A68EC444EE896C1D543C8AFD63"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:AGauge, Version=2.1.8253.28719, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                }
-            "SourcePath" = "8:AGauge.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
@@ -2792,32 +2766,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4F81608AEF82517B403CCE166E5C9E7B"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WinNUT-Client_Common, Version=2.2.8253.28731, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                }
-            "SourcePath" = "8:WinNUT-Client_Common.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_55900C9611A2611D3971BBB8926ECB47"
             {
             "AssemblyRegister" = "3:1"
@@ -2970,6 +2918,37 @@
             "PackageAs" = "3:1"
             "Register" = "3:1"
             "Exclude" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5C99D3FB8E4CBB81209F637E049611DF"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:WinNUT-Client_Common, Version=2.2.8303.20596, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_5C99D3FB8E4CBB81209F637E049611DF"
+                    {
+                    "Name" = "8:WinNUT-Client_Common.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:WinNUT-Client_Common.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -3441,6 +3420,37 @@
                     }
                 }
             "SourcePath" = "8:System.ServiceModel.Duplex.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7643B2E01E55816C8BA2265FF9E9B786"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:AGauge, Version=2.1.8303.20596, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_7643B2E01E55816C8BA2265FF9E9B786"
+                    {
+                    "Name" = "8:AGauge.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:AGauge.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
@@ -5642,15 +5652,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:WinNUT"
-        "ProductCode" = "8:{D86CC521-7EEF-48A4-A043-7C2A4C440FDB}"
-        "PackageCode" = "8:{3EC9F76F-07E8-4AC6-BE64-ACE016374A6F}"
+        "ProductCode" = "8:{8F709952-A4B8-4612-9A33-67614A437E0D}"
+        "PackageCode" = "8:{AFECD240-7D85-43B8-95CE-234ABFB59CDE}"
         "UpgradeCode" = "8:{7EA17151-76E7-4E29-8F6A-621C1B4144C2}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:2.2"
+        "ProductVersion" = "8:2.2.8303"
         "Manufacturer" = "8:NUTDotNet"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://github.com/nutdotnet/WinNUT-Client/issues"
