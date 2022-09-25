@@ -169,20 +169,20 @@ Public Class WinNUT
         LogFile.LogTracing("NotifyIcons Initialised", LogLvl.LOG_DEBUG, Me)
 
         'Verify If Toast Compatible
-
-        If MinOsVersionToast.CompareTo(WindowsVersion) < 0 Then
-            AllowToast = True
-            ToastPopup.ToastHeader = ProgramName & " - " & ShortProgramVersion
-            LogFile.LogTracing("Windows 10 Toast Notification Available", LogLvl.LOG_DEBUG, Me)
-            'Dim ico As Icon = Me.Icon
-            'Dim file As System.IO.FileStream = New System.IO.FileStream(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\WinNUT-Client\WinNut.ico", System.IO.FileMode.OpenOrCreate)
-            'ico.Save(file)
-            'file.Close()
-            'ico.Dispose()
-            'ToastPopup.CreateToastCollection(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\WinNUT-Client\WinNut.ico")
-        Else
+#If CONFIG = "Dbg-Win10" Then
+        ' If MinOsVersionToast.CompareTo(WindowsVersion) < 0 Then
+        AllowToast = True
+        ToastPopup.ToastHeader = ProgramName & " - " & ShortProgramVersion
+        LogFile.LogTracing("Windows 10 Toast Notification Available", LogLvl.LOG_DEBUG, Me)
+        'Dim ico As Icon = Me.Icon
+        'Dim file As System.IO.FileStream = New System.IO.FileStream(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\WinNUT-Client\WinNut.ico", System.IO.FileMode.OpenOrCreate)
+        'ico.Save(file)
+        'file.Close()
+        'ico.Dispose()
+        'ToastPopup.CreateToastCollection(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\WinNUT-Client\WinNut.ico")
+#Else
             LogFile.LogTracing("Windows 10 Toast Notification Not Available. Too Old Windows Version", LogLvl.LOG_DEBUG, Me)
-        End If
+#End If
 
         'UPS_Device.Battery_Limit = WinNUT_Params.Arr_Reg_Key.Item("ShutdownLimitBatteryCharge")
         'UPS_Device.Backup_Limit = WinNUT_Params.Arr_Reg_Key.Item("ShutdownLimitUPSRemainTime")
