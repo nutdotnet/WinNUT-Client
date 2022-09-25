@@ -7,6 +7,8 @@
 '
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
+Imports System.Xml
+
 Public Class ToastPopup
     Private Header As String = ""
     Public WriteOnly Property ToastHeader() As String
@@ -43,10 +45,10 @@ Public Class ToastPopup
             TemplateToast = Windows.UI.Notifications.ToastTemplateType.ToastText02
         End If
 
-        Dim toastXml As Windows.Data.Xml.Dom.XmlDocument = Windows.UI.Notifications.ToastNotificationManager.GetTemplateContent(TemplateToast)
+        Dim toastXml As XmlDocument = Windows.UI.Notifications.ToastNotificationManager.GetTemplateContent(TemplateToast)
 
         'Fill in the text elements
-        Dim stringElements As Windows.Data.Xml.Dom.XmlNodeList = toastXml.GetElementsByTagName("text")
+        Dim stringElements As XmlNodeList = toastXml.GetElementsByTagName("text")
         For i = 0 To ((ToastParts.Count - 1) And (stringElements.Count - 1)) Step 1
             stringElements.Item(i).InnerText = ToastParts.ElementAt(i)
         Next
