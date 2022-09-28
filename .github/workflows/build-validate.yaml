@@ -30,7 +30,7 @@ jobs:
 
     - name: Setup Nuget
       uses: NuGet/setup-nuget@v1.0.2
-      env:
+      # env:
         # ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     
     - name: Restore NuGet Packages
