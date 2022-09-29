@@ -13,7 +13,7 @@ env:
   DOTNET_VERSION: '4.7.2' # The .NET SDK version to use
   # Below is copied from https://github.com/actions/runner-images/issues/128#issuecomment-565227772
   # and https://github.com/actions/runner-images/blob/main/images/win/Windows2022-Readme.md
-  DEV_EXE: "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\devenv.com"
+  DEV_EXE: C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\devenv.com
   SLN_PATH: WinNUT_V2/WinNUT_V2.sln
 
 jobs:
