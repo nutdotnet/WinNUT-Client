@@ -36,10 +36,11 @@ jobs:
       uses: nuget/setup-nuget@v1
     
     - name: Restore NuGet Packages
-      run: nuget restore "%SLN_PATH%"
+      run: nuget restore $env:SLN_PATH
 
     - name: Build solution
-      run: "%DEV_EXE%" "%SLN_PATH%" /build release
+      shell: cmd
+      run: $env:DEV_EXE $env:SLN_PATH /build release
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
