@@ -11,6 +11,9 @@ on:
 
 env:
   DOTNET_VERSION: '4.7.2' # The .NET SDK version to use
+  # Below is copied from https://github.com/actions/runner-images/issues/128#issuecomment-565227772
+  # and https://github.com/actions/runner-images/blob/main/images/win/Windows2022-Readme.md
+  DEV_EXE: "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\devenv.com"
   SLN_PATH: WinNUT_V2/WinNUT_V2.sln
 
 jobs:
@@ -20,11 +23,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest] # Only building for Windows.
+        os: [windows-2019] # Only building for Windows, set to our current development environment.
     steps:
     # Make devenv available so .vdproj can be built.
-    - name: Setup devenv
-      uses: seanmiddleditch/gha-setup-vsdevenv@v4
+    # - name: Setup devenv
+    #   uses: seanmiddleditch/gha-setup-vsdevenv@v4
 
     - name: Checkout Code
       uses: actions/checkout@v3
@@ -36,7 +39,7 @@ jobs:
       run: nuget restore "%SLN_PATH"  
 
     - name: Build solution
-      run: devenv "%SLN_PATH" /build release
+      run: "%DEV_EXE" "%SLN_PATH" /build release
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
