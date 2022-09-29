@@ -11,6 +11,7 @@ on:
 
 env:
   DOTNET_VERSION: '4.7.2' # The .NET SDK version to use
+  SLN_PATH: WinNUT_V2/WinNUT_V2.sln
 
 jobs:
   build:
@@ -19,25 +20,23 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest] # Only building for Windows. Should have MSBuild.
+        os: [windows-latest] # Only building for Windows.
     steps:
-    # Make MSBuild available from $PATH.
-    - name: setup-msbuild
-      uses: microsoft/setup-msbuild@v1.1
+    # Make devenv available so .vdproj can be built.
+    - name: Setup devenv
+      uses: seanmiddleditch/gha-setup-vsdevenv@v4
 
     - name: Checkout Code
       uses: actions/checkout@v3
 
     - name: Setup Nuget
       uses: nuget/setup-nuget@v1
-      # env:
-        # ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     
     - name: Restore NuGet Packages
-      run: nuget restore WinNUT_V2/WinNUT_V2.sln     
+      run: nuget restore "%SLN_PATH"  
 
     - name: Build solution
-      run: msbuild WinNUT_V2/WinNUT_V2.sln /p:Configuration=Release
+      run: devenv "%SLN_PATH" /build release
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
