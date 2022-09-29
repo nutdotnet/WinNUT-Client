@@ -1,5 +1,9 @@
 name: build
 
+defaults:
+  run:
+    working-directory: WinNUT_V2
+
 on:
   push:
   workflow_dispatch:
@@ -11,7 +15,7 @@ on:
 
 env:
   DOTNET_VERSION: '4.7.2' # The .NET SDK version to use
-  SLN_FILE: WinNUT_V2/WinNUT_V2.sln
+  SLN_FILE: WinNUT_V2.sln
 
 jobs:
   build:
@@ -29,11 +33,13 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    - name: Setup Nuget
-      uses: nuget/setup-nuget@v1
+    # - name: Setup Nuget
+    #   uses: nuget/setup-nuget@v1
     
-    - name: Restore NuGet Packages
-      run: nuget restore $env:SLN_FILE     
+    # - name: Restore NuGet Packages
+    #   run: nuget restore $env:SLN_FILE  
+    - name: Restore Packages
+      run: msbuild -t:restore
 
     # msbuild cannot handle .vdproj Installer projects, so only build debug for now.
     - name: Build solution
@@ -45,5 +51,5 @@ jobs:
         name: build-winnut
         if-no-files-found: error
         path: |
-          WinNUT_V2/WinNUT_GUI/bin/Debug
-          WinNUT_V2/Setup/Debug
+          WinNUT_GUI/bin/Debug
+          
