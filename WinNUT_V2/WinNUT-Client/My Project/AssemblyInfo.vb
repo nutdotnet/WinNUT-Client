@@ -23,15 +23,3 @@ Imports System.Runtime.InteropServices
 
 'Le GUID suivant est pour l'ID de la typelib si ce projet est exposé à COM
 <Assembly: Guid("00424259-e020-4e5c-a70a-5660aa21cb0b")>
-
-' Les informations de version pour un assembly se composent des quatre valeurs suivantes :
-'
-'      Version principale
-'      Version secondaire
-'      Numéro de build
-'      Révision
-'
-' Vous pouvez spécifier toutes les valeurs ou indiquer les numéros de build et de révision par défaut
-' en utilisant '*', comme indiqué ci-dessous :
-' <Assembly: AssemblyVersion("1.0.*")>
-
