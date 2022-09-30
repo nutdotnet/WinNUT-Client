@@ -1,5 +1,5 @@
 ﻿Status,Translator,﻿Message,Translation
-Valid,Gawindx,About,Über
+To be Validated,Martin Kurtz,About,Impressum
 Valid,Lineflyer,Activate automatic connection / reconnection,Automatische Verbindung / Wiederverbindung aktivieren
 Valid,Lineflyer,Additional grace period limit. Accepted value: Numeric value from 0 to 3600., Limit für zusätzliche Verzögerung. Wertebereich: Numerischer Wert von 0 bis 3600.
 Valid,Lineflyer,Alert,Alarm
@@ -36,8 +36,8 @@ Valid,Lineflyer,Delay to Shutdown (sec),Verzögerung vor dem Herunterfahren (Sek
 Valid,Lineflyer,Delete log file.,Logdatei löschen.
 Valid,Gawindx,Description :,Beschreibung :
 Valid,Gawindx,Devellopement,Entwicklung
-Valid,Gawindx,Disconnect,Trennen
-Valid,Lineflyer,Disconnected from Nut Host,Vom NUT-Host getrennt
+To be Validated,Martin Kurtz,Disconnect,Verbindung trennen
+To be Validated,Martin Kurtz,Disconnected from Nut Host,Verbindung zum NUT-Host verloren
 Valid,Gawindx,Download New Version from :,Neue Version herunterladen von :
 Valid,Lineflyer,Error,Fehler
 Valid,Lineflyer,Exit,Beenden
@@ -61,8 +61,8 @@ Valid,Gawindx,Input Voltage,Eingangsspannung
 Valid,Gawindx,Item Properties,Eigenschaften
 Valid,Lineflyer,List UPS Variables,Liste der USV-Variablen
 Valid,Lineflyer,Log file log level,Detailstufe für die Logdatei
-Valid,Lineflyer,Logging level,Detailstufe
-Valid,Lineflyer,Logging level.,Detailstufe.
+To be Validated,Martin Kurtz,Logging level,Detailstufe des Logs
+To be Validated,Martin Kurtz,Logging level.,Detailstufe des Logs.
 Valid,Lineflyer,Login,Anmeldung
 Valid,Lineflyer,Login credentials to the Nut server (leave blank if not required),Anmeldeinformationen des NUT-Server (Leer lassen wenn nicht erforderlich)
 Valid,Lineflyer,Lost Connect To {0}:{1},Verbindung zu {0}:{1} verloren
@@ -113,7 +113,7 @@ Valid,Lineflyer,Re-establish connection,Verbindung wiederherstellen
 Valid,Gawindx,Reload,Neu laden
 Valid,Gawindx,Remaining Time :,Verbleibende Zeit :
 Valid,Gawindx,Restarting WinNUT after waking up from Windows.,Neustart von WinNUT nach dem Aufwachen von Windows.
-Valid,Lineflyer,Sends in Systray at closing.,Minimiert beim Schließen in den Systray.
+To be Validated,Martin Kurtz,Sends in Systray at closing.,Ins Systray minimieren anstatt zu schliessen.
 Valid,Gawindx,Serial :,Seriennummer:
 Valid,Lineflyer,Sets the input frequency if not supplied by the UPS.,Legt die Eingangsfrequenz fest wenn dieser Wert nicht von der USV geliefert wird.
 Valid,Lineflyer,Settings,Einstellungen
@@ -142,7 +142,7 @@ Valid,Gawindx,Unknown UPS Name,Unbekannter USV-Name
 Valid,Gawindx,Update,Aktualisieren
 Valid,Gawindx,Update Available : Version {0},Update verfügbar : Version {0}
 Valid,Lineflyer,Update WinNUT-Client Now? Ok to Close WinNut and Install New Version Cancel to Save Msi and Install Later,WinNUT-Client jetzt aktualisieren? OK um WinNUT zu schließen und neue Version zu installieren Abbrechen um MSI-Datei zu speichern und später zu installieren
-Valid,Gawindx,UPS Battery Low,USV-Batterie schwach
+To be Validated,Martin Kurtz,UPS Battery Low,USV-Akkuladung niedrig
 Valid,Lineflyer,UPS Load,USV-Last
 Valid,Lineflyer,UPS Name,USV-Name
 Valid,Lineflyer,UPS name to monitor. Accepted Value: Name of the UPS configured in the Nut server.,Name der zu überwachenden USV. Wertebereich: Name der auf dem NUT-Server konfigurierten USV.
