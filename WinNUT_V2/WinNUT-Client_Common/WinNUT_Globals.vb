@@ -7,31 +7,45 @@
 '
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
+Imports System.IO
+
 Public Module WinNUT_Globals
+#Region "Properties"
+    ' The directory where volatile appdata is stored.
+    ReadOnly Property ApplicationData() As String
+        Get
+#If DEBUG Then
+            ' If debugging, keep any generated data next to the debug executable.
+            Return Path.Combine(Environment.CurrentDirectory, "Data")
+#End If
+            Return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "\WinNUT-Client")
+        End Get
+    End Property
+#End Region
+
     Public LongProgramName As String
     Public ProgramName As String
     Public ProgramVersion As String
     Public ShortProgramVersion As String
     Public GitHubURL As String
     Public Copyright As String
-    Public Directory_AppData As String
     Public IsConnected As Boolean
-    Public LogFile As String
-    Public AppIcon As Dictionary(Of Integer, System.Drawing.Icon)
+    ' Public LogFile As String
+    ' Handle application messages and debug events.
+    ' Public WithEvents LogFile As Logger '  As New Logger(False, 0)
+    ' Logging
+    Public WithEvents LogFile As Logger
+    Public AppIcon As Dictionary(Of Integer, Drawing.Icon)
     Public StrLog As New List(Of String)
-    Public LogFilePath As String
+    ' Public LogFilePath As String
+
     Public Sub Init_Globals()
         LongProgramName = My.Application.Info.Description
         ProgramName = My.Application.Info.ProductName
-        ProgramVersion = System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString
+        ProgramVersion = Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString
         ShortProgramVersion = ProgramVersion.Substring(0, ProgramVersion.IndexOf(".", ProgramVersion.IndexOf(".") + 1))
         GitHubURL = My.Application.Info.Trademark
         Copyright = My.Application.Info.Copyright
-        Directory_AppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\WinNUT-Client"
-
-        If Not System.IO.Directory.Exists(Directory_AppData) Then
-            My.Computer.FileSystem.CreateDirectory(Directory_AppData)
-        End If
         IsConnected = False
 
         'Add Main Gui's Strings
@@ -77,6 +91,18 @@ Public Module WinNUT_Globals
         'StrLog.Insert(AppResxStr.STR_LOG_NO_UPDATE, Resources.Log_Str_10)
         'StrLog.Insert(AppResxStr.STR_LOG_UPDATE, Resources.Log_Str_11)
         'StrLog.Insert(AppResxStr.STR_LOG_NUT_FSD, Resources.Log_Str_12)
+
+        LogFile = New Logger(False, LogLvl.LOG_DEBUG)
     End Sub
 
+    'Sub SetupAppDirectory()
+    '    If Not Directory.Exists(ApplicationData) Then
+    '        Try
+    '            Directory.CreateDirectory(ApplicationData)
+    '        Catch ex As Exception
+    '            Logger.LogTracing("Could not create application directory! Operating with reduced functionality.\n\n" & ex.ToString(),
+    '                                   LogLvl.LOG_ERROR, Nothing)
+    '        End Try
+    '    End If
+    'End Sub
 End Module

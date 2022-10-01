@@ -35,12 +35,26 @@ End Class
 Public Class Nut_Exception
     Inherits System.ApplicationException
 
+    Public Property ExceptionValue As Nut_Exception_Value
+    Public Property ProtocolError As NUTResponse
+
     Public Sub New(ByVal Nut_Error_Lvl As Nut_Exception_Value)
         MyBase.New(StringEnum.GetStringValue(Nut_Error_Lvl))
     End Sub
 
-    Public Sub New(ByVal Nut_Error_Lvl As Nut_Exception_Value, ByVal Message As String)
-        MyBase.New(StringEnum.GetStringValue(Nut_Error_Lvl) & Message)
+    Public Sub New(ByVal Nut_Error_Lvl As Nut_Exception_Value, ByVal Message As String, Optional innerEx As Exception = Nothing)
+        MyBase.New(StringEnum.GetStringValue(Nut_Error_Lvl) & Message, innerEx)
+        ExceptionValue = Nut_Error_Lvl
+    End Sub
+
+    ''' <summary>
+    ''' Raise a Nut_Exception that resulted from an error as part of the NUT protocol.
+    ''' </summary>
+    ''' <param name="protocolError"></param>
+    ''' <param name="message"></param>
+    Public Sub New(protocolError As NUTResponse, message As String)
+        MyBase.New(message)
+        Me.ProtocolError = protocolError
     End Sub
 End Class
 
@@ -51,4 +65,24 @@ Public Class Nut_Parameter
     Public Password As String = ""
     Public UPSName As String = ""
     Public AutoReconnect As Boolean = False
+
+    Public Sub New(Host As String, Port As Integer, Login As String, Password As String, UPSName As String,
+                   Optional AutoReconnect As Boolean = False)
+        Me.Host = Host
+        Me.Port = Port
+        Me.Login = Login
+        Me.Password = Password
+        Me.UPSName = UPSName
+        Me.AutoReconnect = AutoReconnect
+    End Sub
+
+    ''' <summary>
+    ''' Generate an informative String representing this Parameter object. Note password is not printed.
+    ''' </summary>
+    ''' <returns></returns>
+    Public Overrides Function ToString() As String
+        Return String.Format("{0}@{1}:{2}, Name: {3}" & If(AutoReconnect, " [AutoReconnect]", Nothing),
+                             Login, Host, Port, UPSName, AutoReconnect)
+        ' Return MyBase.ToString())
+    End Function
 End Class

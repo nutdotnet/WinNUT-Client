@@ -8,26 +8,29 @@
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
 Imports WinNUT_Client_Common
-Imports System.Threading
-Imports System.ComponentModel
 
 Public Class List_Var_Gui
     Private List_Var_Datas As List(Of UPS_List_Datas)
-    Private LogFile As Logger
-    Private UPS_Name = WinNUT.Nut_Config.UPSName
+    Private UPS_Name = WinNUT.UPS_Device.Nut_Config.UPSName
+
     Private Sub List_Var_Gui_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Me.LogFile = WinNUT.LogFile
         LogFile.LogTracing("Load List Var Gui", LogLvl.LOG_DEBUG, Me)
-        Me.Icon = WinNUT.Icon
-        Me.Visible = False
+        Icon = WinNUT.Icon
+        Visible = False
         PopulateTreeView()
-        Me.Visible = True
+        Visible = True
     End Sub
 
     Private Sub PopulateTreeView()
         Dim action As Action
         LogFile.LogTracing("Populate TreeView", LogLvl.LOG_DEBUG, Me)
-        List_Var_Datas = WinNUT.UPS_Device.GetUPS_ListVar()
+        Try
+            List_Var_Datas = WinNUT.UPS_Device.GetUPS_ListVar()
+        Catch ex As Exception
+            ' TODO: Internationalize?
+            MessageBox.Show("Error encountered trying to get variables from the UPS: " & vbNewLine & ex.Message, "Error Encountered")
+            Close()
+        End Try
 
         If List_Var_Datas Is Nothing Then
             LogFile.LogTracing("ListUPSVars return Nothing Value", LogLvl.LOG_DEBUG, Me)
@@ -36,14 +39,14 @@ Public Class List_Var_Gui
 
         action = Sub() TView_UPSVar.Nodes.Clear()
         TView_UPSVar.Invoke(action)
-        action = Sub() TView_UPSVar.Nodes.Add(WinNUT_Params.Arr_Reg_Key.Item("UPSName"), WinNUT_Params.Arr_Reg_Key.Item("UPSName"))
+        action = Sub() TView_UPSVar.Nodes.Add(Arr_Reg_Key.Item("UPSName"), Arr_Reg_Key.Item("UPSName"))
         TView_UPSVar.Invoke(action)
         Dim TreeChild As New TreeNode
         Dim LastNode As New TreeNode
         For Each UPS_Var In List_Var_Datas
             LastNode = TView_UPSVar.Nodes(0)
             Dim FullPathNode = String.Empty
-            For Each SubPath In (Strings.Split(UPS_Var.VarKey, "."))
+            For Each SubPath In (Split(UPS_Var.VarKey, "."))
                 FullPathNode += SubPath & "."
                 Dim Nodes = TView_UPSVar.Nodes.Find(FullPathNode, True)
                 If Nodes.Length = 0 Then
@@ -85,10 +88,10 @@ Public Class List_Var_Gui
         Dim SelectedNode As TreeNode = TView_UPSVar.SelectedNode
         If SelectedNode IsNot Nothing Then
             If SelectedNode.Parent IsNot Nothing Then
-                If SelectedNode.Parent.Text <> Me.UPS_Name And SelectedNode.Nodes.Count = 0 Then
-                    Dim VarName = Strings.Replace(TView_UPSVar.SelectedNode.FullPath, Me.UPS_Name & ".", "")
+                If SelectedNode.Parent.Text <> UPS_Name And SelectedNode.Nodes.Count = 0 Then
+                    Dim VarName = Replace(TView_UPSVar.SelectedNode.FullPath, UPS_Name & ".", "")
                     LogFile.LogTracing("Update {VarName}", LogLvl.LOG_DEBUG, Me)
-                    Lbl_V_Value.Text = WinNUT.UPS_Device.GetUPSVar(VarName, Me.UPS_Name)
+                    Lbl_V_Value.Text = WinNUT.UPS_Device.GetUPSVar(VarName, UPS_Name)
                 End If
             End If
         End If
@@ -96,7 +99,7 @@ Public Class List_Var_Gui
 
     Private Sub Btn_Close_Click(sender As Object, e As EventArgs) Handles Btn_Close.Click
         LogFile.LogTracing("Close List Var Gui", LogLvl.LOG_DEBUG, Me)
-        Me.Close()
+        Close()
     End Sub
 
     Private Sub Btn_Reload_Click(sender As Object, e As EventArgs) Handles Btn_Reload.Click
@@ -105,13 +108,13 @@ Public Class List_Var_Gui
         Lbl_V_Value.Text = ""
         Lbl_D_Value.Text = ""
         TView_UPSVar.Nodes.Clear()
-        Me.PopulateTreeView()
+        PopulateTreeView()
     End Sub
 
     Private Sub TView_UPSVar_NodeMouseClick(sender As Object, e As TreeNodeMouseClickEventArgs) Handles TView_UPSVar.NodeMouseClick
         Dim index As Integer = 0
-        Dim UPSName = WinNUT_Params.Arr_Reg_Key.Item("UPSName")
-        Dim SelectedChild = Strings.Replace(e.Node.FullPath, UPSName & ".", "")
+        Dim UPSName = Arr_Reg_Key.Item("UPSName")
+        Dim SelectedChild = Replace(e.Node.FullPath, UPSName & ".", "")
         Dim FindChild As Predicate(Of UPS_List_Datas) = Function(ByVal x As UPS_List_Datas)
                                                             If x.VarKey = SelectedChild Then
                                                                 Return True
@@ -136,7 +139,7 @@ Public Class List_Var_Gui
         LogFile.LogTracing("Export TreeView To Clipboard", LogLvl.LOG_DEBUG, Me)
         Dim ToClipBoard As String = Nothing
         With WinNUT.UPS_Device.UPS_Datas
-            ToClipBoard = WinNUT_Params.Arr_Reg_Key.Item("UPSName") & " (" & .Mfr & "/" & .Model & "/" & .Firmware & ")" & vbNewLine
+            ToClipBoard = Arr_Reg_Key.Item("UPSName") & " (" & .Mfr & "/" & .Model & "/" & .Firmware & ")" & vbNewLine
         End With
         For Each LDatas In List_Var_Datas
             ToClipBoard &= LDatas.VarKey & " (" & LDatas.VarDesc & ") : " & LDatas.VarValue & vbNewLine

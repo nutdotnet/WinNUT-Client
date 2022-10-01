@@ -8,17 +8,16 @@
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
 Imports WinNUT_Params = WinNUT_Client_Common.WinNUT_Params
-Imports Logger = WinNUT_Client_Common.Logger
 Imports LogLvl = WinNUT_Client_Common.LogLvl
 Imports AppResxStr = WinNUT_Client_Common.AppResxStr
 Imports WinNUT_Globals = WinNUT_Client_Common.WinNUT_Globals
 
 Public Class Update_Gui
 
+    Private LogFile As WinNUT_Client_Common.Logger = WinNUT_Globals.LogFile
     Private ChangeLogByteSize As Long
-    Public Shared WithEvents LogFile As Logger
     Private Const GitApiURL As String = "https://api.github.com/repos/nutdotnet/WinNUT-Client/releases"
-    Private WithEvents WebC As New System.Net.WebClient
+    Private WithEvents WebC As New Net.WebClient
     Private JSONReleaseFile As Object
     Private sChangeLog As String
     Private ReadOnly ManualUpdate As Boolean = False
@@ -46,7 +45,7 @@ Public Class Update_Gui
             MyBase.SetVisibleCore(False)
             WinNUT.NotifyIcon.Visible = False
             Me.Icon = WinNUT.Icon
-            LogFile = WinNUT.LogFile
+            ' LogFile = WinNUT.LogFile
             VerifyUpdate()
         End If
     End Sub
@@ -72,17 +71,17 @@ Public Class Update_Gui
                 Case 2
                     DelayVerif = DateInterval.Month
             End Select
-            Dim Today As DateTime = Now
+            Dim Today As Date = Now
             Dim Diff As Integer = 1
             If WinNUT_Params.Arr_Reg_Key.Item("LastDateVerification") <> "" Then
-                Dim LastVerif As DateTime = Convert.ToDateTime(WinNUT_Params.Arr_Reg_Key.Item("LastDateVerification"))
-                Diff = DateAndTime.DateDiff(DelayVerif, LastVerif, Today, FirstDayOfWeek.Monday, FirstWeekOfYear.Jan1)
+                Dim LastVerif As Date = Convert.ToDateTime(WinNUT_Params.Arr_Reg_Key.Item("LastDateVerification"))
+                Diff = DateDiff(DelayVerif, LastVerif, Today, FirstDayOfWeek.Monday, FirstWeekOfYear.Jan1)
             End If
             If Diff >= 1 Or ManualUpdate Then
-                System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12
-                WebC.Headers.Add(System.Net.HttpRequestHeader.Accept, "application/json")
-                WebC.Headers.Add(System.Net.HttpRequestHeader.UserAgent, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OPR/73.0.3856.344")
-                WebC.Headers.Add(System.Net.HttpRequestHeader.AcceptLanguage, "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7")
+                Net.ServicePointManager.SecurityProtocol = Net.SecurityProtocolType.Tls12
+                WebC.Headers.Add(Net.HttpRequestHeader.Accept, "application/json")
+                WebC.Headers.Add(Net.HttpRequestHeader.UserAgent, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36 OPR/73.0.3856.344")
+                WebC.Headers.Add(Net.HttpRequestHeader.AcceptLanguage, "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7")
                 AddHandler WebC.DownloadStringCompleted, AddressOf Changelog_Downloaded
                 WebC.DownloadStringAsync(New Uri(GitApiURL))
             Else
@@ -136,7 +135,7 @@ Public Class Update_Gui
                 End If
             End If
         Catch excep As Exception
-            WinNUT.LogFile.LogTracing(excep.Message, LogLvl.LOG_ERROR, Me)
+            LogFile.LogTracing(excep.Message, LogLvl.LOG_ERROR, Me)
         End Try
         WinNUT_Params.Arr_Reg_Key.Item("LastDateVerification") = Now.ToString
         WinNUT_Params.Save_Params()
@@ -209,10 +208,10 @@ Public Class Update_Gui
             .Size = New Point(280, (.Size.Height * 2))
         End With
         Download_Form.Show()
-        Dim MSIFile = System.IO.Path.GetTempPath() + "WinNUT_" & Me.NewVersion & "_Setup.msi"
+        Dim MSIFile = IO.Path.GetTempPath() + "WinNUT_" & Me.NewVersion & "_Setup.msi"
 
         Using WebC = New Net.WebClient
-            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12
+            Net.ServicePointManager.SecurityProtocol = Net.SecurityProtocolType.Tls12
             AddHandler WebC.DownloadFileCompleted, AddressOf New_Version_Downloaded
             AddHandler WebC.DownloadProgressChanged, AddressOf Update_DPBar
             WebC.QueryString.Add("FileName", MSIFile)
@@ -236,7 +235,7 @@ Public Class Update_Gui
                 Dim SaveFile As SaveFileDialog = New SaveFileDialog
                 With SaveFile
                     .Filter = "MSI Files (*.msi)|*.msi"
-                    .FileName = System.IO.Path.GetFileName(Filename)
+                    .FileName = IO.Path.GetFileName(Filename)
                 End With
                 If SaveFile.ShowDialog() = DialogResult.OK Then
                     My.Computer.FileSystem.MoveFile(Filename, SaveFile.FileName, True)

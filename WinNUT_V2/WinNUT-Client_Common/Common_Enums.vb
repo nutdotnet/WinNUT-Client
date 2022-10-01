@@ -100,7 +100,7 @@ Public Enum NUTResponse
 End Enum
 
 Public Enum Nut_Exception_Value
-    <StringValue("Unable to create connection :")>
+    <StringValue("Unable to create connection: ")>
     CONNECT_ERROR
     <StringValue("Invalid Username.")>
     INVALID_USERNAME
