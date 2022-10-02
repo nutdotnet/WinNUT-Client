@@ -39,7 +39,7 @@ Public Class WinNUT
     Public WithEvents UPS_Device As UPS_Device
     ' Public Nut_Socket As Nut_Socket
     ' Public Nut_Config As New Nut_Parameter
-    ' Private Device_Data As UPS_Datas
+    ' Private Device_Data As UPSData
 
     ' ^--- Shall be referenced from inside UPS_Device object
 
@@ -567,8 +567,8 @@ Public Class WinNUT
         LogFile.LogTracing("Battery Status => " & Status, LogLvl.LOG_DEBUG, Me)
     End Sub
 
-    Sub HandleNUTException(ex As Nut_Exception, sender As Object) Handles UPS_Device.EncounteredNUTException
-        If ex.ExceptionValue = Nut_Exception_Value.UNKNOWN_UPS Then
+    Sub HandleNUTException(ex As NutException, sender As Object) Handles UPS_Device.EncounteredNUTException
+        If ex.LastTransaction.ResponseType = NUTResponse.UNKNOWNUPS Then
             Event_Unknown_UPS()
         End If
 
@@ -723,12 +723,18 @@ Public Class WinNUT
                     LogFile.LogTracing("Low Battery", LogLvl.LOG_DEBUG, Me)
             End Select
 
+            ' Calculate and display estimated remaining time on battery.
             Dim iSpan As TimeSpan = TimeSpan.FromSeconds(UPS_BattRuntime)
+            LogFile.LogTracing("Calculated estimated remaining battery time: " & iSpan.ToString(), LogLvl.LOG_DEBUG, Me)
 
+            ' Format the TimeSpan using a standard format (g = 0:00:00)
+            ' https://docs.microsoft.com/en-us/dotnet/api/system.timespan.tostring
+            Lbl_VRTime.Text = iSpan.ToString("g")
             'Lbl_VRTime.Text = iSpan.Hours.ToString.PadLeft(2, "0"c) & ":" &
             'iSpan.Minutes.ToString.PadLeft(2, "0"c) & ":" &
             'iSpan.Seconds.ToString.PadLeft(2, "0"c)
             'End If
+
             LogFile.LogTracing("Update Dial", LogLvl.LOG_DEBUG, Me)
             AG_InV.Value1 = UPS_InputV
             AG_InF.Value1 = UPS_InputF

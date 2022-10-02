@@ -69,6 +69,7 @@ End Enum
 
 ' Define possible responses according to NUT protcol v1.2
 Public Enum NUTResponse
+    NORESPONSE
     OK
     VAR
     ACCESSDENIED
@@ -94,30 +95,8 @@ Public Enum NUTResponse
     PASSWORDREQUIRED
     UNKNOWNCOMMAND
     INVALIDVALUE
-    NORESPONSE
     BEGINLIST
     ENDLIST
-End Enum
-
-Public Enum Nut_Exception_Value
-    <StringValue("Unable to create connection: ")>
-    CONNECT_ERROR
-    <StringValue("Invalid Username.")>
-    INVALID_USERNAME
-    <StringValue("Invalid Password.")>
-    INVALID_PASSWORD
-    <StringValue("Access is denied.")>
-    ACCESS_DENIED
-    <StringValue("Incorrect login ID / password.")>
-    INVALID_AUTH_DATA
-    <StringValue("Authentification errork")>
-    LOGIN_ERROR
-    <StringValue("Connection to Nut Host seem broken when querying : ")>
-    SOCKET_BROKEN
-    <StringValue("Unknown Login error: ")>
-    UNKNOWN_LOGIN_ERROR
-    <StringValue("Unknown UPS Name.")>
-    UNKNOWN_UPS
 End Enum
 
 Public Enum UPS_States
