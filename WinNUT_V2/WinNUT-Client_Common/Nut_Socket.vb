@@ -33,12 +33,14 @@ Public Class Nut_Socket
         End Get
     End Property
 
+    Private Nut_Ver As String
     Public ReadOnly Property Nut_Version() As String
         Get
             Return Nut_Ver
         End Get
     End Property
 
+    Private Net_Ver As String
     Public ReadOnly Property Net_Version() As String
         Get
             Return Net_Ver
@@ -57,19 +59,16 @@ Public Class Nut_Socket
     Private ReaderStream As StreamReader
     Private WriterStream As StreamWriter
 
-    Private Nut_Ver As String
-    Private Net_Ver As String
+    ''' <summary>
+    ''' Possibly a race condition going on where a query is sent while reading a response from another.
+    ''' </summary>
+    Private streamInUse As Boolean
+
 
     Public Auth_Success As Boolean = False
     ' Private ReadOnly WatchDog As New Timer
 
-    'Public Event OnNotice(Message As String, NoticeLvl As LogLvl, sender As Object, ReportToGui As Boolean)
-    Public Event OnNotice(Message As String, NoticeLvl As LogLvl, sender As Object)
-    'Public Event OnError(Excep As Exception, NoticeLvl As LogLvl, sender As Object, ReportToGui As Boolean)
-    ' Public Event OnError(Excep As Exception, NoticeLvl As LogLvl, sender As Object)
-
-    ' Public Event Unknown_UPS()
-    Public Event Socket_Broken()
+    Public Event Socket_Broken(ex As NutException)
 
     ''' <summary>
     ''' Socket was disconnected as a part of normal operations.
@@ -87,8 +86,7 @@ Public Class Nut_Socket
         'End With
     End Sub
 
-    Public Sub Connect() ' As Boolean
-        ' Try
+    Public Sub Connect()
         'TODO: Use LIST UPS protocol command to get valid UPSs.
         Dim Host = NutConfig.Host
         Dim Port = NutConfig.Port
@@ -109,45 +107,29 @@ Public Class Nut_Socket
             ReaderStream = New StreamReader(NutStream)
             WriterStream = New StreamWriter(NutStream)
             LogFile.LogTracing(String.Format("Connection established and streams ready for {0}:{1}", Host, Port), LogLvl.LOG_NOTICE, Me)
+
+            ' Something went wrong - cleanup and pass along error.
         Catch Excep As Exception
             Disconnect(True, True)
             Throw ' Pass exception on up to UPS
-            ' RaiseEvent EncounteredNUTException(New Nut_Exception(Nut_Exception_Value.CONNECT_ERROR, Excep.Message), LogLvl.LOG_ERROR, Me)
         End Try
 
         If ConnectionStatus Then
             AuthLogin(Login, Password)
-            ' Bad login shouldn't preclude a successful connection (basic ops can still occur.)
-            'If Not AuthLogin(Login, Password) Then
-            '    ' Throw New Nut_Exception(Nut_Exception_Value.INVALID_AUTH_DATA)
-            '    RaiseEvent EncounteredNUTException()
-            'End If
+
             Dim Nut_Query = Query_Data("VER")
 
-            If Nut_Query.Response = NUTResponse.OK Then
-                Nut_Ver = (Nut_Query.Data.Split(" "c))(4)
+            If Nut_Query.ResponseType = NUTResponse.OK Then
+                Nut_Ver = (Nut_Query.RawResponse.Split(" "c))(4)
             End If
             Nut_Query = Query_Data("NETVER")
 
-            If Nut_Query.Response = NUTResponse.OK Then
-                Net_Ver = Nut_Query.Data
+            If Nut_Query.ResponseType = NUTResponse.OK Then
+                Net_Ver = Nut_Query.RawResponse
             End If
 
             LogFile.LogTracing(String.Format("NUT server reports VER: {0} NETVER: {1}", Nut_Ver, Net_Ver), LogLvl.LOG_NOTICE, Me)
-            ' Return True
         End If
-
-        'Catch nutEx As Nut_Exception
-        '    ' Handle NUT exceptions specifically, without variable boxing/unboxing
-        '    RaiseEvent EncounteredNUTException(nutEx, LogLvl.LOG_ERROR, Me)
-        '    Return False
-        'Catch Excep As Exception
-        '    'RaiseEvent OnError(Excep, LogLvl.LOG_ERROR, Me)
-        '    'Return False
-
-        'End Try
-
-        ' Return False
     End Sub
 
     ''' <summary>
@@ -172,217 +154,12 @@ Public Class Nut_Socket
         LogFile.LogTracing("NutSocket has been Disconnected.", LogLvl.LOG_DEBUG, Me)
     End Sub
 
-    Private Sub Create_Socket(Host As String, Port As Integer)
-
-    End Sub
-
     ''' <summary>
-    ''' Determines if the current UPS exists on the upsd server.
-    ''' An invalid UPS name isn't necessarily fatal.
+    ''' Parse and enumerate a NUT protocol response.
     ''' </summary>
+    ''' <param name="Data">The raw response given from a query.</param>
     ''' <returns></returns>
-    'Public ReadOnly Property ExistsOnServer(name As String) As Boolean
-    '    Get
-    '        If IsConnected Then
-    '            Dim ListOfUPSs = Query_List_Datas("LIST UPS")
-    '            For Each Known_UPS In ListOfUPSs
-    '                If Known_UPS.VarValue = name Then
-    '                    Return True
-    '                End If
-    '            Next
-    '        End If
-
-    '        Return False
-    '    End Get
-    'End Property
-
-    Public Function Query_Data(Query_Msg As String) As (Data As String, Response As NUTResponse)
-        Dim Response As NUTResponse = NUTResponse.NORESPONSE
-        Dim DataResult As String = ""
-        ' Try
-        If Me.ConnectionStatus Then
-            Me.WriterStream.WriteLine(Query_Msg & vbCr)
-            Me.WriterStream.Flush()
-            DataResult = Trim(Me.ReaderStream.ReadLine())
-
-            If DataResult = Nothing Then
-                ' TODO: Does null dataresult really mean an error condition?
-                ' https://stackoverflow.com/a/6523010/530172
-                Disconnect()
-                RaiseEvent Socket_Broken()
-                Throw New Nut_Exception(Nut_Exception_Value.SOCKET_BROKEN, Query_Msg)
-            End If
-            Response = EnumResponse(DataResult)
-        End If
-        Return (DataResult, Response)
-        'Catch ioEx As IOException
-        '    ' Something's gone wrong with the connection.
-        '    ' Try to safely shut everything down and notify listeners.
-        '    ' Disconnect()
-        '    RaiseEvent Socket_Broken()
-        '    RaiseEvent EncounteredNUTException(New Nut_Exception(Nut_Exception_Value.SOCKET_BROKEN, Query_Msg, ioEx), LogLvl.LOG_ERROR, Me)
-        '    ' Return (Nothing, NUTResponse.NORESPONSE)
-        'Catch Excep As Exception
-        '    RaiseEvent OnError(Excep, LogLvl.LOG_ERROR, Me)
-        '    Return (DataResult, Response)
-        'End Try
-    End Function
-
-    Public Function GetVarDescription(VarName As String) As String
-        ' Try
-        'If Not Me.ConnectionStatus Then
-        '        Disconnect()
-        '        RaiseEvent Socket_Broken()
-        '        Throw New Nut_Exception(Nut_Exception_Value.SOCKET_BROKEN, VarName)
-        '    Else
-
-        Dim Nut_Query = Query_Data("GET DESC " & NutConfig.UPSName & " " & VarName)
-
-        If Nut_Query.Response = NUTResponse.OK Then
-            Return Nut_Query.Data
-        Else
-            Throw New Nut_Exception(Nut_Query.Response, "Protocol error encountered while getting variable description.")
-        End If
-
-        'Select Case Nut_Query.Response
-        '    Case NUTResponse.OK
-        '        'LogFile.LogTracing("Process Result With " & VarName & " : " & Nut_Query.Data, LogLvl.LOG_DEBUG, Me)
-        '        Return Nut_Query.Data
-        '    Case NUTResponse.UNKNOWNUPS
-        '        RaiseEvent Unknown_UPS()
-        '        Return Nothing
-        '    Case Else
-        '        'LogFile.LogTracing("Error Result On Retrieving  " & VarName & " : " & Nut_Query.Data, LogLvl.LOG_ERROR, Me)
-        '        Return Nothing
-        'End Select
-        ' End If
-        'Catch Excep As Exception
-        '    RaiseEvent OnError(Excep, LogLvl.LOG_ERROR, Me)
-        '    Return Nothing
-        'End Try
-    End Function
-
-    Public Function Query_List_Datas(Query_Msg As String) As List(Of UPS_List_Datas)
-        Dim List_Datas As New List(Of String)
-        Dim List_Result As New List(Of UPS_List_Datas)
-        ' Try
-        If Me.ConnectionStatus Then
-            Me.WriterStream.WriteLine(Query_Msg & vbCr)
-            Me.WriterStream.Flush()
-            Threading.Thread.Sleep(100)
-            Dim DataResult As String = ""
-            Dim start As DateTime = DateTime.Now
-            Do
-                DataResult = Me.ReaderStream.ReadLine()
-                List_Datas.Add(DataResult)
-            Loop Until (IsNothing(DataResult) Or (Me.ReaderStream.Peek < 0))
-
-            If (EnumResponse(List_Datas(0)) <> NUTResponse.OK) Or (List_Datas.Count = 0) Then
-                Throw New Nut_Exception(Nut_Exception_Value.SOCKET_BROKEN, Query_Msg)
-            End If
-
-            Dim Key As String
-            Dim Value As String
-            For Each Line In List_Datas
-                Dim SplitString = Split(Line, " ", 4)
-
-                Select Case SplitString(0)
-                    Case "BEGIN"
-                    Case "VAR"
-                        'Query 
-                        'LIST VAR <upsname>
-                        'Response List of var
-                        'VAR <upsname> <varname> "<value>"
-                        Key = Strings.Replace(SplitString(2), """", "")
-                        Value = Strings.Replace(SplitString(3), """", "")
-                        Dim UPSName = SplitString(1)
-                        Dim VarDESC = GetVarDescription(Key)
-                        If Not IsNothing(VarDESC) Then
-                            List_Result.Add(New UPS_List_Datas With {
-                                .VarKey = Key,
-                                .VarValue = Trim(Value),
-                                .VarDesc = Split(Strings.Replace(VarDESC, """", ""), " ", 4)(3)}
-                            )
-                        Else
-                            'TODO: Convert to nut_exception error
-                            Throw New Exception("error")
-                        End If
-                    Case "UPS"
-                        'Query 
-                        'LIST UPS
-                        'List of ups
-                        'UPS <upsname> "<description>"
-                        List_Result.Add(New UPS_List_Datas With {
-                                .VarKey = "UPSNAME",
-                                .VarValue = SplitString(1),
-                                .VarDesc = Strings.Replace(SplitString(2), """", "")}
-                            )
-                    Case "RW"
-                        'Query 
-                        'LIST RW <upsname>
-                        'List of RW var
-                        'RW <upsname> <varname> "<value>"
-                        Key = Strings.Replace(SplitString(2), """", "")
-                        Value = Strings.Replace(SplitString(3), """", "")
-                        Dim UPSName = SplitString(1)
-                        Dim VarDESC = GetVarDescription(Key)
-                        If Not IsNothing(VarDESC) Then
-                            List_Result.Add(New UPS_List_Datas With {
-                                .VarKey = Key,
-                                .VarValue = Trim(Value),
-                                .VarDesc = Split(Strings.Replace(VarDESC, """", ""), " ", 4)(3)}
-                            )
-                        Else
-                            'TODO: Convert to nut_exception error
-                            Throw New Exception("error")
-                        End If
-                    Case "CMD"
-                            'Query 
-                            'LIST CMD <upsname>
-                            'List of CMD
-                            'CMD <upsname> <cmdname>
-                    Case "ENUM"
-                        'Query 
-                        'LIST ENUM <upsname>
-                        'List of Enum ??
-                        'ENUM <upsname> <varname> "<value>"
-                        Key = Strings.Replace(SplitString(2), """", "")
-                        Value = Strings.Replace(SplitString(3), """", "")
-                        Dim UPSName = SplitString(1)
-                        Dim VarDESC = Query_Data("GET DESC " & UPSName & " " & Key)
-                        If VarDESC.Response = NUTResponse.OK Then
-                            List_Result.Add(New UPS_List_Datas With {
-                                .VarKey = Key,
-                                .VarValue = Value,
-                                .VarDesc = Split(Strings.Replace(VarDESC.Data, """", ""), " ", 4)(3)}
-                            )
-                        Else
-                            'TODO: Convert to nut_exception error
-                            Throw New Exception("error")
-                        End If
-                    Case "RANGE"
-                            'Query 
-                            'LIST RANGE <upsname> <varname>
-                            'List of Range
-                            'RANGE <upsname> <varname> "<min>" "<max>"
-                    Case "CLIENT"
-                        'Query 
-                        'LIST CLIENT <upsname>
-                        'List of Range
-                        'CLIENT <device name> <client IP address>
-                End Select
-            Next
-        End If
-        Return List_Result
-        'Catch Excep As Exception
-        '    RaiseEvent OnError(Excep, LogLvl.LOG_ERROR, Me)
-        '    Me.Disconnect()
-        '    Return Nothing
-        'End Try
-    End Function
-
-    ' Parse and enumerate a NUT protocol response.
-    Private Function EnumResponse(ByVal Data As String) As NUTResponse
+    Private Function EnumResponse(Data As String) As NUTResponse
         Dim Response As NUTResponse
         ' Remove hyphens to prepare for parsing.
         Dim SanitisedString = UCase(Data.Replace("-", String.Empty))
@@ -390,8 +167,10 @@ Public Class Nut_Socket
         Dim SplitString = SanitisedString.Split(" "c)
 
         Select Case SplitString(0)
-            Case "OK", "VAR", "BEGIN", "DESC", "UPS"
+            Case "OK", "VAR", "DESC", "UPS"
                 Response = NUTResponse.OK
+            Case "BEGIN"
+                Response = NUTResponse.BEGINLIST
             Case "END"
                 Response = NUTResponse.ENDLIST
             Case "ERR"
@@ -407,56 +186,205 @@ Public Class Nut_Socket
         Return Response
     End Function
 
-    Private Sub AuthLogin(Login As String, Password As String)
+    ''' <summary>
+    ''' Attempt to send a query to the NUT server, and do some basic parsing.
+    ''' </summary>
+    ''' <param name="Query_Msg">The query to be sent to the server, within specifications of the NUT protocol.</param>
+    ''' <returns>The full <see cref="Transaction"/> of this function call.</returns>
+    ''' <exception cref="InvalidOperationException">Thrown when calling this function while disconnected.</exception>"
+    ''' <exception cref="NutException">Thrown when the NUT server returns an error or unexpected response.</exception>
+    Function Query_Data(Query_Msg As String) As Transaction ' (Data As String, Response As NUTResponse)
+        Dim Response As NUTResponse
+        Dim DataResult As String
+        Dim finalTransaction As Transaction
         ' Try
+        If streamInUse Then
+            LogFile.LogTracing("Attempted to query " & Query_Msg & " while using the stream.", LogLvl.LOG_ERROR, Me)
+            Return Nothing
+        End If
+
+        streamInUse = True
+
+        If ConnectionStatus Then
+            LogFile.LogTracing("Sending query " & Query_Msg, LogLvl.LOG_DEBUG, Me)
+            WriterStream.WriteLine(Query_Msg & vbCr)
+            WriterStream.Flush()
+
+            DataResult = Trim(ReaderStream.ReadLine())
+            streamInUse = False
+            LogFile.LogTracing("Done processing response for query " & Query_Msg, LogLvl.LOG_DEBUG, Me)
+
+            Response = EnumResponse(DataResult)
+            finalTransaction = New Transaction(Query_Msg, DataResult, Response)
+
+            ' Handle error conditions
+            If DataResult = Nothing OrElse DataResult.StartsWith("ERR") Then
+                ' TODO: Does null dataresult really mean an error condition?
+                ' https://stackoverflow.com/a/6523010/530172
+                'Disconnect(True, True)
+                'RaiseEvent Socket_Broken(New NutException(Query_Msg, Nothing))
+                Throw New NutException(finalTransaction)
+            End If
+        Else
+            Throw New InvalidOperationException("Attempted to send query while disconnected.")
+        End If
+
+        Return finalTransaction
+    End Function
+
+    Public Function Query_List_Datas(Query_Msg As String) As List(Of UPS_List_Datas)
+        Dim List_Datas As New List(Of String)
+        Dim List_Result As New List(Of UPS_List_Datas)
+        Dim start As Date = Date.Now
+
+        ' Read in first line to get initial response.
+        LogFile.LogTracing("Sending LIST query " & Query_Msg, LogLvl.LOG_DEBUG, Me)
+        Dim response = Query_Data(Query_Msg)
+        streamInUse = True
+        Dim readLine As String
+
+        Do
+            readLine = ReaderStream.ReadLine()
+            If readLine.StartsWith("END") Then
+                Exit Do
+            End If
+            List_Datas.Add(readLine)
+        Loop Until (IsNothing(readLine) Or (ReaderStream.Peek < 0))
+
+        streamInUse = False
+        LogFile.LogTracing("Done processing LIST response for query " & Query_Msg, LogLvl.LOG_DEBUG, Me)
+
+        Dim Key As String
+        Dim Value As String
+        For Each Line In List_Datas
+            Dim SplitString = Split(Line, " ", 4)
+
+            Select Case SplitString(0)
+                Case "BEGIN"
+                Case "VAR"
+                    'Query 
+                    'LIST VAR <upsname>
+                    'Response List of var
+                    'VAR <upsname> <varname> "<value>"
+                    Key = Replace(SplitString(2), """", "")
+                    Value = Replace(SplitString(3), """", "")
+                    Dim UPSName = SplitString(1)
+                    Dim VarDESC = GetVarDescription(Key)
+                    If Not IsNothing(VarDESC) Then
+                        List_Result.Add(New UPS_List_Datas With {
+                            .VarKey = Key,
+                            .VarValue = Trim(Value),
+                            .VarDesc = Split(Replace(VarDESC, """", ""), " ", 4)(3)}
+                        )
+                    Else
+                        'TODO: Convert to nut_exception error
+                        Throw New Exception("error")
+                    End If
+                Case "UPS"
+                    'Query 
+                    'LIST UPS
+                    'List of ups
+                    'UPS <upsname> "<description>"
+                    List_Result.Add(New UPS_List_Datas With {
+                            .VarKey = "UPSNAME",
+                            .VarValue = SplitString(1),
+                            .VarDesc = Replace(SplitString(2), """", "")}
+                        )
+                Case "RW"
+                    'Query 
+                    'LIST RW <upsname>
+                    'List of RW var
+                    'RW <upsname> <varname> "<value>"
+                    Key = Replace(SplitString(2), """", "")
+                    Value = Replace(SplitString(3), """", "")
+                    Dim UPSName = SplitString(1)
+                    Dim VarDESC = GetVarDescription(Key)
+                    If Not IsNothing(VarDESC) Then
+                        List_Result.Add(New UPS_List_Datas With {
+                            .VarKey = Key,
+                            .VarValue = Trim(Value),
+                            .VarDesc = Split(Replace(VarDESC, """", ""), " ", 4)(3)}
+                        )
+                    Else
+                        'TODO: Convert to nut_exception error
+                        Throw New Exception("error")
+                    End If
+                Case "CMD"
+                            'Query 
+                            'LIST CMD <upsname>
+                            'List of CMD
+                            'CMD <upsname> <cmdname>
+                Case "ENUM"
+                    'Query 
+                    'LIST ENUM <upsname>
+                    'List of Enum ??
+                    'ENUM <upsname> <varname> "<value>"
+                    Key = Replace(SplitString(2), """", "")
+                    Value = Replace(SplitString(3), """", "")
+                    Dim UPSName = SplitString(1)
+                    Dim VarDESC = Query_Data("GET DESC " & UPSName & " " & Key)
+                    If VarDESC.ResponseType = NUTResponse.OK Then
+                        List_Result.Add(New UPS_List_Datas With {
+                            .VarKey = Key,
+                            .VarValue = Value,
+                            .VarDesc = Split(Replace(VarDESC.RawResponse, """", ""), " ", 4)(3)}
+                        )
+                    Else
+                        'TODO: Convert to nut_exception error
+                        Throw New Exception("error")
+                    End If
+                Case "RANGE"
+                            'Query 
+                            'LIST RANGE <upsname> <varname>
+                            'List of Range
+                            'RANGE <upsname> <varname> "<min>" "<max>"
+                Case "CLIENT"
+                    'Query 
+                    'LIST CLIENT <upsname>
+                    'List of Range
+                    'CLIENT <device name> <client IP address>
+            End Select
+        Next
+
+        Return List_Result
+    End Function
+
+    Public Function GetVarDescription(VarName As String) As String
+        Dim Nut_Query = Query_Data("GET DESC " & NutConfig.UPSName & " " & VarName)
+
+        If Nut_Query.ResponseType = NUTResponse.OK Then
+            Return Nut_Query.RawResponse
+        Else
+            Throw New NutException(Nut_Query)
+        End If
+    End Function
+
+    Private Sub AuthLogin(Login As String, Password As String)
         LogFile.LogTracing("Attempting authentication...", LogLvl.LOG_NOTICE, Me)
         Auth_Success = False
         If Not String.IsNullOrEmpty(Login) AndAlso String.IsNullOrEmpty(Password) Then
             Dim Nut_Query = Query_Data("USERNAME " & Login)
 
-            If Nut_Query.Response <> NUTResponse.OK Then
-                If Nut_Query.Response = NUTResponse.INVALIDUSERNAME Then
-                    Throw New Nut_Exception(Nut_Exception_Value.INVALID_USERNAME)
-                ElseIf Nut_Query.Response = NUTResponse.ACCESSDENIED Then
-                    Throw New Nut_Exception(Nut_Exception_Value.ACCESS_DENIED)
-                Else
-                    Throw New Nut_Exception(Nut_Exception_Value.UNKNOWN_LOGIN_ERROR, Nut_Query.Data)
-                End If
+            If Nut_Query.ResponseType <> NUTResponse.OK Then
+                Throw New NutException(Nut_Query)
             End If
 
             Nut_Query = Query_Data("PASSWORD " & Password)
 
-            If Nut_Query.Response <> NUTResponse.OK Then
-                If Nut_Query.Response = NUTResponse.INVALIDPASSWORD Then
-                    Throw New Nut_Exception(Nut_Exception_Value.INVALID_PASSWORD)
-                ElseIf Nut_Query.Response = NUTResponse.ACCESSDENIED Then
-                    Throw New Nut_Exception(Nut_Exception_Value.ACCESS_DENIED)
-                Else
-                    Throw New Nut_Exception(Nut_Exception_Value.UNKNOWN_LOGIN_ERROR, Nut_Query.Data)
-                End If
+            If Nut_Query.ResponseType <> NUTResponse.OK Then
+                Throw New NutException(Nut_Query)
             End If
         End If
 
         LogFile.LogTracing("Authenticated successfully.", LogLvl.LOG_NOTICE, Me)
         Auth_Success = True
-        ' Return Me.Auth_Success
-        'Catch nutEx As Nut_Exception
-        '    ' Auth issues aren't necessarily fatal - some interaction can still occur unauthenticated.
-        '    RaiseEvent OnNUTException(nutEx, LogLvl.LOG_ERROR, Me)
-        '    ' Auth_Success = False
-        '    ' Disconnect(True)
-        'Catch Excep As Exception
-        '    RaiseEvent OnError(Excep, LogLvl.LOG_ERROR, Me)
-        '    Disconnect(True)
-        '    ' Auth_Success = False
-        'End Try
     End Sub
 
     Private Sub Event_WatchDog(sender As Object, e As EventArgs)
         Dim Nut_Query = Query_Data("")
-        If Nut_Query.Response = NUTResponse.NORESPONSE Then
-            Disconnect(True)
-            RaiseEvent Socket_Broken()
+        If Nut_Query.ResponseType = NUTResponse.NORESPONSE Then
+            Disconnect(True, True)
+            RaiseEvent Socket_Broken(New NutException(Nut_Query))
         End If
     End Sub
 

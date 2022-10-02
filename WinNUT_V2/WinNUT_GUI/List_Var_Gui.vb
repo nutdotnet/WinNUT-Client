@@ -29,7 +29,8 @@ Public Class List_Var_Gui
         Catch ex As Exception
             ' TODO: Internationalize?
             MessageBox.Show("Error encountered trying to get variables from the UPS: " & vbNewLine & ex.Message, "Error Encountered")
-            Close()
+            ' Close()
+            Return
         End Try
 
         If List_Var_Datas Is Nothing Then
@@ -91,7 +92,7 @@ Public Class List_Var_Gui
                 If SelectedNode.Parent.Text <> UPS_Name And SelectedNode.Nodes.Count = 0 Then
                     Dim VarName = Replace(TView_UPSVar.SelectedNode.FullPath, UPS_Name & ".", "")
                     LogFile.LogTracing("Update {VarName}", LogLvl.LOG_DEBUG, Me)
-                    Lbl_V_Value.Text = WinNUT.UPS_Device.GetUPSVar(VarName, UPS_Name)
+                    Lbl_V_Value.Text = WinNUT.UPS_Device.GetUPSVar(VarName)
                 End If
             End If
         End If
@@ -111,7 +112,7 @@ Public Class List_Var_Gui
         PopulateTreeView()
     End Sub
 
-    Private Sub TView_UPSVar_NodeMouseClick(sender As Object, e As TreeNodeMouseClickEventArgs) Handles TView_UPSVar.NodeMouseClick
+    Private Sub TView_UPSVar_NodeChanged(sender As Object, e As TreeViewEventArgs) Handles TView_UPSVar.AfterSelect
         Dim index As Integer = 0
         Dim UPSName = Arr_Reg_Key.Item("UPSName")
         Dim SelectedChild = Replace(e.Node.FullPath, UPSName & ".", "")

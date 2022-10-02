@@ -39,7 +39,7 @@ Public Class WinNUT
     Public WithEvents UPS_Device As UPS_Device
     ' Public Nut_Socket As Nut_Socket
     ' Public Nut_Config As New Nut_Parameter
-    ' Private Device_Data As UPS_Datas
+    ' Private Device_Data As UPSData
 
     ' ^--- Shall be referenced from inside UPS_Device object
 
@@ -567,8 +567,8 @@ Public Class WinNUT
         LogFile.LogTracing("Battery Status => " & Status, LogLvl.LOG_DEBUG, Me)
     End Sub
 
-    Sub HandleNUTException(ex As Nut_Exception, sender As Object) Handles UPS_Device.EncounteredNUTException
-        If ex.ExceptionValue = Nut_Exception_Value.UNKNOWN_UPS Then
+    Sub HandleNUTException(ex As NutException, sender As Object) Handles UPS_Device.EncounteredNUTException
+        If ex.LastTransaction.ResponseType = NUTResponse.UNKNOWNUPS Then
             Event_Unknown_UPS()
         End If
 
