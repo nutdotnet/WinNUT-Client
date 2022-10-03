@@ -40,11 +40,9 @@ jobs:
         ${env:BUILD_NUM} = ([int]${env:GITHUB_RUN_NUMBER} + 8303)
         echo "Set Build version to ${env:BUILD_NUM}"
 
-    # - name: Setup Nuget
-    #   uses: nuget/setup-nuget@v1
-    
-    # - name: Restore NuGet Packages
-    #   run: nuget restore $env:SLN_FILE  
+    - name: [Debug] Output ENV vars
+      run: env
+
     - name: Restore Packages
       run: msbuild -t:restore
 
