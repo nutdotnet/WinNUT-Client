@@ -40,7 +40,7 @@ jobs:
         Write-Output "::echo::on"
         $calcBuildNum = ([int]$env:GITHUB_RUN_NUMBER + 8303)
         echo "Calculated number $calcBuildNum"
-        $calcBuildNum >> $env:BUILD_NUM
+        "BUILD_NUM=$calcBuildNum" >> $env:GITHUB_ENV
         echo "Set Build version to $env:BUILD_NUM"
 
     - name: (Debug) Output ENV vars
