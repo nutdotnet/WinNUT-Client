@@ -26,6 +26,12 @@ jobs:
       matrix:
         os: [windows-2019] # Should have MSBuild.
     steps:
+    # Calculate the build number. Will change to a new strategy after the next minor release.
+    - name: Calculate Version
+      run: |
+        echo ($GITHUB_RUN_ATTEMPT+8303) >> $env:BUILD_NUM
+        Write-Output "::notice title='Build version'::Build version is 2.2.$env:BUILD_NUM"
+
     # Make MSBuild available from $PATH.
     - name: setup-msbuild
       uses: microsoft/setup-msbuild@v1.1
@@ -40,12 +46,6 @@ jobs:
     #   run: nuget restore $env:SLN_FILE  
     - name: Restore Packages
       run: msbuild -t:restore
-
-    # Calculate the build number. Will change to a new strategy after the next minor release.
-    - name: Calculate Version
-      run: |
-        ($GITHUB_RUN_ATTEMPT+8303) >> $env:BUILD_NUM
-        Write-Output "::notice title='Build version'::Build version is 2.2.$env:BUILD_NUM"
 
     # msbuild cannot handle .vdproj Installer projects, so only build debug for now.
     - name: Build solution
