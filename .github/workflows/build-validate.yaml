@@ -40,7 +40,7 @@ jobs:
         ${env:BUILD_NUM} = ([int]${env:GITHUB_RUN_NUMBER} + 8303)
         echo "Set Build version to ${env:BUILD_NUM}"
 
-    - name: [Debug] Output ENV vars
+    - name: \[Debug\] Output ENV vars
       run: env
 
     - name: Restore Packages
