@@ -26,18 +26,18 @@ jobs:
       matrix:
         os: [windows-2019] # Should have MSBuild.
     steps:
-    # Calculate the build number. Will change to a new strategy after the next minor release.
-    - name: Calculate Version
-      run: |
-        echo ($GITHUB_RUN_ATTEMPT+8303) >> $env:BUILD_NUM
-        Write-Output "::notice title='Build version'::Build version is 2.2.$env:BUILD_NUM"
-
     # Make MSBuild available from $PATH.
     - name: setup-msbuild
       uses: microsoft/setup-msbuild@v1.1
 
     - name: Checkout Code
       uses: actions/checkout@v3
+
+      # Calculate the build number. Will change to a new strategy after the next minor release.
+    - name: Calculate Version
+      run: |
+        echo ($GITHUB_RUN_ATTEMPT+8303) >> $env:BUILD_NUM
+        Write-Output "::notice title='Build version'::Build version is 2.2.$env:BUILD_NUM"
 
     # - name: Setup Nuget
     #   uses: nuget/setup-nuget@v1
