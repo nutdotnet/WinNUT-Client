@@ -16,6 +16,7 @@ on:
 env:
   DOTNET_VERSION: '4.7.2' # The .NET SDK version to use
   SLN_FILE: WinNUT_V2.sln
+  BUILD_NUM:
 
 jobs:
   build:
@@ -36,8 +37,8 @@ jobs:
       # Calculate the build number. Will change to a new strategy after the next minor release.
     - name: Calculate Version
       run: |
-        echo ($GITHUB_RUN_ATTEMPT+8303) >> $env:BUILD_NUM
-        Write-Output "::notice title='Build version'::Build version is 2.2.$env:BUILD_NUM"
+        ($GITHUB_RUN_ATTEMPT+8303) >> $env:BUILD_NUM
+        echo "Set Build version to $env:BUILD_NUM"
 
     # - name: Setup Nuget
     #   uses: nuget/setup-nuget@v1
