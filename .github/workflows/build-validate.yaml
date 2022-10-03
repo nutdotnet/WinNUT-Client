@@ -40,7 +40,7 @@ jobs:
         Write-Output "::echo::on"
         $calcBuildNum = ([int]$env:GITHUB_RUN_NUMBER + 8303)
         echo "Calculated number $calcBuildNum"
-        echo "BUILD_NUM=$calcBuildNum" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+        echo "BUILD_NUM=$calcBuildNum" | Out-File -FilePath $env:GITHUB_ENV -Append
         echo "Set Build version to $env:BUILD_NUM"
 
     - name: (Debug) Output ENV vars
@@ -53,7 +53,7 @@ jobs:
     - name: Build solution
       run: |
         Write-Output "::echo::on"
-        msbuild $env:SLN_FILE -p:Configuration=Debug -p:AssemblyFileVersion=2.2.$env:BUILD_NUM
+        msbuild $env:SLN_FILE /p:Configuration=Debug;AssemblyFileVersion=2.2.$env:BUILD_NUM
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
