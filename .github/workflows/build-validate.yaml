@@ -37,8 +37,7 @@ jobs:
       # Calculate the build number. Will change to a new strategy after the next minor release.
     - name: Calculate Version
       run: |
-        $buildnum = ($env:GITHUB_RUN_NUMBER + 8303)
-        $env:BUILD_NUM = $buildnum
+        $env:BUILD_NUM = ([int]$env:GITHUB_RUN_NUMBER + 8303)
         echo "Set Build version to $env:BUILD_NUM"
 
     # - name: Setup Nuget
