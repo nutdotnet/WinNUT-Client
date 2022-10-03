@@ -41,14 +41,20 @@ jobs:
     - name: Restore Packages
       run: msbuild -t:restore
 
+    # Calculate the build number. Will change to a new strategy after the next minor release.
+    - name: Calculate Version
+      run: |
+        ($GITHUB_RUN_ATTEMPT+8303) >> $env:BUILD_NUM
+        Write-Output "::notice title='Build version'::Build version is 2.2.$env:BUILD_NUM"
+
     # msbuild cannot handle .vdproj Installer projects, so only build debug for now.
     - name: Build solution
-      run: msbuild $env:SLN_FILE /p:Configuration=Debug
+      run: msbuild $env:SLN_FILE -p:Configuration=Debug -p:AssemblyFileVersion=2.2.$env:BUILD_NUM
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
       with:
-        name: build-winnut
+        name: WinNUT-Client-debugbuild-v2.2.$env:BUILD_NUM
         if-no-files-found: error
         path: |
           WinNUT_V2/WinNUT-Client/bin/Debug
