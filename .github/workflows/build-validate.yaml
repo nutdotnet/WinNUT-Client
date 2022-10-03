@@ -50,12 +50,12 @@ jobs:
 
     # msbuild cannot handle .vdproj Installer projects, so only build debug for now.
     - name: Build solution
-      run: msbuild $env:SLN_FILE -p:Configuration=Debug -p:AssemblyFileVersion=2.2.${{ env.BUILD_NUM }}
+      run: msbuild $env:SLN_FILE -p:Configuration=Debug -p:AssemblyFileVersion=2.2.$env:BUILD_NUM
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
       with:
-        name: WinNUT-Client-debugbuild-v2.2.${{ env.BUILD_NUM }}
+        name: ${{ format('WinNUT-Client-debugbuild-v2.2.{0}', env.BUILD_NUM) }}
         if-no-files-found: error
         path: |
           WinNUT_V2/WinNUT-Client/bin/Debug
