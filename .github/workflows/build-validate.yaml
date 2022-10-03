@@ -55,7 +55,7 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
       with:
-        name: WinNUT-Client-debugbuild-v2.2.${{ env:BUILD_NUM }}
+        name: WinNUT-Client-debugbuild-v2.2.${{ env.BUILD_NUM }}
         if-no-files-found: error
         path: |
           WinNUT_V2/WinNUT-Client/bin/Debug
