@@ -53,7 +53,7 @@ jobs:
     - name: Build solution
       run: |
         Write-Output "::echo::on"
-        msbuild $env:SLN_FILE /p:Configuration=Debug;AssemblyFileVersion=2.2.$env:BUILD_NUM
+        msbuild.exe $env:SLN_FILE -p:Configuration=Debug -p:AssemblyFileVersion=2.2.$env:BUILD_NUM
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
