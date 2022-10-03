@@ -37,10 +37,11 @@ jobs:
       # Calculate the build number. Will change to a new strategy after the next minor release.
     - name: Calculate Version
       run: |
-        ${env:BUILD_NUM} = ([int]${env:GITHUB_RUN_NUMBER} + 8303)
-        echo "Set Build version to ${env:BUILD_NUM}"
+        Write-Output "::echo::on"
+        ([int]$env:GITHUB_RUN_NUMBER + 8303) >> $env:BUILD_NUM
+        echo "Set Build version to $env:BUILD_NUM"
 
-    - name: \[Debug\] Output ENV vars
+    - name: (Debug) Output ENV vars
       run: env
 
     - name: Restore Packages
@@ -48,7 +49,9 @@ jobs:
 
     # msbuild cannot handle .vdproj Installer projects, so only build debug for now.
     - name: Build solution
-      run: msbuild ${env:SLN_FILE} -p:Configuration=Debug -p:AssemblyFileVersion=2.2.${env:BUILD_NUM}
+      run: |
+        Write-Output "::echo::on"
+        msbuild $env:SLN_FILE -p:Configuration=Debug -p:AssemblyFileVersion=2.2.$env:BUILD_NUM
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
