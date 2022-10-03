@@ -37,8 +37,8 @@ jobs:
       # Calculate the build number. Will change to a new strategy after the next minor release.
     - name: Calculate Version
       run: |
-        $env:BUILD_NUM = ([int]$env:GITHUB_RUN_NUMBER + 8303)
-        echo "Set Build version to $env:BUILD_NUM"
+        ${env:BUILD_NUM} = ([int]${env:GITHUB_RUN_NUMBER} + 8303)
+        echo "Set Build version to ${env:BUILD_NUM}"
 
     # - name: Setup Nuget
     #   uses: nuget/setup-nuget@v1
@@ -50,7 +50,7 @@ jobs:
 
     # msbuild cannot handle .vdproj Installer projects, so only build debug for now.
     - name: Build solution
-      run: msbuild $env:SLN_FILE -p:Configuration=Debug -p:AssemblyFileVersion=2.2.$env:BUILD_NUM
+      run: msbuild ${env:SLN_FILE} -p:Configuration=Debug -p:AssemblyFileVersion=2.2.${env:BUILD_NUM}
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
