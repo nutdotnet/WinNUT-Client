@@ -38,7 +38,9 @@ jobs:
     - name: Calculate Version
       run: |
         Write-Output "::echo::on"
-        ([int]$env:GITHUB_RUN_NUMBER + 8303) >> $env:BUILD_NUM
+        $calcBuildNum = ([int]$env:GITHUB_RUN_NUMBER + 8303)
+        echo "Calculated number $calcBuildNum"
+        $calcBuildNum >> $env:BUILD_NUM
         echo "Set Build version to $env:BUILD_NUM"
 
     - name: (Debug) Output ENV vars
