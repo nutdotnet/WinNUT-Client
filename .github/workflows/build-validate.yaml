@@ -59,13 +59,12 @@ jobs:
       id: getversion
       uses: berglie/assembly-version/get@v1
       with:
-        directory: `
+        directory: env.DEBUG_OUTPUT
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
       with:
         name: ${{ format('WinNUT-Client-debugbuild-v2.2.{0}', steps.getversion.outputs.version) }}
         if-no-files-found: error
-        path: |
-          env.DEBUG_OUTPUT
+        path: env.DEBUG_OUTPUT
           
