@@ -62,6 +62,16 @@ Your translation / correction will be added on a new version and will thus be av
 #### Development Environment Setup
 This project is built for **.NET Framework 4.7.2**, which is supported up to **Visual Studio 2019**. If you want to compile an installer, you will need the [Microsoft Visual Studio Installer Projects](https://marketplace.visualstudio.com/items?itemName=visualstudioclient.MicrosoftVisualStudio2017InstallerProjects) extension installed.
 
+#### Build & Release Procedure ####
+The [Assembly version](https://learn.microsoft.com/en-us/dotnet/api/system.reflection.assemblyversionattribute.-ctor?view=netframework-4.7.2) is automatically incremented, as defined in [SharedAssemblyInfo.vb](https://github.com/nutdotnet/WinNUT-Client/blob/Dev-2.2/WinNUT_V2/SharedAssemblyInfo.vb). The **build number** is automatically set as the number of days since January 1 2000, and the **revision** is the number of seconds since midnight divided by two. Major and minor versions are determined manually.
+
+When releasing, make a **Release** build and check the version of the client after it's built. Edit the properties of the **WinNUT-Setup** project: 
+    
+- Update **Version** to the *major.minor.build* of the built client assembly
+- Let the **Product** and **PackageCode**s be regenerated
+    
+Commit the Setup project changes (and any other uncommitted changes) in git, and tag the commit with the version in the format v*major.minor.build*. Push and merge forks as necessary. Build the Setup project (in Release mode), then upload that and an archive of the client build output to a new GitHub release.
+
 ## Update WinNUT-Client
 
 Since version 1.8.0.0, WinNUT-Client includes a process for checking for updates.

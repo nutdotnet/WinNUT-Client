@@ -23,38 +23,70 @@ Public Class UPS_Values
     Public UPS_Status As Integer = Nothing
 End Class
 
-Public Class UPS_Datas
-    Public Name As String = ""
-    Public Mfr As String = ""
-    Public Model As String = ""
-    Public Serial As String = ""
-    Public Firmware As String = ""
+Public Class UPSData
+    Public ReadOnly Mfr As String
+    Public ReadOnly Model As String
+    Public ReadOnly Serial As String
+    Public ReadOnly Firmware As String
     Public UPS_Value As New UPS_Values
+
+    Public Sub New(Mfr As String, Model As String, Serial As String, Firmware As String)
+        Me.Mfr = Mfr
+        Me.Model = Model
+        Me.Serial = Serial
+        Me.Firmware = Firmware
+    End Sub
+
 End Class
 
-Public Class Nut_Exception
-    Inherits System.ApplicationException
+''' <summary>
+''' Encapsulates a query and response between a NUT client and server.
+''' </summary>
+Public Class Transaction
+    ''' <summary>
+    ''' The original query sent by the client, to the server.
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property Query As String
+    ''' <summary>
+    ''' See <see cref="NUTResponse"/>
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property ResponseType As NUTResponse
+    ''' <summary>
+    ''' The full, unaltered response from the server.
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property RawResponse As String
 
-    Public Property ExceptionValue As Nut_Exception_Value
-    Public Property ProtocolError As NUTResponse
-
-    Public Sub New(ByVal Nut_Error_Lvl As Nut_Exception_Value)
-        MyBase.New(StringEnum.GetStringValue(Nut_Error_Lvl))
+    Public Sub New(query As String, rawResponse As String, responseType As NUTResponse)
+        Me.Query = query
+        Me.RawResponse = rawResponse
+        Me.ResponseType = responseType
     End Sub
+End Class
 
-    Public Sub New(ByVal Nut_Error_Lvl As Nut_Exception_Value, ByVal Message As String, Optional innerEx As Exception = Nothing)
-        MyBase.New(StringEnum.GetStringValue(Nut_Error_Lvl) & Message, innerEx)
-        ExceptionValue = Nut_Error_Lvl
-    End Sub
+Public Class NutException
+    Inherits ApplicationException
+
+    Public ReadOnly Property LastTransaction As Transaction
 
     ''' <summary>
-    ''' Raise a Nut_Exception that resulted from an error as part of the NUT protocol.
+    ''' Raise a NutException that resulted from either an error as part of the NUT protocol, or a general error during
+    ''' the query.
     ''' </summary>
     ''' <param name="protocolError"></param>
-    ''' <param name="message"></param>
-    Public Sub New(protocolError As NUTResponse, message As String)
-        MyBase.New(message)
-        Me.ProtocolError = protocolError
+    ''' <param name="queryResponse"></param>
+    Public Sub New(query As String, protocolError As NUTResponse, queryResponse As String,
+                   Optional innerException As Exception = Nothing)
+        MyBase.New(Nothing, innerException)
+        LastTransaction = New Transaction(query, queryResponse, protocolError)
+    End Sub
+
+    Public Sub New(transaction As Transaction)
+        MyBase.New(String.Format("{0} ({1})" & vbNewLine & "Query: {2}", transaction.ResponseType,
+                                   transaction.RawResponse, transaction.Query))
+        LastTransaction = transaction
     End Sub
 End Class
 
