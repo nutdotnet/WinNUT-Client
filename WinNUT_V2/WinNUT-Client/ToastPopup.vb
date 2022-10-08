@@ -7,13 +7,19 @@
 '
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
+Imports Microsoft.Toolkit.Uwp.Notifications
+
+''' <summary>
+''' Class to send a Toast Notification on Windows 10 and up. Made possible thanks to Microsoft.Toolkit.Uwp.Notifications
+''' package and https://learn.microsoft.com/en-us/windows/apps/design/shell/tiles-and-notifications/send-local-toast?tabs=desktop
+''' </summary>
 Public Class ToastPopup
-    Private Header As String = ""
-    Public WriteOnly Property ToastHeader() As String
-        Set(ByVal Value As String)
-            Me.Header = Value
-        End Set
-    End Property
+    'Private Header As String = ""
+    'Public WriteOnly Property ToastHeader() As String
+    '    Set(ByVal Value As String)
+    '        Me.Header = Value
+    '    End Set
+    'End Property
     'Public toastCollectionId As String = "WinNUTToastCollection"
     'Create a toast collection
     'Public Async Sub CreateToastCollection(ByVal IconUri As String)
@@ -34,21 +40,25 @@ Public Class ToastPopup
     'Windows.UI.Notifications.ToastNotificationManager.GetDefault().GetToastCollectionManager().SaveToastCollectionAsync(WinNutToastCollection)
     ' End Sub
 
-    Public Sub SendToast(ByVal ToastParts As String())
+    Public Sub SendToast(ToastParts As String())
         'Get a toast XML template
-        Dim TemplateToast As Windows.UI.Notifications.ToastTemplateType
-        If ToastParts.Count >= 3 Then
-            TemplateToast = Windows.UI.Notifications.ToastTemplateType.ToastText04
-        Else
-            TemplateToast = Windows.UI.Notifications.ToastTemplateType.ToastText02
-        End If
+        'Dim TemplateToast As Windows.UI.Notifications.ToastTemplateType
+        'If ToastParts.Count >= 3 Then
+        '    TemplateToast = Windows.UI.Notifications.ToastTemplateType.ToastText04
+        'Else
+        '    TemplateToast = Windows.UI.Notifications.ToastTemplateType.ToastText02
+        'End If
 
-        Dim toastXml As Windows.Data.Xml.Dom.XmlDocument = Windows.UI.Notifications.ToastNotificationManager.GetTemplateContent(TemplateToast)
+        'Dim toastXml As XmlDocument = Windows.UI.Notifications.ToastNotificationManager.GetTemplateContent(TemplateToast)
 
         'Fill in the text elements
-        Dim stringElements As Windows.Data.Xml.Dom.XmlNodeList = toastXml.GetElementsByTagName("text")
-        For i = 0 To ((ToastParts.Count - 1) And (stringElements.Count - 1)) Step 1
-            stringElements.Item(i).InnerText = ToastParts.ElementAt(i)
+        'Dim stringElements As XmlNodeList = toastXml.GetElementsByTagName("text")
+        'For i = 0 To ((ToastParts.Count - 1) And (stringElements.Count - 1)) Step 1
+        '    stringElements.Item(i).InnerText = ToastParts.ElementAt(i)
+        'Next
+        Dim toastBuilder = New ToastContentBuilder()
+        For i = 0 To ToastParts.Count - 1
+            toastBuilder.AddText(ToastParts(i))
         Next
 
         'Specify the absolute path to an image
@@ -57,12 +67,13 @@ Public Class ToastPopup
         'imageElements.Item(0).Attributes.GetNamedItem("src").NodeValue = imagePath
 
         'Create the toast And attach event listeners
-        Dim toast As Windows.UI.Notifications.ToastNotification = New Windows.UI.Notifications.ToastNotification(toastXml)
+        ' Dim toast As Windows.UI.Notifications.ToastNotification = New Windows.UI.Notifications.ToastNotification(toastXml)
         'toast.Activated += ToastActivated
         'toast.Dismissed += ToastDismissed
         'toast.Failed += ToastFailed
 
         'Show the toast. Be sure to specify the AppUserModelId on your application's shortcut!
-        Windows.UI.Notifications.ToastNotificationManager.CreateToastNotifier(Me.Header).Show(toast)
+        ' Windows.UI.Notifications.ToastNotificationManager.CreateToastNotifier(Me.Header).Show(toast)
+        toastBuilder.Show()
     End Sub
 End Class
