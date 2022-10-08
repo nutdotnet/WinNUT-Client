@@ -16,7 +16,7 @@ on:
 env:
   DOTNET_VERSION: '4.7.2' # The .NET SDK version to use
   SLN_FILE: WinNUT_V2.sln
-  DEBUG_OUTPUT: WinNUT_V2/WinNUT-Client/bin/Debug
+  DEBUG_OUTPUT: WinNUT-Client/bin/Debug
 
 jobs:
   build:
