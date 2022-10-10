@@ -37,11 +37,6 @@ Public Class WinNUT
 
     'Object for UPS management
     Public WithEvents UPS_Device As UPS_Device
-    ' Public Nut_Socket As Nut_Socket
-    ' Public Nut_Config As New Nut_Parameter
-    ' Private Device_Data As UPSData
-
-    ' ^--- Shall be referenced from inside UPS_Device object
 
     Private AutoReconnect As Boolean
     Private UPS_Retry As Integer = 0
@@ -665,16 +660,16 @@ Public Class WinNUT
             UPS_Status = "OL"
             UPS_OutPower = .Output_Power
 
-            If (.UPS_Status And UPS_States.OL) Then
+            If .UPS_Status.HasFlag(UPS_States.OL) Then
                 Lbl_VOL.BackColor = Color.Green
                 Lbl_VOB.BackColor = Color.White
                 ActualAppIconIdx = AppIconIdx.IDX_OL
-            ElseIf (.UPS_Status And UPS_States.OB) Then
+            ElseIf .UPS_Status.HasFlag(UPS_States.OB) Then
                 Lbl_VOL.BackColor = Color.Yellow
                 Lbl_VOB.BackColor = Color.Green
                 ActualAppIconIdx = 0
             End If
-            If (.UPS_Status And UPS_States.OVER) Then
+            If .UPS_Status.HasFlag(UPS_States.OVER) Then
                 Lbl_VOLoad.BackColor = Color.Red
             Else
                 Lbl_VOLoad.BackColor = Color.White
@@ -699,31 +694,27 @@ Public Class WinNUT
             '        Lbl_VOLoad.BackColor = Color.White
             '    End If
 
+            LogFile.LogTracing("Updating battery icons based on charge percent: " & UPS_BattCh & "%", LogLvl.LOG_DEBUG, Me)
+
             Select Case UPS_BattCh
                 Case 76 To 100
                     Lbl_VBL.BackColor = Color.White
                     ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_100
-                    LogFile.LogTracing("Battery Charged", LogLvl.LOG_DEBUG, Me)
                 Case 51 To 75
                     Lbl_VBL.BackColor = Color.White
                     ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_75
-                    LogFile.LogTracing("Battery Charged", LogLvl.LOG_DEBUG, Me)
                 Case 40 To 50
                     Lbl_VBL.BackColor = Color.White
                     ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_50
-                    LogFile.LogTracing("Battery Charged", LogLvl.LOG_DEBUG, Me)
                 Case 26 To 39
                     Lbl_VBL.BackColor = Color.Red
                     ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_50
-                    LogFile.LogTracing("Low Battery", LogLvl.LOG_DEBUG, Me)
                 Case 11 To 25
                     Lbl_VBL.BackColor = Color.Red
                     ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_25
-                    LogFile.LogTracing("Low Battery", LogLvl.LOG_DEBUG, Me)
                 Case 0 To 10
                     Lbl_VBL.BackColor = Color.Red
                     ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_0
-                    LogFile.LogTracing("Low Battery", LogLvl.LOG_DEBUG, Me)
             End Select
 
             ' Calculate and display estimated remaining time on battery.
@@ -1041,9 +1032,44 @@ Public Class WinNUT
         End If
     End Sub
 
-    Private Sub Shutdown_Event() Handles UPS_Device.Shutdown_Condition
+    Private Sub HandleUPSStatusChange(sender As UPS_Device, newStatuses As UPS_States) Handles UPS_Device.StatusesChanged
+        LogFile.LogTracing("Handling new UPS status(es)...", LogLvl.LOG_DEBUG, Me)
+        Dim statusString As String = ""
+
+        With sender.UPS_Datas.UPS_Value
+            For Each status In [Enum].GetValues(GetType(UPS_States))
+                If newStatuses.HasFlag(status) Then
+                    statusString &= [Enum].GetName(GetType(UPS_States), status) & " "
+                    ' Determine if we need to initiate the stop procedure.
+                    If status = UPS_States.FSD Then
+                        LogFile.LogTracing("Full Shut Down imposed by the NUT server.", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_LOG_NUT_FSD))
+                        Shutdown_Event()
+                    ElseIf status = UPS_States.OB And
+                            (.Batt_Charge <= Arr_Reg_Key.Item("ShutdownLimitBatteryCharge") Or
+                            .Batt_Runtime <= Arr_Reg_Key.Item("ShutdownLimitUPSRemainTime")) And
+                            Not ShutdownStatus Then
+                        LogFile.LogTracing("UPS battery has dropped below stop condition limits.", LogLvl.LOG_NOTICE, Me, WinNUT_Globals.StrLog.Item(AppResxStr.STR_LOG_SHUT_START))
+                        Shutdown_Event()
+                    ElseIf status = UPS_States.OL AndAlso ShutdownStatus Then
+                        LogFile.LogTracing("UPS returned online during a pre-shutdown event.", LogLvl.LOG_NOTICE, Me)
+                        Stop_Shutdown_Event()
+                    End If
+                End If
+            Next
+        End With
+
+        LogFile.LogTracing("Finished handling new UPS statuses: " & statusString, LogLvl.LOG_NOTICE, Me)
+    End Sub
+
+    ''' <summary>
+    ''' Track if the Shutdown_Gui is counting down to activate the Shutdown_Action.
+    ''' </summary>
+    Private ShutdownStatus = False
+    Private Sub Shutdown_Event()
+        ShutdownStatus = True
+
         If Arr_Reg_Key.Item("ImmediateStopAction") Then
-            ' UPSDisconnect()
+            LogFile.LogTracing("Immediately stopping due to shutdown event.", LogLvl.LOG_NOTICE, Me)
             UPS_Device.Disconnect()
             Shutdown_Action()
         Else
@@ -1054,13 +1080,15 @@ Public Class WinNUT
         End If
     End Sub
 
-    Private Sub Stop_Shutdown_Event() Handles UPS_Device.Stop_Shutdown
+    Private Sub Stop_Shutdown_Event()
+        ShutdownStatus = False
         Shutdown_Gui.Shutdown_Timer.Stop()
         Shutdown_Gui.Shutdown_Timer.Enabled = False
         Shutdown_Gui.Grace_Timer.Stop()
         Shutdown_Gui.Grace_Timer.Enabled = False
         Shutdown_Gui.Hide()
         Shutdown_Gui.Close()
+        LogFile.LogTracing("Stop condition cancelled.", LogLvl.LOG_NOTICE, Me, WinNUT_Globals.StrLog.Item(AppResxStr.STR_LOG_SHUT_STOP))
     End Sub
 
     Public Sub Shutdown_Action()

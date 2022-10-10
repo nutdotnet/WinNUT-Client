@@ -13,6 +13,12 @@ Imports System.Windows.Forms
 Public Class UPS_Device
 #Region "Properties"
 
+    Public ReadOnly Property Name As String
+        Get
+            Return Nut_Config.UPSName
+        End Get
+    End Property
+
     Public ReadOnly Property IsConnected As Boolean
         Get
             Return (Nut_Socket.IsConnected) ' And Me.Socket_Status
@@ -31,6 +37,16 @@ Public Class UPS_Device
         End Get
         Set(value As Integer)
             Update_Data.Interval = value
+        End Set
+    End Property
+
+    Private upsData As UPSData
+    Public Property UPS_Datas As UPSData
+        Get
+            Return upsData
+        End Get
+        Private Set(value As UPSData)
+            upsData = value
         End Set
     End Property
 
@@ -103,28 +119,13 @@ Public Class UPS_Device
     'Private NutStream As System.Net.Sockets.NetworkStream
     'Private ReaderStream As System.IO.StreamReader
     'Private WriterStream As System.IO.StreamWriter
-    'Private ShutdownStatus As Boolean = False
     'Private Follow_FSD As Boolean = False
     'Private Unknown_UPS_Name As Boolean = False
     'Private Invalid_Data As Boolean = False
     'Private Invalid_Auth_Data As Boolean = False
 
 #Region "Properties"
-    Private upsData As UPSData
-    Public Property UPS_Datas As UPSData
-        Get
-            Return upsData
-        End Get
-        Private Set(value As UPSData)
-            upsData = value
-        End Set
-    End Property
 
-    Public ReadOnly Property Name As String
-        Get
-            Return Nut_Config.UPSName
-        End Get
-    End Property
 #End Region
 
     ' Public Event Unknown_UPS()
@@ -139,8 +140,14 @@ Public Class UPS_Device
     Public Event ConnectionError(innerException As Exception)
     Public Event EncounteredNUTException(ex As NutException, sender As Object)
     Public Event New_Retry()
-    Public Event Shutdown_Condition()
-    Public Event Stop_Shutdown()
+    ' Public Event Shutdown_Condition()
+    ' Public Event Stop_Shutdown()
+
+    ''' <summary>
+    ''' Raise an event when a status code is added to the UPS that wasn't there before.
+    ''' </summary>
+    ''' <param name="newStatuses">The bitmask of status flags that are currently set on the UPS.</param>
+    Public Event StatusesChanged(sender As UPS_Device, newStatuses As UPS_States)
 
     Public Sub New(ByRef Nut_Config As Nut_Parameter, ByRef LogFile As Logger, pollInterval As Integer)
         Me.LogFile = LogFile
@@ -291,6 +298,8 @@ Public Class UPS_Device
         Return freshData
     End Function
 
+    Private oldStatusBitmask As Integer
+
     Public Sub Retrieve_UPS_Datas() Handles Update_Data.Tick ' As UPSData
         LogFile.LogTracing("Enter Retrieve_UPS_Datas", LogLvl.LOG_DEBUG, Me)
         Try
@@ -304,6 +313,7 @@ Public Class UPS_Device
                 '            UPS_Datas = GetUPSProductInfo()
                 '    End Select
                 'End With
+
                 With UPS_Datas.UPS_Value
                     .Batt_Charge = Double.Parse(GetUPSVar("battery.charge", 255), ciClone)
                     .Batt_Voltage = Double.Parse(GetUPSVar("battery.voltage", 12), ciClone)
@@ -312,7 +322,7 @@ Public Class UPS_Device
                     .Input_Voltage = Double.Parse(GetUPSVar("input.voltage", 220), ciClone)
                     .Output_Voltage = Double.Parse(GetUPSVar("output.voltage", .Input_Voltage), ciClone)
                     .Load = Double.Parse(GetUPSVar("ups.load", 100), ciClone)
-                    UPS_rt_Status = GetUPSVar("ups.status", "OL")
+                    UPS_rt_Status = GetUPSVar("ups.status")
                     .Output_Power = Double.Parse((GetUPSVar("ups.realpower.nominal", 0)), ciClone)
                     If .Output_Power = 0 Then
                         .Output_Power = Double.Parse((GetUPSVar("ups.power.nominal", 0)), ciClone)
@@ -344,70 +354,26 @@ Public Class UPS_Device
                         Dim BattInstantCurrent = (.Output_Voltage * .Load) / (.Batt_Voltage * 100)
                         .Batt_Runtime = Math.Floor(.Batt_Capacity * 0.6 * .Batt_Charge * (1 - PowerDivider) * 3600 / (BattInstantCurrent * 100))
                     End If
-                    Dim StatusArr = UPS_rt_Status.Trim().Split(" ")
-                    .UPS_Status = 0
-                    For Each State In StatusArr
-                        Select Case State
-                            Case "OL"
-                                LogFile.LogTracing("UPS is On Line", LogLvl.LOG_NOTICE, Me)
-                                .UPS_Status = .UPS_Status Or UPS_States.OL
-                            'If Not Update_Nut.Interval = Me.Delay Then
-                            '    Update_Nut.Stop()
-                            '    Update_Nut.Interval = Me.Delay
-                            '    Update_Nut.Start()
-                            'End If
-                            'If ShutdownStatus Then
-                            '    LogFile.LogTracing("Stop condition Canceled", LogLvl.LOG_NOTICE, Me, WinNUT_Globals.StrLog.Item(AppResxStr.STR_LOG_SHUT_STOP))
-                            '    ShutdownStatus = False
-                            '    RaiseEvent Stop_Shutdown()
-                            'End If
-                            Case "OB"
-                                LogFile.LogTracing("UPS is On Battery", LogLvl.LOG_NOTICE, Me)
-                                .UPS_Status = .UPS_Status Or UPS_States.OB
-                            'If Update_Nut.Interval = Me.Delay Then
-                            '    Update_Nut.Stop()
-                            '    Update_Nut.Interval = If((Math.Floor(Me.Delay / 5) < 1000), 1000, Math.Floor(Me.Delay / 5))
-                            '    Update_Nut.Start()
-                            'End If
-                            'If ((Me.BattCh <= Me.Low_Batt Or Me.BattRuntime <= Me.Backup_Limit) And Not ShutdownStatus) Then
-                            '    LogFile.LogTracing("Stop condition reached", LogLvl.LOG_NOTICE, Me, WinNUT_Globals.StrLog.Item(AppResxStr.STR_LOG_SHUT_START))
-                            '    RaiseEvent Shutdown_Condition()
-                            '    ShutdownStatus = True
-                            'End If
-                            Case "LB", "HB"
-                                LogFile.LogTracing("High/Low Battery on UPS", LogLvl.LOG_NOTICE, Me)
-                                .UPS_Status = .UPS_Status Or UPS_States.LBHB
-                            Case "CHRG"
-                                LogFile.LogTracing("Battery is Charging on UPS", LogLvl.LOG_NOTICE, Me)
-                                .UPS_Status = .UPS_Status Or UPS_States.CHRG
-                            Case "DISCHRG"
-                                LogFile.LogTracing("Battery is Discharging on UPS", LogLvl.LOG_NOTICE, Me)
-                                .UPS_Status = .UPS_Status Or UPS_States.DISCHRG
-                            Case "FSD"
-                                LogFile.LogTracing("Stop condition imposed by the NUT server", LogLvl.LOG_NOTICE, Me, WinNUT_Globals.StrLog.Item(AppResxStr.STR_LOG_NUT_FSD))
-                                .UPS_Status = .UPS_Status Or UPS_States.FSD
-                                RaiseEvent Shutdown_Condition()
-                            'ShutdownStatus = True
-                            Case "BYPASS"
-                                LogFile.LogTracing("UPS bypass circuit is active - no battery protection is available", LogLvl.LOG_NOTICE, Me)
-                                .UPS_Status = .UPS_Status Or UPS_States.BYPASS
-                            Case "CAL"
-                                LogFile.LogTracing("UPS is currently performing runtime calibration (on battery)", LogLvl.LOG_NOTICE, Me)
-                                .UPS_Status = .UPS_Status Or UPS_States.CAL
-                            Case "OFF"
-                                LogFile.LogTracing("UPS is offline and is not supplying power to the load", LogLvl.LOG_NOTICE, Me)
-                                .UPS_Status = .UPS_Status Or UPS_States.OFF
-                            Case "OVER"
-                                LogFile.LogTracing("UPS is overloaded", LogLvl.LOG_NOTICE, Me)
-                                .UPS_Status = .UPS_Status Or UPS_States.OVER
-                            Case "TRIM"
-                                LogFile.LogTracing("UPS is trimming incoming voltage", LogLvl.LOG_NOTICE, Me)
-                                .UPS_Status = .UPS_Status Or UPS_States.TRIM
-                            Case "BOOST"
-                                LogFile.LogTracing("UPS is boosting incoming voltage", LogLvl.LOG_NOTICE, Me)
-                                .UPS_Status = .UPS_Status Or UPS_States.BOOST
-                        End Select
-                    Next
+
+                    ' Prepare the status string for Enum parsing by replacing spaces with commas.
+                    UPS_rt_Status = UPS_rt_Status.Replace(" ", ",")
+                    Try
+                        .UPS_Status = [Enum].Parse(GetType(UPS_States), UPS_rt_Status)
+                    Catch ex As ArgumentException
+                        LogFile.LogTracing("Likely encountered an unknown/invalid UPS status. Using previous status." &
+                                           vbNewLine & ex.Message, LogLvl.LOG_ERROR, Me)
+                    End Try
+
+                    ' Get the difference between the old and new statuses, and filter only for active ones.
+                    Dim statusDiff = (oldStatusBitmask Xor .UPS_Status) And .UPS_Status
+
+                    If statusDiff = 0 Then
+                        LogFile.LogTracing("UPS statuses have not changed since last update, skipping.", LogLvl.LOG_DEBUG, Me)
+                    Else
+                        LogFile.LogTracing("UPS statuses have CHANGED, updating...", LogLvl.LOG_NOTICE, Me)
+                        oldStatusBitmask = .UPS_Status
+                        RaiseEvent StatusesChanged(Me, statusDiff)
+                    End If
                 End With
                 RaiseEvent DataUpdated()
             End If
@@ -419,7 +385,6 @@ Public Class UPS_Device
             'Me.Disconnect(True)
             'Enter_Reconnect_Process(Excep, "Error When Retrieve_UPS_Data : ")
         End Try
-        ' Return Me.UPSData
     End Sub
 
     Private Const MAX_VAR_RETRIES = 3
