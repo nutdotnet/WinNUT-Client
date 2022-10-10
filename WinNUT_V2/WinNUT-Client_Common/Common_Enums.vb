@@ -99,17 +99,20 @@ Public Enum NUTResponse
     ENDLIST
 End Enum
 
+<Flags()>
 Public Enum UPS_States
-    OL = 1
-    OB = 2
-    LBHB = 4
-    CHRG = 8
-    DISCHRG = 16
-    FSD = 32
-    BYPASS = 64
-    CAL = 128
-    OFF = 256
-    OVER = 512
-    TRIM = 1024
-    BOOST = 2048
+    None
+    OL
+    OB
+    LB
+    HB
+    CHRG
+    DISCHRG
+    FSD
+    BYPASS
+    CAL
+    OFF
+    OVER
+    TRIM
+    BOOST
 End Enum
