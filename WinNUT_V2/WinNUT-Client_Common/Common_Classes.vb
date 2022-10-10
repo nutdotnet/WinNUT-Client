@@ -20,7 +20,7 @@ Public Class UPS_Values
     Public Load As Double = Nothing
     Public Output_Power As Double = Nothing
     Public Batt_Capacity As Double = Nothing
-    Public UPS_Status As Integer = Nothing
+    Public UPS_Status As UPS_States = Nothing
 End Class
 
 Public Class UPSData
@@ -36,7 +36,6 @@ Public Class UPSData
         Me.Serial = Serial
         Me.Firmware = Firmware
     End Sub
-
 End Class
 
 ''' <summary>
