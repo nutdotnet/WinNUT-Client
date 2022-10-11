@@ -509,7 +509,7 @@ Public Class WinNUT
             Case "Update Data"
                 FormText &= " - Bat: " & UPS_BattCh & "% - " & StrLog.Item(AppResxStr.STR_MAIN_CONN) & " - "
                 NotifyStr &= StrLog.Item(AppResxStr.STR_MAIN_CONN) & vbNewLine
-                If UPS_Status.Trim().StartsWith("OL") Or StrReverse(UPS_Status.Trim()).StartsWith("LO") Then
+                If UPS_Device.UPS_Datas.UPS_Value.UPS_Status.HasFlag(UPS_States.OL) Then
                     NotifyStr &= StrLog.Item(AppResxStr.STR_MAIN_OL) & vbNewLine
                     FormText &= StrLog.Item(AppResxStr.STR_MAIN_OL) & " - "
                 Else
@@ -1045,12 +1045,16 @@ Public Class WinNUT
                 LogFile.LogTracing("Full Shut Down imposed by the NUT server.", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_LOG_NUT_FSD))
                 Shutdown_Event()
 
-            ElseIf newStatuses.HasFlag(UPS_States.OB) And
-                    (.Batt_Charge <= Arr_Reg_Key.Item("ShutdownLimitBatteryCharge") Or
-                    .Batt_Runtime <= Arr_Reg_Key.Item("ShutdownLimitUPSRemainTime")) And
-                    Not ShutdownStatus Then
-                LogFile.LogTracing("UPS battery has dropped below stop condition limits.", LogLvl.LOG_NOTICE, Me, WinNUT_Globals.StrLog.Item(AppResxStr.STR_LOG_SHUT_START))
-                Shutdown_Event()
+            ElseIf newStatuses.HasFlag(UPS_States.OB) And Not ShutdownStatus Then
+                If .Batt_Charge <= Arr_Reg_Key.Item("ShutdownLimitBatteryCharge") Or
+                    .Batt_Runtime <= Arr_Reg_Key.Item("ShutdownLimitUPSRemainTime") Then
+                    LogFile.LogTracing("UPS battery has dropped below stop condition limits.", LogLvl.LOG_NOTICE, Me, WinNUT_Globals.StrLog.Item(AppResxStr.STR_LOG_SHUT_START)) Then
+                    Shutdown_Event()
+                Else
+                    LogFile.LogTracing(String.Format("UPS charge ({0}%) or Runtime ({1}) have not met shutdown conditions {2} or {3}.",
+                        .Batt_Charge, .Batt_Runtime, Arr_Reg_Key.Item("ShutdownLimitBatteryCharge"), Arr_Reg_Key.Item("ShutdownLimitUPSRemainTime")),
+                        LogLvl.LOG_DEBUG, Me)
+                End If
 
             ElseIf newStatuses.HasFlag(UPS_States.OL) AndAlso ShutdownStatus Then
                 LogFile.LogTracing("UPS returned online during a pre-shutdown event.", LogLvl.LOG_NOTICE, Me)
