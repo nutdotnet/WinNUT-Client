@@ -637,7 +637,7 @@ Public Class WinNUT
     '    End With
     'End Sub
 
-    Private Sub Update_UPS_Data() Handles UPS_Device.DataUpdated ' Me.Data_Updated
+    Private Sub Update_UPS_Data() Handles UPS_Device.DataUpdated
         LogFile.LogTracing("Updating UPS data for Form.", LogLvl.LOG_DEBUG, Me)
         With UPS_Device.UPS_Datas
             If Lbl_VMfr.Text = "" And Lbl_VName.Text = "" And Lbl_VSerial.Text = "" And Lbl_VFirmware.Text = "" Then
@@ -669,7 +669,20 @@ Public Class WinNUT
                 Lbl_VOL.BackColor = Color.Yellow
                 Lbl_VOB.BackColor = Color.Green
                 ActualAppIconIdx = 0
+
+                If Not ShutdownStatus Then
+                    If .Batt_Charge <= Arr_Reg_Key.Item("ShutdownLimitBatteryCharge") Or
+                    .Batt_Runtime <= Arr_Reg_Key.Item("ShutdownLimitUPSRemainTime") Then
+                        LogFile.LogTracing("UPS battery has dropped below stop condition limits.", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_LOG_SHUT_START))
+                        Shutdown_Event()
+                    Else
+                        LogFile.LogTracing(String.Format("UPS charge ({0}%) or Runtime ({1}) have not met shutdown conditions {2} or {3}.",
+                        .Batt_Charge, .Batt_Runtime, Arr_Reg_Key.Item("ShutdownLimitBatteryCharge"), Arr_Reg_Key.Item("ShutdownLimitUPSRemainTime")),
+                        LogLvl.LOG_DEBUG, Me)
+                    End If
+                End If
             End If
+
             If .UPS_Status.HasFlag(UPS_States.OVER) Then
                 Lbl_VOLoad.BackColor = Color.Red
             Else
@@ -1045,16 +1058,8 @@ Public Class WinNUT
                 LogFile.LogTracing("Full Shut Down imposed by the NUT server.", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_LOG_NUT_FSD))
                 Shutdown_Event()
 
-            ElseIf newStatuses.HasFlag(UPS_States.OB) And Not ShutdownStatus Then
-                If .Batt_Charge <= Arr_Reg_Key.Item("ShutdownLimitBatteryCharge") Or
-                    .Batt_Runtime <= Arr_Reg_Key.Item("ShutdownLimitUPSRemainTime") Then
-                    LogFile.LogTracing("UPS battery has dropped below stop condition limits.", LogLvl.LOG_NOTICE, Me, WinNUT_Globals.StrLog.Item(AppResxStr.STR_LOG_SHUT_START)) Then
-                    Shutdown_Event()
-                Else
-                    LogFile.LogTracing(String.Format("UPS charge ({0}%) or Runtime ({1}) have not met shutdown conditions {2} or {3}.",
-                        .Batt_Charge, .Batt_Runtime, Arr_Reg_Key.Item("ShutdownLimitBatteryCharge"), Arr_Reg_Key.Item("ShutdownLimitUPSRemainTime")),
-                        LogLvl.LOG_DEBUG, Me)
-                End If
+            ElseIf newStatuses.HasFlag(UPS_States.OB) Then
+                LogFile.LogTracing(sender.Name & " has switched to battery power.", LogLvl.LOG_NOTICE, Me)
 
             ElseIf newStatuses.HasFlag(UPS_States.OL) AndAlso ShutdownStatus Then
                 LogFile.LogTracing("UPS returned online during a pre-shutdown event.", LogLvl.LOG_NOTICE, Me)
