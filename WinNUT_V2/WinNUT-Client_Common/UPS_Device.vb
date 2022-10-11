@@ -174,8 +174,6 @@ Public Class UPS_Device
 
         Try
             Nut_Socket.Connect()
-            LogFile.LogTracing("TCP Socket Created", LogLvl.LOG_NOTICE, Me)
-
             ' If Nut_Socket.ExistsOnServer(Nut_Config.UPSName) Then
             UPS_Datas = GetUPSProductInfo()
             Update_Data.Start()
@@ -370,7 +368,8 @@ Public Class UPS_Device
                     If statusDiff = 0 Then
                         LogFile.LogTracing("UPS statuses have not changed since last update, skipping.", LogLvl.LOG_DEBUG, Me)
                     Else
-                        LogFile.LogTracing("UPS statuses have CHANGED, updating...", LogLvl.LOG_NOTICE, Me)
+                        LogFile.LogTracing("UPS statuses have CHANGED...", LogLvl.LOG_NOTICE, Me)
+                        LogFile.LogTracing("Current statuses: " & UPS_rt_Status, LogLvl.LOG_NOTICE, Me)
                         oldStatusBitmask = .UPS_Status
                         RaiseEvent StatusesChanged(Me, statusDiff)
                     End If
