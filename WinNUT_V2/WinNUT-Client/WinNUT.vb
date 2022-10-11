@@ -279,8 +279,9 @@ Public Class WinNUT
             Update_Frm.Visible = True
             HasFocus = False
         End If
-        'ToastPopup.CreateToastCollection()
-        ' RaiseEvent RequestConnect()
+
+        LogFile.LogTracing(String.Format("{0} v{1} completed initialization.", My.Application.Info.ProductName, My.Application.Info.Version),
+                           LogLvl.LOG_NOTICE, Me)
     End Sub
 
     Private Sub SystemEvents_PowerModeChanged(sender As Object, e As Microsoft.Win32.PowerModeChangedEventArgs)
@@ -1034,31 +1035,28 @@ Public Class WinNUT
 
     Private Sub HandleUPSStatusChange(sender As UPS_Device, newStatuses As UPS_States) Handles UPS_Device.StatusesChanged
         LogFile.LogTracing("Handling new UPS status(es)...", LogLvl.LOG_DEBUG, Me)
-        Dim statusString As String = ""
 
         With sender.UPS_Datas.UPS_Value
-            For Each status In [Enum].GetValues(GetType(UPS_States))
-                If newStatuses.HasFlag(status) Then
-                    statusString &= [Enum].GetName(GetType(UPS_States), status) & " "
-                    ' Determine if we need to initiate the stop procedure.
-                    If status = UPS_States.FSD Then
-                        LogFile.LogTracing("Full Shut Down imposed by the NUT server.", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_LOG_NUT_FSD))
-                        Shutdown_Event()
-                    ElseIf status = UPS_States.OB And
-                            (.Batt_Charge <= Arr_Reg_Key.Item("ShutdownLimitBatteryCharge") Or
-                            .Batt_Runtime <= Arr_Reg_Key.Item("ShutdownLimitUPSRemainTime")) And
-                            Not ShutdownStatus Then
-                        LogFile.LogTracing("UPS battery has dropped below stop condition limits.", LogLvl.LOG_NOTICE, Me, WinNUT_Globals.StrLog.Item(AppResxStr.STR_LOG_SHUT_START))
-                        Shutdown_Event()
-                    ElseIf status = UPS_States.OL AndAlso ShutdownStatus Then
-                        LogFile.LogTracing("UPS returned online during a pre-shutdown event.", LogLvl.LOG_NOTICE, Me)
-                        Stop_Shutdown_Event()
-                    End If
-                End If
-            Next
-        End With
+            If newStatuses.Equals(UPS_States.None) Then
+                LogFile.LogTracing("Received unexpected None status from UPS.", LogLvl.LOG_WARNING, Me)
+                ' Determine if we need to initiate the stop procedure.
 
-        LogFile.LogTracing("Finished handling new UPS statuses: " & statusString, LogLvl.LOG_NOTICE, Me)
+            ElseIf newStatuses.HasFlag(UPS_States.FSD) Then
+                LogFile.LogTracing("Full Shut Down imposed by the NUT server.", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_LOG_NUT_FSD))
+                Shutdown_Event()
+
+            ElseIf newStatuses.HasFlag(UPS_States.OB) And
+                    (.Batt_Charge <= Arr_Reg_Key.Item("ShutdownLimitBatteryCharge") Or
+                    .Batt_Runtime <= Arr_Reg_Key.Item("ShutdownLimitUPSRemainTime")) And
+                    Not ShutdownStatus Then
+                LogFile.LogTracing("UPS battery has dropped below stop condition limits.", LogLvl.LOG_NOTICE, Me, WinNUT_Globals.StrLog.Item(AppResxStr.STR_LOG_SHUT_START))
+                Shutdown_Event()
+
+            ElseIf newStatuses.HasFlag(UPS_States.OL) AndAlso ShutdownStatus Then
+                LogFile.LogTracing("UPS returned online during a pre-shutdown event.", LogLvl.LOG_NOTICE, Me)
+                Stop_Shutdown_Event()
+            End If
+        End With
     End Sub
 
     ''' <summary>
