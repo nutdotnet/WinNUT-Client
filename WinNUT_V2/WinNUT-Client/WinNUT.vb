@@ -299,7 +299,7 @@ Public Class WinNUT
 
     Private Sub UPS_Connect()
         Dim Nut_Config As Nut_Parameter
-        ' LogFile.LogTracing("Client UPS_Connect subroutine beginning.", LogLvl.LOG_NOTICE, Me)
+        LogFile.LogTracing("Client UPS_Connect subroutine beginning.", LogLvl.LOG_NOTICE, Me)
 
         Nut_Config = New Nut_Parameter(Arr_Reg_Key.Item("ServerAddress"),
                                        Arr_Reg_Key.Item("Port"),
@@ -326,20 +326,21 @@ Public Class WinNUT
         '    ' .Enabled = True
         'End With
 
-        If Not (UPS_Device.IsConnected And UPS_Device.IsAuthenticated) Then
-            LogFile.LogTracing(String.Format("Something went wrong connecting to UPS {0}. IsConnected: {1}, IsAuthenticated: {2}",
-                               upsConf.UPSName, UPS_Device.IsConnected, UPS_Device.IsAuthenticated), LogLvl.LOG_ERROR, Me,
-                               String.Format(StrLog.Item(AppResxStr.STR_LOG_CON_FAILED), upsConf.Host, upsConf.Port, "Connection Error"))
-            UPSDisconnect()
-        Else
-            Menu_UPS_Var.Enabled = True
-            UpdateIcon_NotifyIcon()
-            LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
-            RaiseEvent UpdateNotifyIconStr("Connected", Nothing)
-            LogFile.LogTracing("Connection to Nut Host Established", LogLvl.LOG_NOTICE, Me,
-                               String.Format(StrLog.Item(AppResxStr.STR_LOG_CONNECTED),
-                                             upsConf.Host, upsConf.Port))
-        End If
+        Menu_UPS_Var.Enabled = True
+        UpdateIcon_NotifyIcon()
+        LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
+        RaiseEvent UpdateNotifyIconStr("Connected", Nothing)
+        LogFile.LogTracing("Connection to Nut Host Established", LogLvl.LOG_NOTICE, Me,
+                           String.Format(StrLog.Item(AppResxStr.STR_LOG_CONNECTED),
+                                         upsConf.Host, upsConf.Port))
+    End Sub
+
+    Private Sub ConnectionError(sender As UPS_Device, ex As Exception) Handles UPS_Device.ConnectionError
+        LogFile.LogTracing(String.Format("Something went wrong connecting to UPS {0}. IsConnected: {1}, IsAuthenticated: {2}",
+                               sender.Name, sender.IsConnected, sender.IsAuthenticated), LogLvl.LOG_ERROR, Me,
+                               String.Format(StrLog.Item(AppResxStr.STR_LOG_CON_FAILED), sender.Nut_Config.Host, sender.Nut_Config.Port,
+                                             ex.Message))
+        UPSDisconnect()
     End Sub
 
     ''' <summary>

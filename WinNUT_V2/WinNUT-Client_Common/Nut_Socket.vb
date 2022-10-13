@@ -140,18 +140,15 @@ Public Class Nut_Socket
     Public Sub Disconnect(Optional silent = False, Optional forceful = False)
         ' WatchDog.Stop()
 
-        If Not forceful Then
+        If IsConnected AndAlso Not forceful Then
             Query_Data("LOGOUT")
         End If
 
         Close_Socket()
 
         If Not silent Then
-            LogFile.LogTracing("NutSocket raising Disconnected event.", LogLvl.LOG_DEBUG, Me)
             RaiseEvent SocketDisconnected()
         End If
-
-        LogFile.LogTracing("NutSocket has been Disconnected.", LogLvl.LOG_DEBUG, Me)
     End Sub
 
     ''' <summary>

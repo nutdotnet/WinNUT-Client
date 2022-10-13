@@ -137,7 +137,7 @@ Public Class UPS_Device
     ' Notify of an unexpectedly lost connection (??)
     Public Event Lost_Connect()
     ' Error encountered when trying to connect.
-    Public Event ConnectionError(innerException As Exception)
+    Public Event ConnectionError(sender As UPS_Device, innerException As Exception)
     Public Event EncounteredNUTException(ex As NutException, sender As Object)
     Public Event New_Retry()
     ' Public Event Shutdown_Condition()
@@ -183,7 +183,7 @@ Public Class UPS_Device
             RaiseEvent EncounteredNUTException(ex, Me)
 
         Catch ex As Exception
-            RaiseEvent ConnectionError(ex)
+            RaiseEvent ConnectionError(Me, ex)
 
         End Try
     End Sub
