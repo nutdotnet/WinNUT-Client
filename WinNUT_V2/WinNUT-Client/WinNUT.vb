@@ -281,16 +281,13 @@ Public Class WinNUT
     End Sub
 
     Private Sub SystemEvents_PowerModeChanged(sender As Object, e As Microsoft.Win32.PowerModeChangedEventArgs)
-        LogFile.LogTracing("PowerModeChangedEvent: " & e.ToString(), LogLvl.LOG_NOTICE, Me)
+        LogFile.LogTracing("PowerModeChangedEvent: " & e.Mode, LogLvl.LOG_NOTICE, Me)
         Select Case e.Mode
             Case Microsoft.Win32.PowerModes.Resume
                 LogFile.LogTracing("Restarting WinNUT after waking up from Windows", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_MAIN_EXITSLEEP))
                 If Arr_Reg_Key.Item("AutoReconnect") = True Then
                     UPS_Connect()
                 End If
-            Case Microsoft.Win32.PowerModes.Suspend
-                LogFile.LogTracing("Windows standby, WinNUT will disconnect", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_MAIN_GOTOSLEEP))
-                UPSDisconnect()
         End Select
     End Sub
 
@@ -1098,7 +1095,9 @@ Public Class WinNUT
 
     Public Sub Shutdown_Action()
         Dim stopAction = Arr_Reg_Key.Item("TypeOfStop")
-        LogFile.LogTracing("Executing stop action " & stopAction, LogLvl.LOG_NOTICE, Me)
+        LogFile.LogTracing("Windows going down, WinNUT will disconnect.", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_MAIN_GOTOSLEEP))
+        UPSDisconnect()
+
         Select Case stopAction
             Case 0
                 Process.Start("C:\WINDOWS\system32\Shutdown.exe", "-f -s -t 0")
