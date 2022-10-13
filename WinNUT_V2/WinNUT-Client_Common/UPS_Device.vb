@@ -320,7 +320,7 @@ Public Class UPS_Device
                     .Input_Voltage = Double.Parse(GetUPSVar("input.voltage", 220), ciClone)
                     .Output_Voltage = Double.Parse(GetUPSVar("output.voltage", .Input_Voltage), ciClone)
                     .Load = Double.Parse(GetUPSVar("ups.load", 100), ciClone)
-                    UPS_rt_Status = GetUPSVar("ups.status")
+                    UPS_rt_Status = GetUPSVar("ups.status", UPS_States.None)
                     .Output_Power = Double.Parse((GetUPSVar("ups.realpower.nominal", 0)), ciClone)
                     If .Output_Power = 0 Then
                         .Output_Power = Double.Parse((GetUPSVar("ups.power.nominal", 0)), ciClone)
@@ -387,31 +387,28 @@ Public Class UPS_Device
     End Sub
 
     Private Const MAX_VAR_RETRIES = 3
-    Public Function GetUPSVar(ByVal varName As String, Optional ByVal Fallback_value As Object = Nothing, Optional recursing As Boolean = False) As String
-        ' Try
-        ' LogFile.LogTracing("Enter GetUPSVar", LogLvl.LOG_DEBUG, Me)
-        'If Not Me.ConnectionStatus Then
+    Public Function GetUPSVar(varName As String, Optional Fallback_value As Object = Nothing, Optional recursing As Boolean = False) As String
         If Not IsConnected Then
-            ' Throw New NutException(Nut_Exception_Value.SOCKET_BROKEN, varName)
             Throw New InvalidOperationException("Tried to GetUPSVar while disconnected.")
-            ' Return Nothing
         Else
             Dim Nut_Query As Transaction
+
             Try
                 Nut_Query = Nut_Socket.Query_Data("GET VAR " & Name & " " & varName)
 
-                Select Case Nut_Query.ResponseType
-                    Case NUTResponse.OK
-                        ' LogFile.LogTracing("Process Result With " & varName & " : " & Nut_Query.Data, LogLvl.LOG_DEBUG, Me)
-                        Return ExtractData(Nut_Query.RawResponse)
-                ' Case NUTResponse.UNKNOWNUPS
-                    'Me.Invalid_Data = False
-                    'Me.Unknown_UPS_Name = True
-                    ' RaiseEvent Unknown_UPS()
-                    ' Throw New Nut_Exception(Nut_Exception_Value.UNKNOWN_UPS, "The UPS does not exist on the server.")
-                ' upsd won't provide any value for the var, in case of false reading.
+                If Nut_Query.ResponseType = NUTResponse.OK Then
+                    Return ExtractData(Nut_Query.RawResponse)
+                Else
+                    Throw New NutException(Nut_Query)
+                End If
+
+            Catch ex As NutException
+                Select Case ex.LastTransaction.ResponseType
+                    Case NUTResponse.VARNOTSUPPORTED
+                        LogFile.LogTracing(varName & " is not supported by server.", LogLvl.LOG_WARNING, Me)
+
                     Case NUTResponse.DATASTALE
-                        LogFile.LogTracing("DATA-STALE Error Result On Retrieving  " & varName & " : " & Nut_Query.RawResponse, LogLvl.LOG_ERROR, Me)
+                        LogFile.LogTracing("DATA-STALE Error Result On Retrieving  " & varName & " : " & ex.LastTransaction.RawResponse, LogLvl.LOG_ERROR, Me)
 
                         If recursing Then
                             Return Nothing
@@ -422,42 +419,25 @@ Public Class UPS_Device
                             While returnString Is Nothing AndAlso retryNum <= MAX_VAR_RETRIES
                                 LogFile.LogTracing("Attempting retry " & retryNum & " to get variable.", LogLvl.LOG_NOTICE, Me)
                                 returnString = GetUPSVar(varName, Fallback_value, True)
-                                Return returnString
+                                retryNum += 1
                             End While
 
-                            RaiseEvent EncounteredNUTException(New NutException(Nut_Query), Me)
-                            Return Fallback_value
+                            If returnString IsNot Nothing Then
+                                Return returnString
+                            End If
                         End If
-
-                        ' Throw New System.Exception(varName & " : " & Nut_Query.Data)
-                        Throw New NutException(Nut_Query)
-
-                        ' Return NUTResponse.DATASTALE
-                    Case Else
-                        Throw New NutException(Nut_Query)
-                        ' Return Nothing
                 End Select
-            Catch ex As NutException
-                If ex.LastTransaction.ResponseType = NUTResponse.VARNOTSUPPORTED Then
-                    'Me.Unknown_UPS_Name = False
-                    'Me.Invalid_Data = False
 
-                    If Not String.IsNullOrEmpty(Fallback_value) Then
-                        LogFile.LogTracing("Apply Fallback Value when retrieving " & varName, LogLvl.LOG_WARNING, Me)
-                        'Dim FakeData = "VAR " & Name & " " & varName & " " & """" & Fallback_value & """"
-                        'Return ExtractData(FakeData)
-                        Return Fallback_value
-                    Else
-                        ' Var is unknown and caller was not prepared to handle it, pass exception along.
-                        Throw
-                    End If
+                If Not String.IsNullOrEmpty(Fallback_value) Then
+                    LogFile.LogTracing("Apply Fallback Value when retrieving " & varName, LogLvl.LOG_WARNING, Me)
+                    Return Fallback_value
+                Else
+                    LogFile.LogTracing("Unhandled error while getting " & varName, LogLvl.LOG_ERROR, Me)
+                    Throw
                 End If
             End Try
         End If
-        'Catch Excep As Exception
-        '    'RaiseEvent OnError(Excep, LogLvl.LOG_ERROR, Me)
-        '    Return Nothing
-        'End Try
+
         Return Nothing
     End Function
 
@@ -483,7 +463,7 @@ Public Class UPS_Device
         Return Response
     End Function
 
-    Private Function ExtractData(ByVal Var_Data As String) As String
+    Private Function ExtractData(Var_Data As String) As String
         Dim SanitisedVar As String
         Dim StringArray(Nothing) As String
         Try
