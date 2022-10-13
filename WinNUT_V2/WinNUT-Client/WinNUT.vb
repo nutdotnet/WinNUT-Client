@@ -84,10 +84,6 @@ Public Class WinNUT
     Private Event UpdateBatteryState(Reason As String)
     ' UPS object operation 
     Private Event RequestConnect()
-    ' Private Event RequestDisconnect()
-
-    'Handle sleep/hibernate mode from windows API
-    Declare Function SetSuspendState Lib "PowrProf" (Hibernate As Integer, ForceCritical As Integer, DisableWakeEvent As Integer) As Integer
 
     Private Sub WinNUT_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' Make sure we have an app directory to write to.
@@ -285,6 +281,7 @@ Public Class WinNUT
     End Sub
 
     Private Sub SystemEvents_PowerModeChanged(sender As Object, e As Microsoft.Win32.PowerModeChangedEventArgs)
+        LogFile.LogTracing("PowerModeChangedEvent: " & e.ToString(), LogLvl.LOG_NOTICE, Me)
         Select Case e.Mode
             Case Microsoft.Win32.PowerModes.Resume
                 LogFile.LogTracing("Restarting WinNUT after waking up from Windows", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_MAIN_EXITSLEEP))
@@ -1100,13 +1097,15 @@ Public Class WinNUT
     End Sub
 
     Public Sub Shutdown_Action()
-        Select Case Arr_Reg_Key.Item("TypeOfStop")
+        Dim stopAction = Arr_Reg_Key.Item("TypeOfStop")
+        LogFile.LogTracing("Executing stop action " & stopAction, LogLvl.LOG_NOTICE, Me)
+        Select Case stopAction
             Case 0
                 Process.Start("C:\WINDOWS\system32\Shutdown.exe", "-f -s -t 0")
             Case 1
-                SetSuspendState(False, False, True)  'Suspend
+                Application.SetSuspendState(PowerState.Suspend, False, True)
             Case 2
-                SetSuspendState(True, False, True)   'Hibernate
+                Application.SetSuspendState(PowerState.Hibernate, False, True)
         End Select
     End Sub
 
