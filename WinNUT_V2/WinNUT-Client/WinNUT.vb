@@ -281,7 +281,7 @@ Public Class WinNUT
     End Sub
 
     Private Sub SystemEvents_PowerModeChanged(sender As Object, e As Microsoft.Win32.PowerModeChangedEventArgs)
-        LogFile.LogTracing("PowerModeChangedEvent: " & e.Mode, LogLvl.LOG_NOTICE, Me)
+        LogFile.LogTracing("PowerModeChangedEvent: " & [Enum].GetName(GetType(Microsoft.Win32.PowerModes), e.Mode), LogLvl.LOG_NOTICE, Me)
         Select Case e.Mode
             Case Microsoft.Win32.PowerModes.Resume
                 LogFile.LogTracing("Restarting WinNUT after waking up from Windows", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_MAIN_EXITSLEEP))
@@ -334,7 +334,6 @@ Public Class WinNUT
                                sender.Name, sender.IsConnected, sender.IsAuthenticated), LogLvl.LOG_ERROR, Me,
                                String.Format(StrLog.Item(AppResxStr.STR_LOG_CON_FAILED), sender.Nut_Config.Host, sender.Nut_Config.Port,
                                              ex.Message))
-        UPSDisconnect()
     End Sub
 
     ''' <summary>
