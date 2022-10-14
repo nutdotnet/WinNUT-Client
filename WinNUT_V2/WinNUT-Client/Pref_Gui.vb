@@ -246,7 +246,7 @@ Public Class Pref_Gui
             LogFile.LogTracing(String.Format("Check that the value of {0} for {1} is correct.", sender.Text, sender.Name), LogLvl.LOG_DEBUG, Me)
             Select Case sender.Name
                 Case "Tb_Delay_Com"
-                    MinValue = 0
+                    MinValue = 1
                     MaxValue = 60
                 Case "Tb_Port"
                     MinValue = 1

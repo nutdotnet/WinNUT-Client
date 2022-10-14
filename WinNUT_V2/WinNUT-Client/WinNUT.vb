@@ -846,25 +846,11 @@ Public Class WinNUT
             LogFile.DeleteLogFile()
         End If
 
-        'Dim NeedReconnect As Boolean = False
-
-        'With UPS_Device.Nut_Config
-        '    If .AutoReconnect <> Arr_Reg_Key.Item("autoreconnect") Or
-        '    .Host <> Arr_Reg_Key.Item("ServerAddress") Or
-        '    .Port <> Arr_Reg_Key.Item("Port") Or
-        '    .UPSName <> Arr_Reg_Key.Item("UPSName") Or
-        '    UPS_Device.PollingInterval <> Arr_Reg_Key.Item("Delay") Or
-        '    .Login <> Arr_Reg_Key.Item("NutLogin") Or
-        '    UPS_Device.NutPassword <> Arr_Reg_Key.Item("NutPassword") Then
-        '        NeedReconnect = True
-        '        UPS_Device.NutPassword = Arr_Reg_Key.Item("NutPassword")
-        '    End If
-        '    If UPS_Device.UPS_Follow_FSD <> Arr_Reg_Key.Item("Follow_FSD") Then
-        '        UPS_Device.UPS_Follow_FSD = Arr_Reg_Key.Item("Follow_FSD")
-        '    End If
-        '    UPS_Device.Battery_Limit = Arr_Reg_Key.Item("ShutdownLimitBatteryCharge")
-        '    UPS_Device.Backup_Limit = Arr_Reg_Key.Item("ShutdownLimitUPSRemainTime")
-        'End With
+        ' Validate interval value because it's been incorrectly stored in older versions.
+        If Arr_Reg_Key.Item("Delay") <= 0 Then
+            LogFile.LogTracing("Incorrect value of " & Arr_Reg_Key.Item("Delay") & " for Delay/Interval, resetting to default.", LogLvl.LOG_ERROR, Me)
+            Arr_Reg_Key.Item("Delay") = 1000
+        End If
 
         ' Automatically reconnect if already connected and prefs are changed.
         If (UPS_Device IsNot Nothing) AndAlso UPS_Device.IsConnected And isChanged Then
