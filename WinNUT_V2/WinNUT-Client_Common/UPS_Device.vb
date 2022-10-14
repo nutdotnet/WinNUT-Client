@@ -53,11 +53,7 @@ Public Class UPS_Device
 #End Region
     Private Const CosPhi As Double = 0.6
     ' How many milliseconds to wait before the Reconnect routine tries again.
-#If DEBUG Then
     Private Const DEFAULT_RECONNECT_WAIT_MS As Double = 5000
-#Else
-    Private Const DEFAULT_RECONNECT_WAIT_MS As Double = 30000
-#End If
 
     Private WithEvents Update_Data As New Timer
     'Private Nut_Conn As Nut_Comm
@@ -169,7 +165,7 @@ Public Class UPS_Device
         'End With
     End Sub
 
-    Public Sub Connect_UPS()
+    Public Sub Connect_UPS(Optional retryOnConnFailure = False)
         LogFile.LogTracing("Beginning connection: " & Nut_Config.ToString(), LogLvl.LOG_DEBUG, Me)
 
         Try
@@ -185,6 +181,10 @@ Public Class UPS_Device
         Catch ex As Exception
             RaiseEvent ConnectionError(Me, ex)
 
+            If retryOnConnFailure Then
+                LogFile.LogTracing("Reconnection Process Started", LogLvl.LOG_NOTICE, Me)
+                Reconnect_Nut.Start()
+            End If
         End Try
     End Sub
 

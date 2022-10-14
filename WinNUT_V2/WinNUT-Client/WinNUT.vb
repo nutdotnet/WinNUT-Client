@@ -286,12 +286,12 @@ Public Class WinNUT
             Case Microsoft.Win32.PowerModes.Resume
                 LogFile.LogTracing("Restarting WinNUT after waking up from Windows", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_MAIN_EXITSLEEP))
                 If Arr_Reg_Key.Item("AutoReconnect") = True Then
-                    UPS_Connect()
+                    UPS_Connect(True)
                 End If
         End Select
     End Sub
 
-    Private Sub UPS_Connect()
+    Private Sub UPS_Connect(Optional retryOnConnFailure = False)
         Dim Nut_Config As Nut_Parameter
         LogFile.LogTracing("Client UPS_Connect subroutine beginning.", LogLvl.LOG_NOTICE, Me)
 
@@ -303,7 +303,7 @@ Public Class WinNUT
                                        Arr_Reg_Key.Item("AutoReconnect"))
 
         UPS_Device = New UPS_Device(Nut_Config, LogFile, Arr_Reg_Key.Item("Delay"))
-        UPS_Device.Connect_UPS()
+        UPS_Device.Connect_UPS(retryOnConnFailure)
     End Sub
 
     ''' <summary>
