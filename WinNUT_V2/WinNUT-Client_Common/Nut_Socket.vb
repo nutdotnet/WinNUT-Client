@@ -140,18 +140,15 @@ Public Class Nut_Socket
     Public Sub Disconnect(Optional silent = False, Optional forceful = False)
         ' WatchDog.Stop()
 
-        If Not forceful Then
+        If IsConnected AndAlso Not forceful Then
             Query_Data("LOGOUT")
         End If
 
         Close_Socket()
 
         If Not silent Then
-            LogFile.LogTracing("NutSocket raising Disconnected event.", LogLvl.LOG_DEBUG, Me)
             RaiseEvent SocketDisconnected()
         End If
-
-        LogFile.LogTracing("NutSocket has been Disconnected.", LogLvl.LOG_DEBUG, Me)
     End Sub
 
     ''' <summary>
@@ -206,13 +203,13 @@ Public Class Nut_Socket
         streamInUse = True
 
         If ConnectionStatus Then
-            LogFile.LogTracing("Sending query " & Query_Msg, LogLvl.LOG_DEBUG, Me)
+            ' LogFile.LogTracing("Sending query " & Query_Msg, LogLvl.LOG_DEBUG, Me)
             WriterStream.WriteLine(Query_Msg & vbCr)
             WriterStream.Flush()
 
             DataResult = Trim(ReaderStream.ReadLine())
             streamInUse = False
-            LogFile.LogTracing("Done processing response for query " & Query_Msg, LogLvl.LOG_DEBUG, Me)
+            ' LogFile.LogTracing("Done processing response for query " & Query_Msg, LogLvl.LOG_DEBUG, Me)
 
             Response = EnumResponse(DataResult)
             finalTransaction = New Transaction(Query_Msg, DataResult, Response)
@@ -238,7 +235,7 @@ Public Class Nut_Socket
         Dim start As Date = Date.Now
 
         ' Read in first line to get initial response.
-        LogFile.LogTracing("Sending LIST query " & Query_Msg, LogLvl.LOG_DEBUG, Me)
+        ' LogFile.LogTracing("Sending LIST query " & Query_Msg, LogLvl.LOG_DEBUG, Me)
         Dim response = Query_Data(Query_Msg)
         streamInUse = True
         Dim readLine As String
@@ -252,7 +249,7 @@ Public Class Nut_Socket
         Loop Until (IsNothing(readLine) Or (ReaderStream.Peek < 0))
 
         streamInUse = False
-        LogFile.LogTracing("Done processing LIST response for query " & Query_Msg, LogLvl.LOG_DEBUG, Me)
+        ' LogFile.LogTracing("Done processing LIST response for query " & Query_Msg, LogLvl.LOG_DEBUG, Me)
 
         Dim Key As String
         Dim Value As String

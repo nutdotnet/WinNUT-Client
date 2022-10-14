@@ -37,11 +37,6 @@ Public Class WinNUT
 
     'Object for UPS management
     Public WithEvents UPS_Device As UPS_Device
-    ' Public Nut_Socket As Nut_Socket
-    ' Public Nut_Config As New Nut_Parameter
-    ' Private Device_Data As UPSData
-
-    ' ^--- Shall be referenced from inside UPS_Device object
 
     Private AutoReconnect As Boolean
     Private UPS_Retry As Integer = 0
@@ -89,10 +84,6 @@ Public Class WinNUT
     Private Event UpdateBatteryState(Reason As String)
     ' UPS object operation 
     Private Event RequestConnect()
-    ' Private Event RequestDisconnect()
-
-    'Handle sleep/hibernate mode from windows API
-    Declare Function SetSuspendState Lib "PowrProf" (Hibernate As Integer, ForceCritical As Integer, DisableWakeEvent As Integer) As Integer
 
     Private Sub WinNUT_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' Make sure we have an app directory to write to.
@@ -284,26 +275,25 @@ Public Class WinNUT
             Update_Frm.Visible = True
             HasFocus = False
         End If
-        'ToastPopup.CreateToastCollection()
-        ' RaiseEvent RequestConnect()
+
+        LogFile.LogTracing(String.Format("{0} v{1} completed initialization.", My.Application.Info.ProductName, My.Application.Info.Version),
+                           LogLvl.LOG_NOTICE, Me)
     End Sub
 
     Private Sub SystemEvents_PowerModeChanged(sender As Object, e As Microsoft.Win32.PowerModeChangedEventArgs)
+        LogFile.LogTracing("PowerModeChangedEvent: " & [Enum].GetName(GetType(Microsoft.Win32.PowerModes), e.Mode), LogLvl.LOG_NOTICE, Me)
         Select Case e.Mode
             Case Microsoft.Win32.PowerModes.Resume
                 LogFile.LogTracing("Restarting WinNUT after waking up from Windows", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_MAIN_EXITSLEEP))
                 If Arr_Reg_Key.Item("AutoReconnect") = True Then
-                    UPS_Connect()
+                    UPS_Connect(True)
                 End If
-            Case Microsoft.Win32.PowerModes.Suspend
-                LogFile.LogTracing("Windows standby, WinNUT will disconnect", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_MAIN_GOTOSLEEP))
-                UPSDisconnect()
         End Select
     End Sub
 
-    Private Sub UPS_Connect()
+    Private Sub UPS_Connect(Optional retryOnConnFailure = False)
         Dim Nut_Config As Nut_Parameter
-        ' LogFile.LogTracing("Client UPS_Connect subroutine beginning.", LogLvl.LOG_NOTICE, Me)
+        LogFile.LogTracing("Client UPS_Connect subroutine beginning.", LogLvl.LOG_NOTICE, Me)
 
         Nut_Config = New Nut_Parameter(Arr_Reg_Key.Item("ServerAddress"),
                                        Arr_Reg_Key.Item("Port"),
@@ -313,7 +303,7 @@ Public Class WinNUT
                                        Arr_Reg_Key.Item("AutoReconnect"))
 
         UPS_Device = New UPS_Device(Nut_Config, LogFile, Arr_Reg_Key.Item("Delay"))
-        UPS_Device.Connect_UPS()
+        UPS_Device.Connect_UPS(retryOnConnFailure)
     End Sub
 
     ''' <summary>
@@ -330,20 +320,20 @@ Public Class WinNUT
         '    ' .Enabled = True
         'End With
 
-        If Not (UPS_Device.IsConnected And UPS_Device.IsAuthenticated) Then
-            LogFile.LogTracing(String.Format("Something went wrong connecting to UPS {0}. IsConnected: {1}, IsAuthenticated: {2}",
-                               upsConf.UPSName, UPS_Device.IsConnected, UPS_Device.IsAuthenticated), LogLvl.LOG_ERROR, Me,
-                               String.Format(StrLog.Item(AppResxStr.STR_LOG_CON_FAILED), upsConf.Host, upsConf.Port, "Connection Error"))
-            UPSDisconnect()
-        Else
-            Menu_UPS_Var.Enabled = True
-            UpdateIcon_NotifyIcon()
-            LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
-            RaiseEvent UpdateNotifyIconStr("Connected", Nothing)
-            LogFile.LogTracing("Connection to Nut Host Established", LogLvl.LOG_NOTICE, Me,
-                               String.Format(StrLog.Item(AppResxStr.STR_LOG_CONNECTED),
-                                             upsConf.Host, upsConf.Port))
-        End If
+        Menu_UPS_Var.Enabled = True
+        UpdateIcon_NotifyIcon()
+        LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
+        RaiseEvent UpdateNotifyIconStr("Connected", Nothing)
+        LogFile.LogTracing("Connection to Nut Host Established", LogLvl.LOG_NOTICE, Me,
+                           String.Format(StrLog.Item(AppResxStr.STR_LOG_CONNECTED),
+                                         upsConf.Host, upsConf.Port))
+    End Sub
+
+    Private Sub ConnectionError(sender As UPS_Device, ex As Exception) Handles UPS_Device.ConnectionError
+        LogFile.LogTracing(String.Format("Something went wrong connecting to UPS {0}. IsConnected: {1}, IsAuthenticated: {2}",
+                               sender.Name, sender.IsConnected, sender.IsAuthenticated), LogLvl.LOG_ERROR, Me,
+                               String.Format(StrLog.Item(AppResxStr.STR_LOG_CON_FAILED), sender.Nut_Config.Host, sender.Nut_Config.Port,
+                                             ex.Message))
     End Sub
 
     ''' <summary>
@@ -513,7 +503,7 @@ Public Class WinNUT
             Case "Update Data"
                 FormText &= " - Bat: " & UPS_BattCh & "% - " & StrLog.Item(AppResxStr.STR_MAIN_CONN) & " - "
                 NotifyStr &= StrLog.Item(AppResxStr.STR_MAIN_CONN) & vbNewLine
-                If UPS_Status.Trim().StartsWith("OL") Or StrReverse(UPS_Status.Trim()).StartsWith("LO") Then
+                If UPS_Device.UPS_Datas.UPS_Value.UPS_Status.HasFlag(UPS_States.OL) Then
                     NotifyStr &= StrLog.Item(AppResxStr.STR_MAIN_OL) & vbNewLine
                     FormText &= StrLog.Item(AppResxStr.STR_MAIN_OL) & " - "
                 Else
@@ -641,7 +631,7 @@ Public Class WinNUT
     '    End With
     'End Sub
 
-    Private Sub Update_UPS_Data() Handles UPS_Device.DataUpdated ' Me.Data_Updated
+    Private Sub Update_UPS_Data() Handles UPS_Device.DataUpdated
         LogFile.LogTracing("Updating UPS data for Form.", LogLvl.LOG_DEBUG, Me)
         With UPS_Device.UPS_Datas
             If Lbl_VMfr.Text = "" And Lbl_VName.Text = "" And Lbl_VSerial.Text = "" And Lbl_VFirmware.Text = "" Then
@@ -665,16 +655,29 @@ Public Class WinNUT
             UPS_Status = "OL"
             UPS_OutPower = .Output_Power
 
-            If (.UPS_Status And UPS_States.OL) Then
+            If .UPS_Status.HasFlag(UPS_States.OL) Then
                 Lbl_VOL.BackColor = Color.Green
                 Lbl_VOB.BackColor = Color.White
                 ActualAppIconIdx = AppIconIdx.IDX_OL
-            ElseIf (.UPS_Status And UPS_States.OB) Then
+            ElseIf .UPS_Status.HasFlag(UPS_States.OB) Then
                 Lbl_VOL.BackColor = Color.Yellow
                 Lbl_VOB.BackColor = Color.Green
                 ActualAppIconIdx = 0
+
+                If Not ShutdownStatus Then
+                    If .Batt_Charge <= Arr_Reg_Key.Item("ShutdownLimitBatteryCharge") Or
+                    .Batt_Runtime <= Arr_Reg_Key.Item("ShutdownLimitUPSRemainTime") Then
+                        LogFile.LogTracing("UPS battery has dropped below stop condition limits.", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_LOG_SHUT_START))
+                        Shutdown_Event()
+                    Else
+                        LogFile.LogTracing(String.Format("UPS charge ({0}%) or Runtime ({1}) have not met shutdown conditions {2} or {3}.",
+                        .Batt_Charge, .Batt_Runtime, Arr_Reg_Key.Item("ShutdownLimitBatteryCharge"), Arr_Reg_Key.Item("ShutdownLimitUPSRemainTime")),
+                        LogLvl.LOG_DEBUG, Me)
+                    End If
+                End If
             End If
-            If (.UPS_Status And UPS_States.OVER) Then
+
+            If .UPS_Status.HasFlag(UPS_States.OVER) Then
                 Lbl_VOLoad.BackColor = Color.Red
             Else
                 Lbl_VOLoad.BackColor = Color.White
@@ -699,31 +702,27 @@ Public Class WinNUT
             '        Lbl_VOLoad.BackColor = Color.White
             '    End If
 
+            LogFile.LogTracing("Updating battery icons based on charge percent: " & UPS_BattCh & "%", LogLvl.LOG_DEBUG, Me)
+
             Select Case UPS_BattCh
                 Case 76 To 100
                     Lbl_VBL.BackColor = Color.White
                     ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_100
-                    LogFile.LogTracing("Battery Charged", LogLvl.LOG_DEBUG, Me)
                 Case 51 To 75
                     Lbl_VBL.BackColor = Color.White
                     ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_75
-                    LogFile.LogTracing("Battery Charged", LogLvl.LOG_DEBUG, Me)
                 Case 40 To 50
                     Lbl_VBL.BackColor = Color.White
                     ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_50
-                    LogFile.LogTracing("Battery Charged", LogLvl.LOG_DEBUG, Me)
                 Case 26 To 39
                     Lbl_VBL.BackColor = Color.Red
                     ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_50
-                    LogFile.LogTracing("Low Battery", LogLvl.LOG_DEBUG, Me)
                 Case 11 To 25
                     Lbl_VBL.BackColor = Color.Red
                     ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_25
-                    LogFile.LogTracing("Low Battery", LogLvl.LOG_DEBUG, Me)
                 Case 0 To 10
                     Lbl_VBL.BackColor = Color.Red
                     ActualAppIconIdx = ActualAppIconIdx Or AppIconIdx.IDX_BATT_0
-                    LogFile.LogTracing("Low Battery", LogLvl.LOG_DEBUG, Me)
             End Select
 
             ' Calculate and display estimated remaining time on battery.
@@ -1041,9 +1040,37 @@ Public Class WinNUT
         End If
     End Sub
 
-    Private Sub Shutdown_Event() Handles UPS_Device.Shutdown_Condition
+    Private Sub HandleUPSStatusChange(sender As UPS_Device, newStatuses As UPS_States) Handles UPS_Device.StatusesChanged
+        LogFile.LogTracing("Handling new UPS status(es)...", LogLvl.LOG_DEBUG, Me)
+
+        With sender.UPS_Datas.UPS_Value
+            If newStatuses.Equals(UPS_States.None) Then
+                LogFile.LogTracing("Received unexpected None status from UPS.", LogLvl.LOG_WARNING, Me)
+                ' Determine if we need to initiate the stop procedure.
+
+            ElseIf newStatuses.HasFlag(UPS_States.FSD) Then
+                LogFile.LogTracing("Full Shut Down imposed by the NUT server.", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_LOG_NUT_FSD))
+                Shutdown_Event()
+
+            ElseIf newStatuses.HasFlag(UPS_States.OB) Then
+                LogFile.LogTracing(sender.Name & " has switched to battery power.", LogLvl.LOG_NOTICE, Me)
+
+            ElseIf newStatuses.HasFlag(UPS_States.OL) AndAlso ShutdownStatus Then
+                LogFile.LogTracing("UPS returned online during a pre-shutdown event.", LogLvl.LOG_NOTICE, Me)
+                Stop_Shutdown_Event()
+            End If
+        End With
+    End Sub
+
+    ''' <summary>
+    ''' Track if the Shutdown_Gui is counting down to activate the Shutdown_Action.
+    ''' </summary>
+    Private ShutdownStatus = False
+    Private Sub Shutdown_Event()
+        ShutdownStatus = True
+
         If Arr_Reg_Key.Item("ImmediateStopAction") Then
-            ' UPSDisconnect()
+            LogFile.LogTracing("Immediately stopping due to shutdown event.", LogLvl.LOG_NOTICE, Me)
             UPS_Device.Disconnect()
             Shutdown_Action()
         Else
@@ -1054,23 +1081,29 @@ Public Class WinNUT
         End If
     End Sub
 
-    Private Sub Stop_Shutdown_Event() Handles UPS_Device.Stop_Shutdown
+    Private Sub Stop_Shutdown_Event()
+        ShutdownStatus = False
         Shutdown_Gui.Shutdown_Timer.Stop()
         Shutdown_Gui.Shutdown_Timer.Enabled = False
         Shutdown_Gui.Grace_Timer.Stop()
         Shutdown_Gui.Grace_Timer.Enabled = False
         Shutdown_Gui.Hide()
         Shutdown_Gui.Close()
+        LogFile.LogTracing("Stop condition cancelled.", LogLvl.LOG_NOTICE, Me, WinNUT_Globals.StrLog.Item(AppResxStr.STR_LOG_SHUT_STOP))
     End Sub
 
     Public Sub Shutdown_Action()
-        Select Case Arr_Reg_Key.Item("TypeOfStop")
+        Dim stopAction = Arr_Reg_Key.Item("TypeOfStop")
+        LogFile.LogTracing("Windows going down, WinNUT will disconnect.", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_MAIN_GOTOSLEEP))
+        UPSDisconnect()
+
+        Select Case stopAction
             Case 0
                 Process.Start("C:\WINDOWS\system32\Shutdown.exe", "-f -s -t 0")
             Case 1
-                SetSuspendState(False, False, True)  'Suspend
+                Application.SetSuspendState(PowerState.Suspend, False, True)
             Case 2
-                SetSuspendState(True, False, True)   'Hibernate
+                Application.SetSuspendState(PowerState.Hibernate, False, True)
         End Select
     End Sub
 
