@@ -23,22 +23,19 @@ Verbleibende Zeit: {1}</value>
     <value>Update verfügbar : Version {0}</value>
   </data>
   <data name="Frm_Update_Str_02" xml:space="preserve">
-    <value>ChangeLog anzeigen</value>
+    <value>Change-Log anzeigen</value>
   </data>
   <data name="Frm_Update_Str_03" xml:space="preserve">
-    <value>ChangeLog ausblenden</value>
+    <value>Change-Log ausblenden</value>
   </data>
   <data name="Frm_Update_Str_04" xml:space="preserve">
-    <value>WinNUT-Client jetzt aktualisieren?
-Ok, um WinNut zu schließen und neue Version zu installieren
-Abbrechen, um Msi zu speichern und später zu installieren</value>
+    <value>WinNUT-Client jetzt aktualisieren? OK um WinNUT zu schließen und neue Version zu installieren Abbrechen um MSI-Datei zu speichern und später zu installieren</value>
   </data>
   <data name="Frm_Update_Str_05" xml:space="preserve">
     <value>Neue Version herunterladen von :</value>
   </data>
   <data name="Frm_Main_Str_01" xml:space="preserve">
-    <value>Alte ups.ini importiert
-Ini-Datei nach {0}.old verschoben</value>
+    <value>Alte ups.ini importiert INI-Datei nach {0}.old verschoben</value>
   </data>
   <data name="Frm_Main_Str_02" xml:space="preserve">
     <value>Alte ups.ini importiert</value>
@@ -47,19 +44,19 @@ Ini-Datei nach {0}.old verschoben</value>
     <value>Wiederverbindung läuft</value>
   </data>
   <data name="Frm_Main_Str_04" xml:space="preserve">
-    <value>Versuchen Sie {0} von {1}</value>
+    <value>Versuch {0} von {1}</value>
   </data>
   <data name="Frm_Main_Str_05" xml:space="preserve">
     <value>Nicht verbunden</value>
   </data>
   <data name="Frm_Main_Str_06" xml:space="preserve">
-    <value>In Verbindung gebracht</value>
+    <value>Verbunden</value>
   </data>
   <data name="Frm_Main_Str_07" xml:space="preserve">
-    <value>Online</value>
+    <value>Im Netzbetrieb</value>
   </data>
   <data name="Frm_Main_Str_08" xml:space="preserve">
-    <value>Batterie ({0}%)</value>
+    <value>Im Batteriebetrieb ({0}%)</value>
   </data>
   <data name="Frm_Main_Str_09" xml:space="preserve">
     <value>Niedriger Batteriestatus</value>
@@ -77,25 +74,25 @@ Ini-Datei nach {0}.old verschoben</value>
     <value>Automatische Wiederverbindung</value>
   </data>
   <data name="Log_Str_05" xml:space="preserve">
-    <value>Vom Nut Host getrennt</value>
+    <value>Vom NUT-Host getrennt</value>
   </data>
   <data name="Log_Str_06" xml:space="preserve">
-    <value>Versuchen Sie erneut, {0} / {1} zu verbinden</value>
+    <value>Versuche Wiederverbindung {0} / {1}</value>
   </data>
   <data name="Log_Str_07" xml:space="preserve">
-    <value>Max Retry erreicht. Warten Sie auf die manuelle Wiederverbindung</value>
+    <value>Maximale Anzahl Verbindungsversuche erreicht. Auf manuelle Wiederverbindung warten.</value>
   </data>
   <data name="Log_Str_08" xml:space="preserve">
-    <value>Voraussetzungen für den Start des Löschprozesses</value>
+    <value>Voraussetzungen für den Start des Löschprozesses liegen vor</value>
   </data>
   <data name="Log_Str_09" xml:space="preserve">
-    <value>Aufhebung des Löschprozesses</value>
+    <value>Abbruch des Löschprozesses</value>
   </data>
   <data name="Log_Str_10" xml:space="preserve">
     <value>Kein Update verfügbar</value>
   </data>
   <data name="Log_Str_11" xml:space="preserve">
-    <value>Version {0} Verfügbar</value>
+    <value>Version {0} verfügbar</value>
   </data>
   <data name="Frm_Main_Str_10" xml:space="preserve">
     <value>Batterie OK</value>
@@ -104,13 +101,13 @@ Ini-Datei nach {0}.old verschoben</value>
     <value>Unbekannter USV-Name</value>
   </data>
   <data name="Frm_Main_Str_12" xml:space="preserve">
-    <value>Verlorene Verbindung zu {0}:{1}</value>
+    <value>Verbindung zu {0}:{1} verloren</value>
   </data>
   <data name="Frm_Main_Str_13" xml:space="preserve">
     <value>Falsche Login-ID (Benutzername oder Passwort)</value>
   </data>
   <data name="Log_Str_12" xml:space="preserve">
-    <value>Vom NUT-Server auferlegte Stoppbedingung</value>
+    <value>Vom NUT-Server auferlegte Stopp-Bedingung</value>
   </data>
   <data name="Frm_Main_Str_14" xml:space="preserve">
     <value>Windows Standby, WinNUT wird getrennt.</value>

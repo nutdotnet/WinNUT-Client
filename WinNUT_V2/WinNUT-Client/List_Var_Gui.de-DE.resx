@@ -28,7 +28,7 @@
     <value>Neu laden</value>
   </data>
   <data name="Btn_Clear.Text" xml:space="preserve">
-    <value>Leer</value>
+    <value>Leeren</value>
   </data>
   <data name="Btn_Close.Text" xml:space="preserve">
     <value>Schließen</value>
@@ -37,6 +37,6 @@
     <value>Kopieren</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Liste der UPS Variablen</value>
+    <value>Liste der USV-Variablen</value>
   </data>
 </root>
