@@ -1,4 +1,5 @@
-﻿' WinNUT-Client is a NUT windows client for monitoring your ups hooked up to your favorite linux server.
+﻿Imports System.Resources
+' WinNUT-Client is a NUT windows client for monitoring your ups hooked up to your favorite linux server.
 ' Copyright (C) 2019-2021 Gawindx (Decaux Nicolas)
 '
 ' This program is free software: you can redistribute it and/or modify it under the terms of the
@@ -23,3 +24,4 @@ Imports System.Runtime.InteropServices
 
 'Le GUID suivant est pour l'ID de la typelib si ce projet est exposé à COM
 <Assembly: Guid("00424259-e020-4e5c-a70a-5660aa21cb0b")>
+<Assembly: NeutralResourcesLanguage("en")>
