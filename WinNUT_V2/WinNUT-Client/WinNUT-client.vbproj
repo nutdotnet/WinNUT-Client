@@ -201,6 +201,9 @@
     <EmbeddedResource Include="About_Gui.zh-CN.resx">
       <DependentUpon>About_Gui.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="About_Gui.zh-TW.resx">
+      <DependentUpon>About_Gui.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="List_Var_Gui.de-DE.resx">
       <DependentUpon>List_Var_Gui.vb</DependentUpon>
     </EmbeddedResource>
@@ -216,10 +219,14 @@
     <EmbeddedResource Include="List_Var_Gui.zh-CN.resx">
       <DependentUpon>List_Var_Gui.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="List_Var_Gui.zh-TW.resx">
+      <DependentUpon>List_Var_Gui.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.de-DE.resx" />
     <EmbeddedResource Include="My Project\Resources.fr-FR.resx" />
     <EmbeddedResource Include="My Project\Resources.ru-RU.resx" />
     <EmbeddedResource Include="My Project\Resources.zh-CN.resx" />
+    <EmbeddedResource Include="My Project\Resources.zh-TW.resx" />
     <EmbeddedResource Include="Pref_Gui.de-DE.resx">
       <DependentUpon>Pref_Gui.vb</DependentUpon>
     </EmbeddedResource>
@@ -233,6 +240,9 @@
       <DependentUpon>Pref_Gui.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pref_Gui.zh-CN.resx">
+      <DependentUpon>Pref_Gui.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pref_Gui.zh-TW.resx">
       <DependentUpon>Pref_Gui.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Shutdown_Gui.de-DE.resx">
@@ -250,6 +260,9 @@
     <EmbeddedResource Include="Shutdown_Gui.zh-CN.resx">
       <DependentUpon>Shutdown_Gui.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Shutdown_Gui.zh-TW.resx">
+      <DependentUpon>Shutdown_Gui.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Update_Gui.de-DE.resx">
       <DependentUpon>Update_Gui.vb</DependentUpon>
     </EmbeddedResource>
@@ -263,6 +276,9 @@
       <DependentUpon>Update_Gui.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Update_Gui.zh-CN.resx">
+      <DependentUpon>Update_Gui.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Update_Gui.zh-TW.resx">
       <DependentUpon>Update_Gui.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinNUT.de-DE.resx">
@@ -285,6 +301,9 @@
       <DependentUpon>WinNUT.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinNUT.zh-CN.resx">
+      <DependentUpon>WinNUT.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinNUT.zh-TW.resx">
       <DependentUpon>WinNUT.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
@@ -363,6 +382,7 @@
     <XliffResource Include="MultilingualResources\WinNUT-client.fr-FR.xlf" />
     <XliffResource Include="MultilingualResources\WinNUT-client.ru-RU.xlf" />
     <XliffResource Include="MultilingualResources\WinNUT-client.zh-CN.xlf" />
+    <XliffResource Include="MultilingualResources\WinNUT-Client.zh-TW.xlf" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AGauge_mod\AGauge.csproj">

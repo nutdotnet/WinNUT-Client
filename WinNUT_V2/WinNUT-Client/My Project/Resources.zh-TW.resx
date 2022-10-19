@@ -12,106 +12,106 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="1025" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1025.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="App_Event_Str_01" xml:space="preserve">
+    <value>應用程式關閉於</value>
   </data>
-  <data name="1026" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1026.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Frm_Main_Str_01" xml:space="preserve">
+    <value>已匯入舊的 ups.ini， ini 檔案已重新命名為 {0}.old</value>
   </data>
-  <data name="1028" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1028.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Frm_Main_Str_02" xml:space="preserve">
+    <value>匯入舊的 ups.ini</value>
   </data>
-  <data name="1032" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1032.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Frm_Main_Str_03" xml:space="preserve">
+    <value>正在重新連線</value>
   </data>
-  <data name="1040" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1040.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Frm_Main_Str_04" xml:space="preserve">
+    <value>重試第 {0} 次，共 {1} 次</value>
   </data>
-  <data name="1057" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1057.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Frm_Main_Str_05" xml:space="preserve">
+    <value>未連線</value>
   </data>
-  <data name="1058" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1058.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Frm_Main_Str_06" xml:space="preserve">
+    <value>已連線</value>
   </data>
-  <data name="1060" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1060.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Frm_Main_Str_07" xml:space="preserve">
+    <value>由市電供電</value>
   </data>
-  <data name="1064" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1064.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Frm_Main_Str_08" xml:space="preserve">
+    <value>由電池供電 ({0}%)</value>
   </data>
-  <data name="1072" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1072.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Frm_Main_Str_09" xml:space="preserve">
+    <value>電池電量過低</value>
   </data>
-  <data name="1079" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1079.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Frm_Main_Str_10" xml:space="preserve">
+    <value>電池正常</value>
   </data>
-  <data name="1080" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1080.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Frm_Main_Str_11" xml:space="preserve">
+    <value>未知的 UPS 名稱</value>
   </data>
-  <data name="1092" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1092.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Frm_Main_Str_12" xml:space="preserve">
+    <value>中斷與 {0} 的連線：{1}</value>
   </data>
-  <data name="1096" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1096.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Frm_Main_Str_13" xml:space="preserve">
+    <value>錯誤的登入資訊 (帳號或密碼)</value>
   </data>
-  <data name="1104" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1104.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Frm_Main_Str_14" xml:space="preserve">
+    <value>從睡眠喚醒 Windows 後重新啟動 WinNUT。</value>
   </data>
-  <data name="1121" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1121.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Frm_Main_Str_15" xml:space="preserve">
+    <value>Windows 待機時，WinNUT 將中斷連線。 </value>
   </data>
-  <data name="1122" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1122.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Frm_Shutdown_Str_01" xml:space="preserve">
+    <value>電池電量：{0} 剩餘時間：{1}</value>
   </data>
-  <data name="1124" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1124.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Frm_Update_Str_01" xml:space="preserve">
+    <value>可用的新版本：{0}</value>
   </data>
-  <data name="1128" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1128.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Frm_Update_Str_02" xml:space="preserve">
+    <value>顯示更新日誌</value>
   </data>
-  <data name="1136" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1136.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Frm_Update_Str_03" xml:space="preserve">
+    <value>隱藏更新日誌</value>
   </data>
-  <data name="1152" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1152.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Frm_Update_Str_04" xml:space="preserve">
+    <value>您是否要立即更新 WinNUT-Client? 點選確定以關閉 WinNUT 並安裝新版本，點選取消以儲存 Msi 檔案並於稍後手動安裝。</value>
   </data>
-  <data name="1216" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1216.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Frm_Update_Str_05" xml:space="preserve">
+    <value>下載新版本來源：</value>
   </data>
-  <data name="1280" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1280.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Log_Str_01" xml:space="preserve">
+    <value>WinNUT 設定已變更</value>
   </data>
-  <data name="1344" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1344.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Log_Str_02" xml:space="preserve">
+    <value>連線到 NUT 主機 {0}:{1} 成功</value>
   </data>
-  <data name="2001" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\2001_ViewLogFile.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Log_Str_03" xml:space="preserve">
+    <value>連線到 NUT 主機 {0}:{1} 失敗：{2}</value>
   </data>
-  <data name="2002" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\2002_Delete_LogFile.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Log_Str_04" xml:space="preserve">
+    <value>自動重新連線</value>
   </data>
-  <data name="Battery_Charged" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Battery_Charged.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Log_Str_05" xml:space="preserve">
+    <value>已與 NUT 主機中斷連線。</value>
   </data>
-  <data name="Battery_Charging" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Battery_Charging.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Log_Str_06" xml:space="preserve">
+    <value>重試連線 {0} / {1}</value>
   </data>
-  <data name="Battery_Discharging" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Battery_Discharging.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Log_Str_07" xml:space="preserve">
+    <value>已達最大重試次數，等待手動重新連線。</value>
   </data>
-  <data name="Delete_LogFile_24x24" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Delete_LogFile_24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Log_Str_08" xml:space="preserve">
+    <value>啟動關機程序的條件</value>
   </data>
-  <data name="ups_104x104" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ups_104x104.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Log_Str_09" xml:space="preserve">
+    <value>取消關機程序</value>
   </data>
-  <data name="ViewLogFile_24x24" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ViewLogFile_24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Log_Str_10" xml:space="preserve">
+    <value>沒有可用的更新</value>
   </data>
-  <data name="WinNut" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\WinNut.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Log_Str_11" xml:space="preserve">
+    <value>有新版本 {0} 可以使用</value>
   </data>
-  <data name="WinNUT_Updater" xml:space="preserve" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\WinNUT-Updater.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Log_Str_12" xml:space="preserve">
+    <value>NUT 伺服器附加的停機條件</value>
   </data>
 </root>
