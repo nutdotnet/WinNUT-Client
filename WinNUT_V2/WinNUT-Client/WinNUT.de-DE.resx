@@ -25,7 +25,7 @@
     <value>Erneut verbinden</value>
   </data>
   <data name="Menu_Disconnect.Text" xml:space="preserve">
-    <value>Trennen</value>
+    <value>Verbindung trennen</value>
   </data>
   <data name="Menu_Connection.Text" xml:space="preserve">
     <value>Verbindung</value>
@@ -34,7 +34,7 @@
     <value>Einstellungen</value>
   </data>
   <data name="Menu_About.Text" xml:space="preserve">
-    <value>Über</value>
+    <value>Impressum</value>
   </data>
   <data name="Menu_Update.Text" xml:space="preserve">
     <value>Auf Update prüfen</value>
@@ -52,7 +52,7 @@
     <value>Auf Update prüfen</value>
   </data>
   <data name="Menu_Sys_About.Text" xml:space="preserve">
-    <value>Über</value>
+    <value>Impressum</value>
   </data>
   <data name="Menu_Sys_Exit.Text" xml:space="preserve">
     <value>Beenden</value>
@@ -73,7 +73,7 @@
     <value>Verbleibende Zeit :</value>
   </data>
   <data name="Lbl_BL.Text" xml:space="preserve">
-    <value>USV-Batterie schwach</value>
+    <value>USV-Akkuladung niedrig</value>
   </data>
   <data name="Lbl_OLoad.Text" xml:space="preserve">
     <value>USV-Überlastung</value>
@@ -85,7 +85,7 @@
     <value>USV im Netzbetrieb</value>
   </data>
   <data name="Lbl_BattCh_Dial.Text" xml:space="preserve">
-    <value>Batterieladung</value>
+    <value>Akkuladung</value>
   </data>
   <data name="Lbl_InF_Dial.Text" xml:space="preserve">
     <value>Frequenz</value>
@@ -97,15 +97,12 @@
     <value>USV-Last</value>
   </data>
   <data name="Lbl_BattV_Dial.Text" xml:space="preserve">
-    <value>Batteriespannung</value>
+    <value>Akkuspannung</value>
   </data>
   <data name="Lbl_InV_Dial.Text" xml:space="preserve">
     <value>Eingangsspannung</value>
   </data>
   <data name="Menu_Import_Ini.Text" xml:space="preserve">
     <value>INI-Datei importieren (v1.x)</value>
-  </data>
-  <data name="$this.ImeMode" xml:space="preserve" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
 </root>

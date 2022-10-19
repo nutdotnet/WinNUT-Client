@@ -16,8 +16,7 @@
     <value>Anwendung heruntergefahren um </value>
   </data>
   <data name="Frm_Shutdown_Str_01" xml:space="preserve">
-    <value>Batterieladung: {0}
-Verbleibende Zeit: {1}</value>
+    <value>Akkuladung: {0} Verbleibende Zeit: {1}</value>
   </data>
   <data name="Frm_Update_Str_01" xml:space="preserve">
     <value>Update verfügbar : Version {0}</value>
@@ -56,10 +55,10 @@ Verbleibende Zeit: {1}</value>
     <value>Im Netzbetrieb</value>
   </data>
   <data name="Frm_Main_Str_08" xml:space="preserve">
-    <value>Im Batteriebetrieb ({0}%)</value>
+    <value>Im Akkubetrieb ({0}%)</value>
   </data>
   <data name="Frm_Main_Str_09" xml:space="preserve">
-    <value>Niedriger Batteriestatus</value>
+    <value>Niedrige Akkuladung</value>
   </data>
   <data name="Log_Str_01" xml:space="preserve">
     <value>WinNut-Einstellungen geändert</value>
@@ -74,7 +73,7 @@ Verbleibende Zeit: {1}</value>
     <value>Automatische Wiederverbindung</value>
   </data>
   <data name="Log_Str_05" xml:space="preserve">
-    <value>Vom NUT-Host getrennt</value>
+    <value>Verbindung zum NUT-Host verloren</value>
   </data>
   <data name="Log_Str_06" xml:space="preserve">
     <value>Versuche Wiederverbindung {0} / {1}</value>
@@ -95,7 +94,7 @@ Verbleibende Zeit: {1}</value>
     <value>Version {0} verfügbar</value>
   </data>
   <data name="Frm_Main_Str_10" xml:space="preserve">
-    <value>Batterie OK</value>
+    <value>Akku OK</value>
   </data>
   <data name="Frm_Main_Str_11" xml:space="preserve">
     <value>Unbekannter USV-Name</value>

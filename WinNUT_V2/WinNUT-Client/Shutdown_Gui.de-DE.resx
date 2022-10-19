@@ -19,8 +19,7 @@
     <value>Sofortiges Herunterfahren</value>
   </data>
   <data name="lbl_UPSStatus.Text" xml:space="preserve">
-    <value>Batterieladung: {WinNUT.UPS_BattCh}
-Verbleibende Zeit: {WinNUT.Lbl_VRTime.Text}</value>
+    <value>Akkuladungladung: {WinNUT.UPS_BattCh} Verbleibende Zeit: {WinNUT.Lbl_VRTime.Text}</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Löschen gestartet</value>

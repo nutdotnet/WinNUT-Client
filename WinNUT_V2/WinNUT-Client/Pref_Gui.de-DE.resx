@@ -37,7 +37,7 @@
     <value>Min</value>
   </data>
   <data name="Lbl_BattV.Text" xml:space="preserve">
-    <value>Batteriespannung</value>
+    <value>Akkuspannung</value>
   </data>
   <data name="Lbl_LoadUPS.Text" xml:space="preserve">
     <value>USV-Last</value>
@@ -70,7 +70,7 @@
     <value>Debuggen</value>
   </data>
   <data name="Lbl_LevelLog.Text" xml:space="preserve">
-    <value>Detailstufe</value>
+    <value>Detailstufe des Logs</value>
   </data>
   <data name="CB_Use_Logfile.Text" xml:space="preserve">
     <value>Logdatei erstellen</value>
@@ -89,9 +89,6 @@
   </data>
   <data name="Tab_Miscellanous.Text" xml:space="preserve">
     <value>Verschiedenes</value>
-  </data>
-  <data name="Lbl_Percent.Text" xml:space="preserve">
-    <value>%</value>
   </data>
   <data name="Cb_ExtendTime.Text" xml:space="preserve">
     <value>Längere Abschaltzeit zulassen</value>
@@ -121,7 +118,7 @@
     <value>Herunterfahren wenn Laufzeit niedriger als (Sek.)</value>
   </data>
   <data name="Lbl_BattLimit_Load.Text" xml:space="preserve">
-    <value>Herunterfahren wenn Batteriestand niedriger als</value>
+    <value>Herunterfahren wenn Akkuladung weniger als</value>
   </data>
   <data name="Tab_Shutdown.Text" xml:space="preserve">
     <value>Optionen zum Herunterfahren</value>
@@ -187,7 +184,7 @@
     <value>Legt die Eingangsfrequenz fest wenn dieser Wert nicht von der USV geliefert wird.</value>
   </data>
   <data name="Tb_BattV_Max.ToolTip" xml:space="preserve">
-    <value>Maximale Batteriespannung. Wertebereich: Numerischer Wert von 0 bis 100.</value>
+    <value>Maximale Akkuspannung. Wertebereich: Numerischer Wert von 0 bis 100.</value>
   </data>
   <data name="Tb_Load_Max.ToolTip" xml:space="preserve">
     <value>Maximaler Last der USV. Wertebereich: Numerischer Wert von 0 bis 100.</value>
@@ -199,7 +196,7 @@
     <value>Maximale Eingangsfrequenz. Wertebereich: Numerischer Wert von 0 bis 100.</value>
   </data>
   <data name="Tb_BattV_Min.ToolTip" xml:space="preserve">
-    <value>Minimale Batteriespannung. Wertebereich: Numerischer Wert von 0 bis 100.</value>
+    <value>Minimale Akkuspannung. Wertebereich: Numerischer Wert von 0 bis 100.</value>
   </data>
   <data name="Tb_Load_Min.ToolTip" xml:space="preserve">
     <value>Mindestladezustand der USV. Wertebereich: Numerischer Wert von 0 bis 100.</value>
@@ -217,7 +214,7 @@
     <value>Minimale Eingangsspannung. Wertebereich: Numerischer Wert von 0 bis 999.</value>
   </data>
   <data name="Cbx_LogLevel.ToolTip" xml:space="preserve">
-    <value>Detailstufe.</value>
+    <value>Detailstufe des Logs.</value>
   </data>
   <data name="Btn_DeleteLog.ToolTip" xml:space="preserve">
     <value>Logdatei löschen.</value>
@@ -235,7 +232,7 @@
     <value>Startet WinNUT beim Start von Windows.</value>
   </data>
   <data name="CB_Close_Tray.ToolTip" xml:space="preserve">
-    <value>Minimiert beim Schließen in den Systray.</value>
+    <value>Ins Systray minimieren anstatt zu schliessen.</value>
   </data>
   <data name="CB_Start_Mini.ToolTip" xml:space="preserve">
     <value>Startet WinNUT minimiert.</value>
@@ -262,7 +259,7 @@
     <value>Unteres Backup-Zeitlimit welches das Herunterfahren auslöst. Wertebereich: Numerischer Wert von 0 bis 3600.</value>
   </data>
   <data name="Tb_BattLimit_Load.ToolTip" xml:space="preserve">
-    <value>Untergrenze des Batteriestands der den Abschaltvorgang auslöst. Wertebereich: Numerischer Wert von 0 bis 100.</value>
+    <value>Untergrenze des Akkustands der den Abschaltvorgang auslöst. Wertebereich: Numerischer Wert von 0 bis 100.</value>
   </data>
   <data name="Cbx_Branch_Update.ToolTip" xml:space="preserve">
     <value>Bei der Versionsüberprüfung den stabilen oder Entwicklungszweig verwenden.</value>
@@ -296,14 +293,5 @@
   </data>
   <data name="CB_Follow_FSD.ToolTip" xml:space="preserve">
     <value>Gibt an ob ein Herunterfahren durchgeführt werden soll wenn der NUT-Server ein erzwungenes Herunterfahren signalisiert (FSD = Force ShutDown).</value>
-  </data>
-  <data name="Lbl_BattV.ToolTip" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="Btn_Cancel.ToolTip" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="Tab_Connexion.ToolTip" xml:space="preserve">
-    <value></value>
   </data>
 </root>
