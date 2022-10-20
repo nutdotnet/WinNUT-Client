@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CB_Close_Tray.ToolTip" xml:space="preserve">
+    <value>關閉程式視窗時縮小到工作列角落圖示。</value>
+  </data>
+  <data name="Lbl_Branch_Update.Text" xml:space="preserve">
+    <value>穩定或開發版本</value>
+  </data>
+  <data name="Lbl_PowerF.Text" xml:space="preserve">
+    <value>供電頻率</value>
+  </data>
+  <data name="Cbx_LogLevel.Items" xml:space="preserve">
+    <value>注意</value>
+  </data>
+  <data name="Cbx_TypeStop.Items2" xml:space="preserve">
+    <value>休眠</value>
+  </data>
+  <data name="Cbx_Delay_Verif.Items" xml:space="preserve">
+    <value>每天</value>
+  </data>
+  <data name="Cb_Verify_Update.Text" xml:space="preserve">
+    <value>驗證更新</value>
+  </data>
+  <data name="Cbx_Delay_Verif.Items1" xml:space="preserve">
+    <value>每週</value>
+  </data>
+  <data name="Tab_Shutdown.Text" xml:space="preserve">
+    <value>關機選項</value>
+  </data>
+  <data name="Tb_Port.ToolTip" xml:space="preserve">
+    <value>NUT 伺服器埠號 (預設值 3493)，範圍：1-65535。</value>
+  </data>
+  <data name="Lbl_Login_Nut.Text" xml:space="preserve">
+    <value>登入</value>
+  </data>
+  <data name="Cbx_Delay_Verif.ToolTip" xml:space="preserve">
+    <value>驗證頻率。</value>
+  </data>
+  <data name="Tb_BattV_Max.ToolTip" xml:space="preserve">
+    <value>最高電池電壓，範圍：0-100 。</value>
+  </data>
+  <data name="Cb_ExtendTime.Text" xml:space="preserve">
+    <value>允許的延長關機時間</value>
+  </data>
+  <data name="Cbx_Branch_Update.Items" xml:space="preserve">
+    <value>穩定版本</value>
+  </data>
+  <data name="Lbl_Delay_Verif.Text" xml:space="preserve">
+    <value>每次檢驗延遲</value>
+  </data>
+  <data name="Cb_Reconnect.ToolTip" xml:space="preserve">
+    <value>啟用自動連線與重新連線</value>
+  </data>
+  <data name="Cbx_TypeStop.ToolTip" xml:space="preserve">
+    <value>停機流程最後的停機方式</value>
+  </data>
+  <data name="Tb_UPS_Name.ToolTip" xml:space="preserve">
+    <value>監控的 UPS 名稱。請使用在 NUT 伺服器所設定 UPS 的名稱。</value>
+  </data>
+  <data name="CB_Follow_FSD.Text" xml:space="preserve">
+    <value>接收 FSD (強制關機) 訊號後關機</value>
+  </data>
+  <data name="Cb_Update_At_Start.ToolTip" xml:space="preserve">
+    <value>在啟動時檢查更新。</value>
+  </data>
+  <data name="Lbl_Port.Text" xml:space="preserve">
+    <value>NUT 埠號</value>
+  </data>
+  <data name="Tb_OutV_Max.ToolTip" xml:space="preserve">
+    <value>最低輸出電壓，範圍：0-999 。</value>
+  </data>
+  <data name="Tb_Load_Max.ToolTip" xml:space="preserve">
+    <value>最高 UPS 電量百分比，範圍：0-100 。</value>
+  </data>
+  <data name="Cb_Reconnect.Text" xml:space="preserve">
+    <value>重新建立連線</value>
+  </data>
+  <data name="Lbl_BattV.Text" xml:space="preserve">
+    <value>電池電壓</value>
+  </data>
+  <data name="Lbl_Pwd_Nut.Text" xml:space="preserve">
+    <value>密碼</value>
+  </data>
+  <data name="Cb_ImmediateStop.Text" xml:space="preserve">
+    <value>立刻執行停機動作</value>
+  </data>
+  <data name="Cbx_LogLevel.Items1" xml:space="preserve">
+    <value>警告</value>
+  </data>
+  <data name="Cbx_Branch_Update.ToolTip" xml:space="preserve">
+    <value>在驗證期間使用穩定或開發分支。</value>
+  </data>
+  <data name="Lbl_Name_UPS.Text" xml:space="preserve">
+    <value>UPS 名稱</value>
+  </data>
+  <data name="Tb_InF_Min.ToolTip" xml:space="preserve">
+    <value>最低輸入頻率，範圍：0-100 。</value>
+  </data>
+  <data name="Btn_Ok.Text" xml:space="preserve">
+    <value>確定</value>
+  </data>
+  <data name="Label3.Text" xml:space="preserve">
+    <value>NUT 伺服器的登入資訊 (若不需要請留空)</value>
+  </data>
+  <data name="Cbx_TypeStop.Items1" xml:space="preserve">
+    <value>睡眠</value>
+  </data>
+  <data name="Tab_Calibrage.Text" xml:space="preserve">
+    <value>校正</value>
+  </data>
+  <data name="Lbl_LoadUPS.Text" xml:space="preserve">
+    <value>UPS 負載</value>
+  </data>
+  <data name="Cb_ExtendTime.ToolTip" xml:space="preserve">
+    <value>在關機過程中留出額外的時間。注意：這個額外的時間可能會超過 UPS 的備援時間，請謹慎使用！</value>
+  </data>
+  <data name="Lbl_BattLimit_Time.Text" xml:space="preserve">
+    <value>若續航時間低於秒數時關機</value>
+  </data>
+  <data name="Cb_Update_At_Start.Text" xml:space="preserve">
+    <value>在啟動時驗證更新</value>
+  </data>
+  <data name="Btn_Cancel.Text" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="Tb_BattLimit_Time.ToolTip" xml:space="preserve">
+    <value>觸發停機流程的最低續航時間，範圍：0-3600。</value>
+  </data>
+  <data name="Lbl_OutputV.Text" xml:space="preserve">
+    <value>輸出電壓</value>
+  </data>
+  <data name="CB_Systray.ToolTip" xml:space="preserve">
+    <value>縮小到工作列或角落圖示。</value>
+  </data>
+  <data name="Lbl_BattLimit_Load.Text" xml:space="preserve">
+    <value>若電池電量低於百分比數值時關機</value>
+  </data>
+  <data name="Btn_DeleteLog.ToolTip" xml:space="preserve">
+    <value>刪除日誌檔案。</value>
+  </data>
+  <data name="CB_Start_W_Win.Text" xml:space="preserve">
+    <value>随 Windows 启动当前应用</value>
+  </data>
+  <data name="Cbx_Branch_Update.Items1" xml:space="preserve">
+    <value>開發版本</value>
+  </data>
+  <data name="Tb_BattLimit_Load.ToolTip" xml:space="preserve">
+    <value>觸發停機流程的最低電池電量百分比，範圍：0-100。</value>
+  </data>
+  <data name="Lbl_InputF.Text" xml:space="preserve">
+    <value>輸入頻率</value>
+  </data>
+  <data name="Cbx_LogLevel.Items2" xml:space="preserve">
+    <value>錯誤</value>
+  </data>
+  <data name="Btn_ViewLog.ToolTip" xml:space="preserve">
+    <value>開啟日誌檔案</value>
+  </data>
+  <data name="Lbl_Mini.Text" xml:space="preserve">
+    <value>最低</value>
+  </data>
+  <data name="Lbl_GraceTime.Text" xml:space="preserve">
+    <value>關機前寬限時間 (秒)：</value>
+  </data>
+  <data name="Cbx_LogLevel.Items3" xml:space="preserve">
+    <value>除錯</value>
+  </data>
+  <data name="Tb_Delay_Com.ToolTip" xml:space="preserve">
+    <value>UPS 數據更新頻率 (預設值 5 秒)。範圍：1-60 秒。</value>
+  </data>
+  <data name="CB_Systray.Text" xml:space="preserve">
+    <value>最小化至工作列角落圖示</value>
+  </data>
+  <data name="CB_Start_Mini.Text" xml:space="preserve">
+    <value>啟動時最小化</value>
+  </data>
+  <data name="Tb_BattV_Min.ToolTip" xml:space="preserve">
+    <value>最低電池電壓，範圍：0-100 。</value>
+  </data>
+  <data name="Tb_GraceTime.ToolTip" xml:space="preserve">
+    <value>額外的寬限期。範圍：0-3600。</value>
+  </data>
+  <data name="Cbx_Freq_Input.ToolTip" xml:space="preserve">
+    <value>設定輸入頻率 (若 UPS 未提供)</value>
+  </data>
+  <data name="Lbl_Maxi.Text" xml:space="preserve">
+    <value>最高</value>
+  </data>
+  <data name="Lbl_StopType.Text" xml:space="preserve">
+    <value>停機方式</value>
+  </data>
+  <data name="Lbl_Delay_Com.Text" xml:space="preserve">
+    <value>輪詢間隔時間</value>
+  </data>
+  <data name="Lbl_LevelLog.ToolTip" xml:space="preserve">
+    <value>日誌檔案記錄等級</value>
+  </data>
+  <data name="Lbl_LevelLog.Text" xml:space="preserve">
+    <value>日誌等級</value>
+  </data>
+  <data name="Tb_Load_Min.ToolTip" xml:space="preserve">
+    <value>最低 UPS 電量百分比，範圍：0-100 。</value>
+  </data>
+  <data name="Tab_Connexion.Text" xml:space="preserve">
+    <value>連線</value>
+  </data>
+  <data name="CB_Start_W_Win.ToolTip" xml:space="preserve">
+    <value>隨 Windows 啟動 WinNUT。</value>
+  </data>
+  <data name="CB_Close_Tray.Text" xml:space="preserve">
+    <value>關閉至工作列角落圖示</value>
+  </data>
+  <data name="Tb_Server_IP.ToolTip" xml:space="preserve">
+    <value>NUT 伺服器位址，請使用 IPv4/IPv6/FQDN 位址。</value>
+  </data>
+  <data name="Tb_OutV_Min.ToolTip" xml:space="preserve">
+    <value>最低輸出電壓，範圍：0-999 。</value>
+  </data>
+  <data name="Tb_InV_Max.ToolTip" xml:space="preserve">
+    <value>最高輸入電壓，範圍：0-999 。</value>
+  </data>
+  <data name="Lbl_Server_IP.Text" xml:space="preserve">
+    <value>NUT 主機</value>
+  </data>
+  <data name="Cbx_TypeStop.Items" xml:space="preserve">
+    <value>關機</value>
+  </data>
+  <data name="CB_Use_Logfile.Text" xml:space="preserve">
+    <value>建立日誌檔案</value>
+  </data>
+  <data name="Tab_Miscellanous.Text" xml:space="preserve">
+    <value>其他</value>
+  </data>
+  <data name="Tb_Delay_Stop.ToolTip" xml:space="preserve">
+    <value>停機流程延遲時間，範圍：0-3600 秒。</value>
+  </data>
+  <data name="Lbl_InputV.Text" xml:space="preserve">
+    <value>輸入電壓</value>
+  </data>
+  <data name="Cbx_LogLevel.ToolTip" xml:space="preserve">
+    <value>日誌等級。</value>
+  </data>
+  <data name="Tb_InV_Min.ToolTip" xml:space="preserve">
+    <value>最低輸入電壓，範圍：0-999 。</value>
+  </data>
+  <data name="Cbx_Delay_Verif.Items2" xml:space="preserve">
+    <value>每月</value>
+  </data>
+  <data name="CB_Follow_FSD.ToolTip" xml:space="preserve">
+    <value>指示當 NUT 伺服器發出強制關機訊號 (FSD) 時是否應執行關機</value>
+  </data>
+  <data name="Btn_Apply.Text" xml:space="preserve">
+    <value>套用</value>
+  </data>
+  <data name="Cb_Verify_Update.ToolTip" xml:space="preserve">
+    <value>檢查應用程式更新。</value>
+  </data>
+  <data name="CB_Use_Logfile.ToolTip" xml:space="preserve">
+    <value>建立日誌檔案 (WinNUT-client.log 檔案位於 WinNUT 的安裝目錄)。</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>選項</value>
+  </data>
+  <data name="Tb_InF_Max.ToolTip" xml:space="preserve">
+    <value>最高輸入頻率，範圍：0-100 。</value>
+  </data>
+  <data name="Tab_Update.Text" xml:space="preserve">
+    <value>更新</value>
+  </data>
+  <data name="CB_Start_Mini.ToolTip" xml:space="preserve">
+    <value>啟動時最小化 WinNUT。</value>
+  </data>
+  <data name="Lbl_Delay_Stop.Text" xml:space="preserve">
+    <value>關機前延遲 (秒)</value>
+  </data>
+  <data name="Cb_ImmediateStop.ToolTip" xml:space="preserve">
+    <value>立即或定時執行關機程序。</value>
+  </data>
+</root>

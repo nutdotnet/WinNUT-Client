@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Menu_Sys_Settings.Text" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="Menu_Sys_Update.Text" xml:space="preserve">
+    <value>驗證更新</value>
+  </data>
+  <data name="Menu_Sys_About.Text" xml:space="preserve">
+    <value>關於</value>
+  </data>
+  <data name="Menu_Sys_Exit.Text" xml:space="preserve">
+    <value>離開</value>
+  </data>
+  <data name="Menu_Import_Ini.Text" xml:space="preserve">
+    <value>匯入 ini 檔案 (v1.x 版本)</value>
+  </data>
+  <data name="Menu_UPS_Var.Text" xml:space="preserve">
+    <value>UPS 變數</value>
+  </data>
+  <data name="Menu_Quit.Text" xml:space="preserve">
+    <value>離開</value>
+  </data>
+  <data name="Menu_File.Text" xml:space="preserve">
+    <value>檔案</value>
+  </data>
+  <data name="Menu_Reconnect.Text" xml:space="preserve">
+    <value>重新連線</value>
+  </data>
+  <data name="Menu_Disconnect.Text" xml:space="preserve">
+    <value>中斷連線</value>
+  </data>
+  <data name="Menu_Connection.Text" xml:space="preserve">
+    <value>連線</value>
+  </data>
+  <data name="Menu_Settings.Text" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="Menu_About.Text" xml:space="preserve">
+    <value>關於</value>
+  </data>
+  <data name="Menu_Update.Text" xml:space="preserve">
+    <value>驗證更新</value>
+  </data>
+  <data name="Menu_Help.Text" xml:space="preserve">
+    <value>說明</value>
+  </data>
+  <data name="Lbl_Firmware.Text" xml:space="preserve">
+    <value>韌體：</value>
+  </data>
+  <data name="Lbl_Serial.Text" xml:space="preserve">
+    <value>序號：</value>
+  </data>
+  <data name="Lbl_Name.Text" xml:space="preserve">
+    <value>名稱：</value>
+  </data>
+  <data name="Lbl_Mfr.Text" xml:space="preserve">
+    <value>廠牌：</value>
+  </data>
+  <data name="Lbl_RTime.Text" xml:space="preserve">
+    <value>預估剩餘時間：</value>
+  </data>
+  <data name="Lbl_BL.Text" xml:space="preserve">
+    <value>UPS 低電池電量</value>
+  </data>
+  <data name="Lbl_OLoad.Text" xml:space="preserve">
+    <value>UPS 過載</value>
+  </data>
+  <data name="Lbl_OB.Text" xml:space="preserve">
+    <value>UPS 使用電池供電</value>
+  </data>
+  <data name="Lbl_OL.Text" xml:space="preserve">
+    <value>UPS 已接上市電</value>
+  </data>
+  <data name="Lbl_InV_Dial.Text" xml:space="preserve">
+    <value>輸入電壓</value>
+  </data>
+  <data name="Lbl_OutV_Dial.Text" xml:space="preserve">
+    <value>輸出電壓</value>
+  </data>
+  <data name="Lbl_BattCh_Dial.Text" xml:space="preserve">
+    <value>電池電量</value>
+  </data>
+  <data name="Lbl_Load_Dial.Text" xml:space="preserve">
+    <value>UPS 負載</value>
+  </data>
+  <data name="Lbl_BattV_Dial.Text" xml:space="preserve">
+    <value>電池電壓</value>
+  </data>
+  <data name="Lbl_InF_Dial.Text" xml:space="preserve">
+    <value>頻率</value>
+  </data>
+</root>
