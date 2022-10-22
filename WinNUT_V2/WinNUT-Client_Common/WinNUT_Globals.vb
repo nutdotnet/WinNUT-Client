@@ -18,7 +18,7 @@ Public Module WinNUT_Globals
             ' If debugging, keep any generated data next to the debug executable.
             Return Path.Combine(Environment.CurrentDirectory, "Data")
 #Else
-            Return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "\WinNUT-Client")
+            Return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ProgramName)
 #End If
         End Get
     End Property
