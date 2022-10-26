@@ -10,17 +10,9 @@
 Imports System.IO
 
 Public Module WinNUT_Globals
-#Region "Properties"
-    ' The directory where volatile appdata is stored.
-    ReadOnly Property ApplicationData() As String
-        Get
-#If DEBUG Then
-            ' If debugging, keep any generated data next to the debug executable.
-            Return Path.Combine(Environment.CurrentDirectory, "Data")
-#End If
-            Return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "\WinNUT-Client")
-        End Get
-    End Property
+
+#Region "Constants/Shareds"
+    Private DEFAULT_DATA_PATH As String
 #End Region
 
     Public LongProgramName As String
@@ -30,6 +22,7 @@ Public Module WinNUT_Globals
     Public GitHubURL As String
     Public Copyright As String
     Public IsConnected As Boolean
+    Public ApplicationData As String
     ' Public LogFile As String
     ' Handle application messages and debug events.
     ' Public WithEvents LogFile As Logger '  As New Logger(False, 0)
@@ -40,6 +33,14 @@ Public Module WinNUT_Globals
     ' Public LogFilePath As String
 
     Public Sub Init_Globals()
+#If DEBUG Then
+        ' If debugging, keep any generated data next to the debug executable.
+        DEFAULT_DATA_PATH = Path.Combine(Environment.CurrentDirectory, "Data")
+#Else
+        DEFAULT_DATA_PATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "\WinNUT-Client")
+#End If
+        SetupAppDirectory()
+
         LongProgramName = My.Application.Info.Description
         ProgramName = My.Application.Info.ProductName
         ProgramVersion = Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString
@@ -50,14 +51,17 @@ Public Module WinNUT_Globals
         LogFile = New Logger(False, LogLvl.LOG_DEBUG)
     End Sub
 
-    'Sub SetupAppDirectory()
-    '    If Not Directory.Exists(ApplicationData) Then
-    '        Try
-    '            Directory.CreateDirectory(ApplicationData)
-    '        Catch ex As Exception
-    '            Logger.LogTracing("Could not create application directory! Operating with reduced functionality.\n\n" & ex.ToString(),
-    '                                   LogLvl.LOG_ERROR, Nothing)
-    '        End Try
-    '    End If
-    'End Sub
+    Sub SetupAppDirectory()
+        If Not Directory.Exists(DEFAULT_DATA_PATH) Then
+            Try
+                Directory.CreateDirectory(DEFAULT_DATA_PATH)
+                ApplicationData = DEFAULT_DATA_PATH
+            Catch ex As Exception
+                ' LogFile.LogTracing(ex.ToString & " encountered trying to create app data directory. Falling back to temp." & ex.ToString(),
+                ' LogLvl.LOG_ERROR, Nothing)
+                ApplicationData = Path.GetTempPath() & "\WinNUT_Data\"
+                Directory.CreateDirectory(ApplicationData)
+            End Try
+        End If
+    End Sub
 End Module
