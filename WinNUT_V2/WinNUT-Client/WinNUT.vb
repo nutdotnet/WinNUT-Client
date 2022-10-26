@@ -840,7 +840,7 @@ Public Class WinNUT
         ' Setup logging preferences
         If Arr_Reg_Key.Item("UseLogFile") Then
             LogFile.LogLevelValue = Arr_Reg_Key.Item("Log Level")
-            LogFile.InitializeLogFile()
+            LogFile.InitializeLogFile(ApplicationData)
         ElseIf LogFile.IsWritingToFile Then
             LogFile.DeleteLogFile()
         End If
