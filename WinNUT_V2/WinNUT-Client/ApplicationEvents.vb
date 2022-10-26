@@ -7,6 +7,7 @@
 '
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
+Imports System.IO
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports WinNUT_Client_Common
 
@@ -135,8 +136,12 @@ Namespace My
                 Crash_Report &= BuildExceptionString(ex)
             End Try
 
-            Dim WinNUT_UserData_Dir = ApplicationData
-            Dim CrashLog_Dir = WinNUT_UserData_Dir & "\CrashLog"
+            ' Initialize directory for data
+            Dim CrashLog_Dir = ApplicationData & "\CrashLog"
+            If Not Computer.FileSystem.DirectoryExists(CrashLog_Dir) Then
+                Computer.FileSystem.CreateDirectory(CrashLog_Dir)
+            End If
+
             Dim CrashLog_Filename As String = "Crash_Report_" & Format(Now, "dd-MM-yyyy") & "_" &
                 String.Format("{0}-{1}-{2}.txt", Now.Hour.ToString("00"), Now.Minute.ToString("00"), Now.Second.ToString("00"))
 
@@ -170,11 +175,7 @@ Namespace My
 
             Computer.Clipboard.SetText(Crash_Report)
 
-            If Not Computer.FileSystem.DirectoryExists(CrashLog_Dir) Then
-                Computer.FileSystem.CreateDirectory(CrashLog_Dir)
-            End If
-
-            Dim CrashLog_Report As IO.StreamWriter
+            Dim CrashLog_Report As StreamWriter
             CrashLog_Report = Computer.FileSystem.OpenTextFileWriter(CrashLog_Dir & "\" & CrashLog_Filename, True)
             CrashLog_Report.WriteLine(Crash_Report)
             CrashLog_Report.Close()
