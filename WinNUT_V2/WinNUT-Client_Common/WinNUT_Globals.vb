@@ -39,7 +39,6 @@ Public Module WinNUT_Globals
 #Else
         DEFAULT_DATA_PATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "\WinNUT-Client")
 #End If
-        SetupAppDirectory()
 
         LongProgramName = My.Application.Info.Description
         ProgramName = My.Application.Info.ProductName
@@ -48,7 +47,9 @@ Public Module WinNUT_Globals
         GitHubURL = My.Application.Info.Trademark
         Copyright = My.Application.Info.Copyright
         IsConnected = False
-        LogFile = New Logger(False, LogLvl.LOG_DEBUG)
+        LogFile = New Logger(LogLvl.LOG_DEBUG)
+
+        SetupAppDirectory()
     End Sub
 
     Sub SetupAppDirectory()
@@ -57,8 +58,8 @@ Public Module WinNUT_Globals
                 Directory.CreateDirectory(DEFAULT_DATA_PATH)
                 ApplicationData = DEFAULT_DATA_PATH
             Catch ex As Exception
-                ' LogFile.LogTracing(ex.ToString & " encountered trying to create app data directory. Falling back to temp." & ex.ToString(),
-                ' LogLvl.LOG_ERROR, Nothing)
+                LogFile.LogTracing(ex.ToString & " encountered trying to create app data directory. Falling back to temp.",
+                                   LogLvl.LOG_ERROR, Nothing)
                 ApplicationData = Path.GetTempPath() & "\WinNUT_Data\"
                 Directory.CreateDirectory(ApplicationData)
             End Try
