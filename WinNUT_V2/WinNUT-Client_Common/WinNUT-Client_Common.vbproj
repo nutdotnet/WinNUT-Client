@@ -48,6 +48,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -73,7 +74,6 @@
     <Compile Include="Common_Classes.vb" />
     <Compile Include="StringEnum.vb" />
     <Compile Include="Common_Enums.vb" />
-    <Compile Include="CryptData.vb" />
     <Compile Include="IniFileVb.vb" />
     <Compile Include="Logger.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
