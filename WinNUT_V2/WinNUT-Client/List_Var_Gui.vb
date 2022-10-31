@@ -11,7 +11,16 @@ Imports WinNUT_Client_Common
 
 Public Class List_Var_Gui
     Private List_Var_Datas As List(Of UPS_List_Datas)
+    Private UPSDevice As UPS_Device
     Private UPS_Name = WinNUT.UPS_Device.Nut_Config.UPSName
+
+    Public Sub New(upsDev As UPS_Device)
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+        UPSDevice = upsDev
+    End Sub
 
     Private Sub List_Var_Gui_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LogFile.LogTracing("Load List Var Gui", LogLvl.LOG_DEBUG, Me)
@@ -22,10 +31,13 @@ Public Class List_Var_Gui
     End Sub
 
     Private Sub PopulateTreeView()
-        Dim action As Action
         LogFile.LogTracing("Populate TreeView", LogLvl.LOG_DEBUG, Me)
+        Dim action As Action
+
         Try
+            UPSDevice.IsUpdatingData = False
             List_Var_Datas = WinNUT.UPS_Device.GetUPS_ListVar()
+            UPSDevice.IsUpdatingData = True
         Catch ex As Exception
             ' TODO: Internationalize?
             MessageBox.Show("Error encountered trying to get variables from the UPS: " & vbNewLine & ex.Message, "Error Encountered")

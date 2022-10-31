@@ -1006,9 +1006,8 @@ Public Class WinNUT
 
     Private Sub Menu_UPS_Var_Click(sender As Object, e As EventArgs) Handles Menu_UPS_Var.Click
         LogFile.LogTracing("Open List Var Gui", LogLvl.LOG_DEBUG, Me)
-        List_Var_Gui.Activate()
-        List_Var_Gui.Visible = True
-        HasFocus = False
+        Dim lvgForm = New List_Var_Gui(UPS_Device)
+        lvgForm.Show()
     End Sub
 
     Public Sub Update_InstantLog(sender As Object) Handles LogFile.NewData

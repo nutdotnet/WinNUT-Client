@@ -40,6 +40,16 @@ Public Class UPS_Device
         End Set
     End Property
 
+    Public Property IsUpdatingData As Boolean
+        Get
+            Return Update_Data.Enabled
+        End Get
+        Set(value As Boolean)
+            LogFile.LogTracing("UPS device updating status is now [" & value & "]", LogLvl.LOG_NOTICE, Me)
+            Update_Data.Enabled = value
+        End Set
+    End Property
+
     Private upsData As UPSData
     Public Property UPS_Datas As UPSData
         Get
@@ -303,15 +313,8 @@ Public Class UPS_Device
         Try
             Dim UPS_rt_Status As String
             Dim InputA As Double
-            ' LogFile.LogTracing("Enter Retrieve_UPS_Data", LogLvl.LOG_DEBUG, Me)
-            If IsConnected Then
-                'With UPS_Datas
-                '    Select Case "Unknown"
-                '        Case .Mfr, .Model, .Serial, .Firmware
-                '            UPS_Datas = GetUPSProductInfo()
-                '    End Select
-                'End With
 
+            If IsConnected Then
                 With UPS_Datas.UPS_Value
                     .Batt_Charge = Double.Parse(GetUPSVar("battery.charge", 255), ciClone)
                     .Batt_Voltage = Double.Parse(GetUPSVar("battery.voltage", 12), ciClone)
