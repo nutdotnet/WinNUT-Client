@@ -190,11 +190,11 @@ Public Class Nut_Socket
     ''' <returns>The full <see cref="Transaction"/> of this function call.</returns>
     ''' <exception cref="InvalidOperationException">Thrown when calling this function while disconnected.</exception>"
     ''' <exception cref="NutException">Thrown when the NUT server returns an error or unexpected response.</exception>
-    Function Query_Data(Query_Msg As String) As Transaction ' (Data As String, Response As NUTResponse)
+    Function Query_Data(Query_Msg As String) As Transaction
         Dim Response As NUTResponse
         Dim DataResult As String
         Dim finalTransaction As Transaction
-        ' Try
+
         If streamInUse Then
             LogFile.LogTracing("Attempted to query " & Query_Msg & " while using the stream.", LogLvl.LOG_ERROR, Me)
             Return Nothing
@@ -203,11 +203,12 @@ Public Class Nut_Socket
         streamInUse = True
 
         If ConnectionStatus Then
-            ' LogFile.LogTracing("Sending query " & Query_Msg, LogLvl.LOG_DEBUG, Me)
+            ' LogFile.LogTracing("Query: " & Query_Msg, LogLvl.LOG_DEBUG, Me)
             WriterStream.WriteLine(Query_Msg & vbCr)
             WriterStream.Flush()
 
             DataResult = Trim(ReaderStream.ReadLine())
+            ' LogFile.LogTracing(vbTab & "Response: " & DataResult, LogLvl.LOG_DEBUG, Me)
             streamInUse = False
             ' LogFile.LogTracing("Done processing response for query " & Query_Msg, LogLvl.LOG_DEBUG, Me)
 
@@ -240,13 +241,15 @@ Public Class Nut_Socket
         streamInUse = True
         Dim readLine As String
 
-        Do
+        While True
             readLine = ReaderStream.ReadLine()
-            If readLine.StartsWith("END") Then
-                Exit Do
+
+            If Not readLine.StartsWith("END") Then
+                List_Datas.Add(readLine)
+            Else
+                Exit While
             End If
-            List_Datas.Add(readLine)
-        Loop Until (IsNothing(readLine) Or (ReaderStream.Peek < 0))
+        End While
 
         streamInUse = False
         ' LogFile.LogTracing("Done processing LIST response for query " & Query_Msg, LogLvl.LOG_DEBUG, Me)
@@ -262,21 +265,17 @@ Public Class Nut_Socket
                     'Query 
                     'LIST VAR <upsname>
                     'Response List of var
-                    'VAR <upsname> <varname> "<value>"
+                    'VAR <upsname><varname> "<value>"
                     Key = Replace(SplitString(2), """", "")
                     Value = Replace(SplitString(3), """", "")
                     Dim UPSName = SplitString(1)
                     Dim VarDESC = GetVarDescription(Key)
-                    If Not IsNothing(VarDESC) Then
-                        List_Result.Add(New UPS_List_Datas With {
+                    List_Result.Add(New UPS_List_Datas With {
                             .VarKey = Key,
                             .VarValue = Trim(Value),
-                            .VarDesc = Split(Replace(VarDESC, """", ""), " ", 4)(3)}
+                            .VarDesc = If(Not IsNothing(VarDESC), Split(Replace(VarDESC, """", ""), " ", 4)(3), String.Empty)}
                         )
-                    Else
-                        'TODO: Convert to nut_exception error
-                        Throw New Exception("error")
-                    End If
+
                 Case "UPS"
                     'Query 
                     'LIST UPS
@@ -291,7 +290,7 @@ Public Class Nut_Socket
                     'Query 
                     'LIST RW <upsname>
                     'List of RW var
-                    'RW <upsname> <varname> "<value>"
+                    'RW <upsname><varname> "<value>"
                     Key = Replace(SplitString(2), """", "")
                     Value = Replace(SplitString(3), """", "")
                     Dim UPSName = SplitString(1)
@@ -300,7 +299,7 @@ Public Class Nut_Socket
                         List_Result.Add(New UPS_List_Datas With {
                             .VarKey = Key,
                             .VarValue = Trim(Value),
-                            .VarDesc = Split(Replace(VarDESC, """", ""), " ", 4)(3)}
+                            .VarDesc = If(Not IsNothing(VarDESC), Split(Replace(VarDESC, """", ""), " ", 4)(3), String.Empty)}
                         )
                     Else
                         'TODO: Convert to nut_exception error
@@ -310,12 +309,12 @@ Public Class Nut_Socket
                             'Query 
                             'LIST CMD <upsname>
                             'List of CMD
-                            'CMD <upsname> <cmdname>
+                            'CMD <upsname><cmdname>
                 Case "ENUM"
                     'Query 
                     'LIST ENUM <upsname>
                     'List of Enum ??
-                    'ENUM <upsname> <varname> "<value>"
+                    'ENUM <upsname><varname> "<value>"
                     Key = Replace(SplitString(2), """", "")
                     Value = Replace(SplitString(3), """", "")
                     Dim UPSName = SplitString(1)
@@ -332,14 +331,14 @@ Public Class Nut_Socket
                     End If
                 Case "RANGE"
                             'Query 
-                            'LIST RANGE <upsname> <varname>
+                            'LIST RANGE <upsname><varname>
                             'List of Range
-                            'RANGE <upsname> <varname> "<min>" "<max>"
+                            'RANGE <upsname><varname> "<min>" "<max>"
                 Case "CLIENT"
                     'Query 
                     'LIST CLIENT <upsname>
                     'List of Range
-                    'CLIENT <device name> <client IP address>
+                    'CLIENT <device name><client IP address>
             End Select
         Next
 
