@@ -60,7 +60,7 @@ Partial Class Pref_Gui
         Me.Lbl_InputF = New System.Windows.Forms.Label()
         Me.Lbl_PowerF = New System.Windows.Forms.Label()
         Me.Lbl_InputV = New System.Windows.Forms.Label()
-        Me.Tab_Miscellanous = New System.Windows.Forms.TabPage()
+        Me.Tab_Miscellaneous = New System.Windows.Forms.TabPage()
         Me.Cbx_LogLevel = New System.Windows.Forms.ComboBox()
         Me.Btn_DeleteLog = New System.Windows.Forms.Button()
         Me.Btn_ViewLog = New System.Windows.Forms.Button()
@@ -99,7 +99,7 @@ Partial Class Pref_Gui
         Me.TabControl_Options.SuspendLayout()
         Me.Tab_Connexion.SuspendLayout()
         Me.Tab_Calibrage.SuspendLayout()
-        Me.Tab_Miscellanous.SuspendLayout()
+        Me.Tab_Miscellaneous.SuspendLayout()
         Me.Tab_Shutdown.SuspendLayout()
         Me.Tab_Update.SuspendLayout()
         Me.SuspendLayout()
@@ -109,7 +109,7 @@ Partial Class Pref_Gui
         resources.ApplyResources(Me.TabControl_Options, "TabControl_Options")
         Me.TabControl_Options.Controls.Add(Me.Tab_Connexion)
         Me.TabControl_Options.Controls.Add(Me.Tab_Calibrage)
-        Me.TabControl_Options.Controls.Add(Me.Tab_Miscellanous)
+        Me.TabControl_Options.Controls.Add(Me.Tab_Miscellaneous)
         Me.TabControl_Options.Controls.Add(Me.Tab_Shutdown)
         Me.TabControl_Options.Controls.Add(Me.Tab_Update)
         Me.TabControl_Options.Name = "TabControl_Options"
@@ -365,21 +365,21 @@ Partial Class Pref_Gui
         Me.Lbl_InputV.Name = "Lbl_InputV"
         Me.Pref_TlTip.SetToolTip(Me.Lbl_InputV, resources.GetString("Lbl_InputV.ToolTip"))
         '
-        'Tab_Miscellanous
+        'Tab_Miscellaneous
         '
-        resources.ApplyResources(Me.Tab_Miscellanous, "Tab_Miscellanous")
-        Me.Tab_Miscellanous.Controls.Add(Me.Cbx_LogLevel)
-        Me.Tab_Miscellanous.Controls.Add(Me.Btn_DeleteLog)
-        Me.Tab_Miscellanous.Controls.Add(Me.Btn_ViewLog)
-        Me.Tab_Miscellanous.Controls.Add(Me.Lbl_LevelLog)
-        Me.Tab_Miscellanous.Controls.Add(Me.CB_Use_Logfile)
-        Me.Tab_Miscellanous.Controls.Add(Me.CB_Start_W_Win)
-        Me.Tab_Miscellanous.Controls.Add(Me.CB_Close_Tray)
-        Me.Tab_Miscellanous.Controls.Add(Me.CB_Start_Mini)
-        Me.Tab_Miscellanous.Controls.Add(Me.CB_Systray)
-        Me.Tab_Miscellanous.Name = "Tab_Miscellanous"
-        Me.Pref_TlTip.SetToolTip(Me.Tab_Miscellanous, resources.GetString("Tab_Miscellanous.ToolTip"))
-        Me.Tab_Miscellanous.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.Tab_Miscellaneous, "Tab_Miscellaneous")
+        Me.Tab_Miscellaneous.Controls.Add(Me.Cbx_LogLevel)
+        Me.Tab_Miscellaneous.Controls.Add(Me.Btn_DeleteLog)
+        Me.Tab_Miscellaneous.Controls.Add(Me.Btn_ViewLog)
+        Me.Tab_Miscellaneous.Controls.Add(Me.Lbl_LevelLog)
+        Me.Tab_Miscellaneous.Controls.Add(Me.CB_Use_Logfile)
+        Me.Tab_Miscellaneous.Controls.Add(Me.CB_Start_W_Win)
+        Me.Tab_Miscellaneous.Controls.Add(Me.CB_Close_Tray)
+        Me.Tab_Miscellaneous.Controls.Add(Me.CB_Start_Mini)
+        Me.Tab_Miscellaneous.Controls.Add(Me.CB_Systray)
+        Me.Tab_Miscellaneous.Name = "Tab_Miscellaneous"
+        Me.Pref_TlTip.SetToolTip(Me.Tab_Miscellaneous, resources.GetString("Tab_Miscellaneous.ToolTip"))
+        Me.Tab_Miscellaneous.UseVisualStyleBackColor = True
         '
         'Cbx_LogLevel
         '
@@ -651,8 +651,8 @@ Partial Class Pref_Gui
         Me.Tab_Connexion.PerformLayout()
         Me.Tab_Calibrage.ResumeLayout(False)
         Me.Tab_Calibrage.PerformLayout()
-        Me.Tab_Miscellanous.ResumeLayout(False)
-        Me.Tab_Miscellanous.PerformLayout()
+        Me.Tab_Miscellaneous.ResumeLayout(False)
+        Me.Tab_Miscellaneous.PerformLayout()
         Me.Tab_Shutdown.ResumeLayout(False)
         Me.Tab_Shutdown.PerformLayout()
         Me.Tab_Update.ResumeLayout(False)
@@ -669,7 +669,7 @@ Partial Class Pref_Gui
     Friend WithEvents Lbl_Port As Label
     Friend WithEvents Lbl_Server_IP As Label
     Friend WithEvents Tab_Calibrage As TabPage
-    Friend WithEvents Tab_Miscellanous As TabPage
+    Friend WithEvents Tab_Miscellaneous As TabPage
     Friend WithEvents Tab_Shutdown As TabPage
     Friend WithEvents Tab_Update As TabPage
     Friend WithEvents Btn_Ok As Button

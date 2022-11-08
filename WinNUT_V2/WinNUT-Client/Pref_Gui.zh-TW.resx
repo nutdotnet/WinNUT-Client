@@ -240,7 +240,7 @@
   <data name="CB_Use_Logfile.Text" xml:space="preserve">
     <value>建立日誌檔案</value>
   </data>
-  <data name="Tab_Miscellanous.Text" xml:space="preserve">
+  <data name="Tab_Miscellaneous.Text" xml:space="preserve">
     <value>其他</value>
   </data>
   <data name="Tb_Delay_Stop.ToolTip" xml:space="preserve">

@@ -84,7 +84,7 @@ Valid,Lineflyer,Minimum Charge Level of the UPS. Accepted value: Numeric value f
 Valid,Lineflyer,Minimum input frequency. Accepted value: Numeric value from 0 to 100.,Minimale Eingangsfrequenz. Wertebereich: Numerischer Wert von 0 bis 100.
 Valid,Lineflyer,Minimum input voltage. Accepted value: Numeric value from 0 to 999.,Minimale Eingangsspannung. Wertebereich: Numerischer Wert von 0 bis 999.
 Valid,Lineflyer,Minimum Output Voltage. Accepted value: Numeric value from 0 to 999.,Minimale Ausgangsspannung. Wertebereich: Numerischer Wert von 0 bis 999.
-Valid,Gawindx,Miscellanous,Verschiedenes
+Valid,Gawindx,Miscellaneous,Verschiedenes
 Valid,Gawindx,Monthly,Monatlich
 Valid,Gawindx,Name :,Name :
 Valid,Gawindx,No Update Available,Kein Update verfügbar
