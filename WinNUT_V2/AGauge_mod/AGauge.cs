@@ -23,16 +23,10 @@
 //
 // -----------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
-using System.Collections;
 
 namespace System.Windows.Forms
 {
@@ -47,78 +41,78 @@ namespace System.Windows.Forms
     {
         #region Private Fields
 
-        private Single fontBoundY1;
-        private Single fontBoundY2;
+        private float fontBoundY1;
+        private float fontBoundY2;
         private Bitmap gaugeBitmap;
-        private Boolean drawGaugeBackground = true;
+        private bool drawGaugeBackground = true;
 
         //Modified by Gawindx
         //private Single m_value1;
-        private Single m_value1;
+        private float m_value1;
         //Added By Gawindx
-        private Single m_value2;
+        private float m_value2;
         //private Boolean m_AutoSize = false;
 
         //private Point m_Center = new Point(100, 100);
         //Modified by gawindx
         private Point m_Center = new Point(74, 70);
-        private Single m_MinValue = 0;
-        private Single m_MaxValue = 100;
+        private float m_MinValue = 0;
+        private float m_MaxValue = 100;
 
         private Color m_BaseArcColor = Color.Gray;
         //Modified by Gawindx
         //private Int32 m_BaseArcRadius = 80;
-        private Int32 m_BaseArcRadius = 45;
-        private Int32 m_BaseArcStart = 135;
-        private Int32 m_BaseArcSweep = 270;
+        private int m_BaseArcRadius = 45;
+        private int m_BaseArcStart = 135;
+        private int m_BaseArcSweep = 270;
         //Modified by Gawindx
         //private Int32 m_BaseArcStart = -135;
         //private Int32 m_BaseArcSweep = -45;
-        private Int32 m_BaseArcWidth = 5;
+        private int m_BaseArcWidth = 5;
 
         private Color m_ScaleLinesInterColor = Color.Black;
         //Modified by Gawindx
         //private Int32 m_ScaleLinesInterInnerRadius = 73;
         //private Int32 m_ScaleLinesInterOuterRadius = 80;
-        private Int32 m_ScaleLinesInterInnerRadius = 40;
-        private Int32 m_ScaleLinesInterOuterRadius = 48;
-        private Int32 m_ScaleLinesInterWidth = 1;
+        private int m_ScaleLinesInterInnerRadius = 40;
+        private int m_ScaleLinesInterOuterRadius = 48;
+        private int m_ScaleLinesInterWidth = 1;
 
 
-        private Int32 m_ScaleLinesMinorTicks = 9;
+        private int m_ScaleLinesMinorTicks = 9;
         private Color m_ScaleLinesMinorColor = Color.Gray;
         //Modified by Gawindx
         //private Int32 m_ScaleLinesMinorInnerRadius = 75;
         //private Int32 m_ScaleLinesMinorOuterRadius = 80
-        private Int32 m_ScaleLinesMinorInnerRadius = 42;
-        private Int32 m_ScaleLinesMinorOuterRadius = 48;
-        private Int32 m_ScaleLinesMinorWidth = 1;
+        private int m_ScaleLinesMinorInnerRadius = 42;
+        private int m_ScaleLinesMinorOuterRadius = 48;
+        private int m_ScaleLinesMinorWidth = 1;
 
-        private Single m_ScaleLinesMajorStepValue = 50.0f;
+        private float m_ScaleLinesMajorStepValue = 50.0f;
         private Color m_ScaleLinesMajorColor = Color.Black;
         //Modified by Gawindx
         //private Int32 m_ScaleLinesMajorInnerRadius = 70;
         //private Int32 m_ScaleLinesMajorOuterRadius = 80;
-        private Int32 m_ScaleLinesMajorInnerRadius = 40;
-        private Int32 m_ScaleLinesMajorOuterRadius = 48;
-        private Int32 m_ScaleLinesMajorWidth = 2;
+        private int m_ScaleLinesMajorInnerRadius = 40;
+        private int m_ScaleLinesMajorOuterRadius = 48;
+        private int m_ScaleLinesMajorWidth = 2;
 
         //Modified by Gawindx
         //private Int32 m_ScaleNumbersRadius = 95;
-        private Int32 m_ScaleNumbersRadius = 60;
+        private int m_ScaleNumbersRadius = 60;
         private Color m_ScaleNumbersColor = Color.Black;
-        private String m_ScaleNumbersFormat;
-        private Int32 m_ScaleNumbersStartScaleLine;
-        private Int32 m_ScaleNumbersStepScaleLines = 1;
-        private Int32 m_ScaleNumbersRotation;
+        private string m_ScaleNumbersFormat;
+        private int m_ScaleNumbersStartScaleLine;
+        private int m_ScaleNumbersStepScaleLines = 1;
+        private int m_ScaleNumbersRotation;
 
         private NeedleType m_NeedleType;
         //Modified by Gawindx
         //private Int32 m_NeedleRadius = 80;
-        private Int32 m_NeedleRadius = 32;
+        private int m_NeedleRadius = 32;
         private AGaugeNeedleColor m_NeedleColor1 = AGaugeNeedleColor.Gray;
         private Color m_NeedleColor2 = Color.DimGray;
-        private Int32 m_NeedleWidth = 2;
+        private int m_NeedleWidth = 2;
 
         //Added By Gawindx
         public enum GradientType
@@ -160,7 +154,7 @@ namespace System.Windows.Forms
 
         [Description("This event is raised if the value is entering or leaving defined range.")]
         public event EventHandler<ValueInRangeChangedEventArgs> ValueInRangeChanged;
-        private void OnValueInRangeChanged(AGaugeRange range, Single value)
+        private void OnValueInRangeChanged(AGaugeRange range, float value)
         {
             EventHandler<ValueInRangeChangedEventArgs> e = ValueInRangeChanged;
             if (e != null) e(this, new ValueInRangeChangedEventArgs(range, value, range.InRange));
@@ -170,10 +164,10 @@ namespace System.Windows.Forms
 
         #region Hidden and overridden inherited properties
 
-        public new Boolean AllowDrop { get { return false; } set { /*Do Nothing */ } }
+        public new bool AllowDrop { get { return false; } set { /*Do Nothing */ } }
         //public new Boolean AutoSize { get { return false; } set { /*Do Nothing */ } }
-        public new Boolean ForeColor { get { return false; } set { /*Do Nothing */ } }
-        public new Boolean ImeMode { get { return false; } set { /*Do Nothing */ } }
+        public new bool ForeColor { get { return false; } set { /*Do Nothing */ } }
+        public new bool ImeMode { get { return false; } set { /*Do Nothing */ } }
         public override Color BackColor
         {
             get { return base.BackColor; }
@@ -225,7 +219,7 @@ namespace System.Windows.Forms
         //Modified By Gawindx
         //System.ComponentModel.Description("Gauge value.")]
         Description("Gauge value1.")]
-        public Single Value1
+        public float Value1
         {
             get { return m_value1; }
             set
@@ -268,7 +262,7 @@ namespace System.Windows.Forms
         [Browsable(true),
         Category("AGauge"),
         Description("Auto size Mode of the gauge.")]
-        public Boolean GaugeAutoSize
+        public bool GaugeAutoSize
         {
             get
             {
@@ -387,7 +381,7 @@ namespace System.Windows.Forms
         [Browsable(true),
         Category("AGauge"),
         Description("Second Value To Display.")]
-        public Single Value2
+        public float Value2
         {
             get { return m_value2; }
             set
@@ -421,7 +415,7 @@ namespace System.Windows.Forms
         [Browsable(true),
         Category("AGauge"),
         Description("The radius of the base arc.")]
-        public Int32 BaseArcRadius
+        public int BaseArcRadius
         {
             get { return m_BaseArcRadius; }
             set
@@ -438,7 +432,7 @@ namespace System.Windows.Forms
         [Browsable(true),
         Category("AGauge"),
         Description("The start angle of the base arc.")]
-        public Int32 BaseArcStart
+        public int BaseArcStart
         {
             get { return m_BaseArcStart; }
             set
@@ -455,7 +449,7 @@ namespace System.Windows.Forms
         [Browsable(true),
         Category("AGauge"),
         Description("The sweep angle of the base arc.")]
-        public Int32 BaseArcSweep
+        public int BaseArcSweep
         {
             get { return m_BaseArcSweep; }
             set
@@ -472,7 +466,7 @@ namespace System.Windows.Forms
         [Browsable(true),
         Category("AGauge"),
         Description("The width of the base arc.")]
-        public Int32 BaseArcWidth
+        public int BaseArcWidth
         {
             get { return m_BaseArcWidth; }
             set
@@ -493,7 +487,7 @@ namespace System.Windows.Forms
         [Browsable(true),
         Category("AGauge"),
         Description("The minimum value to show on the scale.")]
-        public Single MinValue
+        public float MinValue
         {
             get { return m_MinValue; }
             set
@@ -512,7 +506,7 @@ namespace System.Windows.Forms
         [Browsable(true),
         Category("AGauge"),
         Description("The maximum value to show on the scale.")]
-        public Single MaxValue
+        public float MaxValue
         {
             get { return m_MaxValue; }
             set
@@ -548,7 +542,7 @@ namespace System.Windows.Forms
         [Browsable(true),
         Category("AGauge"),
         Description("The inner radius of the inter scale lines which are the middle scale lines for an uneven number of minor scale lines.")]
-        public Int32 ScaleLinesInterInnerRadius
+        public int ScaleLinesInterInnerRadius
         {
             get { return m_ScaleLinesInterInnerRadius; }
             set
@@ -565,7 +559,7 @@ namespace System.Windows.Forms
         [Browsable(true),
         Category("AGauge"),
         Description("The outer radius of the inter scale lines which are the middle scale lines for an uneven number of minor scale lines.")]
-        public Int32 ScaleLinesInterOuterRadius
+        public int ScaleLinesInterOuterRadius
         {
             get { return m_ScaleLinesInterOuterRadius; }
             set
@@ -582,7 +576,7 @@ namespace System.Windows.Forms
         [Browsable(true),
         Category("AGauge"),
         Description("The width of the inter scale lines which are the middle scale lines for an uneven number of minor scale lines.")]
-        public Int32 ScaleLinesInterWidth
+        public int ScaleLinesInterWidth
         {
             get { return m_ScaleLinesInterWidth; }
             set
@@ -599,7 +593,7 @@ namespace System.Windows.Forms
         [Browsable(true),
         Category("AGauge"),
         Description("The number of minor scale lines.")]
-        public Int32 ScaleLinesMinorTicks
+        public int ScaleLinesMinorTicks
         {
             get { return m_ScaleLinesMinorTicks; }
             set
@@ -633,7 +627,7 @@ namespace System.Windows.Forms
         [Browsable(true),
         Category("AGauge"),
         Description("The inner radius of the minor scale lines.")]
-        public Int32 ScaleLinesMinorInnerRadius
+        public int ScaleLinesMinorInnerRadius
         {
             get { return m_ScaleLinesMinorInnerRadius; }
             set
@@ -650,7 +644,7 @@ namespace System.Windows.Forms
         [Browsable(true),
         Category("AGauge"),
         Description("The outer radius of the minor scale lines.")]
-        public Int32 ScaleLinesMinorOuterRadius
+        public int ScaleLinesMinorOuterRadius
         {
             get { return m_ScaleLinesMinorOuterRadius; }
             set
@@ -667,7 +661,7 @@ namespace System.Windows.Forms
         [Browsable(true),
         Category("AGauge"),
         Description("The width of the minor scale lines.")]
-        public Int32 ScaleLinesMinorWidth
+        public int ScaleLinesMinorWidth
         {
             get { return m_ScaleLinesMinorWidth; }
             set
@@ -684,7 +678,7 @@ namespace System.Windows.Forms
         [Browsable(true),
         Category("AGauge"),
         Description("The step value of the major scale lines.")]
-        public Single ScaleLinesMajorStepValue
+        public float ScaleLinesMajorStepValue
         {
             get { return m_ScaleLinesMajorStepValue; }
             set
@@ -718,7 +712,7 @@ namespace System.Windows.Forms
         [Browsable(true),
         Category("AGauge"),
         Description("The inner radius of the major scale lines.")]
-        public Int32 ScaleLinesMajorInnerRadius
+        public int ScaleLinesMajorInnerRadius
         {
             get { return m_ScaleLinesMajorInnerRadius; }
             set
@@ -735,7 +729,7 @@ namespace System.Windows.Forms
         [Browsable(true),
         Category("AGauge"),
         Description("The outer radius of the major scale lines.")]
-        public Int32 ScaleLinesMajorOuterRadius
+        public int ScaleLinesMajorOuterRadius
         {
             get { return m_ScaleLinesMajorOuterRadius; }
             set
@@ -752,7 +746,7 @@ namespace System.Windows.Forms
         [Browsable(true),
         Category("AGauge"),
         Description("The width of the major scale lines.")]
-        public Int32 ScaleLinesMajorWidth
+        public int ScaleLinesMajorWidth
         {
             get { return m_ScaleLinesMajorWidth; }
             set
@@ -773,7 +767,7 @@ namespace System.Windows.Forms
         [Browsable(true),
         Category("AGauge"),
         Description("The radius of the scale numbers.")]
-        public Int32 ScaleNumbersRadius
+        public int ScaleNumbersRadius
         {
             get { return m_ScaleNumbersRadius; }
             set
@@ -807,7 +801,7 @@ namespace System.Windows.Forms
         [Browsable(true),
         Category("AGauge"),
         Description("The format of the scale numbers.")]
-        public String ScaleNumbersFormat
+        public string ScaleNumbersFormat
         {
             get { return m_ScaleNumbersFormat; }
             set
@@ -824,7 +818,7 @@ namespace System.Windows.Forms
         [Browsable(true),
         Category("AGauge"),
         Description("The number of the scale line to start writing numbers next to.")]
-        public Int32 ScaleNumbersStartScaleLine
+        public int ScaleNumbersStartScaleLine
         {
             get { return m_ScaleNumbersStartScaleLine; }
             set
@@ -841,7 +835,7 @@ namespace System.Windows.Forms
         [Browsable(true),
         Category("AGauge"),
         Description("The number of scale line steps for writing numbers.")]
-        public Int32 ScaleNumbersStepScaleLines
+        public int ScaleNumbersStepScaleLines
         {
             get { return m_ScaleNumbersStepScaleLines; }
             set
@@ -858,7 +852,7 @@ namespace System.Windows.Forms
         [Browsable(true),
         Category("AGauge"),
         Description("The angle relative to the tangent of the base arc at a scale line that is used to rotate numbers. set to 0 for no rotation or e.g. set to 90.")]
-        public Int32 ScaleNumbersRotation
+        public int ScaleNumbersRotation
         {
             get { return m_ScaleNumbersRotation; }
             set
@@ -896,7 +890,7 @@ namespace System.Windows.Forms
         [Browsable(true),
         Category("AGauge"),
         Description("The radius of the needle.")]
-        public Int32 NeedleRadius
+        public int NeedleRadius
         {
             get { return m_NeedleRadius; }
             set
@@ -947,7 +941,7 @@ namespace System.Windows.Forms
         [Browsable(true),
         Category("AGauge"),
         Description("The width of the needle.")]
-        public Int32 NeedleWidth
+        public int NeedleWidth
         {
             get { return m_NeedleWidth; }
             set
@@ -970,9 +964,9 @@ namespace System.Windows.Forms
         private void FindFontBounds()
         {
             //find upper and lower bounds for numeric characters
-            Int32 c1;
-            Int32 c2;
-            Boolean boundfound;
+            int c1;
+            int c2;
+            bool boundfound;
             using (SolidBrush backBrush = new SolidBrush(Color.White))
             using (SolidBrush foreBrush = new SolidBrush(Color.Black))
             {
@@ -980,7 +974,7 @@ namespace System.Windows.Forms
                 using (Graphics gMeasure = Graphics.FromImage(bmpMeasure))
                 {
                     SizeF boundingBox = gMeasure.MeasureString("0123456789", Font, -1, StringFormat.GenericTypographic);
-                    using (var b = new Bitmap((Int32)(boundingBox.Width), (Int32)(boundingBox.Height)))
+                    using (var b = new Bitmap((int)(boundingBox.Width), (int)(boundingBox.Height)))
                     using (var g = Graphics.FromImage(b))
                     {
                         g.FillRectangle(backBrush, 0.0F, 0.0F, boundingBox.Width, boundingBox.Height);
@@ -1048,7 +1042,7 @@ namespace System.Windows.Forms
             }
 
             #region AutoSize
-            Single centerFactor = 1;
+            float centerFactor = 1;
             var center = Center;
 
 
@@ -1098,8 +1092,8 @@ namespace System.Windows.Forms
                                 ggr.DrawImage(BackgroundImage, 0, 0, Width, Height);
                                 break;
                             case ImageLayout.Tile:
-                                Int32 pixelOffsetX = 0;
-                                Int32 pixelOffsetY = 0;
+                                int pixelOffsetX = 0;
+                                int pixelOffsetY = 0;
                                 while (pixelOffsetX < Width)
                                 {
                                     pixelOffsetY = 0;
@@ -1112,7 +1106,7 @@ namespace System.Windows.Forms
                                 }
                                 break;
                             case ImageLayout.Zoom:
-                                if ((Single)(BackgroundImage.Width / Width) < (Single)(BackgroundImage.Height / Height))
+                                if ((float)(BackgroundImage.Width / Width) < (float)(BackgroundImage.Height / Height))
                                 {
                                     ggr.DrawImage(BackgroundImage, 0, 0, Height, Height);
                                 }
@@ -1130,8 +1124,8 @@ namespace System.Windows.Forms
 
 
                     #region _GaugeRanges
-                    Single rangeStartAngle;
-                    Single rangeSweepAngle;
+                    float rangeStartAngle;
+                    float rangeSweepAngle;
                     foreach (AGaugeRange ptrRange in _GaugeRanges)
                     {
                         if (ptrRange.EndValue > ptrRange.StartValue)
@@ -1199,10 +1193,10 @@ namespace System.Windows.Forms
                     }
 
                     #region ScaleNumbers
-                    String valueText = "";
+                    string valueText = "";
                     SizeF boundingBox;
-                    Single countValue = 0;
-                    Int32 counter1 = 0;
+                    float countValue = 0;
+                    int counter1 = 0;
                     var Format = StringFormat.GenericTypographic;
                     Format.Alignment = StringAlignment.Near;
 
@@ -1225,10 +1219,10 @@ namespace System.Windows.Forms
                             ggr.SetClip(gp);
 
                             ggr.DrawLine(pnMajorScaleLines,
-                            (Single)(center.X),
-                            (Single)(center.Y),
-                            (Single)(center.X + 2 * scaleLinesMajorOuterRadius * Math.Cos((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue)) * Math.PI / 180.0)),
-                            (Single)(center.Y + 2 * scaleLinesMajorOuterRadius * Math.Sin((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue)) * Math.PI / 180.0)));
+                            (float)(center.X),
+                            (float)(center.Y),
+                            (float)(center.X + 2 * scaleLinesMajorOuterRadius * Math.Cos((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue)) * Math.PI / 180.0)),
+                            (float)(center.Y + 2 * scaleLinesMajorOuterRadius * Math.Sin((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue)) * Math.PI / 180.0)));
 
                             gp.Reset();
                             int scaleLinesMinorOuterRadius = (int)(m_ScaleLinesMinorOuterRadius * centerFactor);
@@ -1244,7 +1238,7 @@ namespace System.Windows.Forms
                                 using (var pnScaleLinesInter = new Pen(m_ScaleLinesInterColor, (int)(m_ScaleLinesInterWidth * centerFactor)))
                                 using (var pnScaleLinesMinorColor = new Pen(m_ScaleLinesMinorColor, (int)(m_ScaleLinesMinorWidth * centerFactor)))
                                 {
-                                    for (Int32 counter2 = 1; counter2 <= m_ScaleLinesMinorTicks; counter2++)
+                                    for (int counter2 = 1; counter2 <= m_ScaleLinesMinorTicks; counter2++)
                                     {
                                         if (((m_ScaleLinesMinorTicks % 2) == 1) && (m_ScaleLinesMinorTicks / 2) + 1 == counter2)
                                         {
@@ -1258,10 +1252,10 @@ namespace System.Windows.Forms
                                             ggr.SetClip(gp);
 
                                             ggr.DrawLine(pnScaleLinesInter,
-                                            (Single)(center.X),
-                                            (Single)(center.Y),
-                                            (Single)(center.X + 2 * scaleLinesInterOuterRadius * Math.Cos((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue) + counter2 * m_BaseArcSweep / (((Single)((m_MaxValue - m_MinValue) / m_ScaleLinesMajorStepValue)) * (m_ScaleLinesMinorTicks + 1))) * Math.PI / 180.0)),
-                                            (Single)(center.Y + 2 * scaleLinesInterOuterRadius * Math.Sin((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue) + counter2 * m_BaseArcSweep / (((Single)((m_MaxValue - m_MinValue) / m_ScaleLinesMajorStepValue)) * (m_ScaleLinesMinorTicks + 1))) * Math.PI / 180.0)));
+                                            (float)(center.X),
+                                            (float)(center.Y),
+                                            (float)(center.X + 2 * scaleLinesInterOuterRadius * Math.Cos((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue) + counter2 * m_BaseArcSweep / (((float)((m_MaxValue - m_MinValue) / m_ScaleLinesMajorStepValue)) * (m_ScaleLinesMinorTicks + 1))) * Math.PI / 180.0)),
+                                            (float)(center.Y + 2 * scaleLinesInterOuterRadius * Math.Sin((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue) + counter2 * m_BaseArcSweep / (((float)((m_MaxValue - m_MinValue) / m_ScaleLinesMajorStepValue)) * (m_ScaleLinesMinorTicks + 1))) * Math.PI / 180.0)));
 
                                             gp.Reset();
                                             gp.AddEllipse(new Rectangle(center.X - scaleLinesMinorOuterRadius, center.Y - scaleLinesMinorOuterRadius, 2 * scaleLinesMinorOuterRadius, 2 * scaleLinesMinorOuterRadius));
@@ -1273,10 +1267,10 @@ namespace System.Windows.Forms
                                         else
                                         {
                                             ggr.DrawLine(pnScaleLinesMinorColor,
-                                            (Single)(center.X),
-                                            (Single)(center.Y),
-                                            (Single)(center.X + 2 * scaleLinesMinorOuterRadius * Math.Cos((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue) + counter2 * m_BaseArcSweep / (((Single)((m_MaxValue - m_MinValue) / m_ScaleLinesMajorStepValue)) * (m_ScaleLinesMinorTicks + 1))) * Math.PI / 180.0)),
-                                            (Single)(center.Y + 2 * scaleLinesMinorOuterRadius * Math.Sin((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue) + counter2 * m_BaseArcSweep / (((Single)((m_MaxValue - m_MinValue) / m_ScaleLinesMajorStepValue)) * (m_ScaleLinesMinorTicks + 1))) * Math.PI / 180.0)));
+                                            (float)(center.X),
+                                            (float)(center.Y),
+                                            (float)(center.X + 2 * scaleLinesMinorOuterRadius * Math.Cos((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue) + counter2 * m_BaseArcSweep / (((float)((m_MaxValue - m_MinValue) / m_ScaleLinesMajorStepValue)) * (m_ScaleLinesMinorTicks + 1))) * Math.PI / 180.0)),
+                                            (float)(center.Y + 2 * scaleLinesMinorOuterRadius * Math.Sin((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue) + counter2 * m_BaseArcSweep / (((float)((m_MaxValue - m_MinValue) / m_ScaleLinesMajorStepValue)) * (m_ScaleLinesMinorTicks + 1))) * Math.PI / 180.0)));
                                         }
                                     }
                                 }
@@ -1290,8 +1284,8 @@ namespace System.Windows.Forms
                                 ggr.RotateTransform(90.0F + m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue));
                             }
 
-                            ggr.TranslateTransform((Single)(center.X + (m_ScaleNumbersRadius * centerFactor) * Math.Cos((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue)) * Math.PI / 180.0f)),
-                                                   (Single)(center.Y + (m_ScaleNumbersRadius * centerFactor) * Math.Sin((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue)) * Math.PI / 180.0f)),
+                            ggr.TranslateTransform((float)(center.X + (m_ScaleNumbersRadius * centerFactor) * Math.Cos((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue)) * Math.PI / 180.0f)),
+                                                   (float)(center.Y + (m_ScaleNumbersRadius * centerFactor) * Math.Sin((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue)) * Math.PI / 180.0f)),
                                                    System.Drawing.Drawing2D.MatrixOrder.Append);
 
 
@@ -1320,7 +1314,7 @@ namespace System.Windows.Forms
                     Format.Alignment = StringAlignment.Center;
                     foreach (AGaugeLabel ptrGaugeLabel in _GaugeLabels)
                     {
-                        if (!String.IsNullOrEmpty(ptrGaugeLabel.Text))
+                        if (!string.IsNullOrEmpty(ptrGaugeLabel.Text))
                         {
                             using (var brGaugeLabel = new SolidBrush(ptrGaugeLabel.Color))
                             {
@@ -1340,9 +1334,9 @@ namespace System.Windows.Forms
             e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
             #region Needle
-            Single brushAngle = (Int32)(m_BaseArcStart + (m_value1 - m_MinValue) * m_BaseArcSweep / (m_MaxValue - m_MinValue)) % 360;
+            float brushAngle = (int)(m_BaseArcStart + (m_value1 - m_MinValue) * m_BaseArcSweep / (m_MaxValue - m_MinValue)) % 360;
             if (brushAngle < 0) brushAngle += 360;
-            Double needleAngle = brushAngle * Math.PI / 180;
+            double needleAngle = brushAngle * Math.PI / 180;
 
             int needleWidth = (int)(m_NeedleWidth * centerFactor);
             int needleRadius = (int)(m_NeedleRadius * centerFactor);
@@ -1351,8 +1345,8 @@ namespace System.Windows.Forms
                 case NeedleType.Advance:
                     PointF[] points = new PointF[3];
 
-                    Int32 subcol = (Int32)(((brushAngle + 225) % 180) * 100 / 180);
-                    Int32 subcol2 = (Int32)(((brushAngle + 135) % 180) * 100 / 180);
+                    int subcol = (int)(((brushAngle + 225) % 180) * 100 / 180);
+                    int subcol2 = (int)(((brushAngle + 135) % 180) * 100 / 180);
 
                     using (var brNeedle = new SolidBrush(m_NeedleColor2))
                     {
@@ -1417,14 +1411,14 @@ namespace System.Windows.Forms
                             break;
                     }
 
-                    if (Math.Floor((Single)(((brushAngle + 225) % 360) / 180.0)) == 0)
+                    if (Math.Floor((float)(((brushAngle + 225) % 360) / 180.0)) == 0)
                     {
                         Color clrTemp = clr1;
                         clr1 = clr2;
                         clr2 = clrTemp;
                     }
 
-                    if (Math.Floor((Single)(((brushAngle + 135) % 360) / 180.0)) == 0)
+                    if (Math.Floor((float)(((brushAngle + 135) % 360) / 180.0)) == 0)
                     {
                         clr4 = clr3;
                     }
@@ -1434,30 +1428,30 @@ namespace System.Windows.Forms
                     using (Brush brush3 = new SolidBrush(clr3))
                     using (Brush brush4 = new SolidBrush(clr4))
                     {
-                        points[0].X = (Single)(center.X + needleRadius * Math.Cos(needleAngle));
-                        points[0].Y = (Single)(center.Y + needleRadius * Math.Sin(needleAngle));
-                        points[1].X = (Single)(center.X - needleRadius / 20 * Math.Cos(needleAngle));
-                        points[1].Y = (Single)(center.Y - needleRadius / 20 * Math.Sin(needleAngle));
-                        points[2].X = (Single)(center.X - needleRadius / 5 * Math.Cos(needleAngle) + needleWidth * 2 * Math.Cos(needleAngle + Math.PI / 2));
-                        points[2].Y = (Single)(center.Y - needleRadius / 5 * Math.Sin(needleAngle) + needleWidth * 2 * Math.Sin(needleAngle + Math.PI / 2));
+                        points[0].X = (float)(center.X + needleRadius * Math.Cos(needleAngle));
+                        points[0].Y = (float)(center.Y + needleRadius * Math.Sin(needleAngle));
+                        points[1].X = (float)(center.X - needleRadius / 20 * Math.Cos(needleAngle));
+                        points[1].Y = (float)(center.Y - needleRadius / 20 * Math.Sin(needleAngle));
+                        points[2].X = (float)(center.X - needleRadius / 5 * Math.Cos(needleAngle) + needleWidth * 2 * Math.Cos(needleAngle + Math.PI / 2));
+                        points[2].Y = (float)(center.Y - needleRadius / 5 * Math.Sin(needleAngle) + needleWidth * 2 * Math.Sin(needleAngle + Math.PI / 2));
                         e.Graphics.FillPolygon(brush1, points);
 
-                        points[2].X = (Single)(center.X - needleRadius / 5 * Math.Cos(needleAngle) + needleWidth * 2 * Math.Cos(needleAngle - Math.PI / 2));
-                        points[2].Y = (Single)(center.Y - needleRadius / 5 * Math.Sin(needleAngle) + needleWidth * 2 * Math.Sin(needleAngle - Math.PI / 2));
+                        points[2].X = (float)(center.X - needleRadius / 5 * Math.Cos(needleAngle) + needleWidth * 2 * Math.Cos(needleAngle - Math.PI / 2));
+                        points[2].Y = (float)(center.Y - needleRadius / 5 * Math.Sin(needleAngle) + needleWidth * 2 * Math.Sin(needleAngle - Math.PI / 2));
                         e.Graphics.FillPolygon(brush2, points);
 
-                        points[0].X = (Single)(center.X - (needleRadius / 20 - 1) * Math.Cos(needleAngle));
-                        points[0].Y = (Single)(center.Y - (needleRadius / 20 - 1) * Math.Sin(needleAngle));
-                        points[1].X = (Single)(center.X - needleRadius / 5 * Math.Cos(needleAngle) + needleWidth * 2 * Math.Cos(needleAngle + Math.PI / 2));
-                        points[1].Y = (Single)(center.Y - needleRadius / 5 * Math.Sin(needleAngle) + needleWidth * 2 * Math.Sin(needleAngle + Math.PI / 2));
-                        points[2].X = (Single)(center.X - needleRadius / 5 * Math.Cos(needleAngle) + needleWidth * 2 * Math.Cos(needleAngle - Math.PI / 2));
-                        points[2].Y = (Single)(center.Y - needleRadius / 5 * Math.Sin(needleAngle) + needleWidth * 2 * Math.Sin(needleAngle - Math.PI / 2));
+                        points[0].X = (float)(center.X - (needleRadius / 20 - 1) * Math.Cos(needleAngle));
+                        points[0].Y = (float)(center.Y - (needleRadius / 20 - 1) * Math.Sin(needleAngle));
+                        points[1].X = (float)(center.X - needleRadius / 5 * Math.Cos(needleAngle) + needleWidth * 2 * Math.Cos(needleAngle + Math.PI / 2));
+                        points[1].Y = (float)(center.Y - needleRadius / 5 * Math.Sin(needleAngle) + needleWidth * 2 * Math.Sin(needleAngle + Math.PI / 2));
+                        points[2].X = (float)(center.X - needleRadius / 5 * Math.Cos(needleAngle) + needleWidth * 2 * Math.Cos(needleAngle - Math.PI / 2));
+                        points[2].Y = (float)(center.Y - needleRadius / 5 * Math.Sin(needleAngle) + needleWidth * 2 * Math.Sin(needleAngle - Math.PI / 2));
                         e.Graphics.FillPolygon(brush4, points);
 
-                        points[0].X = (Single)(center.X - needleRadius / 20 * Math.Cos(needleAngle));
-                        points[0].Y = (Single)(center.Y - needleRadius / 20 * Math.Sin(needleAngle));
-                        points[1].X = (Single)(center.X + needleRadius * Math.Cos(needleAngle));
-                        points[1].Y = (Single)(center.Y + needleRadius * Math.Sin(needleAngle));
+                        points[0].X = (float)(center.X - needleRadius / 20 * Math.Cos(needleAngle));
+                        points[0].Y = (float)(center.Y - needleRadius / 20 * Math.Sin(needleAngle));
+                        points[1].X = (float)(center.X + needleRadius * Math.Cos(needleAngle));
+                        points[1].Y = (float)(center.Y + needleRadius * Math.Sin(needleAngle));
 
                         using (var pnNeedle = new Pen(m_NeedleColor2))
                         {
@@ -1467,10 +1461,10 @@ namespace System.Windows.Forms
                     }
                     break;
                 case NeedleType.Simple:
-                    Point startPoint = new Point((Int32)(center.X - needleRadius / 8 * Math.Cos(needleAngle)),
-                            (Int32)(center.Y - needleRadius / 8 * Math.Sin(needleAngle)));
-                    Point endPoint = new Point((Int32)(center.X + needleRadius * Math.Cos(needleAngle)),
-                                             (Int32)(center.Y + needleRadius * Math.Sin(needleAngle)));
+                    Point startPoint = new Point((int)(center.X - needleRadius / 8 * Math.Cos(needleAngle)),
+                            (int)(center.Y - needleRadius / 8 * Math.Sin(needleAngle)));
+                    Point endPoint = new Point((int)(center.X + needleRadius * Math.Cos(needleAngle)),
+                                             (int)(center.Y + needleRadius * Math.Sin(needleAngle)));
 
                     using (var brDisk = new SolidBrush(m_NeedleColor2))
                     {
@@ -1491,12 +1485,12 @@ namespace System.Windows.Forms
             Font PenFontV1 = new Font("Microsoft Sans Serif", 8, FontStyle.Bold);
             Font PenFontV2 = new Font("Microsoft Sans Serif", 7, FontStyle.Bold);
             SolidBrush StringPen = new SolidBrush(Color.Black);
-            Int32 LineHeight = 15;
+            int LineHeight = 15;
             PointF StrPos = Center;
             StrPos.Y = StrPos.Y + 5;
             if (UnitValue1 != UnitValue.None)
             {
-                String StringToDraw = "";
+                string StringToDraw = "";
                 switch (UnitValue1)
                 {
                     case UnitValue.Hertz:
@@ -1518,7 +1512,7 @@ namespace System.Windows.Forms
             }
             if (UnitValue2 != UnitValue.None)
             {
-                String StringToDraw = "";
+                string StringToDraw = "";
                 switch (UnitValue2)
                 {
                     case UnitValue.Hertz:
@@ -1611,12 +1605,12 @@ namespace System.Windows.Forms
         /// <summary>
         /// Gauge Value
         /// </summary>
-        public Single Value { get; private set; }
+        public float Value { get; private set; }
         /// <summary>
         /// True if value is within current range.
         /// </summary>
         public bool InRange { get; private set; }
-        public ValueInRangeChangedEventArgs(AGaugeRange range, Single value, bool inRange)
+        public ValueInRangeChangedEventArgs(AGaugeRange range, float value, bool inRange)
         {
             this.Range = range;
             this.Value = value;

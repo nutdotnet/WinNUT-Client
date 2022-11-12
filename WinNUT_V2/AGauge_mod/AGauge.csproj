@@ -52,6 +52,7 @@
     <Compile Include="AGauge.Designer.cs">
       <DependentUpon>AGauge.cs</DependentUpon>
     </Compile>
+    <Compile Include="AGaugeLabel.cs" />
     <Compile Include="AGaugeRange.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
