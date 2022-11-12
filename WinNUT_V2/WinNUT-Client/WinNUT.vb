@@ -1030,7 +1030,7 @@ Public Class WinNUT
                 LogFile.LogTracing("Received unexpected None status from UPS.", LogLvl.LOG_WARNING, Me)
                 ' Determine if we need to initiate the stop procedure.
 
-            ElseIf newStatuses.HasFlag(UPS_States.FSD) Then
+            ElseIf Arr_Reg_Key.Item("Follow_FSD") AndAlso newStatuses.HasFlag(UPS_States.FSD) Then
                 LogFile.LogTracing("Full Shut Down imposed by the NUT server.", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_LOG_NUT_FSD))
                 Shutdown_Event()
 
