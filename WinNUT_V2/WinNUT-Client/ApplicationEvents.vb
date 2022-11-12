@@ -7,6 +7,7 @@
 '
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
+Imports System.IO
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports WinNUT_Client_Common
 
@@ -48,14 +49,19 @@ Namespace My
                 .Size = New Point(470, 100)
             End With
 
-            Dim Exception_data As String = String.Format("Exception type: {0}" & vbNewLine & "Exception message: {1}" & vbNewLine & "Exception stack trace: " & vbNewLine & "{2}",
-                                               e.Exception.GetType.ToString, e.Exception.Message, e.Exception.StackTrace)
+            Dim Exception_data = BuildExceptionString(e.Exception)
+
+            If e.Exception.InnerException IsNot Nothing Then
+                Exception_data &= vbNewLine & "InnerException present:" & vbNewLine
+                Exception_data &= BuildExceptionString(e.Exception.InnerException)
+            End If
+
             With Msg_Error
                 .Location = New Point(6, 110)
                 .Multiline = True
                 .ScrollBars = ScrollBars.Vertical
                 .ReadOnly = True
-                .Text = Exception_data
+                .Text = Exception_data.ToString()
                 .Size = New Point(470, 300)
             End With
 
@@ -96,6 +102,22 @@ Namespace My
             WinNUT.HasCrashed = True
         End Sub
 
+        ''' <summary>
+        ''' Generate a friendly message describing an exception.
+        ''' </summary>
+        ''' <param name="ex">The exception that will be read for the message.</param>
+        ''' <returns>The final string representation of the exception.</returns>
+        Private Function BuildExceptionString(ex As Exception) As String
+            Dim retStr = String.Empty
+
+            retStr &= String.Format("Exception type: {0}" & vbNewLine, ex.GetType.ToString)
+            retStr &= String.Format("Exception message: {0}" & vbNewLine, ex.Message)
+            retStr &= "Exception stack trace:" & vbNewLine
+            retStr &= ex.StackTrace & vbNewLine
+
+            Return retStr
+        End Function
+
         Private Sub CrashBug_FormClosing(sender As Object, e As FormClosingEventArgs)
             End
         End Sub
@@ -106,25 +128,43 @@ Namespace My
         Private Sub Generate_Button_Click(sender As Object, e As EventArgs)
             'Generate a bug report with all essential datas 
             Dim Crash_Report As String = "WinNUT Bug Report" & vbNewLine
-            Dim WinNUT_Config As New Dictionary(Of String, Object)(Arr_Reg_Key)
-            Dim WinNUT_UserData_Dir = ApplicationData ' Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\WinNUT-Client"
-            Dim CrashLog_Dir = WinNUT_UserData_Dir & "\CrashLog"
+            Dim WinNUT_Config As New Dictionary(Of String, Object)
+            Try
+                WinNUT_Config = Arr_Reg_Key
+            Catch ex As Exception
+                Crash_Report &= "ALERT: Encountered exception while trying to access Arr_Reg_Key:" & vbNewLine
+                Crash_Report &= BuildExceptionString(ex)
+            End Try
+
+            ' Initialize directory for data
+            Dim CrashLog_Dir = ApplicationData & "\CrashLog"
+            If Not Computer.FileSystem.DirectoryExists(CrashLog_Dir) Then
+                Computer.FileSystem.CreateDirectory(CrashLog_Dir)
+            End If
+
             Dim CrashLog_Filename As String = "Crash_Report_" & Format(Now, "dd-MM-yyyy") & "_" &
                 String.Format("{0}-{1}-{2}.txt", Now.Hour.ToString("00"), Now.Minute.ToString("00"), Now.Second.ToString("00"))
 
-            For Each kvp As KeyValuePair(Of String, Object) In Arr_Reg_Key
-                Select Case kvp.Key
-                    Case "ServerAddress", "Port", "UPSName", "NutLogin", "NutPassword"
-                        WinNUT_Config.Remove(kvp.Key)
-                End Select
-            Next
+
 
             Crash_Report &= "Os Version : " & Computer.Info.OSVersion & vbNewLine
             Crash_Report &= "WinNUT Version : " & Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString & vbNewLine
 
             Crash_Report &= vbNewLine & "WinNUT Parameters : " & vbNewLine
+            If WinNUT_Config.Count > 0 Then
+                ' Prepare config values by removing sensitive information.
+                For Each kvp As KeyValuePair(Of String, Object) In Arr_Reg_Key
+                    Select Case kvp.Key
+                        Case "ServerAddress", "Port", "UPSName", "NutLogin", "NutPassword"
+                            WinNUT_Config.Remove(kvp.Key)
+                    End Select
+                Next
+                Crash_Report &= Newtonsoft.Json.JsonConvert.SerializeObject(WinNUT_Config, Newtonsoft.Json.Formatting.Indented) & vbNewLine
 
-            Crash_Report &= Newtonsoft.Json.JsonConvert.SerializeObject(WinNUT_Config, Newtonsoft.Json.Formatting.Indented) & vbNewLine
+            Else
+                Crash_Report &= "[EMPTY]" & vbNewLine
+            End If
+
             Crash_Report &= vbNewLine & "Error Message : " & vbNewLine
             Crash_Report &= Msg_Error.Text & vbNewLine & vbNewLine
             Crash_Report &= "Last Events :" & vbNewLine
@@ -135,11 +175,7 @@ Namespace My
 
             Computer.Clipboard.SetText(Crash_Report)
 
-            If Not Computer.FileSystem.DirectoryExists(CrashLog_Dir) Then
-                Computer.FileSystem.CreateDirectory(CrashLog_Dir)
-            End If
-
-            Dim CrashLog_Report As IO.StreamWriter
+            Dim CrashLog_Report As StreamWriter
             CrashLog_Report = Computer.FileSystem.OpenTextFileWriter(CrashLog_Dir & "\" & CrashLog_Filename, True)
             CrashLog_Report.WriteLine(Crash_Report)
             CrashLog_Report.Close()

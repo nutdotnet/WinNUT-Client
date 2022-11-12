@@ -7,21 +7,24 @@
 '
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
+Imports System.Security.Cryptography
+Imports System.Text
+
 Public Module WinNUT_Params
     Public Arr_Reg_Key As New Dictionary(Of String, Object)
     Private Arr_Reg_Key_Base As New Dictionary(Of String, Dictionary(Of String, Object))
     Public RegBranch As String
     Private RegPath As String
-    Private Cryptor As New CryptData()
+
     Public Sub Init_Params()
 
         With Arr_Reg_Key
             .Add("ServerAddress", "")
             .Add("Port", 0)
             .Add("UPSName", "")
-            .Add("Delay", 1)
-            .Add("NutLogin", Cryptor.EncryptData(""))
-            .Add("NutPassword", Cryptor.EncryptData(""))
+            .Add("Delay", 1000)
+            .Add("NutLogin", String.Empty)
+            .Add("NutPassword", String.Empty)
             .Add("AutoReconnect", vbFalse)
             .Add("MinInputVoltage", 0)
             .Add("MaxInputVoltage", 0)
@@ -70,9 +73,9 @@ Public Module WinNUT_Params
             .Add("ServerAddress", "nutserver host")
             .Add("Port", 3493)
             .Add("UPSName", "UPSName")
-            .Add("Delay", 5)
-            .Add("NutLogin", Cryptor.EncryptData(""))
-            .Add("NutPassword", Cryptor.EncryptData(""))
+            .Add("Delay", 1000)
+            .Add("NutLogin", String.Empty)
+            .Add("NutPassword", String.Empty)
             .Add("AutoReconnect", vbFalse)
         End With
         With Arr_Reg_Calibration
@@ -124,67 +127,52 @@ Public Module WinNUT_Params
             .Add("Update", Arr_Reg_Update)
         End With
 
-        'Verify if non encoded Login/Password Exist
-        'if not, create it
-        Dim WinnutConnRegPath = WinNUT_Params.RegBranch & "WinNUT\Connexion"
-        Dim LoginValue = My.Computer.Registry.GetValue(WinnutConnRegPath, "NutLogin", "")
-        Dim PasswordValue = My.Computer.Registry.GetValue(WinnutConnRegPath, "NutPassword", "")
-        If (LoginValue Is Nothing) Or Not (Cryptor.IsCryptedtData(LoginValue)) Then
-            My.Computer.Registry.SetValue(WinnutConnRegPath, "NutLogin", Cryptor.EncryptData(LoginValue))
-        End If
+        ' Fill in parameter structures with data read in from the Registry (or defaults.)
 
-        If (PasswordValue Is Nothing) Or Not (Cryptor.IsCryptedtData(PasswordValue)) Then
-            My.Computer.Registry.SetValue(WinnutConnRegPath, "NutPassword", Cryptor.EncryptData(PasswordValue))
-        End If
-
-        'Read Data from registry
         For Each RegKeys As KeyValuePair(Of String, Dictionary(Of String, Object)) In Arr_Reg_Key_Base
             For Each RegValue As KeyValuePair(Of String, Object) In RegKeys.Value
                 RegPath = "WinNUT\" & RegKeys.Key
-                If My.Computer.Registry.GetValue(WinNUT_Params.RegBranch & RegPath, RegValue.Key, Nothing) Is Nothing Then
+                Dim WinReg = My.Computer.Registry.GetValue(RegBranch & RegPath, RegValue.Key, RegValue.Value)
+
+                If WinReg Is Nothing Then
+                    LogFile.LogTracing("Registry key " & RegPath & RegValue.Key & " did not exist at load time. Creating and setting default value.", LogLvl.LOG_NOTICE, Nothing)
                     My.Computer.Registry.CurrentUser.CreateSubKey(RegPath)
-                    My.Computer.Registry.SetValue(WinNUT_Params.RegBranch & RegPath, RegValue.Key, RegValue.Value)
+                    My.Computer.Registry.SetValue(RegBranch & RegPath, RegValue.Key, RegValue.Value)
+                    WinReg = RegValue.Value
                 End If
+
                 If (RegValue.Key = "NutLogin" Or RegValue.Key = "NutPassword") Then
-                    Dim WinReg = My.Computer.Registry.GetValue(WinNUT_Params.RegBranch & RegPath, RegValue.Key, RegValue.Value)
-                    If String.IsNullOrEmpty(WinReg) Or Not (Cryptor.IsCryptedtData(WinReg)) Then
-                        WinReg = Cryptor.EncryptData("")
+                    If Not String.IsNullOrEmpty(WinReg) Then
+                        Try
+                            WinReg = DecryptData(WinReg)
+                        Catch ex As Exception
+                            WinReg = RegValue.Value
+                            LogFile.LogTracing(ex.GetType().ToString() & " encountered trying to decrypt " & RegValue.Key &
+                                               ". Using default value (" & WinReg & ")", LogLvl.LOG_ERROR, Nothing)
+                        End Try
                     End If
-                    WinNUT_Params.Arr_Reg_Key.Item(RegValue.Key) = Cryptor.DecryptData(WinReg)
-                Else
-                    WinNUT_Params.Arr_Reg_Key.Item(RegValue.Key) = My.Computer.Registry.GetValue(WinNUT_Params.RegBranch & RegPath, RegValue.Key, RegValue.Value)
                 End If
+
+                Arr_Reg_Key.Item(RegValue.Key) = WinReg
             Next
         Next
     End Sub
 
-    Public Function Save_Params() As Boolean
-        Dim Cryptor As New CryptData()
-        Dim Result As Boolean = False
+    Public Sub Save_Params()
+        For Each RegKeys As KeyValuePair(Of String, Dictionary(Of String, Object)) In Arr_Reg_Key_Base
+            For Each RegValue As KeyValuePair(Of String, Object) In RegKeys.Value
+                RegPath = "WinNUT\" & RegKeys.Key
+                Dim saveValue = Arr_Reg_Key.Item(RegValue.Key)
 
-        Try
-            For Each RegKeys As KeyValuePair(Of String, Dictionary(Of String, Object)) In Arr_Reg_Key_Base
-                For Each RegValue As KeyValuePair(Of String, Object) In RegKeys.Value
-                    RegPath = "WinNUT\" & RegKeys.Key
-                    If My.Computer.Registry.GetValue(WinNUT_Params.RegBranch & RegPath, RegValue.Key, Nothing) Is Nothing Then
-                        My.Computer.Registry.CurrentUser.CreateSubKey(RegPath)
-                        My.Computer.Registry.SetValue(WinNUT_Params.RegBranch & RegPath, RegValue.Key, RegValue.Value)
-                    Else
-                        If (RegValue.Key = "NutLogin" Or RegValue.Key = "NutPassword") Then
-                            My.Computer.Registry.SetValue(WinNUT_Params.RegBranch & RegPath, RegValue.Key, Cryptor.EncryptData(WinNUT_Params.Arr_Reg_Key.Item(RegValue.Key)))
-                        Else
-                            My.Computer.Registry.SetValue(WinNUT_Params.RegBranch & RegPath, RegValue.Key, WinNUT_Params.Arr_Reg_Key.Item(RegValue.Key))
-                        End If
+                If (RegValue.Key = "NutLogin" Or RegValue.Key = "NutPassword") Then
+                    saveValue = EncryptData(saveValue)
+                End If
 
-                    End If
-                Next
+                My.Computer.Registry.SetValue(RegBranch & RegPath, RegValue.Key, saveValue)
             Next
-            Result = True
-        Catch ex As Exception
-            Result = False
-        End Try
-        Return Result
-    End Function
+        Next
+    End Sub
+
     Public Function ImportIni(ByVal FileName As String) As Boolean
         Dim Result = False
         Try
@@ -285,13 +273,33 @@ Public Module WinNUT_Params
                     Next
                 Next
             End With
-            If Save_Params() Then
-                Result = True
-            End If
+
+            Save_Params()
+            Result = True
         Catch ex As Exception
             Result = False
         End Try
         Return Result
     End Function
 
+    Private Function EncryptData(plaintext As String) As String
+        Dim encryptedData = ProtectedData.Protect(Encoding.Unicode.GetBytes(plaintext),
+                                                            Nothing, DataProtectionScope.CurrentUser)
+
+        Return Convert.ToBase64String(encryptedData)
+    End Function
+
+    ''' <summary>
+    ''' Decrypt a string that was previously encrypted by the <see cref="EncryptData(String)"/> function call.
+    ''' </summary>
+    ''' <param name="encryptedtext">A Base64-encoded and encrypted string to decrypt.</param>
+    ''' <returns>An unencrypted Unicode string.</returns>
+    ''' <exception cref="ArgumentNullException">The parameter was null.</exception>
+    ''' <exception cref="CryptographicException">Decryption failed, likely because the argument was not an encrypted string.</exception>"
+    Private Function DecryptData(encryptedtext As String) As String
+        Dim decryptedData = ProtectedData.Unprotect(Convert.FromBase64String(encryptedtext),
+                                                    Nothing, DataProtectionScope.CurrentUser)
+
+        Return Encoding.Unicode.GetString(decryptedData)
+    End Function
 End Module

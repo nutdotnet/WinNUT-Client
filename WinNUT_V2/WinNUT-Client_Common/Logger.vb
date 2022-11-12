@@ -15,8 +15,8 @@ Public Class Logger
     Private Const LOG_FILE_CREATION_SCHEDULE = Logging.LogFileCreationScheduleOption.Daily
     ' The LogFileCreationScheduleOption doesn't present the string format of what it uses
     Private Const LOG_FILE_DATESTRING = "yyyy-MM-dd"
-    ' Logs will be stored in the program's appdata folder, in a Logs subdirectory.
-    Public Shared ReadOnly LogFolder = Path.Combine(ApplicationData, "Logs")
+    ' The subfolder that will contain logs.
+    Public Const LOG_SUBFOLDER = "\Logs\"
 #End Region
 
     Private LogFile As Logging.FileLogTraceListener
@@ -65,67 +65,31 @@ Public Class Logger
         Get
             Return LogFile IsNot Nothing
         End Get
-
-        'Get
-        '    Return Not (LogFile Is Nothing)
-        'End Get
-
-        'Set(Value As Boolean)
-        '    If Value = False And LogFile IsNot Nothing Then
-        '        LogFile.Close()
-        '        LogFile.Dispose()
-        '        LogFile = Nothing
-        '        LogTracing("Logging to file has been disabled.", LogLvl.LOG_NOTICE, Me)
-        '    ElseIf Value Then
-        '        SetupLogfile()
-        '    End If
-        'End Set
     End Property
 
     ''' <summary>
-    ''' Either retrieve the log file location from the <see cref="LogFile"/> object, or give an estimate of what it
-    ''' would be.
+    ''' Get the log file location from the <see cref="LogFile"/> object.
     ''' </summary>
     ''' <returns>The possible path to the log file. Note that this does not gaurantee it exists.</returns>
     Public ReadOnly Property LogFileLocation() As String
         Get
-            If IsWritingToFile Then
-                Return LogFile.FullLogFileName
-            Else
-                Return Path.Combine(LogFolder, BASE_FILE_NAME & Date.Now.ToString(LOG_FILE_DATESTRING))
-            End If
+            Return LogFile.FullLogFileName
         End Get
     End Property
 
-    ' Log all events - this object will keep all logs and allow accessors to decide which ones they want.
-    'Public Property LogLevel() As LogLvl
-    '    Get
-    '        Return Me.LogLevelValue
-    '    End Get
-    '    Set(ByVal Value As LogLvl)
-    '        Me.LogLevelValue = Value
-    '    End Set
-    'End Property
-
 #End Region
 
-    Public Sub New(writeLog As Boolean, LogLevel As LogLvl)
+    Public Sub New(LogLevel As LogLvl)
         LogLevelValue = LogLevel
-        ' LastEventsList.Capacity = 50
-
-        ' IsWritingToFile = writeLog
-        If writeLog = True Then
-            InitializeLogFile()
-        End If
     End Sub
 
-    Public Sub InitializeLogFile()
+    Public Sub InitializeLogFile(baseDataFolder As String)
         LogFile = New Logging.FileLogTraceListener(BASE_FILE_NAME) With {
             .TraceOutputOptions = TraceOptions.DateTime Or TraceOptions.ProcessId,
             .Append = True,
             .AutoFlush = True,
             .LogFileCreationSchedule = LOG_FILE_CREATION_SCHEDULE,
-            .CustomLocation = LogFolder,
+            .CustomLocation = baseDataFolder & LOG_SUBFOLDER,
             .Location = Logging.LogFileLocation.Custom
         }
 
@@ -169,7 +133,14 @@ Public Class Logger
     ''' <param name="LogToDisplay">A user-friendly, translated string to be shown.</param>
     Public Sub LogTracing(message As String, LvlError As LogLvl, sender As Object, Optional LogToDisplay As String = Nothing)
         Dim Pid = TEventCache.ProcessId
-        Dim SenderName = sender.GetType.Name
+        Dim SenderName
+        ' Handle a null sender
+        If sender Is Nothing Then
+            SenderName = "Nothing"
+        Else
+            SenderName = sender.GetType.Name
+        End If
+
         Dim EventTime = Now.ToLocalTime
         Dim FinalMsg = EventTime & " Pid: " & Pid & " " & SenderName & " : " & message
 
