@@ -1,4 +1,4 @@
-// Copyright (C) 2007 A.J.Bauer
+﻿// Copyright (C) 2007 A.J.Bauer
 //
 //  This software is provided as-is, without any express or implied
 //  warranty.  In no event will the authors be held liable for any damages
@@ -40,7 +40,7 @@ namespace System.Windows.Forms
   /// <para>AGauge - Copyright (C) 2007 A.J.Bauer</para>
   /// <link>http://www.codeproject.com/Articles/17559/A-fast-and-performing-gauge</link>
   /// </summary>
-  [ToolboxBitmapAttribute(typeof(AGauge), "AGauge.AGauge.bmp"),
+  [ToolboxBitmap(typeof(AGauge), "AGauge.AGauge.bmp"),
   DefaultEvent("ValueInRangeChanged"),
   Description("Displays a value on an analog gauge. Raises an event if the value enters one of the definable ranges.")]
   public partial class AGauge : Control
@@ -174,7 +174,7 @@ namespace System.Windows.Forms
     //public new Boolean AutoSize { get { return false; } set { /*Do Nothing */ } }
     public new Boolean ForeColor { get { return false; } set { /*Do Nothing */ } }
     public new Boolean ImeMode { get { return false; } set { /*Do Nothing */ } }
-    public override System.Drawing.Color BackColor
+    public override Color BackColor
     {
       get { return base.BackColor; }
       set
@@ -184,7 +184,7 @@ namespace System.Windows.Forms
         Refresh();
       }
     }
-    public override System.Drawing.Font Font
+    public override Font Font
     {
       get { return base.Font; }
       set
@@ -194,7 +194,7 @@ namespace System.Windows.Forms
         Refresh();
       }
     }
-    public override System.Windows.Forms.ImageLayout BackgroundImageLayout
+    public override ImageLayout BackgroundImageLayout
     {
       get { return base.BackgroundImageLayout; }
       set
@@ -220,11 +220,11 @@ namespace System.Windows.Forms
     }
 
     #region Properties  
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
+    [Browsable(true),
+    Category("AGauge"),
     //Modified By Gawindx
     //System.ComponentModel.Description("Gauge value.")]
-    System.ComponentModel.Description("Gauge value1.")]
+    Description("Gauge value1.")]
     public Single Value1
     {
       get { return m_value1; }
@@ -265,9 +265,9 @@ namespace System.Windows.Forms
       }
     }
     
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("Auto size Mode of the gauge.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("Auto size Mode of the gauge.")]
     public Boolean GaugeAutoSize
     {
       get
@@ -280,27 +280,27 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("Gauge Ranges.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("Gauge Ranges.")]
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
     public AGaugeRangeCollection GaugeRanges { get { return _GaugeRanges; } }
     private AGaugeRangeCollection _GaugeRanges;
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("Gauge Labels.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("Gauge Labels.")]
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
     public AGaugeLabelCollection GaugeLabels { get { return _GaugeLabels; } }
     private AGaugeLabelCollection _GaugeLabels;
 
     #region << Gauge Base >>
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The center of the gauge (in the control's client area)."),
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The center of the gauge (in the control's client area)."),
     //Modified By Gawindx
     //System.ComponentModel.DefaultValue(typeof(Point), "100, 100")]
-    System.ComponentModel.DefaultValue(typeof(Point), "148, 130")]
+    DefaultValue(typeof(Point), "148, 130")]
     public Point Center
     {
       get { return m_Center; }
@@ -316,9 +316,9 @@ namespace System.Windows.Forms
     }
 
     //Added By Gawindx
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("UseColor For Arc Base Color.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("UseColor For Arc Base Color.")]
     public GradientType GradientColor
     {
       get { return m_gradientType; }
@@ -333,9 +333,9 @@ namespace System.Windows.Forms
     }
 
     //Added By Gawindx
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("Orientation Of Gradient Colors.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("Orientation Of Gradient Colors.")]
     public GradientOrientation GradientColorOrientation
     {
       get { return m_gradientOrientation; }
@@ -350,9 +350,9 @@ namespace System.Windows.Forms
     }
 
     //Added By Gawindx
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("Units For Value 1")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("Units For Value 1")]
     public UnitValue UnitValue1
     {
       get { return m_unitvalue1; }
@@ -367,9 +367,9 @@ namespace System.Windows.Forms
     }
 
     //Added By Gawindx
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("UseColor For Arc Base Color.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("UseColor For Arc Base Color.")]
     public UnitValue UnitValue2
     {
       get { return m_unitvalue2; }
@@ -384,9 +384,9 @@ namespace System.Windows.Forms
     }
 
     //Added By Gawindx
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("Second Value To Display.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("Second Value To Display.")]
     public Single Value2
     {
       get { return m_value2; }
@@ -401,9 +401,9 @@ namespace System.Windows.Forms
       }
     }
     
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The color of the base arc.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The color of the base arc.")]
     public Color BaseArcColor
     {
       get { return m_BaseArcColor; }
@@ -418,9 +418,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The radius of the base arc.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The radius of the base arc.")]
     public Int32 BaseArcRadius
     {
       get { return m_BaseArcRadius; }
@@ -435,9 +435,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The start angle of the base arc.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The start angle of the base arc.")]
     public Int32 BaseArcStart
     {
       get { return m_BaseArcStart; }
@@ -452,9 +452,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The sweep angle of the base arc.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The sweep angle of the base arc.")]
     public Int32 BaseArcSweep
     {
       get { return m_BaseArcSweep; }
@@ -469,9 +469,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The width of the base arc.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The width of the base arc.")]
     public Int32 BaseArcWidth
     {
       get { return m_BaseArcWidth; }
@@ -490,9 +490,9 @@ namespace System.Windows.Forms
 
     #region << Gauge Scale >>
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The minimum value to show on the scale.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The minimum value to show on the scale.")]
     public Single MinValue
     {
       get { return m_MinValue; }
@@ -509,9 +509,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The maximum value to show on the scale.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The maximum value to show on the scale.")]
     public Single MaxValue
     {
       get { return m_MaxValue; }
@@ -528,9 +528,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The color of the inter scale lines which are the middle scale lines for an uneven number of minor scale lines.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The color of the inter scale lines which are the middle scale lines for an uneven number of minor scale lines.")]
     public Color ScaleLinesInterColor
     {
       get { return m_ScaleLinesInterColor; }
@@ -545,9 +545,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The inner radius of the inter scale lines which are the middle scale lines for an uneven number of minor scale lines.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The inner radius of the inter scale lines which are the middle scale lines for an uneven number of minor scale lines.")]
     public Int32 ScaleLinesInterInnerRadius
     {
       get { return m_ScaleLinesInterInnerRadius; }
@@ -562,9 +562,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The outer radius of the inter scale lines which are the middle scale lines for an uneven number of minor scale lines.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The outer radius of the inter scale lines which are the middle scale lines for an uneven number of minor scale lines.")]
     public Int32 ScaleLinesInterOuterRadius
     {
       get { return m_ScaleLinesInterOuterRadius; }
@@ -579,9 +579,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The width of the inter scale lines which are the middle scale lines for an uneven number of minor scale lines.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The width of the inter scale lines which are the middle scale lines for an uneven number of minor scale lines.")]
     public Int32 ScaleLinesInterWidth
     {
       get { return m_ScaleLinesInterWidth; }
@@ -596,9 +596,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The number of minor scale lines.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The number of minor scale lines.")]
     public Int32 ScaleLinesMinorTicks
     {
       get { return m_ScaleLinesMinorTicks; }
@@ -613,9 +613,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The color of the minor scale lines.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The color of the minor scale lines.")]
     public Color ScaleLinesMinorColor
     {
       get { return m_ScaleLinesMinorColor; }
@@ -630,9 +630,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The inner radius of the minor scale lines.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The inner radius of the minor scale lines.")]
     public Int32 ScaleLinesMinorInnerRadius
     {
       get { return m_ScaleLinesMinorInnerRadius; }
@@ -647,9 +647,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The outer radius of the minor scale lines.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The outer radius of the minor scale lines.")]
     public Int32 ScaleLinesMinorOuterRadius
     {
       get { return m_ScaleLinesMinorOuterRadius; }
@@ -664,9 +664,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The width of the minor scale lines.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The width of the minor scale lines.")]
     public Int32 ScaleLinesMinorWidth
     {
       get { return m_ScaleLinesMinorWidth; }
@@ -681,9 +681,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The step value of the major scale lines.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The step value of the major scale lines.")]
     public Single ScaleLinesMajorStepValue
     {
       get { return m_ScaleLinesMajorStepValue; }
@@ -698,9 +698,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The color of the major scale lines.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The color of the major scale lines.")]
     public Color ScaleLinesMajorColor
     {
       get { return m_ScaleLinesMajorColor; }
@@ -715,9 +715,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The inner radius of the major scale lines.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The inner radius of the major scale lines.")]
     public Int32 ScaleLinesMajorInnerRadius
     {
       get { return m_ScaleLinesMajorInnerRadius; }
@@ -732,9 +732,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The outer radius of the major scale lines.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The outer radius of the major scale lines.")]
     public Int32 ScaleLinesMajorOuterRadius
     {
       get { return m_ScaleLinesMajorOuterRadius; }
@@ -749,9 +749,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The width of the major scale lines.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The width of the major scale lines.")]
     public Int32 ScaleLinesMajorWidth
     {
       get { return m_ScaleLinesMajorWidth; }
@@ -770,9 +770,9 @@ namespace System.Windows.Forms
 
     #region << Gauge Scale Numbers >>
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The radius of the scale numbers.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The radius of the scale numbers.")]
     public Int32 ScaleNumbersRadius
     {
       get { return m_ScaleNumbersRadius; }
@@ -787,9 +787,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The color of the scale numbers.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The color of the scale numbers.")]
     public Color ScaleNumbersColor
     {
       get { return m_ScaleNumbersColor; }
@@ -804,9 +804,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The format of the scale numbers.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The format of the scale numbers.")]
     public String ScaleNumbersFormat
     {
       get { return m_ScaleNumbersFormat; }
@@ -821,9 +821,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The number of the scale line to start writing numbers next to.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The number of the scale line to start writing numbers next to.")]
     public Int32 ScaleNumbersStartScaleLine
     {
       get { return m_ScaleNumbersStartScaleLine; }
@@ -838,9 +838,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The number of scale line steps for writing numbers.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The number of scale line steps for writing numbers.")]
     public Int32 ScaleNumbersStepScaleLines
     {
       get { return m_ScaleNumbersStepScaleLines; }
@@ -855,9 +855,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The angle relative to the tangent of the base arc at a scale line that is used to rotate numbers. set to 0 for no rotation or e.g. set to 90.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The angle relative to the tangent of the base arc at a scale line that is used to rotate numbers. set to 0 for no rotation or e.g. set to 90.")]
     public Int32 ScaleNumbersRotation
     {
       get { return m_ScaleNumbersRotation; }
@@ -876,9 +876,9 @@ namespace System.Windows.Forms
 
     #region << Gauge Needle >>
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The type of the needle, currently only type 0 and 1 are supported. Type 0 looks nicers but if you experience performance problems you might consider using type 1.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The type of the needle, currently only type 0 and 1 are supported. Type 0 looks nicers but if you experience performance problems you might consider using type 1.")]
     public NeedleType NeedleType
     {
       get { return m_NeedleType; }
@@ -893,9 +893,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The radius of the needle.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The radius of the needle.")]
     public Int32 NeedleRadius
     {
       get { return m_NeedleRadius; }
@@ -910,9 +910,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The first color of the needle.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The first color of the needle.")]
     public AGaugeNeedleColor NeedleColor1
     {
       get { return m_NeedleColor1; }
@@ -927,9 +927,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The second color of the needle.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The second color of the needle.")]
     public Color NeedleColor2
     {
       get { return m_NeedleColor2; }
@@ -944,9 +944,9 @@ namespace System.Windows.Forms
       }
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("AGauge"),
-    System.ComponentModel.Description("The width of the needle.")]
+    [Browsable(true),
+    Category("AGauge"),
+    Description("The width of the needle.")]
     public Int32 NeedleWidth
     {
       get { return m_NeedleWidth; }
@@ -1667,29 +1667,29 @@ namespace System.Windows.Forms
       OuterRadius = outerRadius;
     }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("Design"),
-    System.ComponentModel.DisplayName("(Name)"),
-    System.ComponentModel.Description("Instance Name.")]
+    [Browsable(true),
+    Category("Design"),
+    DisplayName("(Name)"),
+    Description("Instance Name.")]
     public string Name { get; set; }
 
-    [System.ComponentModel.Browsable(false)]
+    [Browsable(false)]
     public Boolean InRange { get; set; }
 
     private AGauge Owner;
-    [System.ComponentModel.Browsable(false)]
+    [Browsable(false)]
     public void SetOwner(AGauge value) { Owner = value; }
     private void NotifyOwner() { if (Owner != null) Owner.RepaintControl(); }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("Appearance"),
-    System.ComponentModel.Description("The color of the range.")]
+    [Browsable(true),
+    Category("Appearance"),
+    Description("The color of the range.")]
     public Color Color { get { return _Color; } set { _Color = value; NotifyOwner(); } }
     private Color _Color;
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("Limits"),
-    System.ComponentModel.Description("The start value of the range, must be less than RangeEndValue.")]
+    [Browsable(true),
+    Category("Limits"),
+    Description("The start value of the range, must be less than RangeEndValue.")]
     public Single StartValue
     {
       get { return _StartValue; }
@@ -1705,9 +1705,9 @@ namespace System.Windows.Forms
     }
     private Single _StartValue;
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("Limits"),
-    System.ComponentModel.Description("The end value of the range. Must be greater than RangeStartValue.")]
+    [Browsable(true),
+    Category("Limits"),
+    Description("The end value of the range. Must be greater than RangeStartValue.")]
     public Single EndValue
     {
       get { return _EndValue; }
@@ -1723,9 +1723,9 @@ namespace System.Windows.Forms
     }
     private Single _EndValue;
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("Appearance"),
-    System.ComponentModel.Description("The inner radius of the range.")]
+    [Browsable(true),
+    Category("Appearance"),
+    Description("The inner radius of the range.")]
     public Int32 InnerRadius
     {
       get { return _InnerRadius; }
@@ -1733,9 +1733,9 @@ namespace System.Windows.Forms
     }
     private Int32 _InnerRadius = 70;
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("Appearance"),
-    System.ComponentModel.Description("The outer radius of the range.")]
+    [Browsable(true),
+    Category("Appearance"),
+    Description("The outer radius of the range.")]
     public Int32 OuterRadius
     {
       get { return _OuterRadius; }
@@ -1819,38 +1819,38 @@ namespace System.Windows.Forms
 
   public class AGaugeLabel
   {
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("Design"),
-    System.ComponentModel.DisplayName("(Name)"),
-    System.ComponentModel.Description("Instance Name.")]
+    [Browsable(true),
+    Category("Design"),
+    DisplayName("(Name)"),
+    Description("Instance Name.")]
     public string Name { get; set; }
 
     private AGauge Owner;
-    [System.ComponentModel.Browsable(false)]
+    [Browsable(false)]
     public void SetOwner(AGauge value) { Owner = value; }
     private void NotifyOwner() { if (Owner != null) Owner.RepaintControl(); }
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("Appearance"),
-    System.ComponentModel.Description("The color of the caption text.")]
+    [Browsable(true),
+    Category("Appearance"),
+    Description("The color of the caption text.")]
     public Color Color { get { return _Color; } set { _Color = value; NotifyOwner(); } }
     private Color _Color = Color.FromKnownColor(KnownColor.WindowText);
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("Appearance"),
-    System.ComponentModel.Description("The text of the caption.")]
+    [Browsable(true),
+    Category("Appearance"),
+    Description("The text of the caption.")]
     public String Text { get { return _Text; } set { _Text = value; NotifyOwner(); } }
     private String _Text;
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("Appearance"),
-    System.ComponentModel.Description("The position of the caption.")]
+    [Browsable(true),
+    Category("Appearance"),
+    Description("The position of the caption.")]
     public Point Position { get { return _Position; } set { _Position = value; NotifyOwner(); } }
     private Point _Position;
 
-    [System.ComponentModel.Browsable(true),
-    System.ComponentModel.Category("Appearance"),
-    System.ComponentModel.Description("Font of Text.")]
+    [Browsable(true),
+    Category("Appearance"),
+    Description("Font of Text.")]
     public Font Font { get { return _Font; } set { _Font = value; NotifyOwner(); } }
     private Font _Font = DefaultFont;
 
@@ -1911,6 +1911,6 @@ namespace System.Windows.Forms
   }
   #endregion
 
-  [System.Runtime.CompilerServices.CompilerGenerated]
+  [Runtime.CompilerServices.CompilerGenerated]
   class NamespaceDoc { } //Namespace Documentation
 }
