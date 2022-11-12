@@ -323,7 +323,7 @@ Public Class Pref_Gui
     End Sub
 
     Private Sub TabControl_Options_Selecting(sender As Object, e As TabControlCancelEventArgs) Handles TabControl_Options.Selecting
-        If TabControl_Options.SelectedTab Is Tab_Miscellaneous Then
+        If TabControl_Options.SelectedTab Is Tab_Miscellanous Then
             SetLogControlsStatus()
         End If
     End Sub

@@ -84,7 +84,7 @@ Valid,TGi,Minimum Charge Level of the UPS. Accepted value: Numeric value from 0 
 Valid,TGi,Minimum input frequency. Accepted value: Numeric value from 0 to 100.,最低輸入頻率，範圍：0-100 。
 Valid,TGi,Minimum input voltage. Accepted value: Numeric value from 0 to 999.,最低輸入電壓，範圍：0-999 。
 Valid,TGi,Minimum Output Voltage. Accepted value: Numeric value from 0 to 999.,最低輸出電壓，範圍：0-999 。
-Valid,TGi,Miscellaneous,其他
+Valid,TGi,Miscellanous,其他
 Valid,TGi,Monthly,每月
 Valid,TGi,Name :,名稱：
 Valid,TGi,No Update Available,沒有可用的更新

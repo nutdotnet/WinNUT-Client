@@ -518,13 +518,13 @@ Accepted value: Numeric value from 0 to 100.</value>
   <data name="&gt;&gt;Cb_Verify_Update.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="&gt;&gt;Tab_Miscellaneous.Type" xml:space="preserve">
+  <data name="&gt;&gt;Tab_Miscellanous.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Cbx_TypeStop.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="&gt;&gt;Tab_Miscellaneous.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;Tab_Miscellanous.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="Lbl_Login_Nut.ToolTip" xml:space="preserve">
@@ -650,7 +650,7 @@ Accepted value: Numeric value from 0 to 999.</value>
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;CB_Close_Tray.Parent" xml:space="preserve">
-    <value>Tab_Miscellaneous</value>
+    <value>Tab_Miscellanous</value>
   </data>
   <data name="Cbx_Freq_Input.Items" xml:space="preserve">
     <value>50</value>
@@ -801,7 +801,7 @@ Accepted value: Numeric value from 0 to 100.</value>
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Btn_ViewLog.Parent" xml:space="preserve">
-    <value>Tab_Miscellaneous</value>
+    <value>Tab_Miscellanous</value>
   </data>
   <data name="Cbx_Branch_Update.ToolTip" xml:space="preserve">
     <value>Use the Stable or Devellop branch during verification.</value>
@@ -1168,7 +1168,7 @@ Accepted value: Numeric value from 0 to 3600.</value>
     <value />
   </data>
   <data name="&gt;&gt;Lbl_LevelLog.Parent" xml:space="preserve">
-    <value>Tab_Miscellaneous</value>
+    <value>Tab_Miscellanous</value>
   </data>
   <data name="Lbl_PowerF.ToolTip" xml:space="preserve">
     <value />
@@ -1228,7 +1228,7 @@ Accepted value: Numeric value from 0 to 3600.</value>
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;CB_Start_W_Win.Parent" xml:space="preserve">
-    <value>Tab_Miscellaneous</value>
+    <value>Tab_Miscellanous</value>
   </data>
   <data name="&gt;&gt;Tb_BattLimit_Load.Parent" xml:space="preserve">
     <value>Tab_Shutdown</value>
@@ -1383,11 +1383,12 @@ Accepted value: Numerical value from 1 to 60 seconds.</value>
     <value>322, 234</value>
   </data>
   <data name="Tb_InF_Min.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
   </data>
   <data name="Tb_BattV_Min.TabIndex" type="System.Int32, mscorlib">
     <value>22</value>
   </data>
-  <data name="&gt;&gt;Tab_Miscellaneous.Parent" xml:space="preserve">
+  <data name="&gt;&gt;Tab_Miscellanous.Parent" xml:space="preserve">
     <value>TabControl_Options</value>
   </data>
   <data name="Label3.Location" type="System.Drawing.Point, System.Drawing">
@@ -1492,7 +1493,7 @@ Accepted value: Numeric value from 0 to 3600.</value>
     <value>Type of Stop</value>
   </data>
   <data name="&gt;&gt;CB_Systray.Parent" xml:space="preserve">
-    <value>Tab_Miscellaneous</value>
+    <value>Tab_Miscellanous</value>
   </data>
   <data name="Lbl_PowerF.Size" type="System.Drawing.Size, System.Drawing">
     <value>92, 13</value>
@@ -1537,7 +1538,7 @@ Accepted value: Numeric value from 0 to 3600.</value>
     <value>4</value>
   </data>
   <data name="&gt;&gt;CB_Start_Mini.Parent" xml:space="preserve">
-    <value>Tab_Miscellaneous</value>
+    <value>Tab_Miscellanous</value>
   </data>
   <data name="CB_Start_W_Win.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 102</value>
@@ -1620,8 +1621,8 @@ Accepted value: Numeric value from 0 to 3600.</value>
   <data name="Lbl_Mini.Location" type="System.Drawing.Point, System.Drawing">
     <value>191, 12</value>
   </data>
-  <data name="&gt;&gt;Tab_Miscellaneous.Name" xml:space="preserve">
-    <value>Tab_Miscellaneous</value>
+  <data name="&gt;&gt;Tab_Miscellanous.Name" xml:space="preserve">
+    <value>Tab_Miscellanous</value>
   </data>
   <data name="Lbl_OutputV.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 132</value>
@@ -1654,7 +1655,7 @@ Accepted value: Numeric value from 0 to 3600.</value>
     <value>13</value>
   </data>
   <data name="&gt;&gt;Btn_DeleteLog.Parent" xml:space="preserve">
-    <value>Tab_Miscellaneous</value>
+    <value>Tab_Miscellanous</value>
   </data>
   <data name="Tb_Load_Min.ToolTip" xml:space="preserve">
     <value>Minimum Charge Level of the UPS.
@@ -1681,7 +1682,7 @@ Accepted value: Numeric value from 0 to 100.</value>
   <data name="Tb_BattLimit_Time.Location" type="System.Drawing.Point, System.Drawing">
     <value>240, 41</value>
   </data>
-  <data name="Tab_Miscellaneous.TabIndex" type="System.Int32, mscorlib">
+  <data name="Tab_Miscellanous.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
   <data name="&gt;&gt;Tb_InV_Min.Type" xml:space="preserve">
@@ -8694,7 +8695,7 @@ Accepted value: Numeric value from 0 to 999.</value>
   <data name="CB_Use_Logfile.Text" xml:space="preserve">
     <value>Create LogFile</value>
   </data>
-  <data name="Tab_Miscellaneous.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="Tab_Miscellanous.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
   </data>
   <data name="TabControl_Options.Size" type="System.Drawing.Size, System.Drawing">
@@ -8730,11 +8731,11 @@ Accepted value: Numeric value from 0 to 999.</value>
   <data name="Tb_Server_IP.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
-  <data name="Tab_Miscellaneous.Text" xml:space="preserve">
-    <value>Miscellaneous</value>
+  <data name="Tab_Miscellanous.Text" xml:space="preserve">
+    <value>Miscellanous</value>
   </data>
   <data name="&gt;&gt;CB_Use_Logfile.Parent" xml:space="preserve">
-    <value>Tab_Miscellaneous</value>
+    <value>Tab_Miscellanous</value>
   </data>
   <data name="&gt;&gt;Lbl_OutputV.ZOrder" xml:space="preserve">
     <value>15</value>
@@ -8771,7 +8772,7 @@ Accepted value: Numeric value from 0 to 3600.</value>
     <value>121, 21</value>
   </data>
   <data name="&gt;&gt;Cbx_LogLevel.Parent" xml:space="preserve">
-    <value>Tab_Miscellaneous</value>
+    <value>Tab_Miscellanous</value>
   </data>
   <data name="Tb_Delay_Stop.Location" type="System.Drawing.Point, System.Drawing">
     <value>240, 121</value>
@@ -8782,7 +8783,7 @@ Accepted value: Numeric value from 0 to 3600.</value>
   <data name="Lbl_Branch_Update.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 102</value>
   </data>
-  <data name="Tab_Miscellaneous.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="Tab_Miscellanous.Size" type="System.Drawing.Size, System.Drawing">
     <value>322, 234</value>
   </data>
   <data name="Tb_GraceTime.TabIndex" type="System.Int32, mscorlib">
@@ -8966,7 +8967,7 @@ Accepted value: Numeric value from 0 to 999.</value>
   <data name="Tab_Connexion.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
-  <data name="Tab_Miscellaneous.ToolTip" xml:space="preserve">
+  <data name="Tab_Miscellanous.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="CB_Use_Logfile.Size" type="System.Drawing.Size, System.Drawing">
