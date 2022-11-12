@@ -17,14 +17,14 @@ namespace System.Windows.Forms
     {
         public AGaugeRange() { }
 
-        public AGaugeRange(Color color, Single startValue, Single endValue)
+        public AGaugeRange(Color color, float startValue, float endValue)
         {
             Color = color;
             _StartValue = startValue;
             _EndValue = endValue;
         }
 
-        public AGaugeRange(Color color, Single startValue, Single endValue, Int32 innerRadius, Int32 outerRadius)
+        public AGaugeRange(Color color, float startValue, float endValue, int innerRadius, int outerRadius)
         {
             Color = color;
             _StartValue = startValue;
@@ -40,7 +40,7 @@ namespace System.Windows.Forms
         public string Name { get; set; }
 
         [Browsable(false)]
-        public Boolean InRange { get; set; }
+        public bool InRange { get; set; }
 
         private AGauge Owner;
         [Browsable(false)]
@@ -56,7 +56,7 @@ namespace System.Windows.Forms
         [Browsable(true),
         Category("Limits"),
         Description("The start value of the range, must be less than RangeEndValue.")]
-        public Single StartValue
+        public float StartValue
         {
             get { return _StartValue; }
             set
@@ -69,12 +69,12 @@ namespace System.Windows.Forms
                 _StartValue = value; NotifyOwner();
             }
         }
-        private Single _StartValue;
+        private float _StartValue;
 
         [Browsable(true),
         Category("Limits"),
         Description("The end value of the range. Must be greater than RangeStartValue.")]
-        public Single EndValue
+        public float EndValue
         {
             get { return _EndValue; }
             set
@@ -87,27 +87,27 @@ namespace System.Windows.Forms
                 _EndValue = value; NotifyOwner();
             }
         }
-        private Single _EndValue;
+        private float _EndValue;
 
         [Browsable(true),
         Category("Appearance"),
         Description("The inner radius of the range.")]
-        public Int32 InnerRadius
+        public int InnerRadius
         {
             get { return _InnerRadius; }
             set { if (value > 0) { _InnerRadius = value; NotifyOwner(); } }
         }
-        private Int32 _InnerRadius = 70;
+        private int _InnerRadius = 70;
 
         [Browsable(true),
         Category("Appearance"),
         Description("The outer radius of the range.")]
-        public Int32 OuterRadius
+        public int OuterRadius
         {
             get { return _OuterRadius; }
             set { if (value > 0) { _OuterRadius = value; NotifyOwner(); } }
         }
-        private Int32 _OuterRadius = 80;
+        private int _OuterRadius = 80;
     }
 
     public class AGaugeRangeCollection : CollectionBase
