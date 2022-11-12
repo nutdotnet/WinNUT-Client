@@ -99,6 +99,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_0A325B8139084CA78A0244CAC82F2853"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_0A861B352BC31F8043445D772FF57CB6"
         "OwnerKey" = "8:_70DBA11C2BF449198BA594449914C1BC"
         "MsmSig" = "8:_UNDEFINED"
@@ -155,6 +161,12 @@
         {
         "MsmKey" = "8:_177E6DBC66C7EC973109925FB76F0AD8"
         "OwnerKey" = "8:_70DBA11C2BF449198BA594449914C1BC"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_19385C4691E649139966B93BFCB76418"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -377,6 +389,12 @@
         {
         "MsmKey" = "8:_3C02EAEA0AD8AD7328CC2692CD4C19D1"
         "OwnerKey" = "8:_70DBA11C2BF449198BA594449914C1BC"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_3F430083DA6440B2B12DECC4BB791883"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -3435,6 +3453,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_A17B6478098A4E61AD676107545BBEAD"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_A51E7D6EB2814770BABB461429AA4198"
         "OwnerKey" = "8:_70DBA11C2BF449198BA594449914C1BC"
         "MsmSig" = "8:_UNDEFINED"
@@ -6261,7 +6285,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "FrameworkVersion" = "8:.NETFramework,Version=v4.7.2"
+                "FrameworkVersion" = "8:.NETFramework,Version=v4.8"
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=863262"
                 }
@@ -6610,6 +6634,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0A325B8139084CA78A0244CAC82F2853"
+            {
+            "SourcePath" = "8:..\\WinNUT-Client\\bin\\Release\\WinNUT-Client.exe.config"
+            "TargetName" = "8:WinNUT-Client.exe.config"
+            "Tag" = "8:"
+            "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0A861B352BC31F8043445D772FF57CB6"
             {
             "AssemblyRegister" = "3:1"
@@ -6887,6 +6931,26 @@
             "Register" = "3:1"
             "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_19385C4691E649139966B93BFCB76418"
+            {
+            "SourcePath" = "8:..\\WinNUT-Client\\bin\\Release\\WinNUT-Client.exe.manifest"
+            "TargetName" = "8:WinNUT-Client.exe.manifest"
+            "Tag" = "8:"
+            "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_19A373CB2F62FEC5606DD9E5BBD06BD8"
@@ -7797,6 +7861,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3F430083DA6440B2B12DECC4BB791883"
+            {
+            "SourcePath" = "8:..\\..\\changelog.md"
+            "TargetName" = "8:changelog.md"
+            "Tag" = "8:"
+            "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:FALSE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3FF150BC21C6D3F7A800F9E0854357B9"
             {
             "AssemblyRegister" = "3:1"
@@ -8700,7 +8784,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WinNUT-Client_Common, Version=2.2.8331.25397, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:WinNUT-Client_Common, Version=2.2.8338.35532, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_5C99D3FB8E4CBB81209F637E049611DF"
@@ -9464,7 +9548,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:AGauge, Version=2.1.8328.30467, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:AGauge, Version=2.1.8338.35532, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_7643B2E01E55816C8BA2265FF9E9B786"
@@ -10594,6 +10678,26 @@
             "Register" = "3:1"
             "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A17B6478098A4E61AD676107545BBEAD"
+            {
+            "SourcePath" = "8:..\\WinNUT-Client\\bin\\Release\\WinNUT-Client.application"
+            "TargetName" = "8:WinNUT-Client.application"
+            "Tag" = "8:"
+            "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A51E7D6EB2814770BABB461429AA4198"
@@ -12791,15 +12895,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:WinNUT"
-        "ProductCode" = "8:{CA896527-C51A-4EE5-8F27-3548FCA4B352}"
-        "PackageCode" = "8:{59FBD0C6-66EA-4802-877F-FEF22337D6BD}"
+        "ProductCode" = "8:{4B9C8FB9-4559-40A2-93F6-A99AE67A60DA}"
+        "PackageCode" = "8:{2AB34500-9AC5-48A5-BE38-C9122A50EEF0}"
         "UpgradeCode" = "8:{7EA17151-76E7-4E29-8F6A-621C1B4144C2}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:2.2.8331"
+        "ProductVersion" = "8:2.2.8338"
         "Manufacturer" = "8:NUTDotNet"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://github.com/nutdotnet/WinNUT-Client/issues"
@@ -12938,20 +13042,6 @@
             "Folder" = "8:_F9B39B2DBF7643D6B54B0DCE6EE72023"
             "WorkingFolder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
             "Icon" = "8:_33BCB1EF059B4E9B87FA7435A8F2499C"
-            "Feature" = "8:"
-            }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_DDD33AE710CB481A877BE9BA8F9CBC41"
-            {
-            "Name" = "8:README.md"
-            "Arguments" = "8:"
-            "Description" = "8:"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_7E781465BFAC4DC08591FE1EDE1E2D1F"
-            "Folder" = "8:_DB434D603D254A8799A657820BC92B20"
-            "WorkingFolder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
-            "Icon" = "8:"
             "Feature" = "8:"
             }
         }
