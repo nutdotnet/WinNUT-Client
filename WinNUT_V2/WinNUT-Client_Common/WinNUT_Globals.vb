@@ -12,7 +12,6 @@ Imports System.IO
 Public Module WinNUT_Globals
 
 #Region "Constants/Shareds"
-    ' What path we'd like to keep our data in.
 
 #If DEBUG Then
     ' If debugging, keep any generated data next to the debug executable.
@@ -23,31 +22,26 @@ Public Module WinNUT_Globals
 #End If
 
     Private ReadOnly FALLBACK_DATA_PATH = Path.GetTempPath() & ProgramName
-#End Region
 
-    Public LongProgramName As String
-    Public ProgramName As String
-    Public ProgramVersion As String
-    Public ShortProgramVersion As String
-    Public GitHubURL As String
-    Public Copyright As String
-    Public IsConnected As Boolean
+    Public ReadOnly ProgramName = My.Application.Info.ProductName
+    Public ReadOnly LongProgramName = My.Application.Info.Description
+    Public ReadOnly ProgramVersion = Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString
+    Public ReadOnly ShortProgramVersion = ProgramVersion.Substring(0, ProgramVersion.IndexOf(".", ProgramVersion.IndexOf(".") + 1))
+    Public ReadOnly GitHubURL = My.Application.Info.Trademark
+    Public ReadOnly Copyright = My.Application.Info.Copyright
+
+    Public IsConnected = False
     Public ApplicationData As String
-    Public WithEvents LogFile As Logger
+    Public WithEvents LogFile As Logger = New Logger(LogLvl.LOG_DEBUG)
     Public AppIcon As Dictionary(Of Integer, Drawing.Icon)
     Public StrLog As New List(Of String)
 
+#End Region
+
+
+
     Public Sub Init_Globals()
         ApplicationData = GetAppDirectory(DESIRED_DATA_PATH)
-        LogFile = New Logger(LogLvl.LOG_DEBUG)
-
-        LongProgramName = My.Application.Info.Description
-        ProgramName = My.Application.Info.ProductName
-        ProgramVersion = Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString
-        ShortProgramVersion = ProgramVersion.Substring(0, ProgramVersion.IndexOf(".", ProgramVersion.IndexOf(".") + 1))
-        GitHubURL = My.Application.Info.Trademark
-        Copyright = My.Application.Info.Copyright
-        IsConnected = False
     End Sub
 
     ''' <summary>
