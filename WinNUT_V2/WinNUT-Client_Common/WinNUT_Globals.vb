@@ -15,13 +15,13 @@ Public Module WinNUT_Globals
 
 #If DEBUG Then
     ' If debugging, keep any generated data next to the debug executable.
-    Private ReadOnly DESIRED_DATA_PATH As String = Path.Combine(Environment.CurrentDirectory, "Data")
+    Private ReadOnly DESIRED_DATA_PATH As String = Path.Combine(Environment.CurrentDirectory)
 #Else
-        Private ReadOnly DESIRED_DATA_PATH As String = Path.Combine(Environment.GetFolderPath(
-                Environment.SpecialFolder.ApplicationData), "\WinNUT-Client")
+        Private ReadOnly DESIRED_DATA_PATH As String = Environment.GetFolderPath(
+                Environment.SpecialFolder.ApplicationData))
 #End If
 
-    Private ReadOnly FALLBACK_DATA_PATH = Path.GetTempPath() & ProgramName
+    Private ReadOnly FALLBACK_DATA_PATH = Path.GetTempPath()
 
     Public ReadOnly ProgramName = My.Application.Info.ProductName
     Public ReadOnly LongProgramName = My.Application.Info.Description
@@ -45,12 +45,14 @@ Public Module WinNUT_Globals
     End Sub
 
     ''' <summary>
-    ''' Do everything possible to find a safe place to write to. If the requested option is unavailable, we fall back
-    ''' to the temporary directory for the current user.
+    ''' Do everything possible to find a safe place to write to, with the <see cref="ProgramName"/> appended to it. If
+    ''' the requested option is unavailable, we fall back to the temporary directory for the current user.
     ''' </summary>
-    ''' <param name="requestedDir">The requested directory.</param>
+    ''' <param name="requestedDir">The requested directory, with <see cref="ProgramName"/> appended to it.</param>
     ''' <returns>The best possible option available as a writable data directory.</returns>
     Private Function GetAppDirectory(requestedDir As String) As String
+        requestedDir = Path.Combine(requestedDir, ProgramName)
+
         Try
             Directory.CreateDirectory(requestedDir)
             LogFile.LogTracing("Successfully created or opened requested data directory for WinNUT." &
