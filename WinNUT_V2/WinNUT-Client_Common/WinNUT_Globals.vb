@@ -59,6 +59,8 @@ Public Module WinNUT_Globals
     Private Function GetAppDirectory(requestedDir As String) As String
         Try
             Directory.CreateDirectory(requestedDir)
+            LogFile.LogTracing("Successfully created or opened requested data directory for WinNUT." &
+                               vbNewLine & "requestedDir: " & requestedDir, LogLvl.LOG_DEBUG, Nothing)
             Return requestedDir
 
         Catch ex As Exception
