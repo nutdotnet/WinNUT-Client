@@ -129,7 +129,7 @@ Public Class Logger
             Next
         End If
 
-        LogFile.WriteLine(String.Empty)
+        LogFile.WriteLine("==== Begin Live Log ====")
     End Sub
 
     ''' <summary>
