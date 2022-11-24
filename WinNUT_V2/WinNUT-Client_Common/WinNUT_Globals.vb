@@ -14,9 +14,11 @@ Public Module WinNUT_Globals
 #Region "Constants/Shareds"
 
 #If DEBUG Then
+    Public ReadOnly IsDebugBuild = True
     ' If debugging, keep any generated data next to the debug executable.
     Private ReadOnly DESIRED_DATA_PATH As String = Path.Combine(Environment.CurrentDirectory)
 #Else
+        Public ReadOnly IsDebugBuild = False
         Private ReadOnly DESIRED_DATA_PATH As String = Environment.GetFolderPath(
                 Environment.SpecialFolder.ApplicationData))
 #End If
