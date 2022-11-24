@@ -54,7 +54,7 @@ Public Module WinNUT_Globals
     ''' <param name="requestedDir">The requested directory, with <see cref="ProgramName"/> appended to it.</param>
     ''' <returns>The best possible option available as a writable data directory.</returns>
     Private Function GetAppDirectory(requestedDir As String) As String
-        requestedDir = Path.Combine(requestedDir, ProgramName)
+        requestedDir = Path.Combine(requestedDir, DATA_DIRECTORY_NAME)
 
         Try
             Directory.CreateDirectory(requestedDir)
