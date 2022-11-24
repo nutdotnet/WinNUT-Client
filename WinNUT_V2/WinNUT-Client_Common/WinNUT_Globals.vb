@@ -24,6 +24,7 @@ Public Module WinNUT_Globals
 #End If
 
     Private ReadOnly FALLBACK_DATA_PATH = Path.GetTempPath()
+    Private ReadOnly DATA_DIRECTORY_NAME = "WinNut-Client"
 
     Public ReadOnly ProgramName = My.Application.Info.ProductName
     Public ReadOnly LongProgramName = My.Application.Info.Description
