@@ -12,57 +12,62 @@ Imports System.IO
 Public Module WinNUT_Globals
 
 #Region "Constants/Shareds"
-    Private DEFAULT_DATA_PATH As String
-#End Region
 
-    Public LongProgramName As String
-    Public ProgramName As String
-    Public ProgramVersion As String
-    Public ShortProgramVersion As String
-    Public GitHubURL As String
-    Public Copyright As String
-    Public IsConnected As Boolean
-    Public ApplicationData As String
-    ' Public LogFile As String
-    ' Handle application messages and debug events.
-    ' Public WithEvents LogFile As Logger '  As New Logger(False, 0)
-    ' Logging
-    Public WithEvents LogFile As Logger
-    Public AppIcon As Dictionary(Of Integer, Drawing.Icon)
-    Public StrLog As New List(Of String)
-    ' Public LogFilePath As String
-
-    Public Sub Init_Globals()
 #If DEBUG Then
-        ' If debugging, keep any generated data next to the debug executable.
-        DEFAULT_DATA_PATH = Path.Combine(Environment.CurrentDirectory, "Data")
+    Public ReadOnly IsDebugBuild = True
+    ' If debugging, keep any generated data next to the debug executable.
+    Private ReadOnly DESIRED_DATA_PATH As String = Path.Combine(Environment.CurrentDirectory)
 #Else
-        DEFAULT_DATA_PATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "\WinNUT-Client")
+        Public ReadOnly IsDebugBuild = False
+        Private ReadOnly DESIRED_DATA_PATH As String = Environment.GetFolderPath(
+                Environment.SpecialFolder.ApplicationData))
 #End If
 
-        LongProgramName = My.Application.Info.Description
-        ProgramName = My.Application.Info.ProductName
-        ProgramVersion = Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString
-        ShortProgramVersion = ProgramVersion.Substring(0, ProgramVersion.IndexOf(".", ProgramVersion.IndexOf(".") + 1))
-        GitHubURL = My.Application.Info.Trademark
-        Copyright = My.Application.Info.Copyright
-        IsConnected = False
-        LogFile = New Logger(LogLvl.LOG_DEBUG)
+    Private ReadOnly FALLBACK_DATA_PATH = Path.GetTempPath()
+    Private ReadOnly DATA_DIRECTORY_NAME = "WinNut-Client"
 
-        SetupAppDirectory()
+    Public ReadOnly ProgramName = My.Application.Info.ProductName
+    Public ReadOnly LongProgramName = My.Application.Info.Description
+    Public ReadOnly ProgramVersion = Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString
+    Public ReadOnly ShortProgramVersion = ProgramVersion.Substring(0, ProgramVersion.IndexOf(".", ProgramVersion.IndexOf(".") + 1))
+    Public ReadOnly GitHubURL = My.Application.Info.Trademark
+    Public ReadOnly Copyright = My.Application.Info.Copyright
+
+    Public IsConnected = False
+    Public ApplicationData As String
+    Public WithEvents LogFile As Logger = New Logger(LogLvl.LOG_DEBUG)
+    Public AppIcon As Dictionary(Of Integer, Drawing.Icon)
+    Public StrLog As New List(Of String)
+
+#End Region
+
+
+
+    Public Sub Init_Globals()
+        ApplicationData = GetAppDirectory(DESIRED_DATA_PATH)
     End Sub
 
-    Sub SetupAppDirectory()
-        If Not Directory.Exists(DEFAULT_DATA_PATH) Then
-            Try
-                Directory.CreateDirectory(DEFAULT_DATA_PATH)
-                ApplicationData = DEFAULT_DATA_PATH
-            Catch ex As Exception
-                LogFile.LogTracing(ex.ToString & " encountered trying to create app data directory. Falling back to temp.",
-                                   LogLvl.LOG_ERROR, Nothing)
-                ApplicationData = Path.GetTempPath() & "\WinNUT_Data\"
-                Directory.CreateDirectory(ApplicationData)
-            End Try
-        End If
-    End Sub
+    ''' <summary>
+    ''' Do everything possible to find a safe place to write to, with the <see cref="ProgramName"/> appended to it. If
+    ''' the requested option is unavailable, we fall back to the temporary directory for the current user.
+    ''' </summary>
+    ''' <param name="requestedDir">The requested directory, with <see cref="ProgramName"/> appended to it.</param>
+    ''' <returns>The best possible option available as a writable data directory.</returns>
+    Private Function GetAppDirectory(requestedDir As String) As String
+        requestedDir = Path.Combine(requestedDir, DATA_DIRECTORY_NAME)
+
+        Try
+            Directory.CreateDirectory(requestedDir)
+            LogFile.LogTracing("Successfully created or opened requested data directory for WinNUT." &
+                               vbNewLine & "requestedDir: " & requestedDir, LogLvl.LOG_DEBUG, Nothing)
+            Return requestedDir
+
+        Catch ex As Exception
+            LogFile.LogTracing(ex.ToString & " encountered trying to create app data directory. Falling back to temp.",
+                               LogLvl.LOG_ERROR, Nothing)
+
+            Directory.CreateDirectory(FALLBACK_DATA_PATH)
+            Return FALLBACK_DATA_PATH
+        End Try
+    End Function
 End Module

@@ -7,23 +7,38 @@
 '
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
+Imports System.Globalization
 Imports System.IO
 
 Public Class Logger
 #Region "Constants/Shared"
-    Private Shared ReadOnly BASE_FILE_NAME = ProgramName ' "WinNUT-CLient"
     Private Const LOG_FILE_CREATION_SCHEDULE = Logging.LogFileCreationScheduleOption.Daily
-    ' The LogFileCreationScheduleOption doesn't present the string format of what it uses
-    Private Const LOG_FILE_DATESTRING = "yyyy-MM-dd"
+
+#If DEBUG Then
+    Private Shared ReadOnly DEFAULT_DATETIMEFORMAT = DateTimeFormatInfo.InvariantInfo
+#Else
+    Private Shared ReadOnly DEFAULT_DATETIMEFORMAT = DateTimeFormatInfo.CurrentInfo
+#End If
+
+
     ' The subfolder that will contain logs.
-    Public Const LOG_SUBFOLDER = "\Logs\"
+    Public Const LOG_SUBFOLDER = "Logs"
+
+    Private Shared ReadOnly BASE_FILE_NAME = ProgramName
+    Private ReadOnly TEventCache As New TraceEventCache()
 #End Region
 
+#Region "Private/backing values"
+
     Private LogFile As Logging.FileLogTraceListener
-    Private ReadOnly TEventCache As New TraceEventCache()
-    Public LogLevelValue As LogLvl
     Private L_CurrentLogData As String
     Private LastEventsList As New List(Of Object)
+    Private _DateTimeFormatInfo As DateTimeFormatInfo = DEFAULT_DATETIMEFORMAT
+
+#End Region
+
+    Public LogLevelValue As LogLvl
+
     Public Event NewData(sender As Object)
 
 #Region "Properties"
@@ -77,6 +92,16 @@ Public Class Logger
         End Get
     End Property
 
+    Public Property DateTimeFormatInfo As DateTimeFormatInfo
+        Get
+            Return _DateTimeFormatInfo
+        End Get
+        Set(value As DateTimeFormatInfo)
+            _DateTimeFormatInfo = value
+        End Set
+    End Property
+
+
 #End Region
 
     Public Sub New(LogLevel As LogLvl)
@@ -89,11 +114,22 @@ Public Class Logger
             .Append = True,
             .AutoFlush = True,
             .LogFileCreationSchedule = LOG_FILE_CREATION_SCHEDULE,
-            .CustomLocation = baseDataFolder & LOG_SUBFOLDER,
+            .CustomLocation = Path.Combine(baseDataFolder, LOG_SUBFOLDER),
             .Location = Logging.LogFileLocation.Custom
         }
 
-        LogTracing("Log file is initialized at " & LogFile.FullLogFileName, LogLvl.LOG_NOTICE, Me)
+        LogTracing(String.Format("{0} {1} Log file init", LongProgramName, ProgramVersion), LogLvl.LOG_NOTICE, Me)
+
+        If LastEventsList.Count > 0 Then
+            ' Fill new file with the LastEventsList buffer
+            LogFile.WriteLine("==== History of " & LastEventsList.Count & " previous events ====")
+
+            For index As Integer = 0 To LastEventsList.Count - 1
+                LogFile.WriteLine(String.Format("[{0}] {1}", index + 1, LastEventsList(index)))
+            Next
+        End If
+
+        LogFile.WriteLine("==== Begin Live Log ====")
     End Sub
 
     ''' <summary>
@@ -132,17 +168,7 @@ Public Class Logger
     ''' <param name="sender">What generated this message.</param>
     ''' <param name="LogToDisplay">A user-friendly, translated string to be shown.</param>
     Public Sub LogTracing(message As String, LvlError As LogLvl, sender As Object, Optional LogToDisplay As String = Nothing)
-        Dim Pid = TEventCache.ProcessId
-        Dim SenderName
-        ' Handle a null sender
-        If sender Is Nothing Then
-            SenderName = "Nothing"
-        Else
-            SenderName = sender.GetType.Name
-        End If
-
-        Dim EventTime = Now.ToLocalTime
-        Dim FinalMsg = EventTime & " Pid: " & Pid & " " & SenderName & " : " & message
+        Dim FinalMsg = FormatLogLine(message, LvlError, sender)
 
         ' Always write log messages to the attached debug messages window.
 #If DEBUG Then
@@ -166,4 +192,15 @@ Public Class Logger
             RaiseEvent NewData(sender)
         End If
     End Sub
+
+    Private Function FormatLogLine(message As String, logLvl As LogLvl, Optional sender As Object = Nothing)
+        Dim Pid = TEventCache.ProcessId
+        Dim SenderName = "Nothing"
+
+        If sender IsNot Nothing Then
+            SenderName = sender.GetType.Name
+        End If
+
+        Return String.Format("{0} [{1}, {2}]: {3}", Date.Now.ToString(_DateTimeFormatInfo), Pid, SenderName, message)
+    End Function
 End Class
