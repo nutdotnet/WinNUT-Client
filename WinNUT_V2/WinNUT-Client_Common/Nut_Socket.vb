@@ -203,12 +203,16 @@ Public Class Nut_Socket
         If ConnectionStatus Then
             streamInUse = True
 
-            WriterStream.WriteLine(Query_Msg & vbCr)
-            WriterStream.Flush()
+            Try
+                WriterStream.WriteLine(Query_Msg & vbCr)
+                WriterStream.Flush()
+            Catch
+                Throw
+            Finally
+                streamInUse = False
+            End Try
+
             DataResult = Trim(ReaderStream.ReadLine())
-
-            streamInUse = False
-
             Response = EnumResponse(DataResult)
             finalTransaction = New Transaction(Query_Msg, DataResult, Response)
 
