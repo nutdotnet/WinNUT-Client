@@ -132,6 +132,12 @@
     <Compile Include="About_Gui.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="AGaugeTest.Designer.vb">
+      <DependentUpon>AGaugeTest.vb</DependentUpon>
+    </Compile>
+    <Compile Include="AGaugeTest.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -203,6 +209,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="About_Gui.zh-TW.resx">
       <DependentUpon>About_Gui.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGaugeTest.resx">
+      <DependentUpon>AGaugeTest.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="List_Var_Gui.de-DE.resx">
       <DependentUpon>List_Var_Gui.vb</DependentUpon>

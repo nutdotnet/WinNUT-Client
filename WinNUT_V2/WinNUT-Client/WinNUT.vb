@@ -273,6 +273,13 @@ Public Class WinNUT
             HasFocus = False
         End If
 
+#If DEBUG Then
+        ' Insert AGauge testing dialog menu item
+        Dim agDbgFormOpen = New ToolStripMenuItem("AGauge Test Form")
+        AddHandler agDbgFormOpen.Click, Function() AGaugeTest.ShowDialog()
+        Menu_File.DropDownItems.Add(agDbgFormOpen)
+#End If
+
         LogFile.LogTracing(String.Format("{0} v{1} completed initialization.", My.Application.Info.ProductName, My.Application.Info.Version),
                            LogLvl.LOG_NOTICE, Me)
     End Sub
