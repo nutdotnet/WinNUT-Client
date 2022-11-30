@@ -188,7 +188,8 @@ Public Class Nut_Socket
     ''' </summary>
     ''' <param name="Query_Msg">The query to be sent to the server, within specifications of the NUT protocol.</param>
     ''' <returns>The full <see cref="Transaction"/> of this function call.</returns>
-    ''' <exception cref="InvalidOperationException">Thrown when calling this function while disconnected.</exception>"
+    ''' <exception cref="InvalidOperationException">Thrown when calling this function while disconnected, or another
+    ''' call is in progress.</exception>
     ''' <exception cref="NutException">Thrown when the NUT server returns an error or unexpected response.</exception>
     Function Query_Data(Query_Msg As String) As Transaction
         Dim Response As NUTResponse
@@ -196,22 +197,22 @@ Public Class Nut_Socket
         Dim finalTransaction As Transaction
 
         If streamInUse Then
-            LogFile.LogTracing("Attempted to query " & Query_Msg & " while using the stream.", LogLvl.LOG_ERROR, Me)
-            Return Nothing
+            Throw New InvalidOperationException("Attempted to query " & Query_Msg & " while stream is in use.")
         End If
 
-        streamInUse = True
-
         If ConnectionStatus Then
-            ' LogFile.LogTracing("Query: " & Query_Msg, LogLvl.LOG_DEBUG, Me)
-            WriterStream.WriteLine(Query_Msg & vbCr)
-            WriterStream.Flush()
+            streamInUse = True
+
+            Try
+                WriterStream.WriteLine(Query_Msg & vbCr)
+                WriterStream.Flush()
+            Catch
+                Throw
+            Finally
+                streamInUse = False
+            End Try
 
             DataResult = Trim(ReaderStream.ReadLine())
-            ' LogFile.LogTracing(vbTab & "Response: " & DataResult, LogLvl.LOG_DEBUG, Me)
-            streamInUse = False
-            ' LogFile.LogTracing("Done processing response for query " & Query_Msg, LogLvl.LOG_DEBUG, Me)
-
             Response = EnumResponse(DataResult)
             finalTransaction = New Transaction(Query_Msg, DataResult, Response)
 

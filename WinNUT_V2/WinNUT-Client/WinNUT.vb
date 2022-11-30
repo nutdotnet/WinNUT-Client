@@ -346,6 +346,24 @@ Public Class WinNUT
         End If
     End Sub
 
+    Private Sub UPS_Lostconnect() Handles UPS_Device.Lost_Connect
+        LogFile.LogTracing("Notify user of lost connection", LogLvl.LOG_ERROR, Me,
+            String.Format(StrLog.Item(AppResxStr.STR_MAIN_LOSTCONNECT), UPS_Device.Nut_Config.Host, UPS_Device.Nut_Config.Port))
+        ' UPSDisconnect()
+
+        ReInitDisplayValues()
+        If UPS_Device.Nut_Config.AutoReconnect And UPS_Retry <= UPS_MaxRetry Then
+            ActualAppIconIdx = AppIconIdx.IDX_ICO_RETRY
+        Else
+            ActualAppIconIdx = AppIconIdx.IDX_ICO_OFFLINE
+        End If
+
+        UpdateIcon_NotifyIcon()
+        RaiseEvent UpdateNotifyIconStr("Lost Connect", Nothing)
+        RaiseEvent UpdateBatteryState("Lost Connect")
+        LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
+    End Sub
+
     ''' <summary>
     ''' Perform final actions to wrap up a disconnected UPS.
     ''' </summary>
@@ -585,24 +603,6 @@ Public Class WinNUT
         About_Gui.Activate()
         About_Gui.Visible = True
         HasFocus = False
-    End Sub
-
-    Private Sub UPS_Lostconnect() Handles UPS_Device.Lost_Connect
-        LogFile.LogTracing("Notify user of lost connection", LogLvl.LOG_ERROR, Me,
-            String.Format(StrLog.Item(AppResxStr.STR_MAIN_LOSTCONNECT), UPS_Device.Nut_Config.Host, UPS_Device.Nut_Config.Port))
-        ' UPSDisconnect()
-
-        'ReInitDisplayValues()
-        If UPS_Device.Nut_Config.AutoReconnect And UPS_Retry <= UPS_MaxRetry Then
-            ActualAppIconIdx = AppIconIdx.IDX_ICO_RETRY
-        Else
-            ActualAppIconIdx = AppIconIdx.IDX_ICO_OFFLINE
-        End If
-
-        UpdateIcon_NotifyIcon()
-        RaiseEvent UpdateNotifyIconStr("Lost Connect", Nothing)
-        RaiseEvent UpdateBatteryState("Lost Connect")
-        LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
     End Sub
 
     Public Shared Sub Event_ChangeStatus() Handles Me.On_Battery, Me.On_Line,
