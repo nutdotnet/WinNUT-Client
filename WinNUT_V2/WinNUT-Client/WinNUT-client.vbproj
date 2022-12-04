@@ -139,13 +139,19 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="Controls\CProgressBar.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\UPSVarGauge.Designer.vb">
+      <DependentUpon>UPSVarGauge.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\UPSVarGauge.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="CProgressBar.vb">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="ToastPopup.vb" />
     <Compile Include="Update_Gui.Designer.vb">
@@ -317,7 +323,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include=".editorconfig" />
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
