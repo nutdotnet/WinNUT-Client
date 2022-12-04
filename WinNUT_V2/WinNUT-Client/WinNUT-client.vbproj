@@ -399,16 +399,15 @@
     <XliffResource Include="MultilingualResources\WinNUT-Client.zh-TW.xlf" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AGauge_mod\AGauge.csproj">
-      <Project>{cbdb1d25-5a95-43d4-a958-bf6ae65c6c3f}</Project>
-      <Name>AGauge</Name>
-    </ProjectReference>
     <ProjectReference Include="..\WinNUT-Client_Common\WinNUT-Client_Common.vbproj">
       <Project>{9074ce60-db9a-4bdf-b851-6eab8a81f366}</Project>
       <Name>WinNUT-Client_Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="AGauge_V2">
+      <Version>2.0.2</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
       <Version>7.1.2</Version>
     </PackageReference>
