@@ -9,9 +9,7 @@
 
 Imports System.ComponentModel
 
-
-Namespace System.Windows.Forms
-
+Namespace Controls
     Public Class UPSVarGauge
         Inherits AGauge
 
@@ -126,5 +124,4 @@ Namespace System.Windows.Forms
         'End Sub
 
     End Class
-
 End Namespace
