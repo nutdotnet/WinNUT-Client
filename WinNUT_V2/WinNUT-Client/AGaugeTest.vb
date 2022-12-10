@@ -12,4 +12,8 @@ Public Class AGaugeTest
         AGauge1.MinValue = txt_minValue.Text
         AGauge1.MaxValue = txt_maxValue.Text
     End Sub
+
+    Private Sub btn_battVClone_Click(sender As Object, e As EventArgs) Handles btn_battVClone.Click
+
+    End Sub
 End Class
