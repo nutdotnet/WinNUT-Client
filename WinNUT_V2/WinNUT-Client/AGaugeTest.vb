@@ -8,6 +8,15 @@
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
 Public Class AGaugeTest
+    Public Sub New()
+
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+
+    End Sub
+
     Private Sub btn_update_Click(sender As Object, e As EventArgs) Handles btn_update.Click
         AGauge1.MinValue = txt_minValue.Text
         AGauge1.MaxValue = txt_maxValue.Text

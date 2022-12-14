@@ -29,7 +29,7 @@ Partial Class AGaugeTest
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    ' <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txt_minValue = New System.Windows.Forms.TextBox()
@@ -38,7 +38,7 @@ Partial Class AGaugeTest
         Me.AGauge1 = New UPSVarGauge()
         Me.btn_update = New System.Windows.Forms.Button()
         Me.btn_battVClone = New System.Windows.Forms.Button()
-        Me.AG_BattV = New System.Windows.Forms.AGauge()
+        Me.AG_BattV = New UPSVarGauge()
         Me.SuspendLayout()
         '
         'Label1
@@ -80,8 +80,6 @@ Partial Class AGaugeTest
         Me.AGauge1.BaseArcStart = 135
         Me.AGauge1.BaseArcSweep = 270
         Me.AGauge1.BaseArcWidth = 5
-        Me.AGauge1.Center = New System.Drawing.Point(74, 70)
-        Me.AGauge1.GaugeAutoSize = False
         Me.AGauge1.Location = New System.Drawing.Point(13, 13)
         Me.AGauge1.MaxValue = 26.0!
         Me.AGauge1.MinValue = 2.0!
@@ -141,10 +139,8 @@ Partial Class AGaugeTest
         Me.AG_BattV.BaseArcStart = 135
         Me.AG_BattV.BaseArcSweep = 270
         Me.AG_BattV.BaseArcWidth = 5
-        Me.AG_BattV.Center = New System.Drawing.Point(74, 70)
-        Me.AG_BattV.GaugeAutoSize = False
         Me.AG_BattV.GradientType = UPSVarGauge.GradientTypeEnum.RedGreen
-        Me.AG_BattV.GradientOrientation = UPSVarGauge.GradientOrientationEnum.BottomToUp
+        Me.AG_BattV.GradientOrientation = UPSVarGauge.GradientOrientationEnum.BottomToTop
         Me.AG_BattV.Location = New System.Drawing.Point(208, 13)
         Me.AG_BattV.MaximumSize = New System.Drawing.Size(148, 130)
         Me.AG_BattV.MaxValue = 26.0!
