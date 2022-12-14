@@ -15,12 +15,9 @@ Friend Class UPSVarGauge
 
 #Region "Private Fields"
 
-    Private ReadOnly drawGaugeBackground = True
-
     Private ReadOnly m_value1 As Single
     Private m_value2 As Single
 
-    Private ReadOnly m_Center = New Point(74, 70)
     Private ReadOnly m_MinValue As Single = 0
     Private ReadOnly m_MaxValue As Single = 100
 
@@ -29,14 +26,14 @@ Friend Class UPSVarGauge
     Private ReadOnly m_BaseArcSweep = 270
     Private ReadOnly m_BaseArcWidth = 5
 
-    Private ReadOnly m_ScaleLinesInterInnerRadius = 40
-    Private ReadOnly m_ScaleLinesInterOuterRadius = 48
-    Private ReadOnly m_ScaleLinesInterWidth = 1
-
     Private ReadOnly m_ScaleLinesMinorTicks = 9
     Private ReadOnly m_ScaleLinesMinorInnerRadius = 42
     Private ReadOnly m_ScaleLinesMinorOuterRadius = 48
     Private ReadOnly m_ScaleLinesMinorWidth = 1
+
+    Private ReadOnly m_ScaleLinesInterInnerRadius = 40
+    Private ReadOnly m_ScaleLinesInterOuterRadius = 48
+    Private ReadOnly m_ScaleLinesInterWidth = 1
 
     Private ReadOnly m_ScaleLinesMajorStepValue = 50.0F
     Private ReadOnly m_ScaleLinesMajorInnerRadius = 40
@@ -56,7 +53,7 @@ Friend Class UPSVarGauge
     Private ReadOnly m_NeedleWidth = 2
 
     Private m_gradientType = GradientTypeEnum.RedGreen
-    Private m_gradientOrientation = GradientOrientationEnum.BottomToUp
+    Private m_gradientOrientation = GradientOrientationEnum.BottomToTop
     Private m_unitvalue1 = UnitValueEnum.Volts
     Private m_unitvalue2 = UnitValueEnum.None
 
@@ -66,7 +63,7 @@ Friend Class UPSVarGauge
 
     ' Map Value1 onto Value
     <Browsable(True),
-            Category("UPSVarGauge"),
+            Category("AGauge"),
             Description("First gauge value.")>
     Public Property Value1 As Single
         Get
@@ -162,8 +159,8 @@ Friend Class UPSVarGauge
     End Enum
 
     Public Enum GradientOrientationEnum
-        UpToBottom
-        BottomToUp
+        TopToBottom
+        BottomToTop
         RightToLeft
         LeftToRight
     End Enum
@@ -178,45 +175,47 @@ Friend Class UPSVarGauge
 
     Public Sub New()
         MyBase.New()
+        InitializeComponent()
 
         Size = New Size(148, 130)
-        Center = New Point(148, 130)
     End Sub
 
-    Overrides Sub RenderDefaultArc(graphics As Graphics, center As Point, centerFactor As Single)
+    Overrides Sub RenderDefaultArc(graphics As Graphics)
         If m_BaseArcRadius > 0 Then
             Dim baseArcRadius As Integer = m_BaseArcRadius * centerFactor
-            If m_gradientType <> GradientTypeEnum.None Then
-                Dim GradientP1Brush = New Point(0, (center.X + baseArcRadius + m_BaseArcWidth + 2))
-                Dim GradientP2Brush = New Point(0, (center.X - baseArcRadius - m_BaseArcWidth - 2))
 
-                Select Case m_gradientOrientation
-                    Case GradientOrientationEnum.UpToBottom
-                        GradientP1Brush = New Point(0, (center.X - baseArcRadius - m_BaseArcWidth - 2))
-                        GradientP2Brush = New Point(0, (center.X + baseArcRadius + m_BaseArcWidth + 2))
-                    Case GradientOrientationEnum.BottomToUp
-                        GradientP1Brush = New Point(0, (center.X + baseArcRadius + m_BaseArcWidth + 2))
-                        GradientP2Brush = New Point(0, (center.X - baseArcRadius - m_BaseArcWidth - 2))
-                    Case GradientOrientationEnum.RightToLeft
-                        GradientP1Brush = New Point((center.Y + baseArcRadius + m_BaseArcWidth + 2), 0)
-                        GradientP2Brush = New Point((center.Y - baseArcRadius - m_BaseArcWidth - 2), 0)
-                    Case GradientOrientationEnum.LeftToRight
-                        GradientP1Brush = New Point((center.Y - baseArcRadius - m_BaseArcWidth - 2), 0)
-                        GradientP2Brush = New Point((center.Y + baseArcRadius + m_BaseArcWidth + 2), 0)
-                End Select
-
-                Dim myArc1Gradient = New LinearGradientBrush(GradientP1Brush, GradientP2Brush, Color.Red, Color.Green)
-                Using pnArc = New Pen(myArc1Gradient, m_BaseArcWidth * centerFactor)
-                    graphics.DrawArc(pnArc, New Rectangle(center.X - baseArcRadius,
-                                                              center.Y - baseArcRadius,
+            If m_gradientType = GradientTypeEnum.None Then
+                Using pnArc = New Pen(BaseArcColor, m_BaseArcWidth * centerFactor)
+                    graphics.DrawArc(pnArc, New Rectangle(Center.X - baseArcRadius,
+                                                              Center.Y - baseArcRadius,
                                                               2 * baseArcRadius,
                                                               2 * baseArcRadius),
                                          m_BaseArcStart, m_BaseArcSweep)
                 End Using
+
             Else
-                Using pnArc = New Pen(BaseArcColor, m_BaseArcWidth * centerFactor)
-                    graphics.DrawArc(pnArc, New Rectangle(center.X - baseArcRadius,
-                                                              center.Y - baseArcRadius,
+                Dim GradientP1Brush = New Point(0, (Center.X + baseArcRadius + m_BaseArcWidth + 2))
+                Dim GradientP2Brush = New Point(0, (Center.X - baseArcRadius - m_BaseArcWidth - 2))
+
+                Select Case m_gradientOrientation
+                    Case GradientOrientationEnum.TopToBottom
+                        GradientP1Brush = New Point(0, (Center.Y - baseArcRadius - m_BaseArcWidth - 2))
+                        GradientP2Brush = New Point(0, (Center.Y + baseArcRadius + m_BaseArcWidth + 2))
+                    Case GradientOrientationEnum.BottomToTop
+                        GradientP1Brush = New Point(0, (Center.Y + baseArcRadius + m_BaseArcWidth + 2))
+                        GradientP2Brush = New Point(0, (Center.Y - baseArcRadius - m_BaseArcWidth - 2))
+                    Case GradientOrientationEnum.RightToLeft
+                        GradientP1Brush = New Point((Center.X + baseArcRadius + m_BaseArcWidth + 2), 0)
+                        GradientP2Brush = New Point((Center.X - baseArcRadius - m_BaseArcWidth - 2), 0)
+                    Case GradientOrientationEnum.LeftToRight
+                        GradientP1Brush = New Point((Center.X - baseArcRadius - m_BaseArcWidth - 2), 0)
+                        GradientP2Brush = New Point((Center.X + baseArcRadius + m_BaseArcWidth + 2), 0)
+                End Select
+
+                Dim myArc1Gradient = New LinearGradientBrush(GradientP1Brush, GradientP2Brush, Color.Red, Color.Green)
+                Using pnArc = New Pen(myArc1Gradient, m_BaseArcWidth * centerFactor)
+                    graphics.DrawArc(pnArc, New Rectangle(Center.X - baseArcRadius,
+                                                              Center.Y - baseArcRadius,
                                                               2 * baseArcRadius,
                                                               2 * baseArcRadius),
                                          m_BaseArcStart, m_BaseArcSweep)
@@ -228,13 +227,13 @@ Friend Class UPSVarGauge
     ''' <summary>
     ''' Override PostRender and render the value of the gauge with unit.
     ''' </summary>
-    Overrides Sub PostRender(graphics As Graphics, center As Point, centerFactor As Single)
+    Overrides Sub PostRender(graphics As Graphics)
         Dim PenString = New Pen(Color.Black)
         Dim PenFontV1 = New Font("Microsoft Sans Serif", 8, FontStyle.Bold)
         Dim PenFontV2 = New Font("Microsoft Sans Serif", 7, FontStyle.Bold)
         Dim StringPen = New SolidBrush(Color.Black)
         Dim LineHeight = 15
-        Dim StrPos = center
+        Dim StrPos = Center
         StrPos.Y += 5
 
         If UnitValue1 <> UnitValueEnum.None Then
