@@ -276,12 +276,17 @@ Public Class WinNUT
 #If DEBUG Then
         ' Insert AGauge testing dialog menu item
         Dim agDbgFormOpen = New ToolStripMenuItem("AGauge Test Form")
-        AddHandler agDbgFormOpen.Click, Function() AGaugeTest.ShowDialog()
+        AddHandler agDbgFormOpen.Click, AddressOf OpenAGDebugForm
         Menu_File.DropDownItems.Add(agDbgFormOpen)
 #End If
 
         LogFile.LogTracing(String.Format("{0} v{1} completed initialization.", My.Application.Info.ProductName, My.Application.Info.Version),
                            LogLvl.LOG_NOTICE, Me)
+    End Sub
+
+    Private Sub OpenAGDebugForm(sender As Object, e As EventArgs)
+        Dim form = New AGaugeTest()
+        form.ShowDialog()
     End Sub
 
     Private Sub SystemEvents_PowerModeChanged(sender As Object, e As Microsoft.Win32.PowerModeChangedEventArgs)

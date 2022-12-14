@@ -79,12 +79,12 @@ Partial Class WinNUT
         Me.GB_InF_Dial = New System.Windows.Forms.GroupBox()
         Me.Lbl_InF_Dial = New System.Windows.Forms.Label()
         Me.CB_CurrentLog = New System.Windows.Forms.ComboBox()
-        Me.AG_InF = New System.Windows.Forms.AGauge()
-        Me.AG_InV = New System.Windows.Forms.AGauge()
-        Me.AG_BattV = New System.Windows.Forms.AGauge()
-        Me.AG_Load = New System.Windows.Forms.AGauge()
-        Me.AG_OutV = New System.Windows.Forms.AGauge()
-        Me.AG_BattCh = New System.Windows.Forms.AGauge()
+        Me.AG_InF = New UPSVarGauge()
+        Me.AG_InV = New UPSVarGauge()
+        Me.AG_BattV = New UPSVarGauge()
+        Me.AG_Load = New UPSVarGauge()
+        Me.AG_OutV = New UPSVarGauge()
+        Me.AG_BattCh = New UPSVarGauge()
         Me.ContextMenu_Systray.SuspendLayout()
         Me.Main_Menu.SuspendLayout()
         Me.GB_Status.SuspendLayout()
@@ -452,15 +452,13 @@ Partial Class WinNUT
         Me.AG_InF.BaseArcStart = 135
         Me.AG_InF.BaseArcSweep = 270
         Me.AG_InF.BaseArcWidth = 5
-        Me.AG_InF.Center = New System.Drawing.Point(74, 70)
-        Me.AG_InF.GaugeAutoSize = False
-        Me.AG_InF.GradientColor = System.Windows.Forms.AGauge.GradientType.RedGreen
-        Me.AG_InF.GradientColorOrientation = System.Windows.Forms.AGauge.GradientOrientation.BottomToUp
+        Me.AG_InF.GradientType = UPSVarGauge.GradientTypeEnum.RedGreen
+        Me.AG_InF.GradientOrientation = UPSVarGauge.GradientOrientationEnum.BottomToTop
         resources.ApplyResources(Me.AG_InF, "AG_InF")
         Me.AG_InF.MaxValue = 100.0!
         Me.AG_InF.MinValue = 0!
         Me.AG_InF.Name = "AG_InF"
-        Me.AG_InF.NeedleColor1 = System.Windows.Forms.AGaugeNeedleColor.Gray
+        Me.AG_InF.NeedleColor1 = AGaugeNeedleColor.Gray
         Me.AG_InF.NeedleColor2 = System.Drawing.Color.DimGray
         Me.AG_InF.NeedleRadius = 32
         Me.AG_InF.NeedleType = System.Windows.Forms.NeedleType.Advance
@@ -485,8 +483,8 @@ Partial Class WinNUT
         Me.AG_InF.ScaleNumbersRotation = 0
         Me.AG_InF.ScaleNumbersStartScaleLine = 0
         Me.AG_InF.ScaleNumbersStepScaleLines = 1
-        Me.AG_InF.UnitValue1 = System.Windows.Forms.AGauge.UnitValue.Hertz
-        Me.AG_InF.UnitValue2 = System.Windows.Forms.AGauge.UnitValue.None
+        Me.AG_InF.UnitValue1 = UPSVarGauge.UnitValueEnum.Hertz
+        Me.AG_InF.UnitValue2 = UPSVarGauge.UnitValueEnum.None
         Me.AG_InF.Value1 = 0!
         Me.AG_InF.Value2 = 0!
         '
@@ -497,15 +495,13 @@ Partial Class WinNUT
         Me.AG_InV.BaseArcStart = 135
         Me.AG_InV.BaseArcSweep = 270
         Me.AG_InV.BaseArcWidth = 5
-        Me.AG_InV.Center = New System.Drawing.Point(74, 70)
-        Me.AG_InV.GaugeAutoSize = False
-        Me.AG_InV.GradientColor = System.Windows.Forms.AGauge.GradientType.RedGreen
-        Me.AG_InV.GradientColorOrientation = System.Windows.Forms.AGauge.GradientOrientation.BottomToUp
+        Me.AG_InV.GradientType = UPSVarGauge.GradientTypeEnum.RedGreen
+        Me.AG_InV.GradientOrientation = UPSVarGauge.GradientOrientationEnum.BottomToTop
         resources.ApplyResources(Me.AG_InV, "AG_InV")
         Me.AG_InV.MaxValue = 100.0!
         Me.AG_InV.MinValue = 0!
         Me.AG_InV.Name = "AG_InV"
-        Me.AG_InV.NeedleColor1 = System.Windows.Forms.AGaugeNeedleColor.Gray
+        Me.AG_InV.NeedleColor1 = AGaugeNeedleColor.Gray
         Me.AG_InV.NeedleColor2 = System.Drawing.Color.DimGray
         Me.AG_InV.NeedleRadius = 32
         Me.AG_InV.NeedleType = System.Windows.Forms.NeedleType.Advance
@@ -530,8 +526,8 @@ Partial Class WinNUT
         Me.AG_InV.ScaleNumbersRotation = 0
         Me.AG_InV.ScaleNumbersStartScaleLine = 0
         Me.AG_InV.ScaleNumbersStepScaleLines = 1
-        Me.AG_InV.UnitValue1 = System.Windows.Forms.AGauge.UnitValue.Volts
-        Me.AG_InV.UnitValue2 = System.Windows.Forms.AGauge.UnitValue.None
+        Me.AG_InV.UnitValue1 = UPSVarGauge.UnitValueEnum.Volts
+        Me.AG_InV.UnitValue2 = UPSVarGauge.UnitValueEnum.None
         Me.AG_InV.Value1 = 0!
         Me.AG_InV.Value2 = 0!
         '
@@ -542,15 +538,13 @@ Partial Class WinNUT
         Me.AG_BattV.BaseArcStart = 135
         Me.AG_BattV.BaseArcSweep = 270
         Me.AG_BattV.BaseArcWidth = 5
-        Me.AG_BattV.Center = New System.Drawing.Point(74, 70)
-        Me.AG_BattV.GaugeAutoSize = False
-        Me.AG_BattV.GradientColor = System.Windows.Forms.AGauge.GradientType.RedGreen
-        Me.AG_BattV.GradientColorOrientation = System.Windows.Forms.AGauge.GradientOrientation.BottomToUp
+        Me.AG_BattV.GradientType = UPSVarGauge.GradientTypeEnum.RedGreen
+        Me.AG_BattV.GradientOrientation = UPSVarGauge.GradientOrientationEnum.BottomToTop
         resources.ApplyResources(Me.AG_BattV, "AG_BattV")
         Me.AG_BattV.MaxValue = 100.0!
         Me.AG_BattV.MinValue = 0!
         Me.AG_BattV.Name = "AG_BattV"
-        Me.AG_BattV.NeedleColor1 = System.Windows.Forms.AGaugeNeedleColor.Gray
+        Me.AG_BattV.NeedleColor1 = AGaugeNeedleColor.Gray
         Me.AG_BattV.NeedleColor2 = System.Drawing.Color.DimGray
         Me.AG_BattV.NeedleRadius = 32
         Me.AG_BattV.NeedleType = System.Windows.Forms.NeedleType.Advance
@@ -575,8 +569,8 @@ Partial Class WinNUT
         Me.AG_BattV.ScaleNumbersRotation = 0
         Me.AG_BattV.ScaleNumbersStartScaleLine = 0
         Me.AG_BattV.ScaleNumbersStepScaleLines = 1
-        Me.AG_BattV.UnitValue1 = System.Windows.Forms.AGauge.UnitValue.Volts
-        Me.AG_BattV.UnitValue2 = System.Windows.Forms.AGauge.UnitValue.None
+        Me.AG_BattV.UnitValue1 = UPSVarGauge.UnitValueEnum.Volts
+        Me.AG_BattV.UnitValue2 = UPSVarGauge.UnitValueEnum.None
         Me.AG_BattV.Value1 = 0!
         Me.AG_BattV.Value2 = 0!
         '
@@ -587,15 +581,13 @@ Partial Class WinNUT
         Me.AG_Load.BaseArcStart = 135
         Me.AG_Load.BaseArcSweep = 270
         Me.AG_Load.BaseArcWidth = 5
-        Me.AG_Load.Center = New System.Drawing.Point(74, 70)
-        Me.AG_Load.GaugeAutoSize = False
-        Me.AG_Load.GradientColor = System.Windows.Forms.AGauge.GradientType.RedGreen
-        Me.AG_Load.GradientColorOrientation = System.Windows.Forms.AGauge.GradientOrientation.RightToLeft
+        Me.AG_Load.GradientType = UPSVarGauge.GradientTypeEnum.RedGreen
+        Me.AG_Load.GradientOrientation = UPSVarGauge.GradientOrientationEnum.RightToLeft
         resources.ApplyResources(Me.AG_Load, "AG_Load")
         Me.AG_Load.MaxValue = 100.0!
         Me.AG_Load.MinValue = 0!
         Me.AG_Load.Name = "AG_Load"
-        Me.AG_Load.NeedleColor1 = System.Windows.Forms.AGaugeNeedleColor.Gray
+        Me.AG_Load.NeedleColor1 = AGaugeNeedleColor.Gray
         Me.AG_Load.NeedleColor2 = System.Drawing.Color.DimGray
         Me.AG_Load.NeedleRadius = 32
         Me.AG_Load.NeedleType = System.Windows.Forms.NeedleType.Advance
@@ -620,8 +612,8 @@ Partial Class WinNUT
         Me.AG_Load.ScaleNumbersRotation = 0
         Me.AG_Load.ScaleNumbersStartScaleLine = 0
         Me.AG_Load.ScaleNumbersStepScaleLines = 1
-        Me.AG_Load.UnitValue1 = System.Windows.Forms.AGauge.UnitValue.Percent
-        Me.AG_Load.UnitValue2 = System.Windows.Forms.AGauge.UnitValue.Watts
+        Me.AG_Load.UnitValue1 = UPSVarGauge.UnitValueEnum.Percent
+        Me.AG_Load.UnitValue2 = UPSVarGauge.UnitValueEnum.Watts
         Me.AG_Load.Value1 = 0!
         Me.AG_Load.Value2 = 0!
         '
@@ -632,15 +624,13 @@ Partial Class WinNUT
         Me.AG_OutV.BaseArcStart = 135
         Me.AG_OutV.BaseArcSweep = 270
         Me.AG_OutV.BaseArcWidth = 5
-        Me.AG_OutV.Center = New System.Drawing.Point(74, 70)
-        Me.AG_OutV.GaugeAutoSize = False
-        Me.AG_OutV.GradientColor = System.Windows.Forms.AGauge.GradientType.RedGreen
-        Me.AG_OutV.GradientColorOrientation = System.Windows.Forms.AGauge.GradientOrientation.BottomToUp
+        Me.AG_OutV.GradientType = UPSVarGauge.GradientTypeEnum.RedGreen
+        Me.AG_OutV.GradientOrientation = UPSVarGauge.GradientOrientationEnum.BottomToTop
         resources.ApplyResources(Me.AG_OutV, "AG_OutV")
         Me.AG_OutV.MaxValue = 100.0!
         Me.AG_OutV.MinValue = 0!
         Me.AG_OutV.Name = "AG_OutV"
-        Me.AG_OutV.NeedleColor1 = System.Windows.Forms.AGaugeNeedleColor.Gray
+        Me.AG_OutV.NeedleColor1 = AGaugeNeedleColor.Gray
         Me.AG_OutV.NeedleColor2 = System.Drawing.Color.DimGray
         Me.AG_OutV.NeedleRadius = 32
         Me.AG_OutV.NeedleType = System.Windows.Forms.NeedleType.Advance
@@ -665,8 +655,8 @@ Partial Class WinNUT
         Me.AG_OutV.ScaleNumbersRotation = 0
         Me.AG_OutV.ScaleNumbersStartScaleLine = 0
         Me.AG_OutV.ScaleNumbersStepScaleLines = 1
-        Me.AG_OutV.UnitValue1 = System.Windows.Forms.AGauge.UnitValue.Volts
-        Me.AG_OutV.UnitValue2 = System.Windows.Forms.AGauge.UnitValue.None
+        Me.AG_OutV.UnitValue1 = UPSVarGauge.UnitValueEnum.Volts
+        Me.AG_OutV.UnitValue2 = UPSVarGauge.UnitValueEnum.None
         Me.AG_OutV.Value1 = 0!
         Me.AG_OutV.Value2 = 0!
         '
@@ -677,15 +667,13 @@ Partial Class WinNUT
         Me.AG_BattCh.BaseArcStart = 135
         Me.AG_BattCh.BaseArcSweep = 270
         Me.AG_BattCh.BaseArcWidth = 5
-        Me.AG_BattCh.Center = New System.Drawing.Point(74, 70)
-        Me.AG_BattCh.GaugeAutoSize = False
-        Me.AG_BattCh.GradientColor = System.Windows.Forms.AGauge.GradientType.RedGreen
-        Me.AG_BattCh.GradientColorOrientation = System.Windows.Forms.AGauge.GradientOrientation.LeftToRight
+        Me.AG_BattCh.GradientType = UPSVarGauge.GradientTypeEnum.RedGreen
+        Me.AG_BattCh.GradientOrientation = UPSVarGauge.GradientOrientationEnum.LeftToRight
         resources.ApplyResources(Me.AG_BattCh, "AG_BattCh")
         Me.AG_BattCh.MaxValue = 100.0!
         Me.AG_BattCh.MinValue = 0!
         Me.AG_BattCh.Name = "AG_BattCh"
-        Me.AG_BattCh.NeedleColor1 = System.Windows.Forms.AGaugeNeedleColor.Gray
+        Me.AG_BattCh.NeedleColor1 = AGaugeNeedleColor.Gray
         Me.AG_BattCh.NeedleColor2 = System.Drawing.Color.DimGray
         Me.AG_BattCh.NeedleRadius = 32
         Me.AG_BattCh.NeedleType = System.Windows.Forms.NeedleType.Advance
@@ -710,8 +698,8 @@ Partial Class WinNUT
         Me.AG_BattCh.ScaleNumbersRotation = 0
         Me.AG_BattCh.ScaleNumbersStartScaleLine = 0
         Me.AG_BattCh.ScaleNumbersStepScaleLines = 1
-        Me.AG_BattCh.UnitValue1 = System.Windows.Forms.AGauge.UnitValue.Percent
-        Me.AG_BattCh.UnitValue2 = System.Windows.Forms.AGauge.UnitValue.None
+        Me.AG_BattCh.UnitValue1 = UPSVarGauge.UnitValueEnum.Percent
+        Me.AG_BattCh.UnitValue2 = UPSVarGauge.UnitValueEnum.None
         Me.AG_BattCh.Value1 = 0!
         Me.AG_BattCh.Value2 = 0!
         '
@@ -806,13 +794,13 @@ Partial Class WinNUT
     Friend WithEvents Lbl_BattV_Dial As Label
     Friend WithEvents GB_InV_Dial As GroupBox
     Friend WithEvents Lbl_InV_Dial As Label
-    Friend WithEvents AG_InV As AGauge
-    Friend WithEvents AG_OutV As AGauge
-    Friend WithEvents AG_BattCh As AGauge
-    Friend WithEvents AG_Load As AGauge
-    Friend WithEvents AG_BattV As AGauge
+    Friend WithEvents AG_InV As UPSVarGauge
+    Friend WithEvents AG_OutV As UPSVarGauge
+    Friend WithEvents AG_BattCh As UPSVarGauge
+    Friend WithEvents AG_Load As UPSVarGauge
+    Friend WithEvents AG_BattV As UPSVarGauge
     Friend WithEvents GB_InF_Dial As GroupBox
-    Friend WithEvents AG_InF As AGauge
+    Friend WithEvents AG_InF As UPSVarGauge
     Friend WithEvents Lbl_InF_Dial As Label
     Friend WithEvents CB_CurrentLog As ComboBox
     Friend WithEvents Menu_Import_Ini As ToolStripMenuItem
