@@ -101,18 +101,18 @@ End Enum
 
 <Flags()>
 Public Enum UPS_States
-    None
-    OL
-    OB
-    LB
-    HB
-    CHRG
-    DISCHRG
-    FSD
-    BYPASS
-    CAL
-    OFF
-    OVER
-    TRIM
-    BOOST
+    None = 0
+    OL = 1 << 0
+    OB = 1 << 1
+    LB = 1 << 2
+    HB = 1 << 3
+    CHRG = 1 << 4
+    DISCHRG = 1 << 5
+    FSD = 1 << 6
+    BYPASS = 1 << 7
+    CAL = 1 << 8
+    OFF = 1 << 9
+    OVER = 1 << 10
+    TRIM = 1 << 11
+    BOOST = 1 << 12
 End Enum
