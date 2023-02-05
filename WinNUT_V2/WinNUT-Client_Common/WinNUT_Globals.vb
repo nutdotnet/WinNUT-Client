@@ -20,7 +20,7 @@ Public Module WinNUT_Globals
 #Else
         Public ReadOnly IsDebugBuild = False
         Private ReadOnly DESIRED_DATA_PATH As String = Environment.GetFolderPath(
-                Environment.SpecialFolder.ApplicationData))
+                Environment.SpecialFolder.ApplicationData)
 #End If
 
     Private ReadOnly FALLBACK_DATA_PATH = Path.GetTempPath()
