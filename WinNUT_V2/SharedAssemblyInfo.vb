@@ -20,17 +20,4 @@ Imports System.Reflection
 <Assembly: AssemblyProduct("WinNUT Client")>
 <Assembly: AssemblyCopyright("NUTDotNet contributors © 2019-2022")>
 <Assembly: AssemblyTrademark("https://github.com/nutdotnet/WinNUT-Client")>
-
-' Les informations de version pour un assembly se composent des quatre valeurs suivantes :
-'
-'      Version principale
-'      Version secondaire
-'      Numéro de build
-'      Révision
-'
-' Vous pouvez spécifier toutes les valeurs ou indiquer les numéros de build et de révision par défaut
-' en utilisant '*', comme indiqué ci-dessous :
-' <Assembly: AssemblyVersion("1.0.*")>
-
-<Assembly: AssemblyVersion("2.2.*")>
 <Assembly: NeutralResourcesLanguage("en-US")>
