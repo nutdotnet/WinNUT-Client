@@ -1,5 +1,3 @@
-# Build the solution to verify a successful build in debug mode.
-
 name: build-debug
 
 on:
@@ -15,26 +13,24 @@ env:
   SHORT_SHA:
 
 jobs:
-  prepare-environment:
+  build-debug:
     runs-on: windows-latest
     steps:
-      - name: Get short SHA
+      - name: "Get Short SHA"
+        id: "get-short-sha"
+        shell: pwsh
         run: echo "SHORT_SHA=$("${{ github.sha }}".SubString(0, 8))" >> $env:GITHUB_ENV
-
-  build-solution:
-    uses: ./.github/workflows/build-solution.yaml
-    with:
-      buildMode: 'Debug'
-      version: '2.2.*'
-      compileLangs: false
-  
-  build-debug:
-    needs: build-solution
-    # runs-on: windows-latest
-    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Build solution in Debug configuration (no multilingual)
+        uses: ./.github/actions/build-solution
+        with:
+          build-mode: "Debug"
+          version: "2.2.*"
+          compile-langs: false
       - name: Package output
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ format('winnut-{0}-{1}', inputs.buildMode, env.SHORT_SHA) }}
+          name: ${{ format('winnut-client-debug-{0}', env.SHORT_SHA) }}
           if-no-files-found: error
-          path: WinNUT_V2/WinNUT_GUI/bin/Debug
+          path: WinNUT_V2/WinNUT-Client/bin/Debug
