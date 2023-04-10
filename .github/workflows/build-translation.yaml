@@ -1,0 +1,32 @@
+name: build-translation
+
+on:
+  workflow_dispatch:
+
+  pull_request:
+    branches: Dev-2.2
+    paths:
+    - "**.xlf"
+
+jobs:
+  build-translation:
+    runs-on: windows-latest
+    steps:
+      - name: "Get Short SHA"
+        id: "get-short-sha"
+        shell: pwsh
+        run: echo "SHORT_SHA=$("${{ github.sha }}".SubString(0, 8))" >> $env:GITHUB_ENV
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Build solution in Debug configuration (with multilingual)
+        uses: ./.github/actions/build-solution
+        with:
+          build-mode: "Debug"
+          version: "2.2.*"
+          compile-langs: true
+      - name: Package output
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ format('winnut-client-debug-{0}', env.SHORT_SHA) }}
+          if-no-files-found: error
+          path: WinNUT_V2/WinNUT-Client/bin/Debug
