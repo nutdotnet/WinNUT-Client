@@ -1,5 +1,5 @@
 name: "Build Solution"
-description: "Execute MSBuild with desired settings."
+description: "Execute MSBuild with desired settings, and upload resulting artifact."
 inputs:
       build-mode:
         description: 'Solution build mode passed to MSBuild.'
@@ -9,24 +9,18 @@ inputs:
         description: 'Version number to refer to this build and its assets, in the form `major.minor.build`.'
         required: true
 
-      compile-langs:
-        description: 'Install the Multilingual App Toolkit extension, so that languages are compiled.'
-        required: true
-
 runs:
   using: "composite"
   steps:
+    - name: "Get Short SHA"
+      shell: pwsh
+      run: echo "SHORT_SHA=$("${{ github.sha }}".SubString(0, 8))" >> $env:GITHUB_ENV
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1
     - name: Restore Packages
       working-directory: WinNUT_V2
       shell: pwsh
       run: msbuild $env:SLN_DIR -t:restore
-    - name: Install Multilingual App Toolkit extension
-      if: inputs.compile-langs == 'true'
-      uses: microcompiler/install-vsix@db1f973c3d24d1ddc0c38f14d0e1e3a85b2ccb21
-      with:
-        packagename: 'dts-publisher.mat2022'
     - name: Build solution
       shell: pwsh
       working-directory: WinNUT_V2
@@ -34,3 +28,9 @@ runs:
         msbuild WinNUT_V2.sln -nologo
         -property:Configuration=${{ inputs.build-mode }}
         -property:Version=${{ inputs.version }}
+    - name: Package output
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ format('winnut-client-{0}-{1}', inputs.build-mode, env.SHORT_SHA) }}
+        if-no-files-found: error
+        path: WinNUT_V2/WinNUT-Client/bin/${{ inputs.build-mode }}
