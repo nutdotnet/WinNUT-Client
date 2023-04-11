@@ -12,21 +12,14 @@ jobs:
   build-translation:
     runs-on: windows-latest
     steps:
-      - name: "Get Short SHA"
-        id: "get-short-sha"
-        shell: pwsh
-        run: echo "SHORT_SHA=$("${{ github.sha }}".SubString(0, 8))" >> $env:GITHUB_ENV
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Build solution in Debug configuration (with multilingual)
+      - name: Install Multilingual App Toolkit extension
+        uses: microcompiler/install-vsix@db1f973c3d24d1ddc0c38f14d0e1e3a85b2ccb21
+        with:
+          packagename: 'dts-publisher.mat2022'
+      - name: Build solution in Debug configuration
         uses: ./.github/actions/build-solution
         with:
           build-mode: "Debug"
-          version: "2.2.*"
-          compile-langs: true
-      - name: Package output
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ format('winnut-client-debug-{0}', env.SHORT_SHA) }}
-          if-no-files-found: error
-          path: WinNUT_V2/WinNUT-Client/bin/Debug
+          version: "${{ vars.PRERELEASE_VERSION }}.*"
