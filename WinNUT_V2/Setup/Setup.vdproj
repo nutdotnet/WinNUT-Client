@@ -393,12 +393,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_3F430083DA6440B2B12DECC4BB791883"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_3FDB26770B8C2C12BAE91A21DA04EBC3"
         "OwnerKey" = "8:_70DBA11C2BF449198BA594449914C1BC"
         "MsmSig" = "8:_UNDEFINED"
@@ -1625,12 +1619,6 @@
         {
         "MsmKey" = "8:_75BE45541E40F8250A565F0D0C3FCA82"
         "OwnerKey" = "8:_70DBA11C2BF449198BA594449914C1BC"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_761987FA7717402DB92207F177F3DB49"
-        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -2927,6 +2915,12 @@
         {
         "MsmKey" = "8:_9DFE9A8C70BF36F01921D1C4B1602C70"
         "OwnerKey" = "8:_70DBA11C2BF449198BA594449914C1BC"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_9E636FF29BA24788AE1072D051294BE6"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -4307,6 +4301,12 @@
         {
         "MsmKey" = "8:_E7F08E9ED28295BEE3DDF803B5DE61DF"
         "OwnerKey" = "8:_70DBA11C2BF449198BA594449914C1BC"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E836E4A52E0740F5A2C614D8AB62A468"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -7350,37 +7350,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_2A6481F0F99C80219D875FADD7CEBCF5"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
-                "ScatterAssemblies"
-                {
-                    "_2A6481F0F99C80219D875FADD7CEBCF5"
-                    {
-                    "Name" = "8:System.Net.Http.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.Net.Http.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_33BCB1EF059B4E9B87FA7435A8F2499C"
             {
             "SourcePath" = "8:..\\images\\Ico\\WinNut.ico"
@@ -7833,26 +7802,6 @@
             "Register" = "3:1"
             "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3F430083DA6440B2B12DECC4BB791883"
-            {
-            "SourcePath" = "8:..\\..\\changelog.md"
-            "TargetName" = "8:changelog.md"
-            "Tag" = "8:"
-            "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:FALSE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3FDB26770B8C2C12BAE91A21DA04EBC3"
@@ -8603,7 +8552,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WinNUT-Client_Common, Version=2.2.8436.29817, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:WinNUT-Client_Common, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_5C99D3FB8E4CBB81209F637E049611DF"
@@ -8768,37 +8717,6 @@
                     }
                 }
             "SourcePath" = "8:System.Runtime.WindowsRuntime.UI.Xaml.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_64004A3095D61B7A465881685BB1A0CF"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:System.ObjectModel, Version=4.0.11.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
-                "ScatterAssemblies"
-                {
-                    "_64004A3095D61B7A465881685BB1A0CF"
-                    {
-                    "Name" = "8:System.ObjectModel.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.ObjectModel.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
@@ -9436,26 +9354,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_761987FA7717402DB92207F177F3DB49"
-            {
-            "SourcePath" = "8:..\\..\\COPYING"
-            "TargetName" = "8:COPYING"
-            "Tag" = "8:"
-            "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_763D47C7EB44810D6199E3315BC543EF"
             {
             "AssemblyRegister" = "3:1"
@@ -9491,7 +9389,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:AGauge, Version=2.1.8436.29817, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:AGauge, Version=2.1.8502.34404, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_7643B2E01E55816C8BA2265FF9E9B786"
@@ -9724,37 +9622,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7F619FE6A380D79E80E85D6E6822F82A"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:System.ObjectModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_7F619FE6A380D79E80E85D6E6822F82A"
-                    {
-                    "Name" = "8:System.ObjectModel.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.ObjectModel.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7F6E5FD19E88328BADA4E8B2CE4E1A32"
             {
             "AssemblyRegister" = "3:1"
@@ -9938,37 +9805,6 @@
             "PackageAs" = "3:1"
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_869845581A9866B44DBED568C68F8D20"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:System.Runtime, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_869845581A9866B44DBED568C68F8D20"
-                    {
-                    "Name" = "8:System.Runtime.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.Runtime.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -10652,6 +10488,26 @@
             "Register" = "3:1"
             "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9E636FF29BA24788AE1072D051294BE6"
+            {
+            "SourcePath" = "8:..\\..\\LICENSE.txt"
+            "TargetName" = "8:LICENSE.txt"
+            "Tag" = "8:"
+            "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9F6DE8A084F82CF80095E944791B4989"
@@ -11370,37 +11226,6 @@
                     }
                 }
             "SourcePath" = "8:System.Linq.Queryable.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C41DB7598DA243F404B67F0C6A6AD857"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:System.Runtime, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
-                "ScatterAssemblies"
-                {
-                    "_C41DB7598DA243F404B67F0C6A6AD857"
-                    {
-                    "Name" = "8:System.Runtime.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.Runtime.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
@@ -12348,6 +12173,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E836E4A52E0740F5A2C614D8AB62A468"
+            {
+            "SourcePath" = "8:..\\..\\CHANGELOG.md"
+            "TargetName" = "8:CHANGELOG.md"
+            "Tag" = "8:"
+            "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E8BB0E2A241C1023B684B55FEB5B745F"
             {
             "AssemblyRegister" = "3:1"
@@ -12734,37 +12579,6 @@
                     }
                 }
             "SourcePath" = "8:System.IO.Compression.ZipFile.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_FE65F691A8229B618E6EA507F54C7373"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_FE65F691A8229B618E6EA507F54C7373"
-                    {
-                    "Name" = "8:System.Net.Http.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.Net.Http.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
@@ -13481,6 +13295,7 @@
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {
+                "ExcludeFilter" = "8:system.net.http.dll"
                 }
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_8B1E7E5B3E4E41DCA9C0CC6327710A7B"
