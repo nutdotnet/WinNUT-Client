@@ -8,55 +8,72 @@ on:
 
 env:
   # The desired name of the no-install archive to be uploaded along side the installer.
-  ARCHIVE_NAME: "winnut-client"
+  ARCHIVE_NAME: "winnut-client-noinstall"
   VS_PATH: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise"
 
 jobs:
   build-release:
     runs-on: windows-latest
     steps:
+      - name: Setup Git
+        run: |
+          git config --global url."https://user:${{ secrets.GITHUB_TOKEN }}@github".insteadOf https://github
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
       - name: Checkout code
         uses: actions/checkout@v3
       # Provide VER and SEMVER env vars.
       - name: Extract version from tag
         run: ./.github/workflows/get-ver.ps1 ${{ github.ref }}
-      - name: Build solution in Release configuration
-        uses: ./.github/actions/build-solution
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+      - name: Build solution
+        working-directory: WinNUT_V2
+        run: >
+          msbuild -target:"restore;publish" 
+          -property:Configuration="Release"
+          -property:Version="${{ env.VER }}"
+          -property:ApplicationVersion="${{ env.VER }}.0"
+          -property:PublishDir="./publish"
+      - name: Checkout pages branch
+        uses: actions/checkout@v3
         with:
-          build-mode: "Release"
-          version: "${{ env.VER }}"
+          ref: "gh-pages"
+          path: "gh-pages"
+      - name: Prep ClickOnce branch and deploy
+        working-directory: gh-pages
+        run: |
+          $outDir = "WinNUT_V2/WinNUT-Client/publish"
+          Write-Output "Removing previous files..."
+          if (Test-Path "Application Files") {
+              Remove-Item -Path "Application Files" -Recurse
+          }
+          if (Test-Path "WinNUT-Client.application") {
+              Remove-Item -Path "WinNUT-Client.application"
+          }
+          Write-Output "Copying new files..."
+          Copy-Item -Path "../$outDir/Application Files","../$outDir/WinNUT-Client.application" -Destination . -Recurse
+          # Stage and commit.
+          Write-Output "Staging..."
+          git add -A
+          Write-Output "Committing..."
+          git commit -m "Update to ${{ env.SEMVER }}"
+          # Push.
+          git push
       - name: Prepare no install archive
         run: |
-          $arc = Compress-Archive -PassThru -Path "WinNUT_V2\WinNUT-Client\bin\Release" -DestinationPath "${{ env.ARCHIVE_NAME }}-v${{ env.SEMVER }}.zip"
+          $arc = Compress-Archive -PassThru -Path "WinNUT_V2\WinNUT-Client\bin\Release" -DestinationPath "${{ env.ARCHIVE_NAME }}-${{ env.SEMVER }}.zip"
+          $arc = $arc -replace '\\','/'
           echo "ARCHIVE_NAME=$arc" >> $env:GITHUB_ENV
-      # https://stackoverflow.com/questions/8648428/an-error-occurred-while-validating-hresult-8000000a
-      - name: Fix 'out of process' build error
-        working-directory: ${{ env.VS_PATH }}
-        run: Start-Process -Wait -NoNewWindow "${{ env.VS_PATH }}\Common7\IDE\CommonExtensions\Microsoft\VSI\DisableOutOfProcBuild\DisableOutOfProcBuild.exe"
-      # Since MSBuild won't build the Setup project, we need to call devenv directly.
-      - name: Build Setup Project
-        run: Start-Process -Wait -NoNewWindow "${{ env.VS_PATH }}\common7\ide\devenv.com" -ArgumentList "WinNUT_V2\WinNUT_V2.sln /Build Release /Project Setup\Setup.vdproj"
-      - name: Create prerelease
+      - name: Create GitHub release
         uses: softprops/action-gh-release@v1
         with:
           draft: true
           fail_on_unmatched_files: true
           generate_release_notes: true
           files: |
-            WinNUT_V2/Setup/Release/WinNUT-Setup.msi
+            WinNUT_V2/WinNUT-Client/publish/WinNUT-Client.application
             ${{ env.ARCHIVE_NAME }}
             LICENSE.txt
             README.md
             CHANGELOG.md
-      # - name: Create prerelease
-      #   uses: "marvinpinto/action-automatic-releases@v1.2.1"
-      #   with:
-      #     repo_token: "${{ secrets.GITHUB_TOKEN }}"
-      #     draft: true   # Release as draft until I'm more confident
-      #     prerelease: true
-      #     files: |
-      #       WinNUT_V2\Setup\Release\WinNUT-Setup.msi
-      #       ${{ env.ARCHIVE_NAME }}.zip
-      #       LICENSE.txt
-      #       README.md
-      #       CHANGELOG.md
