@@ -1,6 +1,73 @@
 ## History:
-### Further releases
-Please see the [releases](https://github.com/nutdotnet/WinNUT-Client/releases) page for more recent releases.
+### Pre-Release v2.2.8436
+After a longer than expected wait, the next pre-release is out with another set of bugfixes.
+
+## What's Changed
+* Data directory location is more consistent depending on how WinNUT is being run (build type and location) by @gbakeman in https://github.com/nutdotnet/WinNUT-Client/pull/62
+  * Also includes some improvements to the Logger
+* WinNUT is more stable when the connection is lost, and the UI will no longer show strange data by @gbakeman in https://github.com/nutdotnet/WinNUT-Client/pull/64
+* Define UPS_States values as pow of 2 to fix state change detection by @supersmile2009 in https://github.com/nutdotnet/WinNUT-Client/pull/71
+* Fix release build by @supersmile2009 in https://github.com/nutdotnet/WinNUT-Client/pull/72
+
+## New Contributors
+* @supersmile2009 made their first contribution in https://github.com/nutdotnet/WinNUT-Client/pull/71
+
+**Full Changelog**: https://github.com/nutdotnet/WinNUT-Client/compare/v2.2.8356...v2.2.8436
+
+### Pre-Release v2.2.8356
+## What's Changed
+* Installer dependency cleanup by @gbakeman in https://github.com/nutdotnet/WinNUT-Client/pull/48
+* Logging fixes by @gbakeman in https://github.com/nutdotnet/WinNUT-Client/pull/50
+* Fix incorrect windows version detection by @gbakeman in https://github.com/nutdotnet/WinNUT-Client/pull/51
+* Fix List_Var_Gui error by @gbakeman in https://github.com/nutdotnet/WinNUT-Client/pull/52
+* Upgrade to .Net Framework 4.8 by @gbakeman in https://github.com/nutdotnet/WinNUT-Client/pull/53
+* Upgrade unhandled exception handling, cryptography by @gbakeman in https://github.com/nutdotnet/WinNUT-Client/pull/49
+  * This fixes an error on startup that was affecting many people. Please upgrade to this version if WinNUT was crashing on startup for you.
+* Respect Follow FSD setting by @gbakeman in https://github.com/nutdotnet/WinNUT-Client/pull/57
+
+Also fixing the installer per #60 
+
+**Full Changelog**: https://github.com/nutdotnet/WinNUT-Client/compare/v2.2.8331...v2.2.8356
+
+### Pre-Release v2.2.8331 (Installer quick fix)
+Quick fix to remove many dependencies that were added to the installer distribution of WinNUT. Only the installer has changed; please see the last release for the non-installer version.
+
+### Pre-Release v2.2.8328
+## Noticeable changes
+* Re-enabled the Battery Runtime calculation. Not sure why it was disabled, please report any issues experienced with this. https://github.com/nutdotnet/WinNUT-Client/pull/33
+* Finally applied pending de-DE and zh-TW translations to WinNUT https://github.com/nutdotnet/WinNUT-Client/pull/39
+* Re-activate stop actions system and extensive core changes including status updates overhaul in https://github.com/nutdotnet/WinNUT-Client/pull/36
+  * Also fixed resuming WinNUT from a suspended state
+* Correct Interval/Delay value in https://github.com/nutdotnet/WinNUT-Client/pull/37
+
+## Minor changes
+* Created a build automation workflow so pull requests will have debug builds of WinNUT created and available for download automatically.
+* Updated documentation for build & release, and translation procedures.
+* Upgraded AGauge .Net Framework to solution's 4.7.2.
+* Replaced Win10 static binary references with NuGet package to enable Toast Notifications while still building cross-platform (Win7 and up). 
+
+## New Contributors
+* @MartinKurtz made their first contribution in https://github.com/nutdotnet/WinNUT-Client/pull/30
+
+**Full Changelog**: https://github.com/nutdotnet/WinNUT-Client/compare/v2.2.8303...v2.2.8328
+
+### Version 2.2.8303
+Attempting to fix versioning on MSI Installer for future smooth upgrades. No changes in main program since last version.
+
+**NOTE:** You will need to remove the old version (2.2 in Add Remove Programs list) for this and future upgrades to install correctly.
+
+**Full Changelog**: https://github.com/nutdotnet/WinNUT-Client/compare/v2.2.8286...v2.2.8303
+
+### Version 2.2.8286
+Beta/Prerelease
+* Add Translation/zh-TW/zh-TW.csv for Chinese (Traditional) by @yrctw in https://github.com/nutdotnet/WinNUT-Client/pull/23
+* Large changes to Socket/UPS, DATA-STALE error handling by @gbakeman in https://github.com/nutdotnet/WinNUT-Client/pull/25
+
+## New Contributors
+* @yrctw made their first contribution in https://github.com/nutdotnet/WinNUT-Client/pull/23
+
+**Full Changelog**: https://github.com/nutdotnet/WinNUT-Client/compare/v2.2.8255...v2.2.8286
+
 
 ### Version 2.2.8255
 Beta Release
