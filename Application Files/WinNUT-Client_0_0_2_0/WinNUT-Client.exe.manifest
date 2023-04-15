@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="WinNUT-Client.exe" version="0.0.1.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="WinNUT-Client.exe" version="0.0.2.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
   <description asmv2:iconFile="Resources\WinNut.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="WinNUT-Client" version="0.0.1.0" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="WinNUT-Client" version="0.0.2.0" language="neutral" processorArchitecture="msil" />
     <commandLine file="WinNUT-Client.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -49,13 +49,13 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AGauge.dll" size="35840">
-      <assemblyIdentity name="AGauge" version="2.1.8505.28912" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="AGauge" version="2.1.8505.29201" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>dlDNzGH+GthjvBajHO2P35yb+jLf3VSzjPdXXlvesDs=</dsig:DigestValue>
+        <dsig:DigestValue>uak0G0UVxHfXrZytdEdNUPkL8CS41JxuETdga69tysY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -85,73 +85,73 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="WinNUT-Client.exe" size="4132352">
-      <assemblyIdentity name="WinNUT-Client" version="0.0.1.0" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="WinNUT-Client" version="0.0.2.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>omoo+XBxKqO8BC6NAPTlRwr68BbLCPZxxVCvUItxXQw=</dsig:DigestValue>
+        <dsig:DigestValue>HY8DCmr5VPM3JOsmtoQM9b0ZcJaHmTWSQj4+wrMi/zk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="de-DE\WinNUT-Client.resources.dll" size="19456">
-      <assemblyIdentity name="WinNUT-Client.resources" version="0.0.1.0" language="de-DE" processorArchitecture="msil" />
+      <assemblyIdentity name="WinNUT-Client.resources" version="0.0.2.0" language="de-DE" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>kwoaEH1EyG/pUuGovp2whU733z2pNjVpgOlovqLFe+A=</dsig:DigestValue>
+        <dsig:DigestValue>coxMZCYMDsmzObCqiTBGjOdyYTEYTQZCucz214oYcvM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="fr-FR\WinNUT-Client.resources.dll" size="19968">
-      <assemblyIdentity name="WinNUT-Client.resources" version="0.0.1.0" language="fr-FR" processorArchitecture="msil" />
+      <assemblyIdentity name="WinNUT-Client.resources" version="0.0.2.0" language="fr-FR" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>1lGo6wFlRIS6yfS4Bx2YgzBACeMIEH80HfTbuMvNisI=</dsig:DigestValue>
+        <dsig:DigestValue>OhM5b2yhM7oLxqfPD4OUHV4lr94Dr4CBnDetNNQnrIE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ru-RU\WinNUT-Client.resources.dll" size="22528">
-      <assemblyIdentity name="WinNUT-Client.resources" version="0.0.1.0" language="ru-RU" processorArchitecture="msil" />
+      <assemblyIdentity name="WinNUT-Client.resources" version="0.0.2.0" language="ru-RU" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Jno2S2l1hi/uaUmsT4hWFHFLpYho7GErUYqpngbYCn8=</dsig:DigestValue>
+        <dsig:DigestValue>QjUBWe39dF8gdSfOlbciK2Jf7jq7UZ6qROKhQFfjL1w=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="zh-CN\WinNUT-Client.resources.dll" size="18944">
-      <assemblyIdentity name="WinNUT-Client.resources" version="0.0.1.0" language="zh-CN" processorArchitecture="msil" />
+      <assemblyIdentity name="WinNUT-Client.resources" version="0.0.2.0" language="zh-CN" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>3gbNYKPyW4q2FovppHGWh/FWCErPTaxSCkLj672ya9c=</dsig:DigestValue>
+        <dsig:DigestValue>v55rPrkxe7okd/+D/5aF2/qTvK7qzClRS6WJJ7VCtaY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="zh-TW\WinNUT-Client.resources.dll" size="17920">
-      <assemblyIdentity name="WinNUT-Client.resources" version="0.0.1.0" language="zh-TW" processorArchitecture="msil" />
+      <assemblyIdentity name="WinNUT-Client.resources" version="0.0.2.0" language="zh-TW" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>wBDCvE+MEzw7mHCBUyQGT85nuWM13xgRUV9LThP1dNE=</dsig:DigestValue>
+        <dsig:DigestValue>ZRs0L2opUTBvQHD8cPVeRmRk7PcMI7pzvntifartDjE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -163,7 +163,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>8th+cRnopcQZFo0ntRE+C6QUVOsdDc8qMblJcNKN3Yg=</dsig:DigestValue>
+        <dsig:DigestValue>PBketNFdc3kIYULihQx/+6PpLFlbS4i9AxhJVEcHi+8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
