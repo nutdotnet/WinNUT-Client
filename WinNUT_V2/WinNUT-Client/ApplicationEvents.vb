@@ -9,6 +9,7 @@
 
 Imports System.IO
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Newtonsoft.Json
 Imports WinNUT_Client_Common
 
 Namespace My
@@ -19,23 +20,23 @@ Namespace My
     ' StartupNextInstance : Déclenché lors du lancement d'une application à instance unique et si cette application est déjà active. 
     ' NetworkAvailabilityChanged : Déclenché quand la connexion réseau est connectée ou déconnectée.
     Partial Friend Class MyApplication
+
+
         Private CrashBug_Form As New Form
         Private BtnClose As New Button
         Private BtnGenerate As New Button
         Private Msg_Crash As New Label
         Private Msg_Error As New TextBox
+        Private exception As Exception
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
-            'Init WinNUT Variables
             Init_Globals()
-            LogFile.LogTracing("Init Globals Variables Complete", LogLvl.LOG_DEBUG, Me)
+            LogFile.LogTracing("MyApplication_Startup complete.", LogLvl.LOG_DEBUG, Me)
         End Sub
 
         Private Sub MyApplication_UnhandledException(ByVal sender As Object, ByVal e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
             e.ExitApplication = False
-
-            Dim Frms As New FormCollection
-            Frms = Application.OpenForms()
+            exception = e.Exception
 
             With Msg_Crash
                 .Location = New Point(6, 6)
@@ -49,19 +50,12 @@ Namespace My
                 .Size = New Point(470, 100)
             End With
 
-            Dim Exception_data = BuildExceptionString(e.Exception)
-
-            If e.Exception.InnerException IsNot Nothing Then
-                Exception_data &= vbNewLine & "InnerException present:" & vbNewLine
-                Exception_data &= BuildExceptionString(e.Exception.InnerException)
-            End If
-
             With Msg_Error
                 .Location = New Point(6, 110)
                 .Multiline = True
                 .ScrollBars = ScrollBars.Vertical
                 .ReadOnly = True
-                .Text = Exception_data.ToString()
+                .Text = e.Exception.ToString()
                 .Size = New Point(470, 300)
             End With
 
@@ -95,97 +89,82 @@ Namespace My
 
             AddHandler BtnClose.Click, AddressOf Application.Close_Button_Click
             AddHandler BtnGenerate.Click, AddressOf Application.Generate_Button_Click
-            AddHandler CrashBug_Form.FormClosing, AddressOf Application.CrashBug_FormClosing
 
             CrashBug_Form.Show()
             CrashBug_Form.BringToFront()
             WinNUT.HasCrashed = True
         End Sub
 
-        ''' <summary>
-        ''' Generate a friendly message describing an exception.
-        ''' </summary>
-        ''' <param name="ex">The exception that will be read for the message.</param>
-        ''' <returns>The final string representation of the exception.</returns>
-        Private Function BuildExceptionString(ex As Exception) As String
-            Dim retStr = String.Empty
+        Private Shared Function GenerateCrashReport(ex As Exception) As String
+            Dim reportStream As New StringWriter()
+            reportStream.WriteLine("WinNUT Bug Report")
+            reportStream.WriteLine("Generated at " + DateTime.UtcNow.ToString("F"))
+            reportStream.WriteLine()
+            reportStream.WriteLine("OS Version: " & Computer.Info.OSVersion)
+            reportStream.WriteLine("WinNUT Version: " & ProgramVersion)
 
-            retStr &= String.Format("Exception type: {0}" & vbNewLine, ex.GetType.ToString)
-            retStr &= String.Format("Exception message: {0}" & vbNewLine, ex.Message)
-            retStr &= "Exception stack trace:" & vbNewLine
-            retStr &= ex.StackTrace & vbNewLine
+#Region "Config output"
+            Dim confCopy = New Dictionary(Of String, Object)
 
-            Return retStr
-        End Function
+            reportStream.WriteLine()
+            reportStream.WriteLine("==== Parameters ====")
+            reportStream.WriteLine()
 
-        Private Sub CrashBug_FormClosing(sender As Object, e As FormClosingEventArgs)
-            End
-        End Sub
-        Private Sub Close_Button_Click(sender As Object, e As EventArgs)
-            End
-        End Sub
-
-        Private Sub Generate_Button_Click(sender As Object, e As EventArgs)
-            'Generate a bug report with all essential datas 
-            Dim Crash_Report As String = "WinNUT Bug Report" & vbNewLine
-            Dim WinNUT_Config As New Dictionary(Of String, Object)
-            Try
-                WinNUT_Config = Arr_Reg_Key
-            Catch ex As Exception
-                Crash_Report &= "ALERT: Encountered exception while trying to access Arr_Reg_Key:" & vbNewLine
-                Crash_Report &= BuildExceptionString(ex)
-            End Try
-
-            ' Initialize directory for data
-            Dim CrashLog_Dir = ApplicationData & "\CrashLog"
-            If Not Computer.FileSystem.DirectoryExists(CrashLog_Dir) Then
-                Computer.FileSystem.CreateDirectory(CrashLog_Dir)
-            End If
-
-            Dim CrashLog_Filename As String = "Crash_Report_" & Format(Now, "dd-MM-yyyy") & "_" &
-                String.Format("{0}-{1}-{2}.txt", Now.Hour.ToString("00"), Now.Minute.ToString("00"), Now.Second.ToString("00"))
-
-
-
-            Crash_Report &= "Os Version : " & Computer.Info.OSVersion & vbNewLine
-            Crash_Report &= "WinNUT Version : " & Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString & vbNewLine
-
-            Crash_Report &= vbNewLine & "WinNUT Parameters : " & vbNewLine
-            If WinNUT_Config.Count > 0 Then
-                ' Prepare config values by removing sensitive information.
+            ' Censor any identifying information
+            If Arr_Reg_Key IsNot Nothing AndAlso Arr_Reg_Key.Count > 0 Then
                 For Each kvp As KeyValuePair(Of String, Object) In Arr_Reg_Key
+                    Dim newVal As String
                     Select Case kvp.Key
                         Case "ServerAddress", "Port", "UPSName", "NutLogin", "NutPassword"
-                            WinNUT_Config.Remove(kvp.Key)
+                            newVal = "*****"
+                        Case Else
+                            newVal = kvp.Value
                     End Select
+
+                    confCopy.Add(kvp.Key, newVal)
                 Next
-                Crash_Report &= Newtonsoft.Json.JsonConvert.SerializeObject(WinNUT_Config, Newtonsoft.Json.Formatting.Indented) & vbNewLine
 
+                reportStream.WriteLine(JsonConvert.SerializeObject(confCopy, Formatting.Indented))
+                reportStream.WriteLine()
             Else
-                Crash_Report &= "[EMPTY]" & vbNewLine
+                reportStream.WriteLine("[EMPTY]")
             End If
+#End Region
 
-            Crash_Report &= vbNewLine & "Error Message : " & vbNewLine
-            Crash_Report &= Msg_Error.Text & vbNewLine & vbNewLine
-            Crash_Report &= "Last Events :" & vbNewLine
+#Region "Exceptions"
+            reportStream.WriteLine("==== Exception ====")
+            reportStream.WriteLine()
+            reportStream.WriteLine(JsonConvert.SerializeObject(ex, Formatting.Indented))
+            reportStream.WriteLine()
+#End Region
 
-            For Each WinNUT_Event In LogFile.LastEvents
-                Crash_Report &= WinNUT_Event & vbNewLine
-            Next
+            reportStream.WriteLine("==== Last Events ====")
 
-            Computer.Clipboard.SetText(Crash_Report)
+            LogFile.LastEvents.Reverse()
+            reportStream.WriteLine()
+            reportStream.WriteLine(JsonConvert.SerializeObject(LogFile.LastEvents, Formatting.Indented))
 
-            Dim CrashLog_Report As StreamWriter
-            CrashLog_Report = Computer.FileSystem.OpenTextFileWriter(CrashLog_Dir & "\" & CrashLog_Filename, True)
-            CrashLog_Report.WriteLine(Crash_Report)
+            Return reportStream.ToString()
+        End Function
+
+        Private Sub Generate_Button_Click(sender As Object, e As EventArgs)
+            Dim logFileName = "CrashReport_" + DateTime.Now.ToString("s").Replace(":", ".") + ".txt"
+            Dim report = GenerateCrashReport(exception)
+
+            Computer.Clipboard.SetText(report)
+
+            Directory.CreateDirectory(TEMP_DATA_PATH)
+            Dim CrashLog_Report = New StreamWriter(Path.Combine(TEMP_DATA_PATH, logFileName))
+            CrashLog_Report.WriteLine(report)
             CrashLog_Report.Close()
 
             ' Open an Explorer window to the crash log.
-            ' Dim fullFilepath As String = CrashLog_Dir & "\" & CrashLog_Filename
-            ' If WinNUT IsNot Nothing Then
-            Process.Start(CrashLog_Dir)
-            ' End If
+            Process.Start(TEMP_DATA_PATH)
             End
+        End Sub
+
+        Private Sub Close_Button_Click(sender As Object, e As EventArgs)
+            CrashBug_Form.Close()
         End Sub
     End Class
 End Namespace

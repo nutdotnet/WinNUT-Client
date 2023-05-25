@@ -86,12 +86,6 @@ Public Class WinNUT
     Private Event RequestConnect()
 
     Private Sub WinNUT_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' Make sure we have an app directory to write to.
-        ' SetupAppDirectory()
-
-        AddHandler Microsoft.Win32.SystemEvents.PowerModeChanged, AddressOf SystemEvents_PowerModeChanged
-        AddHandler RequestConnect, AddressOf UPS_Connect
-
         'Add Main Gui's Strings
         StrLog.Insert(AppResxStr.STR_MAIN_OLDINI_RENAMED, My.Resources.Frm_Main_Str_01)
         StrLog.Insert(AppResxStr.STR_MAIN_OLDINI, My.Resources.Frm_Main_Str_02)
@@ -272,6 +266,9 @@ Public Class WinNUT
             Update_Frm.Visible = True
             HasFocus = False
         End If
+
+        AddHandler Microsoft.Win32.SystemEvents.PowerModeChanged, AddressOf SystemEvents_PowerModeChanged
+        AddHandler RequestConnect, AddressOf UPS_Connect
 
         LogFile.LogTracing(String.Format("{0} v{1} completed initialization.", My.Application.Info.ProductName, My.Application.Info.Version),
                            LogLvl.LOG_NOTICE, Me)
@@ -837,7 +834,7 @@ Public Class WinNUT
         ' Setup logging preferences
         If Arr_Reg_Key.Item("UseLogFile") Then
             LogFile.LogLevelValue = Arr_Reg_Key.Item("Log Level")
-            LogFile.InitializeLogFile(ApplicationData)
+            LogFile.InitializeLogFile(ApplicationDataPath)
         ElseIf LogFile.IsWritingToFile Then
             LogFile.DeleteLogFile()
         End If
