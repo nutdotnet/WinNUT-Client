@@ -19,6 +19,14 @@ Password: secret
 It will probably be necessary to allow the WinNUT-Client IP to communicate with the NUT server.
 *See issue 47 for more information, specifically [this commentary](https://github.com/gawindx/WinNUT-Client/issues/47#issuecomment-759180793).*
 
+### For QNAP NAS 
+If your NUT server is hosted on a QNAP NAS, be sure to provide the following connection information (default):
+UPS Name: qnapups
+(Login and Password can be empty)
+
+Also check the "Enable network UPS master" box on the Control Panel -> External device page on the QNAP webinterface and add the IP address of the WinNUT-Client to allow the client to connect to the QNAP for UPS information.
+
+
 ### 
 ## Contributing
 ### Translation
