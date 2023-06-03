@@ -96,6 +96,10 @@
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AGauge, Version=2.1.8367.22654, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\AGauge.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -132,14 +136,26 @@
     <Compile Include="About_Gui.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="AGaugeTest.Designer.vb">
+      <DependentUpon>AGaugeTest.vb</DependentUpon>
+    </Compile>
+    <Compile Include="AGaugeTest.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="Controls\CProgressBar.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\UPSVarGauge.Designer.vb">
+      <DependentUpon>UPSVarGauge.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\UPSVarGauge.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="CProgressBar.vb">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="ToastPopup.vb" />
     <Compile Include="Update_Gui.Designer.vb">
@@ -203,6 +219,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="About_Gui.zh-TW.resx">
       <DependentUpon>About_Gui.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGaugeTest.resx">
+      <DependentUpon>AGaugeTest.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="List_Var_Gui.de-DE.resx">
       <DependentUpon>List_Var_Gui.vb</DependentUpon>
@@ -308,7 +327,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include=".editorconfig" />
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
@@ -385,10 +403,6 @@
     <XliffResource Include="MultilingualResources\WinNUT-Client.zh-TW.xlf" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AGauge_mod\AGauge.csproj">
-      <Project>{cbdb1d25-5a95-43d4-a958-bf6ae65c6c3f}</Project>
-      <Name>AGauge</Name>
-    </ProjectReference>
     <ProjectReference Include="..\WinNUT-Client_Common\WinNUT-Client_Common.vbproj">
       <Project>{9074ce60-db9a-4bdf-b851-6eab8a81f366}</Project>
       <Name>WinNUT-Client_Common</Name>
@@ -402,6 +416,7 @@
       <Version>13.0.1</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.ResxResources.targets" Label="MultilingualAppToolkit" Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\v$(MultilingualAppToolkitVersion)\Microsoft.Multilingual.ResxResources.targets')" />
   <Target Name="MATPrerequisite" BeforeTargets="PrepareForBuild" Condition="!Exists('$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.ResxResources.targets')" Label="MultilingualAppToolkit">

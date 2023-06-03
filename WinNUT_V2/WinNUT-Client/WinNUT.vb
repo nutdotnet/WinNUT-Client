@@ -273,8 +273,20 @@ Public Class WinNUT
             HasFocus = False
         End If
 
+#If DEBUG Then
+        ' Insert AGauge testing dialog menu item
+        Dim agDbgFormOpen = New ToolStripMenuItem("AGauge Test Form")
+        AddHandler agDbgFormOpen.Click, AddressOf OpenAGDebugForm
+        Menu_File.DropDownItems.Add(agDbgFormOpen)
+#End If
+
         LogFile.LogTracing(String.Format("{0} v{1} completed initialization.", My.Application.Info.ProductName, My.Application.Info.Version),
                            LogLvl.LOG_NOTICE, Me)
+    End Sub
+
+    Private Sub OpenAGDebugForm(sender As Object, e As EventArgs)
+        Dim form = New AGaugeTest()
+        form.ShowDialog()
     End Sub
 
     Private Sub SystemEvents_PowerModeChanged(sender As Object, e As Microsoft.Win32.PowerModeChangedEventArgs)
@@ -897,11 +909,11 @@ Public Class WinNUT
             End If
         End With
         With AG_BattV
-            If (.MaxValue <> Arr_Reg_Key.Item("MinBattVoltage")) Or (.MinValue <> Arr_Reg_Key.Item("MinBattVoltage")) Then
+            If (.MaxValue <> Arr_Reg_Key.Item("MaxBattVoltage")) Or (.MinValue <> Arr_Reg_Key.Item("MinBattVoltage")) Then
                 LogFile.LogTracing("Parameter Dial Voltage Battery Need to be Updated", LogLvl.LOG_DEBUG, Me)
                 .MaxValue = Arr_Reg_Key.Item("MaxBattVoltage")
                 .MinValue = Arr_Reg_Key.Item("MinBattVoltage")
-                .ScaleLinesMajorStepValue = CInt((.MaxValue - .MinValue) / 5)
+                ' .ScaleLinesMajorStepValue = CInt((.MaxValue - .MinValue) / 5)
                 LogFile.LogTracing("Parameter Dial Voltage Battery Updated", LogLvl.LOG_DEBUG, Me)
             End If
         End With
