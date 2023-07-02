@@ -7,7 +7,9 @@
 '
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
+Imports System.Globalization
 Imports System.IO
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Newtonsoft.Json
 Imports WinNUT_Client_Common
@@ -20,6 +22,8 @@ Namespace My
     ' StartupNextInstance : Déclenché lors du lancement d'une application à instance unique et si cette application est déjà active. 
     ' NetworkAvailabilityChanged : Déclenché quand la connexion réseau est connectée ou déconnectée.
     Partial Friend Class MyApplication
+        ' Default culture for output so logs can be shared with the project.
+        Private Shared DEF_CULTURE_INFO As CultureInfo = CultureInfo.InvariantCulture
 
 
         Private CrashBug_Form As New Form
@@ -27,16 +31,22 @@ Namespace My
         Private BtnGenerate As New Button
         Private Msg_Crash As New Label
         Private Msg_Error As New TextBox
-        Private exception As Exception
+
+        Private crashReportData As String
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+            ' Uncomment below and comment out Handles line for _UnhandledException sub when debugging unhandled exceptions.
+            ' AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf AppDomainUnhandledException
             Init_Globals()
             LogFile.LogTracing("MyApplication_Startup complete.", LogLvl.LOG_DEBUG, Me)
         End Sub
 
-        Private Sub MyApplication_UnhandledException(ByVal sender As Object, ByVal e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
+        Private Sub AppDomainUnhandledException(sender As Object, e As System.UnhandledExceptionEventArgs)
+            MyApplication_UnhandledException(sender, New UnhandledExceptionEventArgs(False, e.ExceptionObject))
+        End Sub
+
+        Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
             e.ExitApplication = False
-            exception = e.Exception
 
             With Msg_Crash
                 .Location = New Point(6, 6)
@@ -87,6 +97,8 @@ Namespace My
                 .Controls.Add(BtnGenerate)
             End With
 
+            crashReportData = GenerateCrashReport(e.Exception)
+
             AddHandler BtnClose.Click, AddressOf Application.Close_Button_Click
             AddHandler BtnGenerate.Click, AddressOf Application.Generate_Button_Click
 
@@ -96,9 +108,13 @@ Namespace My
         End Sub
 
         Private Shared Function GenerateCrashReport(ex As Exception) As String
-            Dim reportStream As New StringWriter()
+            Dim jsonSerializerSettings As New JsonSerializerSettings()
+            jsonSerializerSettings.Culture = DEF_CULTURE_INFO
+            jsonSerializerSettings.Formatting = Formatting.Indented
+
+            Dim reportStream As New StringWriter(DEF_CULTURE_INFO)
             reportStream.WriteLine("WinNUT Bug Report")
-            reportStream.WriteLine("Generated at " + DateTime.UtcNow.ToString("F"))
+            reportStream.WriteLine("Generated at " + Date.UtcNow.ToString("F", DEF_CULTURE_INFO))
             reportStream.WriteLine()
             reportStream.WriteLine("OS Version: " & Computer.Info.OSVersion)
             reportStream.WriteLine("WinNUT Version: " & ProgramVersion)
@@ -124,7 +140,7 @@ Namespace My
                     confCopy.Add(kvp.Key, newVal)
                 Next
 
-                reportStream.WriteLine(JsonConvert.SerializeObject(confCopy, Formatting.Indented))
+                reportStream.WriteLine(JsonConvert.SerializeObject(confCopy, jsonSerializerSettings))
                 reportStream.WriteLine()
             Else
                 reportStream.WriteLine("[EMPTY]")
@@ -134,7 +150,7 @@ Namespace My
 #Region "Exceptions"
             reportStream.WriteLine("==== Exception ====")
             reportStream.WriteLine()
-            reportStream.WriteLine(JsonConvert.SerializeObject(ex, Formatting.Indented))
+            reportStream.WriteLine(Regex.Unescape(JsonConvert.SerializeObject(ex, jsonSerializerSettings)))
             reportStream.WriteLine()
 #End Region
 
@@ -142,20 +158,19 @@ Namespace My
 
             LogFile.LastEvents.Reverse()
             reportStream.WriteLine()
-            reportStream.WriteLine(JsonConvert.SerializeObject(LogFile.LastEvents, Formatting.Indented))
+            reportStream.WriteLine(Regex.Unescape(JsonConvert.SerializeObject(LogFile.LastEvents, jsonSerializerSettings)))
 
             Return reportStream.ToString()
         End Function
 
         Private Sub Generate_Button_Click(sender As Object, e As EventArgs)
-            Dim logFileName = "CrashReport_" + DateTime.Now.ToString("s").Replace(":", ".") + ".txt"
-            Dim report = GenerateCrashReport(exception)
+            Dim logFileName = "CrashReport_" + Date.Now.ToString("s").Replace(":", ".") + ".txt"
 
-            Computer.Clipboard.SetText(report)
+            Computer.Clipboard.SetText(crashReportData)
 
             Directory.CreateDirectory(TEMP_DATA_PATH)
             Dim CrashLog_Report = New StreamWriter(Path.Combine(TEMP_DATA_PATH, logFileName))
-            CrashLog_Report.WriteLine(report)
+            CrashLog_Report.WriteLine(crashReportData)
             CrashLog_Report.Close()
 
             ' Open an Explorer window to the crash log.
