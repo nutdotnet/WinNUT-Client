@@ -16,7 +16,6 @@ Imports System.IO
 Public Class Nut_Socket
 
 #Region "Properties"
-
     Public ReadOnly Property ConnectionStatus As Boolean
         Get
             If NutSocket IsNot Nothing Then
@@ -33,6 +32,13 @@ Public Class Nut_Socket
         End Get
     End Property
 
+    Private _isLoggedIn As Boolean = False
+    Public ReadOnly Property IsLoggedIn() As Boolean
+        Get
+            Return _isLoggedIn
+        End Get
+    End Property
+
     Private Nut_Ver As String
     Public ReadOnly Property Nut_Version() As String
         Get
@@ -46,7 +52,6 @@ Public Class Nut_Socket
             Return Net_Ver
         End Get
     End Property
-
 #End Region
 
     Private LogFile As Logger
@@ -63,10 +68,6 @@ Public Class Nut_Socket
     ''' Possibly a race condition going on where a query is sent while reading a response from another.
     ''' </summary>
     Private streamInUse As Boolean
-
-
-    Public Auth_Success As Boolean = False
-    ' Private ReadOnly WatchDog As New Timer
 
     Public Event Socket_Broken(ex As NutException)
 
@@ -115,7 +116,12 @@ Public Class Nut_Socket
         End Try
 
         If ConnectionStatus Then
-            AuthLogin(Login, Password)
+            Try
+                AuthLogin(Login, Password)
+            Catch ex As NutException
+                ' TODO: Make friendly message string for user.
+                LogFile.LogTracing("Error while attempting to log in: " & ex.Message, LogLvl.LOG_ERROR, Me)
+            End Try
 
             Dim Nut_Query = Query_Data("VER")
 
@@ -130,6 +136,32 @@ Public Class Nut_Socket
 
             LogFile.LogTracing(String.Format("NUT server reports VER: {0} NETVER: {1}", Nut_Ver, Net_Ver), LogLvl.LOG_NOTICE, Me)
         End If
+    End Sub
+
+    ''' <summary>
+    ''' Register with the UPSd server as being dependant on it for power.
+    ''' </summary>
+    ''' <param name="Login"></param>
+    ''' <param name="Password"></param>
+    ''' <exception cref="NutException">A protocol error was encountered while trying to authenticate.</exception>
+    Private Sub AuthLogin(Login As String, Password As String)
+        If _isLoggedIn Then
+            Throw New InvalidOperationException("Attempted to login when already logged in.")
+        End If
+
+        LogFile.LogTracing("Attempting authentication...", LogLvl.LOG_NOTICE, Me)
+
+        If Not String.IsNullOrEmpty(Login) Then
+            Query_Data("USERNAME " & Login)
+
+            If Not String.IsNullOrEmpty(Password) Then
+                Query_Data("PASSWORD " & Password)
+            End If
+        End If
+
+        Query_Data("LOGIN")
+        _isLoggedIn = True
+        LogFile.LogTracing("Authenticated successfully.", LogLvl.LOG_NOTICE, Me)
     End Sub
 
     ''' <summary>
@@ -355,27 +387,6 @@ Public Class Nut_Socket
             Throw New NutException(Nut_Query)
         End If
     End Function
-
-    Private Sub AuthLogin(Login As String, Password As String)
-        LogFile.LogTracing("Attempting authentication...", LogLvl.LOG_NOTICE, Me)
-        Auth_Success = False
-        If Not String.IsNullOrEmpty(Login) AndAlso String.IsNullOrEmpty(Password) Then
-            Dim Nut_Query = Query_Data("USERNAME " & Login)
-
-            If Nut_Query.ResponseType <> NUTResponse.OK Then
-                Throw New NutException(Nut_Query)
-            End If
-
-            Nut_Query = Query_Data("PASSWORD " & Password)
-
-            If Nut_Query.ResponseType <> NUTResponse.OK Then
-                Throw New NutException(Nut_Query)
-            End If
-        End If
-
-        LogFile.LogTracing("Authenticated successfully.", LogLvl.LOG_NOTICE, Me)
-        Auth_Success = True
-    End Sub
 
     Private Sub Event_WatchDog(sender As Object, e As EventArgs)
         Dim Nut_Query = Query_Data("")
