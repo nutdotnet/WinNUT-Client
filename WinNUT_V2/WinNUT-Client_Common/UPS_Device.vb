@@ -27,7 +27,7 @@ Public Class UPS_Device
 
     Public ReadOnly Property IsAuthenticated As Boolean
         Get
-            Return Nut_Socket.Auth_Success
+            Return Nut_Socket.IsLoggedIn
         End Get
     End Property
 
@@ -61,6 +61,26 @@ Public Class UPS_Device
     End Property
 
 #End Region
+
+#Region "Events"
+
+    ' Public Event Unknown_UPS()
+    Public Event DataUpdated()
+    Public Event Connected(sender As UPS_Device)
+    Public Event ReConnected(sender As UPS_Device)
+    ' Notify that the connection was closed gracefully.
+    Public Event Disconnected()
+    ' Notify of an unexpectedly lost connection (??)
+    Public Event Lost_Connect()
+    ' Error encountered when trying to connect.
+    Public Event ConnectionError(sender As UPS_Device, innerException As Exception)
+    Public Event EncounteredNUTException(ex As NutException, sender As Object)
+    Public Event New_Retry()
+    ' Public Event Shutdown_Condition()
+    ' Public Event Stop_Shutdown()
+
+#End Region
+
     Private Const CosPhi As Double = 0.6
     ' How many milliseconds to wait before the Reconnect routine tries again.
     Private Const DEFAULT_RECONNECT_WAIT_MS As Double = 5000
@@ -81,73 +101,11 @@ Public Class UPS_Device
     Public Retry As Integer = 0
     Public MaxRetry As Integer = 30
     Private WithEvents Reconnect_Nut As New System.Windows.Forms.Timer
-    ' Private ReadOnly WatchDog As New System.Windows.Forms.Timer
-    ' Private Socket_Status As Boolean = False
 
 
 
 
     Private LogFile As Logger
-    'Private ConnectionStatus As Boolean = False
-    'Private Server As String
-    'Private Port As Integer
-    'Private UPSName As String
-    'Private Delay As Integer
-    'Private Login As String
-    'Private Password As String
-    'Private Mfr As String
-    'Private Model As String
-    'Private Serial As String
-    'Private Firmware As String
-    'Private BattCh As Double
-    'Private BattV As Double
-    'Private BattRuntime As Double
-    'Private BattCapacity As Double
-    'Private PowerFreq As Double
-    'Private InputV As Double
-    'Private OutputV As Double
-    'Private Load As Double
-    'Private Status As String
-    'Private OutPower As Double
-    'Private InputA As Double
-    'Private Low_Batt As Integer
-    'Private Low_Backup As Integer
-    'Private LConnect As Boolean = False
-    'Private AReconnect As Boolean = False
-    'Private MaxRetry As Integer = 30
-    'Private Retry As Integer = 0
-    'Private ErrorStatus As Boolean = False
-    'Private ErrorMsg As String = ""
-    'Private Update_Nut As New System.Windows.Forms.Timer
-    'Private Reconnect_Nut As New System.Windows.Forms.Timer
-    'Private NutSocket As System.Net.Sockets.Socket
-    'Private NutTCP As System.Net.Sockets.TcpClient
-    'Private NutStream As System.Net.Sockets.NetworkStream
-    'Private ReaderStream As System.IO.StreamReader
-    'Private WriterStream As System.IO.StreamWriter
-    'Private Follow_FSD As Boolean = False
-    'Private Unknown_UPS_Name As Boolean = False
-    'Private Invalid_Data As Boolean = False
-    'Private Invalid_Auth_Data As Boolean = False
-
-#Region "Properties"
-
-#End Region
-
-    ' Public Event Unknown_UPS()
-    Public Event DataUpdated()
-    Public Event Connected(sender As UPS_Device)
-    Public Event ReConnected(sender As UPS_Device)
-    ' Notify that the connection was closed gracefully.
-    Public Event Disconnected()
-    ' Notify of an unexpectedly lost connection (??)
-    Public Event Lost_Connect()
-    ' Error encountered when trying to connect.
-    Public Event ConnectionError(sender As UPS_Device, innerException As Exception)
-    Public Event EncounteredNUTException(ex As NutException, sender As Object)
-    Public Event New_Retry()
-    ' Public Event Shutdown_Condition()
-    ' Public Event Stop_Shutdown()
 
     ''' <summary>
     ''' Raise an event when a status code is added to the UPS that wasn't there before.
