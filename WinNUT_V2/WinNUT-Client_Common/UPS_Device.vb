@@ -15,13 +15,17 @@ Public Class UPS_Device
 
     Public ReadOnly Property Name As String
         Get
-            Return Nut_Config.UPSName
+            If Nut_Config IsNot Nothing Then
+                Return Nut_Config.UPSName
+            Else
+                Return "null"
+            End If
         End Get
     End Property
 
     Public ReadOnly Property IsConnected As Boolean
         Get
-            Return (Nut_Socket.IsConnected) ' And Me.Socket_Status
+            Return (Nut_Socket.IsConnected)
         End Get
     End Property
 
@@ -74,10 +78,17 @@ Public Class UPS_Device
     Public Event Lost_Connect()
     ' Error encountered when trying to connect.
     Public Event ConnectionError(sender As UPS_Device, innerException As Exception)
-    Public Event EncounteredNUTException(ex As NutException, sender As Object)
     Public Event New_Retry()
     ' Public Event Shutdown_Condition()
     ' Public Event Stop_Shutdown()
+
+    ''' <summary>
+    ''' Raised when the NUT server returns an error during normal communication and is deemed important for the client
+    ''' application to know.
+    ''' </summary>
+    ''' <param name="sender">The device object that has received the error.</param>
+    ''' <param name="nutEx">An exception detailing the error and cirucmstances surrounding it.</param>
+    Public Event EncounteredNUTException(sender As UPS_Device, nutEx As NutException)
 
 #End Region
 
@@ -124,13 +135,7 @@ Public Class UPS_Device
         With Reconnect_Nut
             .Interval = DEFAULT_RECONNECT_WAIT_MS
             .Enabled = False
-            ' AddHandler .Tick, AddressOf Reconnect_Socket
         End With
-        'With WatchDog
-        '    .Interval = 1000
-        '    .Enabled = False
-        '    AddHandler .Tick, AddressOf Event_WatchDog
-        'End With
     End Sub
 
     Public Sub Connect_UPS(Optional retryOnConnFailure = False)
@@ -144,7 +149,7 @@ Public Class UPS_Device
             RaiseEvent Connected(Me)
         Catch ex As NutException
             ' This is how we determine if we have a valid UPS name entered, among other errors.
-            RaiseEvent EncounteredNUTException(ex, Me)
+            RaiseEvent EncounteredNUTException(Me, ex)
 
         Catch ex As Exception
             RaiseEvent ConnectionError(Me, ex)
@@ -156,21 +161,9 @@ Public Class UPS_Device
         End Try
     End Sub
 
-    'Private Sub HandleDisconnectRequest(sender As Object, Optional cancelAutoReconnect As Boolean = True) Handles Me.RequestDisconnect
-    '    If disconnectInProgress Then
-    '        Throw New InvalidOperationException("Disconnection already in progress.")
-    '    End If
-
-    '    ' WatchDog.Stop()
-
-    '    If cancelAutoReconnect And Reconnect_Nut.Enabled = True Then
-    '        Debug.WriteLine("Cancelling ")
-    '    End If
-    'End Sub
-
-    Public Sub Disconnect(Optional cancelReconnect As Boolean = True, Optional silent As Boolean = False, Optional forceful As Boolean = False)
+    Public Sub Disconnect(Optional cancelReconnect As Boolean = True, Optional forceful As Boolean = False)
         LogFile.LogTracing("Processing request to disconnect...", LogLvl.LOG_DEBUG, Me)
-        ' WatchDog.Stop()
+
         Update_Data.Stop()
         If cancelReconnect And Reconnect_Nut.Enabled Then
             LogFile.LogTracing("Stopping Reconnect timer.", LogLvl.LOG_DEBUG, Me)
@@ -178,11 +171,13 @@ Public Class UPS_Device
         End If
 
         Retry = 0
-        Nut_Socket.Disconnect(silent, forceful)
-        ' Confirmation of disconnection will come from raised Disconnected event.
-
-        'LogFile.LogTracing("Completed disconnecting UPS, notifying listeners.", LogLvl.LOG_DEBUG, Me)
-        'RaiseEvent Disconnected()
+        Try
+            Nut_Socket.Disconnect(forceful)
+        Catch nutEx As NutException
+            RaiseEvent EncounteredNUTException(Me, nutEx)
+        Finally
+            RaiseEvent Disconnected()
+        End Try
     End Sub
 
 #Region "Socket Interaction"
@@ -193,29 +188,8 @@ Public Class UPS_Device
         RaiseEvent Disconnected()
     End Sub
 
-    ''' <summary>
-    ''' Check underlying connection for an error state by sending an empty query to the server.
-    ''' A watchdog may not actually be necessary under normal circumstances, since queries are regularly being sent to
-    ''' the NUT server and will catch a broken socket that way.
-    ''' </summary>
-    ''' <param name="sender"></param>
-    ''' <param name="e"></param>
-    Private Sub Event_WatchDog(sender As Object, e As EventArgs)
-        If IsConnected Then
-            Dim Nut_Query = Nut_Socket.Query_Data("")
-            If Nut_Query.ResponseType = NUTResponse.NORESPONSE Then
-                LogFile.LogTracing("WatchDog Socket report a Broken State", LogLvl.LOG_WARNING, Me)
-                Nut_Socket.Disconnect(True)
-                RaiseEvent Lost_Connect()
-                ' Me.Socket_Status = False
-            End If
-        End If
-    End Sub
-
     Private Sub Socket_Broken() Handles Nut_Socket.Socket_Broken
-        ' LogFile.LogTracing("TCP Socket seems Broken", LogLvl.LOG_WARNING, Me)
         LogFile.LogTracing("Socket has reported a Broken event.", LogLvl.LOG_WARNING, Me)
-        ' SocketDisconnected()
         RaiseEvent Lost_Connect()
 
         If Nut_Config.AutoReconnect Then
@@ -228,7 +202,7 @@ Public Class UPS_Device
         Retry += 1
         If Retry <= MaxRetry Then
             RaiseEvent New_Retry()
-            LogFile.LogTracing(String.Format("Try Reconnect {0} / {1}", Retry, MaxRetry), LogLvl.LOG_NOTICE, Me, String.Format(WinNUT_Globals.StrLog.Item(AppResxStr.STR_LOG_NEW_RETRY), Retry, MaxRetry))
+            LogFile.LogTracing(String.Format("Try Reconnect {0} / {1}", Retry, MaxRetry), LogLvl.LOG_NOTICE, Me, String.Format(StrLog.Item(AppResxStr.STR_LOG_NEW_RETRY), Retry, MaxRetry))
             Connect_UPS()
             If IsConnected Then
                 LogFile.LogTracing("Nut Host Reconnected", LogLvl.LOG_DEBUG, Me)
@@ -237,9 +211,7 @@ Public Class UPS_Device
                 RaiseEvent ReConnected(Me)
             End If
         Else
-            LogFile.LogTracing("Max Retry reached. Stop Process Autoreconnect and wait for manual Reconnection", LogLvl.LOG_ERROR, Me, WinNUT_Globals.StrLog.Item(AppResxStr.STR_LOG_STOP_RETRY))
-            'Reconnect_Nut.Stop()
-            'RaiseEvent Disconnected()
+            LogFile.LogTracing("Max Retry reached. Stop Process Autoreconnect and wait for manual Reconnection", LogLvl.LOG_ERROR, Me, StrLog.Item(AppResxStr.STR_LOG_STOP_RETRY))
             Disconnect(True)
         End If
     End Sub
@@ -259,7 +231,7 @@ Public Class UPS_Device
 
         ' Other constant values for UPS calibration.
         freshData.UPS_Value.Batt_Capacity = Double.Parse(GetUPSVar("battery.capacity", 7), ciClone)
-        Freq_Fallback = Double.Parse(GetUPSVar("output.frequency.nominal", (50 + CInt(WinNUT_Params.Arr_Reg_Key.Item("FrequencySupply")) * 10)), ciClone)
+        Freq_Fallback = Double.Parse(GetUPSVar("output.frequency.nominal", (50 + CInt(Arr_Reg_Key.Item("FrequencySupply")) * 10)), ciClone)
 
         Return freshData
     End Function
@@ -340,10 +312,8 @@ Public Class UPS_Device
         Catch Excep As Exception
             ' Something went wrong while trying to read the data... Consider the socket broken and proceed from here.
             LogFile.LogTracing("Something went wrong in Retrieve_UPS_Datas: " & Excep.ToString(), LogLvl.LOG_ERROR, Me)
-            Disconnect(False, True, True)
+            Disconnect(False, True)
             Socket_Broken()
-            'Me.Disconnect(True)
-            'Enter_Reconnect_Process(Excep, "Error When Retrieve_UPS_Data : ")
         End Try
     End Sub
 
@@ -434,5 +404,9 @@ Public Class UPS_Device
             MsgBox(e.Message)
         End Try
         Return StringArray(StringArray.Length - 1)
+    End Function
+
+    Public Overrides Function ToString() As String
+        Return Name
     End Function
 End Class

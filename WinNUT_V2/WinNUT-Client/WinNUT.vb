@@ -297,6 +297,7 @@ Public Class WinNUT
                                        Arr_Reg_Key.Item("AutoReconnect"))
 
         UPS_Device = New UPS_Device(Nut_Config, LogFile, Arr_Reg_Key.Item("Delay"))
+        AddHandler UPS_Device.EncounteredNUTException, AddressOf HandleNUTException
         UPS_Device.Connect_UPS(retryOnConnFailure)
     End Sub
 
@@ -331,15 +332,16 @@ Public Class WinNUT
     End Sub
 
     ''' <summary>
-    ''' Prepare application for and handle disconnecting from the UPS.
+    ''' Prepare application for and initiate disconnecting from the UPS.
     ''' </summary>
-    Private Sub UPSDisconnect() ' Handles UPS_Device.Disconnected
-        ' LogFile.LogTracing("Running Client disconnect subroutine.", LogLvl.LOG_DEBUG, Me)
+    Private Sub UPSDisconnect()
+        LogFile.LogTracing("Running Client disconnect subroutine.", LogLvl.LOG_DEBUG, Me)
 
         If UPS_Device IsNot Nothing Then
             UPS_Device.Disconnect(True)
+            RemoveHandler UPS_Device.EncounteredNUTException, AddressOf HandleNUTException
         Else
-            LogFile.LogTracing("Attempted to disconnect when UPS_Device is Nothing.", LogLvl.LOG_DEBUG, Me)
+            LogFile.LogTracing("Attempted to disconnect when UPS_Device is Nothing.", LogLvl.LOG_ERROR, Me)
         End If
     End Sub
 
@@ -415,18 +417,14 @@ Public Class WinNUT
             NotifyIcon.Visible = True
             e.Cancel = True
         Else
-            ' TODO: Common shutdown subroutine? --v
             LogFile.LogTracing("Init Disconnecting Before Close WinNut", LogLvl.LOG_DEBUG, Me)
-            RemoveHandler Microsoft.Win32.SystemEvents.PowerModeChanged, AddressOf SystemEvents_PowerModeChanged
             UPSDisconnect()
-            LogFile.LogTracing("WinNut Is now Closed", LogLvl.LOG_DEBUG, Me)
-            End
         End If
     End Sub
 
     Private Sub Menu_Quit_Click_1(sender As Object, e As EventArgs) Handles Menu_Quit.Click
         LogFile.LogTracing("Close WinNut From Menu Quit", LogLvl.LOG_DEBUG, Me)
-        End
+        Application.Exit()
     End Sub
 
     Private Sub Menu_Settings_Click(sender As Object, e As EventArgs) Handles Menu_Settings.Click
@@ -439,7 +437,7 @@ Public Class WinNUT
 
     Private Sub Menu_Sys_Exit_Click(sender As Object, e As EventArgs) Handles Menu_Sys_Exit.Click
         LogFile.LogTracing("Close WinNut From Systray", LogLvl.LOG_DEBUG, Me)
-        End
+        Application.Exit()
     End Sub
 
     Private Sub Menu_Sys_Settings_Click(sender As Object, e As EventArgs) Handles Menu_Sys_Settings.Click
@@ -572,11 +570,12 @@ Public Class WinNUT
         LogFile.LogTracing("Battery Status => " & Status, LogLvl.LOG_DEBUG, Me)
     End Sub
 
-    Sub HandleNUTException(ex As NutException, sender As Object) Handles UPS_Device.EncounteredNUTException
+    Private Sub HandleNUTException(sender As UPS_Device, ex As NutException)
         If ex.LastTransaction.ResponseType = NUTResponse.UNKNOWNUPS Then
             Event_Unknown_UPS()
         End If
 
+        LogFile.LogTracing("NUT protocol error encoutnered:" + vbNewLine + ex.ToString(), LogLvl.LOG_NOTICE, sender)
     End Sub
 
     Public Sub Event_Unknown_UPS() ' Handles UPS_Device.Unknown_UPS
