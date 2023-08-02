@@ -10,8 +10,8 @@
 
 
 ' Class dealing only with the management of the communication socket with the Nut server
-Imports System.Net.Sockets
 Imports System.IO
+Imports System.Net.Sockets
 
 Public Class Nut_Socket
 
@@ -79,12 +79,6 @@ Public Class Nut_Socket
     Public Sub New(Nut_Config As Nut_Parameter, ByRef logger As Logger)
         LogFile = logger
         NutConfig = Nut_Config
-
-        'With Me.WatchDog
-        '    .Interval = 1000
-        '    .Enabled = False
-        '    AddHandler .Tick, AddressOf Event_WatchDog
-        'End With
     End Sub
 
     Public Sub Connect()
@@ -111,7 +105,7 @@ Public Class Nut_Socket
 
             ' Something went wrong - cleanup and pass along error.
         Catch Excep As Exception
-            Disconnect(True, True)
+            Disconnect(True)
             Throw ' Pass exception on up to UPS
         End Try
 
@@ -167,19 +161,15 @@ Public Class Nut_Socket
     ''' <summary>
     ''' Perform various functions necessary to disconnect the socket from the NUT server.
     ''' </summary>
-    ''' <param name="Silent">Skip raising the <see cref="SocketDisconnected"/> event if true.</param>
     ''' <param name="Forceful">Skip sending the LOGOUT command to the NUT server. Unknown effects.</param>
-    Public Sub Disconnect(Optional silent = False, Optional forceful = False)
-        ' WatchDog.Stop()
-
-        If IsConnected AndAlso Not forceful Then
-            Query_Data("LOGOUT")
-        End If
-
-        Close_Socket()
-
-        If Not silent Then
-            RaiseEvent SocketDisconnected()
+    Public Sub Disconnect(Optional forceful = False)
+        If Not forceful AndAlso IsConnected AndAlso IsLoggedIn Then
+            Try
+                Query_Data("LOGOUT")
+            Finally
+                Close_Socket()
+                RaiseEvent SocketDisconnected()
+            End Try
         End If
     End Sub
 
@@ -391,7 +381,7 @@ Public Class Nut_Socket
     Private Sub Event_WatchDog(sender As Object, e As EventArgs)
         Dim Nut_Query = Query_Data("")
         If Nut_Query.ResponseType = NUTResponse.NORESPONSE Then
-            Disconnect(True, True)
+            Disconnect(True)
             RaiseEvent Socket_Broken(New NutException(Nut_Query))
         End If
     End Sub
