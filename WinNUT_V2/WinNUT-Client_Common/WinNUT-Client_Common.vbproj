@@ -45,6 +45,9 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Octokit, Version=5.0.4.0, Culture=neutral, PublicKeyToken=0be8860aee462442, processorArchitecture=MSIL">
+      <HintPath>..\packages\Octokit.5.0.4\lib\netstandard2.0\Octokit.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -94,6 +97,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Nut_Socket.vb" />
+    <Compile Include="Updater\GitHubUpdateProvider.vb" />
+    <Compile Include="Updater\IUpdateProvider.vb" />
+    <Compile Include="Updater\CheckForUpdateCompletedEventArgs.vb" />
+    <Compile Include="Updater\UpdateProgressChangedEventArgs.vb" />
     <Compile Include="UPS_Device.vb" />
     <Compile Include="WinNUT_Globals.vb" />
     <Compile Include="WinNUT_Params.vb" />
@@ -117,6 +124,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
