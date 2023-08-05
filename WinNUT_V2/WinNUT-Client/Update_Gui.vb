@@ -59,6 +59,7 @@ Public Class Update_Gui
             Return Resp.ContentLength
         End Using
     End Function
+
     Public Sub VerifyUpdate()
         LogFile.LogTracing("Verify Update", LogLvl.LOG_DEBUG, Me)
         If WinNUT_Params.Arr_Reg_Key.Item("VerifyUpdate") Or Me.ManualUpdate Then
@@ -73,10 +74,16 @@ Public Class Update_Gui
             End Select
             Dim Today As Date = Now
             Dim Diff As Integer = 1
-            If WinNUT_Params.Arr_Reg_Key.Item("LastDateVerification") <> "" Then
-                Dim LastVerif As Date = Convert.ToDateTime(WinNUT_Params.Arr_Reg_Key.Item("LastDateVerification"))
-                Diff = DateDiff(DelayVerif, LastVerif, Today, FirstDayOfWeek.Monday, FirstWeekOfYear.Jan1)
+            Dim lastCheckDate = WinNUT_Params.Arr_Reg_Key.Item("LastDateVerification")
+
+            If lastCheckDate <> "" Then
+                Try
+                    Diff = DateDiff(DelayVerif, Convert.ToDateTime(lastCheckDate), Today)
+                Catch ex As FormatException
+                    LogFile.LogTracing("Format exception when parsing last check date: " + lastCheckDate, LogLvl.LOG_ERROR, Me)
+                End Try
             End If
+
             If Diff >= 1 Or ManualUpdate Then
                 Net.ServicePointManager.SecurityProtocol = Net.SecurityProtocolType.Tls12
                 WebC.Headers.Add(Net.HttpRequestHeader.Accept, "application/json")
@@ -137,7 +144,9 @@ Public Class Update_Gui
         Catch excep As Exception
             LogFile.LogTracing(excep.Message, LogLvl.LOG_ERROR, Me)
         End Try
-        WinNUT_Params.Arr_Reg_Key.Item("LastDateVerification") = Now.ToString
+
+        ' Use the 's' format to get a standard datetime for error-free parsing in the future.
+        WinNUT_Params.Arr_Reg_Key.Item("LastDateVerification") = Date.Now.ToString("s")
         WinNUT_Params.Save_Params()
         Me.UpdateInfoRetrieved = True
         Me.Show()
