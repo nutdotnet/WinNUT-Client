@@ -70,53 +70,53 @@ Public Module WinNUT_Params
 
 
         With Arr_Reg_Connexion
-            .Add("ServerAddress", "nutserver host")
-            .Add("Port", 3493)
-            .Add("UPSName", "UPSName")
-            .Add("Delay", 1000)
-            .Add("NutLogin", String.Empty)
-            .Add("NutPassword", String.Empty)
-            .Add("AutoReconnect", vbFalse)
+            .Add("ServerAddress", "nutserver host") ' NUT_ServerAddress
+            .Add("Port", 3493) ' NUT_ServerPort
+            .Add("UPSName", "UPSName") ' NUT_UPSName
+            .Add("Delay", 1000) ' NUT_PollIntervalMsec
+            .Add("NutLogin", String.Empty) ' NUT_Username
+            .Add("NutPassword", String.Empty) ' NUT_PasswordEnc
+            .Add("AutoReconnect", vbFalse) ' NUT_AutoReconnect
         End With
         With Arr_Reg_Calibration
-            .Add("MinInputVoltage", 210)
-            .Add("MaxInputVoltage", 270)
-            .Add("FrequencySupply", 0)
-            .Add("MinInputFrequency", 40)
-            .Add("MaxInputFrequency", 60)
-            .Add("MinOutputVoltage", 210)
-            .Add("MaxOutputVoltage", 250)
-            .Add("MinUPSLoad", 0)
-            .Add("MaxUPSLoad", 100)
-            .Add("MinBattVoltage", 6)
-            .Add("MaxBattVoltage", 18)
+            .Add("MinInputVoltage", 210) ' CAL_VoltInMin
+            .Add("MaxInputVoltage", 270) ' CAL_VoltInMax
+            .Add("FrequencySupply", 0) ' CAL_FreqInNom
+            .Add("MinInputFrequency", 40) ' CAL_FreqInMin
+            .Add("MaxInputFrequency", 60) ' CAL_FreqInMax
+            .Add("MinOutputVoltage", 210) ' CAL_VoltOutMin
+            .Add("MaxOutputVoltage", 250) ' CAL_VoltOutMax
+            .Add("MinUPSLoad", 0) ' CAL_LoadMin
+            .Add("MaxUPSLoad", 100) ' CAL_LoadMax
+            .Add("MinBattVoltage", 6) ' CAL_BattVMin
+            .Add("MaxBattVoltage", 18) ' CAL_BattVMax
         End With
         With Arr_Reg_Miscellanous
-            .Add("MinimizeToTray", vbFalse)
-            .Add("MinimizeOnStart", vbFalse)
-            .Add("CloseToTray", vbFalse)
-            .Add("StartWithWindows", vbFalse)
+            .Add("MinimizeToTray", vbFalse) ' ☑️
+            .Add("MinimizeOnStart", vbFalse) ' ☑️
+            .Add("CloseToTray", vbFalse) ' ☑️
+            .Add("StartWithWindows", vbFalse) ' ☑️
         End With
         With Arr_Reg_Logging
-            .Add("UseLogFile", vbFalse)
-            .Add("Log Level", 0)
+            .Add("UseLogFile", vbFalse) ' LG_LogToFile
+            .Add("Log Level", 0) ' LG_LogLevel
         End With
         With Arr_Reg_Power
-            .Add("ShutdownLimitBatteryCharge", 30)
-            .Add("ShutdownLimitUPSRemainTime", 120)
-            .Add("ImmediateStopAction", vbFalse)
-            .Add("Follow_FSD", vbFalse)
-            .Add("TypeOfStop", 0)
-            .Add("DelayToShutdown", 15)
-            .Add("AllowExtendedShutdownDelay", vbFalse)
-            .Add("ExtendedShutdownDelay", 15)
+            .Add("ShutdownLimitBatteryCharge", 30) ' PW_BattChrgFloor
+            .Add("ShutdownLimitUPSRemainTime", 120) ' PW_RuntimeFloor
+            .Add("ImmediateStopAction", vbFalse) ' PW_Immediate
+            .Add("Follow_FSD", vbFalse) ' PW_RespectFSD
+            .Add("TypeOfStop", 0) ' PW_StopType
+            .Add("DelayToShutdown", 15) ' PW_StopDelaySec
+            .Add("AllowExtendedShutdownDelay", vbFalse) ' PW_UserExtendStopTimer
+            .Add("ExtendedShutdownDelay", 15) ' PW_ExtendDelaySec
         End With
         With Arr_Reg_Update
-            .Add("VerifyUpdate", vbFalse)
-            .Add("VerifyUpdateAtStart", vbFalse)
-            .Add("DelayBetweenEachVerification", 2)
-            .Add("StableOrDevBranch", 0)
-            .Add("LastDateVerification", "")
+            .Add("VerifyUpdate", vbFalse) ' UP_AutoUpdate
+            .Add("VerifyUpdateAtStart", vbFalse) ' UP_CheckAtStart
+            .Add("DelayBetweenEachVerification", 2) ' UP_AutoChkDelay
+            .Add("StableOrDevBranch", 0) ' UP_Branch
+            .Add("LastDateVerification", "") ' UP_LastCheck
         End With
         With Arr_Reg_Key_Base
             .Add("Connexion", Arr_Reg_Connexion)
