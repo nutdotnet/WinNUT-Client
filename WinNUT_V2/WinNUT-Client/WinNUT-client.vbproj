@@ -180,6 +180,12 @@
     <Compile Include="Pref_Gui.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="UpgradePrefsDialog.Designer.vb">
+      <DependentUpon>UpgradePrefsDialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UpgradePrefsDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WinNUT.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -295,6 +301,9 @@
     <EmbeddedResource Include="Update_Gui.zh-TW.resx">
       <DependentUpon>Update_Gui.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UpgradePrefsDialog.resx">
+      <DependentUpon>UpgradePrefsDialog.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WinNUT.de-DE.resx">
       <DependentUpon>WinNUT.vb</DependentUpon>
     </EmbeddedResource>
@@ -377,6 +386,7 @@
     <None Include="Resources\Battery_Charged.png" />
     <None Include="Resources\Battery_Charging.png" />
     <None Include="Resources\Battery_Discharging.png" />
+    <None Include="Resources\XP_Information.png" />
     <Content Include="WinNut.ico" />
   </ItemGroup>
   <ItemGroup>
