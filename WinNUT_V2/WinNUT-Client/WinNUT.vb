@@ -139,15 +139,6 @@ Public Class WinNUT
         WinNUT_PrefsChanged(True)
         LogFile.LogTracing("Loaded Params Complete", LogLvl.LOG_DEBUG, Me)
 
-        ' Setup logging preferences
-        ' LogFile.LogLevel = Arr_Reg_Key.Item("Log Level")
-        ' LogFile.IsWritingToFile = Arr_Reg_Key.Item("UseLogFile")
-        'If Arr_Reg_Key.Item("UseLogFile") Then
-        '    LogFile.InitializeLogFile()
-        'End If
-
-        'LogFile.LogTracing("Logging is configured.", LogLvl.LOG_DEBUG, Me)
-
         'Init Systray
         NotifyIcon.Text = LongProgramName & " - " & ShortProgramVersion
         NotifyIcon.Visible = False
@@ -833,7 +824,7 @@ Public Class WinNUT
         ' Setup logging preferences
         If Arr_Reg_Key.Item("UseLogFile") Then
             LogFile.LogLevelValue = Arr_Reg_Key.Item("Log Level")
-            LogFile.InitializeLogFile(ApplicationDataPath)
+            LogFile.InitializeLogFile()
         ElseIf LogFile.IsWritingToFile Then
             LogFile.DeleteLogFile()
         End If

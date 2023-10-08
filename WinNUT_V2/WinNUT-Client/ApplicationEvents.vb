@@ -23,8 +23,8 @@ Namespace My
     ' NetworkAvailabilityChanged : Déclenché quand la connexion réseau est connectée ou déconnectée.
     Partial Friend Class MyApplication
         ' Default culture for output so logs can be shared with the project.
-        Private Shared DEF_CULTURE_INFO As CultureInfo = CultureInfo.InvariantCulture
-
+        Private Shared ReadOnly DEF_CULTURE_INFO As CultureInfo = CultureInfo.InvariantCulture
+        Private Shared ReadOnly CRASHBUG_OUTPUT_PATH = System.Windows.Forms.Application.LocalUserAppDataPath
 
         Private CrashBug_Form As New Form
         Private BtnClose As New Button
@@ -168,13 +168,13 @@ Namespace My
 
             Computer.Clipboard.SetText(crashReportData)
 
-            Directory.CreateDirectory(TEMP_DATA_PATH)
-            Dim CrashLog_Report = New StreamWriter(Path.Combine(TEMP_DATA_PATH, logFileName))
+            Directory.CreateDirectory(CRASHBUG_OUTPUT_PATH)
+            Dim CrashLog_Report = New StreamWriter(Path.Combine(CRASHBUG_OUTPUT_PATH, logFileName))
             CrashLog_Report.WriteLine(crashReportData)
             CrashLog_Report.Close()
 
             ' Open an Explorer window to the crash log.
-            Process.Start(TEMP_DATA_PATH)
+            Process.Start(CRASHBUG_OUTPUT_PATH)
             End
         End Sub
 

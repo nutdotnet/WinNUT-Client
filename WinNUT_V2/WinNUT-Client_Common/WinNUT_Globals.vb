@@ -20,58 +20,12 @@ Public Module WinNUT_Globals
     Public ReadOnly GitHubURL = My.Application.Info.Trademark
     Public ReadOnly Copyright = My.Application.Info.Copyright
 
-#Region "File Directories"
-
-    Private ReadOnly DATA_DIRECTORY_NAME = "WinNUT-Client"
-    Private ReadOnly TEMP_FOLDER = Path.GetTempPath() + DATA_DIRECTORY_NAME
-
-#If DEBUG Then
-    Public ReadOnly IsDebugBuild = True
-    ' If debugging, keep any generated data next to the debug executable.
-    Private ReadOnly DESIRED_DATA_PATH As String = Path.Combine(Environment.CurrentDirectory, DATA_DIRECTORY_NAME)
-#Else
-    Public ReadOnly IsDebugBuild = False
-    Private ReadOnly DESIRED_DATA_PATH As String = Path.Combine(Environment.GetFolderPath(
-                Environment.SpecialFolder.ApplicationData), DATA_DIRECTORY_NAME)
-#End If
-
-    Public ReadOnly TEMP_DATA_PATH = Path.Combine(Path.GetTempPath(), DATA_DIRECTORY_NAME)
-
-#End Region
-
-    Public ApplicationDataPath = TEMP_DATA_PATH
     Public WithEvents LogFile As Logger = New Logger(LogLvl.LOG_DEBUG)
     Public StrLog As New List(Of String)
 
 #End Region
 
     Public Sub Init_Globals()
-        ApplicationDataPath = GetAppDirectory(DESIRED_DATA_PATH)
+
     End Sub
-
-    ''' <summary>
-    ''' Do everything possible to find a safe place to write to, with the <see cref="ProgramName"/> appended to it. If
-    ''' the requested option is unavailable, we fall back to the temporary directory for the current user.
-    ''' </summary>
-    ''' <param name="requestedDir">The requested directory, with <see cref="ProgramName"/> appended to it.</param>
-    ''' <returns>The best possible option available as a writable data directory.</returns>
-    Private Function GetAppDirectory(requestedDir As String) As String
-        Dim finalDir As String
-
-        Try
-            Directory.CreateDirectory(requestedDir)
-            LogFile.LogTracing("Successfully created or opened requested data directory for WinNUT." &
-                               vbNewLine & "requestedDir: " & requestedDir, LogLvl.LOG_DEBUG, Nothing)
-            finalDir = requestedDir
-
-        Catch ex As Exception
-            LogFile.LogTracing(ex.ToString & " encountered trying to create app data directory. Falling back to temp.",
-                               LogLvl.LOG_ERROR, Nothing)
-
-            Directory.CreateDirectory(TEMP_DATA_PATH)
-            finalDir = TEMP_DATA_PATH
-        End Try
-
-        Return finalDir
-    End Function
 End Module

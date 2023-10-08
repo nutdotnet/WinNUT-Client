@@ -343,8 +343,8 @@ Public Class Pref_Gui
 
     Private Sub Btn_ViewLog_Click(sender As Object, e As EventArgs) Handles Btn_ViewLog.Click
         LogFile.LogTracing("Show LogFile", LogLvl.LOG_DEBUG, Me)
-        If File.Exists(LogFile.LogFileLocation) Then
-            Process.Start(LogFile.LogFileLocation)
+        If File.Exists(LogFile.LogFilePath) Then
+            Process.Start(LogFile.LogFilePath)
         Else
             LogFile.LogTracing("LogFile does not exists", LogLvl.LOG_WARNING, Me)
             Btn_ViewLog.Enabled = False
