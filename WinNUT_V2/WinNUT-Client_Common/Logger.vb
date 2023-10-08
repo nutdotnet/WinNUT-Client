@@ -9,28 +9,28 @@
 
 Imports System.Globalization
 Imports System.IO
+Imports Microsoft.VisualBasic.Logging
 
 Public Class Logger
 #Region "Constants/Shared"
-    Private Const LOG_FILE_CREATION_SCHEDULE = Logging.LogFileCreationScheduleOption.Daily
+    Private Const LOG_FILE_CREATION_SCHEDULE = LogFileCreationScheduleOption.Daily
 
-#If DEBUG Then
+    ' Set TEST_RELEASE_DIRS in the custom compiler constants dialog for file storage to behave like release.
+#If DEBUG And Not TEST_RELEASE_DIRS Then
     Private Shared ReadOnly DEFAULT_DATETIMEFORMAT = DateTimeFormatInfo.InvariantInfo
+    Private Shared ReadOnly DEFAULT_LOCATION = LogFileLocation.ExecutableDirectory
 #Else
     Private Shared ReadOnly DEFAULT_DATETIMEFORMAT = DateTimeFormatInfo.CurrentInfo
+    ' Actually goes to the Roaming folder.
+    Private Shared ReadOnly DEFAULT_LOCATION = LogFileLocation.LocalUserApplicationDirectory
 #End If
 
-
-    ' The subfolder that will contain logs.
-    Public Const LOG_SUBFOLDER = "Logs"
-
-    Private Shared ReadOnly BASE_FILE_NAME = ProgramName
     Private ReadOnly TEventCache As New TraceEventCache()
 #End Region
 
 #Region "Private/backing values"
 
-    Private LogFile As Logging.FileLogTraceListener
+    Private LogFile As FileLogTraceListener
     Private L_CurrentLogData As String
     Private LastEventsList As New List(Of Object)
     Private _DateTimeFormatInfo As DateTimeFormatInfo = DEFAULT_DATETIMEFORMAT
@@ -86,7 +86,7 @@ Public Class Logger
     ''' Get the log file location from the <see cref="LogFile"/> object.
     ''' </summary>
     ''' <returns>The possible path to the log file. Note that this does not gaurantee it exists.</returns>
-    Public ReadOnly Property LogFileLocation() As String
+    Public ReadOnly Property LogFilePath() As String
         Get
             Return LogFile.FullLogFileName
         End Get
@@ -108,15 +108,26 @@ Public Class Logger
         LogLevelValue = LogLevel
     End Sub
 
-    Public Sub InitializeLogFile(baseDataFolder As String)
-        LogFile = New Logging.FileLogTraceListener(BASE_FILE_NAME) With {
+    ''' <summary>
+    ''' Instantiates a new <see cref="FileLogTraceListener"/> at a the desired location, and outputs the
+    ''' <see cref="LastEvents"/> buffer into the file before synchronizing with write calls.
+    ''' </summary>
+    ''' <param name="baseDataFolder">Desired location to initiate the log file. If unspecified,
+    ''' then a default location is used.</param>
+    Public Sub InitializeLogFile(Optional baseDataFolder As String = Nothing)
+        LogFile = New FileLogTraceListener() With {
             .TraceOutputOptions = TraceOptions.DateTime Or TraceOptions.ProcessId,
             .Append = True,
             .AutoFlush = True,
-            .LogFileCreationSchedule = LOG_FILE_CREATION_SCHEDULE,
-            .CustomLocation = Path.Combine(baseDataFolder, LOG_SUBFOLDER),
-            .Location = Logging.LogFileLocation.Custom
+            .LogFileCreationSchedule = LOG_FILE_CREATION_SCHEDULE
         }
+
+        If baseDataFolder Is Nothing Then
+            LogFile.Location = DEFAULT_LOCATION
+        Else
+            LogFile.Location = LogFileLocation.Custom
+            LogFile.CustomLocation = baseDataFolder
+        End If
 
         LogTracing(String.Format("{0} {1} Log file init", LongProgramName, ProgramVersion), LogLvl.LOG_NOTICE, Me)
 
