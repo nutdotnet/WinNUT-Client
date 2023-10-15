@@ -11,6 +11,17 @@ Imports System.Globalization
 Imports System.Windows.Forms
 
 Public Class UPS_Device
+#Region "Fields/Constants"
+    Private Const CosPhi As Double = 0.6
+    ' How many milliseconds to wait before the Reconnect routine tries again.
+    Private Const DEFAULT_RECONNECT_WAIT_MS As Double = 5000
+
+    Private WithEvents Update_Data As New Timer
+    Private Freq_Fallback As Double
+    Private ciClone As CultureInfo
+    Private LogFile As Logger
+#End Region
+
 #Region "Properties"
 
     Public ReadOnly Property Name As String
@@ -92,15 +103,7 @@ Public Class UPS_Device
 
 #End Region
 
-    Private Const CosPhi As Double = 0.6
-    ' How many milliseconds to wait before the Reconnect routine tries again.
-    Private Const DEFAULT_RECONNECT_WAIT_MS As Double = 5000
 
-    Private WithEvents Update_Data As New Timer
-    'Private Nut_Conn As Nut_Comm
-    ' Private LogFile As Logger
-    Private Freq_Fallback As Double
-    Private ciClone As CultureInfo
 
     Public Nut_Config As Nut_Parameter
 
@@ -112,11 +115,6 @@ Public Class UPS_Device
     Public Retry As Integer = 0
     Public MaxRetry As Integer = 30
     Private WithEvents Reconnect_Nut As New System.Windows.Forms.Timer
-
-
-
-
-    Private LogFile As Logger
 
     ''' <summary>
     ''' Raise an event when a status code is added to the UPS that wasn't there before.
