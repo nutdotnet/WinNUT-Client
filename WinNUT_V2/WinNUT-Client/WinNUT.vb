@@ -402,7 +402,7 @@ Public Class WinNUT
         ' Begin auto-connecting if user indicated they wanted it. (Note: Will hang form because we don't do threading yet)
         If Arr_Reg_Key.Item("AutoReconnect") Then
             LogFile.LogTracing("Auto-connecting to UPS on startup.", LogLvl.LOG_NOTICE, Me)
-            UPS_Connect()
+            UPS_Connect(True)
         End If
 
         LogFile.LogTracing("Completed WinNUT_Shown", LogLvl.LOG_DEBUG, Me)
