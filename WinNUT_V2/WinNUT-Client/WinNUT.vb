@@ -7,6 +7,7 @@
 '
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
+Imports Windows.ApplicationModel.AppService
 Imports WinNUT_Client_Common
 
 Public Class WinNUT
@@ -408,7 +409,9 @@ Public Class WinNUT
     End Sub
 
     Private Sub WinNUT_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-        If Arr_Reg_Key.Item("CloseToTray") = True And Arr_Reg_Key.Item("MinimizeToTray") = True Then
+        LogFile.LogTracing("Received FormClosing event. Reason: " + e.CloseReason.ToString(), LogLvl.LOG_NOTICE, Me)
+
+        If e.CloseReason = CloseReason.UserClosing AndAlso Arr_Reg_Key.Item("CloseToTray") = True And Arr_Reg_Key.Item("MinimizeToTray") = True Then
             LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
             UpdateIcon_NotifyIcon()
             LogFile.LogTracing("Minimize Main Gui To Notify Icon", LogLvl.LOG_DEBUG, Me)
