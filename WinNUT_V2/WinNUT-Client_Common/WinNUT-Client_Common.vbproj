@@ -73,6 +73,7 @@
       <Link>My Project\SharedAssemblyInfo.vb</Link>
     </Compile>
     <Compile Include="Common_Classes.vb" />
+    <Compile Include="CommUPSVariable.vb" />
     <Compile Include="StringEnum.vb" />
     <Compile Include="Common_Enums.vb" />
     <Compile Include="IniFileVb.vb" />
