@@ -300,12 +300,12 @@ Public Class WinNUT
         Dim upsConf = nutUps.Nut_Config
         LogFile.LogTracing(upsConf.UPSName & " has indicated it's ready to start sending data.", LogLvl.LOG_DEBUG, Me)
 
-        ' Setup and begin polling data from UPS.
-        ' Polling_Interval = Arr_Reg_Key.Item("Delay")
-        'With Update_Data
-        '    .Interval = Polling_Interval
-        '    ' .Enabled = True
-        'End With
+        With UPS_Device.UPS_Datas
+            Lbl_VMfr.Text = .Mfr
+            Lbl_VName.Text = .Model
+            Lbl_VSerial.Text = .Serial
+            Lbl_VFirmware.Text = .Firmware
+        End With
 
         Menu_UPS_Var.Enabled = True
         UpdateIcon_NotifyIcon()
@@ -542,7 +542,7 @@ Public Class WinNUT
         Dim Status As String = "Unknown"
         Select Case Reason
             Case Nothing, "Deconnected", "Lost Connect"
-                If (UPS_Device IsNot Nothing) AndAlso Not UPS_Device.Nut_Socket.IsConnected Then
+                If (UPS_Device IsNot Nothing) AndAlso Not UPS_Device.IsConnected Then
                     PBox_Battery_State.Image = Nothing
                 End If
                 Status = "Unknown"
@@ -620,15 +620,7 @@ Public Class WinNUT
 
     Private Sub Update_UPS_Data() Handles UPS_Device.DataUpdated
         LogFile.LogTracing("Updating UPS data for Form.", LogLvl.LOG_DEBUG, Me)
-        With UPS_Device.UPS_Datas
-            If Lbl_VMfr.Text = "" And Lbl_VName.Text = "" And Lbl_VSerial.Text = "" And Lbl_VFirmware.Text = "" Then
-                LogFile.LogTracing("Retrieve UPS Informations", LogLvl.LOG_DEBUG, Me)
-                Lbl_VMfr.Text = .Mfr
-                Lbl_VName.Text = .Model
-                Lbl_VSerial.Text = .Serial
-                Lbl_VFirmware.Text = .Firmware
-            End If
-        End With
+
         With UPS_Device.UPS_Datas.UPS_Value
             UPS_BattCh = .Batt_Charge
             UPS_BattV = .Batt_Voltage
@@ -638,7 +630,6 @@ Public Class WinNUT
             UPS_InputV = .Input_Voltage
             UPS_OutputV = .Output_Voltage
             UPS_Load = .Load
-            'Me.UPS_Status = Me.Device_Data
             UPS_Status = "OL"
             UPS_OutPower = .Output_Power
 
@@ -669,25 +660,6 @@ Public Class WinNUT
             Else
                 Lbl_VOLoad.BackColor = Color.White
             End If
-            'If Me.UPS_Status <> Nothing Then
-            'If Me.UPS_Status.Trim().StartsWith("OL") Or StrReverse(Me.UPS_Status.Trim()).StartsWith("LO") Then
-            '    LogFile.LogTracing("UPS is plugged", LogLvl.LOG_DEBUG, Me)
-            '    Lbl_VOL.BackColor = Color.Green
-            '    Lbl_VOB.BackColor = Color.White
-            '    ActualAppIconIdx = AppIconIdx.IDX_OL
-            'Else
-            '    LogFile.LogTracing("UPS is unplugged", LogLvl.LOG_DEBUG, Me)
-            '    Lbl_VOL.BackColor = Color.Yellow
-            '    Lbl_VOB.BackColor = Color.Green
-            '    ActualAppIconIdx = 0
-            'End If
-
-            'If Me.UPS_Load > 100 Then
-            '        LogFile.LogTracing("UPS Overload", LogLvl.LOG_ERROR, Me)
-            '        Lbl_VOLoad.BackColor = Color.Red
-            '    Else
-            '        Lbl_VOLoad.BackColor = Color.White
-            '    End If
 
             LogFile.LogTracing("Updating battery icons based on charge percent: " & UPS_BattCh & "%", LogLvl.LOG_DEBUG, Me)
 

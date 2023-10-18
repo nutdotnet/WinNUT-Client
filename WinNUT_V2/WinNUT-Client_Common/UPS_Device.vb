@@ -64,11 +64,17 @@ Public Class UPS_Device
         End Set
     End Property
 
+    Private _MaxLoad As Integer
+
+    Public ReadOnly Property MaxLoad As Integer
+        Get
+            Return _MaxLoad
+        End Get
+    End Property
+
 #End Region
 
 #Region "Events"
-
-    ' Public Event Unknown_UPS()
     Public Event DataUpdated()
     Public Event Connected(sender As UPS_Device)
     Public Event ReConnected(sender As UPS_Device)
@@ -79,8 +85,6 @@ Public Class UPS_Device
     ' Error encountered when trying to connect.
     Public Event ConnectionError(sender As UPS_Device, innerException As Exception)
     Public Event New_Retry()
-    ' Public Event Shutdown_Condition()
-    ' Public Event Stop_Shutdown()
 
     ''' <summary>
     ''' Raised when the NUT server returns an error during normal communication and is deemed important for the client
@@ -89,6 +93,12 @@ Public Class UPS_Device
     ''' <param name="sender">The device object that has received the error.</param>
     ''' <param name="nutEx">An exception detailing the error and cirucmstances surrounding it.</param>
     Public Event EncounteredNUTException(sender As UPS_Device, nutEx As NutException)
+
+    ''' <summary>
+    ''' Raise an event when a status code is added to the UPS that wasn't there before.
+    ''' </summary>
+    ''' <param name="newStatuses">The bitmask of status flags that are currently set on the UPS.</param>
+    Public Event StatusesChanged(sender As UPS_Device, newStatuses As UPS_States)
 
 #End Region
 
@@ -107,7 +117,7 @@ Public Class UPS_Device
     ' Public UPSData As New UPSData
 
 
-    Public WithEvents Nut_Socket As Nut_Socket
+    Private WithEvents Nut_Socket As Nut_Socket
 
     Public Retry As Integer = 0
     Public MaxRetry As Integer = 30
@@ -117,12 +127,6 @@ Public Class UPS_Device
 
 
     Private LogFile As Logger
-
-    ''' <summary>
-    ''' Raise an event when a status code is added to the UPS that wasn't there before.
-    ''' </summary>
-    ''' <param name="newStatuses">The bitmask of status flags that are currently set on the UPS.</param>
-    Public Event StatusesChanged(sender As UPS_Device, newStatuses As UPS_States)
 
     Public Sub New(ByRef Nut_Config As Nut_Parameter, ByRef LogFile As Logger, pollInterval As Integer)
         Me.LogFile = LogFile
@@ -234,6 +238,10 @@ Public Class UPS_Device
         Freq_Fallback = Double.Parse(GetUPSVar("output.frequency.nominal", (50 + CInt(Arr_Reg_Key.Item("FrequencySupply")) * 10)), ciClone)
 
         Return freshData
+    End Function
+
+    Private Function FindMaxLoad() As Integer
+
     End Function
 
     Private oldStatusBitmask As Integer
