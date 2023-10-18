@@ -194,14 +194,6 @@ Public Class WinNUT
             .Value1 = UPS_BattCh
             .ScaleLinesMajorStepValue = CInt((.MaxValue - .MinValue) / 5)
         End With
-        With AG_Load
-            .Location = New Point(6, 26)
-            .MaxValue = Arr_Reg_Key.Item("MaxUPSLoad")
-            .MinValue = Arr_Reg_Key.Item("MinUPSLoad")
-            .Value1 = UPS_Load
-            .Value2 = UPS_OutPower
-            .ScaleLinesMajorStepValue = CInt((.MaxValue - .MinValue) / 5)
-        End With
         With AG_BattV
             .Location = New Point(6, 26)
             .MaxValue = Arr_Reg_Key.Item("MaxBattVoltage")
@@ -743,7 +735,7 @@ Public Class WinNUT
         AG_InF.Value1 = Arr_Reg_Key.Item("MinInputFrequency")
         AG_OutV.Value1 = Arr_Reg_Key.Item("MinOutputVoltage")
         AG_BattCh.Value1 = 0
-        AG_Load.Value1 = Arr_Reg_Key.Item("MinUPSLoad")
+        AG_Load.Value1 = 0
         AG_Load.Value2 = 0
         AG_BattV.Value1 = Arr_Reg_Key.Item("MinBattVoltage")
     End Sub
@@ -847,15 +839,6 @@ Public Class WinNUT
                 .MinValue = Arr_Reg_Key.Item("MinOutputVoltage")
                 .ScaleLinesMajorStepValue = CInt((.MaxValue - .MinValue) / 5)
                 LogFile.LogTracing("Parameter Dial Output Voltage Updated", LogLvl.LOG_DEBUG, Me)
-            End If
-        End With
-        With AG_Load
-            If (.MaxValue <> Arr_Reg_Key.Item("MaxUPSLoad")) Or (.MinValue <> Arr_Reg_Key.Item("MinUPSLoad")) Then
-                LogFile.LogTracing("Parameter Dial UPS Load Need to be Updated", LogLvl.LOG_DEBUG, Me)
-                .MaxValue = Arr_Reg_Key.Item("MaxUPSLoad")
-                .MinValue = Arr_Reg_Key.Item("MinUPSLoad")
-                .ScaleLinesMajorStepValue = CInt((.MaxValue - .MinValue) / 5)
-                LogFile.LogTracing("Parameter Dial UPS Load Updated", LogLvl.LOG_DEBUG, Me)
             End If
         End With
         With AG_BattV

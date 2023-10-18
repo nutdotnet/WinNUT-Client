@@ -122,10 +122,6 @@ IPV4 / IPV6 / доменное имя.</value>
     <value>Максимальное напряжение батареи.
 Число от 0 до 100.</value>
   </data>
-  <data name="Tb_Load_Max.ToolTip" xml:space="preserve">
-    <value>Максимальная нагрузка на ИБП.
-Число от 0 до 100.</value>
-  </data>
   <data name="Tb_OutV_Max.ToolTip" xml:space="preserve">
     <value>Максимальное напряжение на выходе.
 Число от 0 до 100.</value>
@@ -136,10 +132,6 @@ IPV4 / IPV6 / доменное имя.</value>
   </data>
   <data name="Tb_BattV_Min.ToolTip" xml:space="preserve">
     <value>Минимальное напряжение батареи.
-Число от 0 до 100.</value>
-  </data>
-  <data name="Tb_Load_Min.ToolTip" xml:space="preserve">
-    <value>Минимальная нагрузка на ИБП.
 Число от 0 до 100.</value>
   </data>
   <data name="Tb_OutV_Min.ToolTip" xml:space="preserve">
@@ -313,5 +305,20 @@ IPV4 / IPV6 / доменное имя.</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Опции</value>
+  </data>
+  <data name="Cbx_Freq_Input.Margin" xml:space="preserve" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 6, 3, 3</value>
+  </data>
+  <data name="Tb_BattV_Max.Margin" xml:space="preserve" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 6, 3, 3</value>
+  </data>
+  <data name="Tb_OutV_Max.Margin" xml:space="preserve" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 6, 3, 3</value>
+  </data>
+  <data name="Tb_InF_Max.Margin" xml:space="preserve" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 6, 3, 3</value>
+  </data>
+  <data name="Lbl_LoadUPS.Font" xml:space="preserve" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt, style=Italic</value>
   </data>
 </root>
