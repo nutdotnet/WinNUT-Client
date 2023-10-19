@@ -127,7 +127,7 @@ Public Class List_Var_Gui
     Private Sub TView_UPSVar_NodeChanged(sender As Object, e As TreeViewEventArgs) Handles TView_UPSVar.AfterSelect
         Dim index As Integer = 0
         Dim UPSName = Arr_Reg_Key.Item("UPSName")
-        Dim SelectedChild = Replace(e.Node.FullPath, UPSName & ".", "")
+        Dim SelectedChild = Replace(e.Node.FullPath, UPSName & ".", "", 1, 1)
         Dim FindChild As Predicate(Of UPS_List_Datas) = Function(ByVal x As UPS_List_Datas)
                                                             If x.VarKey = SelectedChild Then
                                                                 Return True
