@@ -4960,6 +4960,18 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_B8073AE507D3E3454F05FE38F157CEDD"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_7643B2E01E55816C8BA2265FF9E9B786"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_E8BB0E2A241C1023B684B55FEB5B745F"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -4979,18 +4991,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_70DBA11C2BF449198BA594449914C1BC"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B8073AE507D3E3454F05FE38F157CEDD"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_7643B2E01E55816C8BA2265FF9E9B786"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -9429,9 +9429,14 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:AGauge, Version=2.1.8690.23867, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:AGauge, Version=2.1.8690.23992, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_7643B2E01E55816C8BA2265FF9E9B786"
+                    {
+                    "Name" = "8:AGauge.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:AGauge.dll"
             "TargetName" = "8:"
@@ -11003,9 +11008,14 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WinNUT-Client_Common, Version=2.2.8690.23867, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:WinNUT-Client_Common, Version=2.2.8693.25939, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_B8073AE507D3E3454F05FE38F157CEDD"
+                    {
+                    "Name" = "8:WinNUT-Client_Common.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:WinNUT-Client_Common.dll"
             "TargetName" = "8:"
@@ -12868,15 +12878,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:WinNUT"
-        "ProductCode" = "8:{59FA2D2B-9A33-4889-897C-EDA8E87DE6A0}"
-        "PackageCode" = "8:{725679C7-4AF5-4AB4-9AF4-CBB753A11D56}"
+        "ProductCode" = "8:{6D31D0C8-D73A-482F-B98A-DAA529A961CA}"
+        "PackageCode" = "8:{9087DB0B-BB27-47FB-BD23-2B42D99D2DFB}"
         "UpgradeCode" = "8:{7EA17151-76E7-4E29-8F6A-621C1B4144C2}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:2.2.8690"
+        "ProductVersion" = "8:2.2.8693"
         "Manufacturer" = "8:NUTDotNet"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://github.com/nutdotnet/WinNUT-Client/issues"
