@@ -33,8 +33,6 @@ Public Module WinNUT_Params
             .Add("MaxInputFrequency", 0)
             .Add("MinOutputVoltage", 0)
             .Add("MaxOutputVoltage", 0)
-            .Add("MinUPSLoad", 0)
-            .Add("MaxUPSLoad", 0)
             .Add("MinBattVoltage", 0)
             .Add("MaxBattVoltage", 0)
             .Add("MinimizeToTray", vbFalse)
@@ -79,17 +77,15 @@ Public Module WinNUT_Params
             .Add("AutoReconnect", vbFalse) ' NUT_AutoReconnect
         End With
         With Arr_Reg_Calibration
-            .Add("MinInputVoltage", 210) ' CAL_VoltInMin
-            .Add("MaxInputVoltage", 270) ' CAL_VoltInMax
-            .Add("FrequencySupply", 0) ' CAL_FreqInNom
-            .Add("MinInputFrequency", 40) ' CAL_FreqInMin
-            .Add("MaxInputFrequency", 60) ' CAL_FreqInMax
-            .Add("MinOutputVoltage", 210) ' CAL_VoltOutMin
-            .Add("MaxOutputVoltage", 250) ' CAL_VoltOutMax
-            .Add("MinUPSLoad", 0) ' CAL_LoadMin
-            .Add("MaxUPSLoad", 100) ' CAL_LoadMax
-            .Add("MinBattVoltage", 6) ' CAL_BattVMin
-            .Add("MaxBattVoltage", 18) ' CAL_BattVMax
+            .Add("MinInputVoltage", 210)
+            .Add("MaxInputVoltage", 270)
+            .Add("FrequencySupply", 0)
+            .Add("MinInputFrequency", 40)
+            .Add("MaxInputFrequency", 60)
+            .Add("MinOutputVoltage", 210)
+            .Add("MaxOutputVoltage", 250)
+            .Add("MinBattVoltage", 6)
+            .Add("MaxBattVoltage", 18)
         End With
         With Arr_Reg_Miscellanous
             .Add("MinimizeToTray", vbFalse) ' ☑️
@@ -192,8 +188,6 @@ Public Module WinNUT_Params
                 .Add("Max Input Frequency", "MaxInputFrequency")
                 .Add("Min Output Voltage", "MinOutputVoltage")
                 .Add("Max Output Voltage", "MaxOutputVoltage")
-                .Add("Min UPS Load", "MinUPSLoad")
-                .Add("Max UPS Load", "MaxUPSLoad")
                 .Add("Min Batt Voltage", "MinBattVoltage")
                 .Add("Max Batt Voltage", "MaxBattVoltage")
                 .Add("Minimize to tray", "MinimizeToTray")

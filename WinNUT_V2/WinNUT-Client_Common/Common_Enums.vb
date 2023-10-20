@@ -116,3 +116,10 @@ Public Enum UPS_States
     TRIM = 1 << 11
     BOOST = 1 << 12
 End Enum
+
+Public Enum PowerMethod
+    Unavailable ' No methods are available to calculate power.
+    RealPower ' The ups.realpower variable is available for direct reading.
+    NominalPowerCalc ' Power can be calculated by taking the load percentage of the nominal power variable.
+    VoltAmpCalc ' Power will have be calculated as a function of volts and amps.
+End Enum

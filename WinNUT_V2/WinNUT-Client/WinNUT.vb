@@ -7,6 +7,7 @@
 '
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
+Imports Windows.ApplicationModel.AppService
 Imports WinNUT_Client_Common
 
 Public Class WinNUT
@@ -193,14 +194,6 @@ Public Class WinNUT
             .Value1 = UPS_BattCh
             .ScaleLinesMajorStepValue = CInt((.MaxValue - .MinValue) / 5)
         End With
-        With AG_Load
-            .Location = New Point(6, 26)
-            .MaxValue = Arr_Reg_Key.Item("MaxUPSLoad")
-            .MinValue = Arr_Reg_Key.Item("MinUPSLoad")
-            .Value1 = UPS_Load
-            .Value2 = UPS_OutPower
-            .ScaleLinesMajorStepValue = CInt((.MaxValue - .MinValue) / 5)
-        End With
         With AG_BattV
             .Location = New Point(6, 26)
             .MaxValue = Arr_Reg_Key.Item("MaxBattVoltage")
@@ -299,12 +292,12 @@ Public Class WinNUT
         Dim upsConf = nutUps.Nut_Config
         LogFile.LogTracing(upsConf.UPSName & " has indicated it's ready to start sending data.", LogLvl.LOG_DEBUG, Me)
 
-        ' Setup and begin polling data from UPS.
-        ' Polling_Interval = Arr_Reg_Key.Item("Delay")
-        'With Update_Data
-        '    .Interval = Polling_Interval
-        '    ' .Enabled = True
-        'End With
+        With UPS_Device.UPS_Datas
+            Lbl_VMfr.Text = .Mfr
+            Lbl_VName.Text = .Model
+            Lbl_VSerial.Text = .Serial
+            Lbl_VFirmware.Text = .Firmware
+        End With
 
         Menu_UPS_Var.Enabled = True
         UpdateIcon_NotifyIcon()
@@ -392,14 +385,16 @@ Public Class WinNUT
         ' Begin auto-connecting if user indicated they wanted it. (Note: Will hang form because we don't do threading yet)
         If Arr_Reg_Key.Item("AutoReconnect") Then
             LogFile.LogTracing("Auto-connecting to UPS on startup.", LogLvl.LOG_NOTICE, Me)
-            UPS_Connect()
+            UPS_Connect(True)
         End If
 
         LogFile.LogTracing("Completed WinNUT_Shown", LogLvl.LOG_DEBUG, Me)
     End Sub
 
     Private Sub WinNUT_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-        If Arr_Reg_Key.Item("CloseToTray") = True And Arr_Reg_Key.Item("MinimizeToTray") = True Then
+        LogFile.LogTracing("Received FormClosing event. Reason: " + e.CloseReason.ToString(), LogLvl.LOG_NOTICE, Me)
+
+        If e.CloseReason = CloseReason.UserClosing AndAlso Arr_Reg_Key.Item("CloseToTray") = True And Arr_Reg_Key.Item("MinimizeToTray") = True Then
             LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
             UpdateIcon_NotifyIcon()
             LogFile.LogTracing("Minimize Main Gui To Notify Icon", LogLvl.LOG_DEBUG, Me)
@@ -539,7 +534,7 @@ Public Class WinNUT
         Dim Status As String = "Unknown"
         Select Case Reason
             Case Nothing, "Deconnected", "Lost Connect"
-                If (UPS_Device IsNot Nothing) AndAlso Not UPS_Device.Nut_Socket.IsConnected Then
+                If (UPS_Device IsNot Nothing) AndAlso Not UPS_Device.IsConnected Then
                     PBox_Battery_State.Image = Nothing
                 End If
                 Status = "Unknown"
@@ -617,15 +612,7 @@ Public Class WinNUT
 
     Private Sub Update_UPS_Data() Handles UPS_Device.DataUpdated
         LogFile.LogTracing("Updating UPS data for Form.", LogLvl.LOG_DEBUG, Me)
-        With UPS_Device.UPS_Datas
-            If Lbl_VMfr.Text = "" And Lbl_VName.Text = "" And Lbl_VSerial.Text = "" And Lbl_VFirmware.Text = "" Then
-                LogFile.LogTracing("Retrieve UPS Informations", LogLvl.LOG_DEBUG, Me)
-                Lbl_VMfr.Text = .Mfr
-                Lbl_VName.Text = .Model
-                Lbl_VSerial.Text = .Serial
-                Lbl_VFirmware.Text = .Firmware
-            End If
-        End With
+
         With UPS_Device.UPS_Datas.UPS_Value
             UPS_BattCh = .Batt_Charge
             UPS_BattV = .Batt_Voltage
@@ -635,7 +622,6 @@ Public Class WinNUT
             UPS_InputV = .Input_Voltage
             UPS_OutputV = .Output_Voltage
             UPS_Load = .Load
-            'Me.UPS_Status = Me.Device_Data
             UPS_Status = "OL"
             UPS_OutPower = .Output_Power
 
@@ -666,25 +652,6 @@ Public Class WinNUT
             Else
                 Lbl_VOLoad.BackColor = Color.White
             End If
-            'If Me.UPS_Status <> Nothing Then
-            'If Me.UPS_Status.Trim().StartsWith("OL") Or StrReverse(Me.UPS_Status.Trim()).StartsWith("LO") Then
-            '    LogFile.LogTracing("UPS is plugged", LogLvl.LOG_DEBUG, Me)
-            '    Lbl_VOL.BackColor = Color.Green
-            '    Lbl_VOB.BackColor = Color.White
-            '    ActualAppIconIdx = AppIconIdx.IDX_OL
-            'Else
-            '    LogFile.LogTracing("UPS is unplugged", LogLvl.LOG_DEBUG, Me)
-            '    Lbl_VOL.BackColor = Color.Yellow
-            '    Lbl_VOB.BackColor = Color.Green
-            '    ActualAppIconIdx = 0
-            'End If
-
-            'If Me.UPS_Load > 100 Then
-            '        LogFile.LogTracing("UPS Overload", LogLvl.LOG_ERROR, Me)
-            '        Lbl_VOLoad.BackColor = Color.Red
-            '    Else
-            '        Lbl_VOLoad.BackColor = Color.White
-            '    End If
 
             LogFile.LogTracing("Updating battery icons based on charge percent: " & UPS_BattCh & "%", LogLvl.LOG_DEBUG, Me)
 
@@ -768,7 +735,7 @@ Public Class WinNUT
         AG_InF.Value1 = Arr_Reg_Key.Item("MinInputFrequency")
         AG_OutV.Value1 = Arr_Reg_Key.Item("MinOutputVoltage")
         AG_BattCh.Value1 = 0
-        AG_Load.Value1 = Arr_Reg_Key.Item("MinUPSLoad")
+        AG_Load.Value1 = 0
         AG_Load.Value2 = 0
         AG_BattV.Value1 = Arr_Reg_Key.Item("MinBattVoltage")
     End Sub
@@ -872,15 +839,6 @@ Public Class WinNUT
                 .MinValue = Arr_Reg_Key.Item("MinOutputVoltage")
                 .ScaleLinesMajorStepValue = CInt((.MaxValue - .MinValue) / 5)
                 LogFile.LogTracing("Parameter Dial Output Voltage Updated", LogLvl.LOG_DEBUG, Me)
-            End If
-        End With
-        With AG_Load
-            If (.MaxValue <> Arr_Reg_Key.Item("MaxUPSLoad")) Or (.MinValue <> Arr_Reg_Key.Item("MinUPSLoad")) Then
-                LogFile.LogTracing("Parameter Dial UPS Load Need to be Updated", LogLvl.LOG_DEBUG, Me)
-                .MaxValue = Arr_Reg_Key.Item("MaxUPSLoad")
-                .MinValue = Arr_Reg_Key.Item("MinUPSLoad")
-                .ScaleLinesMajorStepValue = CInt((.MaxValue - .MinValue) / 5)
-                LogFile.LogTracing("Parameter Dial UPS Load Updated", LogLvl.LOG_DEBUG, Me)
             End If
         End With
         With AG_BattV
