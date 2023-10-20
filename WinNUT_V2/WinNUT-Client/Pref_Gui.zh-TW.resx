@@ -81,9 +81,6 @@
   <data name="Tb_OutV_Max.ToolTip" xml:space="preserve">
     <value>最低輸出電壓，範圍：0-999 。</value>
   </data>
-  <data name="Tb_Load_Max.ToolTip" xml:space="preserve">
-    <value>最高 UPS 電量百分比，範圍：0-100 。</value>
-  </data>
   <data name="Cb_Reconnect.Text" xml:space="preserve">
     <value>重新建立連線</value>
   </data>
@@ -210,9 +207,6 @@
   <data name="Lbl_LevelLog.Text" xml:space="preserve">
     <value>日誌等級</value>
   </data>
-  <data name="Tb_Load_Min.ToolTip" xml:space="preserve">
-    <value>最低 UPS 電量百分比，範圍：0-100 。</value>
-  </data>
   <data name="Tab_Connexion.Text" xml:space="preserve">
     <value>連線</value>
   </data>
@@ -287,5 +281,20 @@
   </data>
   <data name="Cb_ImmediateStop.ToolTip" xml:space="preserve">
     <value>立即或定時執行關機程序。</value>
+  </data>
+  <data name="Cbx_Freq_Input.Margin" xml:space="preserve" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 6, 3, 3</value>
+  </data>
+  <data name="Tb_BattV_Max.Margin" xml:space="preserve" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 6, 3, 3</value>
+  </data>
+  <data name="Tb_OutV_Max.Margin" xml:space="preserve" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 6, 3, 3</value>
+  </data>
+  <data name="Tb_InF_Max.Margin" xml:space="preserve" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 6, 3, 3</value>
+  </data>
+  <data name="Lbl_LoadUPS.Font" xml:space="preserve" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt, style=Italic</value>
   </data>
 </root>

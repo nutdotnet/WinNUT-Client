@@ -42,8 +42,6 @@ Public Class Pref_Gui
             Arr_Reg_Key.Item("MaxInputFrequency") = CInt(Tb_InF_Max.Text)
             Arr_Reg_Key.Item("MinOutputVoltage") = CInt(Tb_OutV_Min.Text)
             Arr_Reg_Key.Item("MaxOutputVoltage") = CInt(Tb_OutV_Max.Text)
-            Arr_Reg_Key.Item("MinUPSLoad") = CInt(Tb_Load_Min.Text)
-            Arr_Reg_Key.Item("MaxUPSLoad") = CInt(Tb_Load_Max.Text)
             Arr_Reg_Key.Item("MinBattVoltage") = CInt(Tb_BattV_Min.Text)
             Arr_Reg_Key.Item("MaxBattVoltage") = CInt(Tb_BattV_Max.Text)
             Arr_Reg_Key.Item("MinimizeToTray") = CB_Systray.Checked
@@ -124,8 +122,6 @@ Public Class Pref_Gui
             Tb_InF_Max.Text = CStr(Arr_Reg_Key.Item("MaxInputFrequency"))
             Tb_OutV_Min.Text = CStr(Arr_Reg_Key.Item("MinOutputVoltage"))
             Tb_OutV_Max.Text = CStr(Arr_Reg_Key.Item("MaxOutputVoltage"))
-            Tb_Load_Min.Text = CStr(Arr_Reg_Key.Item("MinUPSLoad"))
-            Tb_Load_Max.Text = CStr(Arr_Reg_Key.Item("MaxUPSLoad"))
             Tb_BattV_Min.Text = CStr(Arr_Reg_Key.Item("MinBattVoltage"))
             Tb_BattV_Max.Text = CStr(Arr_Reg_Key.Item("MaxBattVoltage"))
             CB_Systray.Checked = Arr_Reg_Key.Item("MinimizeToTray")
@@ -237,7 +233,7 @@ Public Class Pref_Gui
         End If
     End Sub
 
-    Private Sub Number_Validating(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Tb_Port.Validating, Tb_OutV_Min.Validating, Tb_OutV_Max.Validating, Tb_Load_Min.Validating, Tb_Load_Max.Validating, Tb_InV_Min.Validating, Tb_InV_Max.Validating, Tb_InF_Min.Validating, Tb_InF_Max.Validating, Tb_GraceTime.Validating, Tb_Delay_Stop.Validating, Tb_Delay_Com.Validating, Tb_BattV_Min.Validating, Tb_BattV_Max.Validating, Tb_BattLimit_Time.Validating, Tb_BattLimit_Load.Validating
+    Private Sub Number_Validating(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Tb_Port.Validating, Tb_OutV_Min.Validating, Tb_OutV_Max.Validating, Tb_InV_Min.Validating, Tb_InV_Max.Validating, Tb_InF_Min.Validating, Tb_InF_Max.Validating, Tb_GraceTime.Validating, Tb_Delay_Stop.Validating, Tb_Delay_Com.Validating, Tb_BattV_Min.Validating, Tb_BattV_Max.Validating, Tb_BattLimit_Time.Validating, Tb_BattLimit_Load.Validating
         If IsShowed Then
             Dim StrTest As String = sender.Text
             Dim Result As Object = 0
@@ -254,7 +250,7 @@ Public Class Pref_Gui
                 Case "Tb_OutV_Min", "Tb_OutV_Max", "Tb_InV_Min", "Tb_InV_Max", "Tb_BattV_Min", "Tb_BattV_Max"
                     MinValue = 0
                     MaxValue = 999
-                Case "Tb_Load_Min", "Tb_Load_Max", "Tb_InF_Min", "Tb_InF_Max", "Tb_BattLimit_Load"
+                Case "Tb_InF_Min", "Tb_InF_Max", "Tb_BattLimit_Load"
                     MinValue = 0
                     MaxValue = 100
                 Case "Tb_BattLimit_Time"

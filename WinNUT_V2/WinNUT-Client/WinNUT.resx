@@ -7800,7 +7800,7 @@
     <value>AG_InV</value>
   </data>
   <data name="&gt;&gt;AG_InV.Type" xml:space="preserve">
-    <value>System.Windows.Forms.AGauge, AGauge, Version=2.0.2.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8688.27024, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;AG_InV.Parent" xml:space="preserve">
     <value>GB_InV_Dial</value>
@@ -7893,7 +7893,7 @@
     <value>AG_OutV</value>
   </data>
   <data name="&gt;&gt;AG_OutV.Type" xml:space="preserve">
-    <value>System.Windows.Forms.AGauge, AGauge, Version=2.0.2.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8688.27024, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;AG_OutV.Parent" xml:space="preserve">
     <value>GB_OutV_Dial</value>
@@ -8049,7 +8049,7 @@
     <value>AG_BattCh</value>
   </data>
   <data name="&gt;&gt;AG_BattCh.Type" xml:space="preserve">
-    <value>System.Windows.Forms.AGauge, AGauge, Version=2.0.2.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8688.27024, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;AG_BattCh.Parent" xml:space="preserve">
     <value>GB_BattCh_Dial</value>
@@ -8103,7 +8103,7 @@
     <value>AG_Load</value>
   </data>
   <data name="&gt;&gt;AG_Load.Type" xml:space="preserve">
-    <value>System.Windows.Forms.AGauge, AGauge, Version=2.0.2.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8688.27024, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;AG_Load.Parent" xml:space="preserve">
     <value>GB_Load_Dial</value>
@@ -8196,7 +8196,7 @@
     <value>AG_BattV</value>
   </data>
   <data name="&gt;&gt;AG_BattV.Type" xml:space="preserve">
-    <value>System.Windows.Forms.AGauge, AGauge, Version=2.0.2.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8688.27024, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;AG_BattV.Parent" xml:space="preserve">
     <value>GB_BattV_Dial</value>
@@ -8289,7 +8289,7 @@
     <value>AG_InF</value>
   </data>
   <data name="&gt;&gt;AG_InF.Type" xml:space="preserve">
-    <value>System.Windows.Forms.AGauge, AGauge, Version=2.0.2.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8688.27024, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;AG_InF.Parent" xml:space="preserve">
     <value>GB_InF_Dial</value>
@@ -15246,9 +15246,6 @@
         ABEVdxdtCj0LHwAAAADBDwAAgAcAAJJnAACiZwAAomcAAKJnAACiZwAAomcAAKJnAACiZwAAomMAAKJD
         AACAQQAAgIEAAOPLAADz/wAA
 </value>
-  </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>720, 420</value>

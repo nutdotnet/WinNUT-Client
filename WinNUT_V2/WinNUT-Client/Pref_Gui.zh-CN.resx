@@ -22,10 +22,6 @@
     <value>最高电池电压。
 取值：0-100 之间的数值。</value>
   </data>
-  <data name="Tb_Load_Max.ToolTip" xml:space="preserve">
-    <value>最高 UPS 电量等级。
-取值：0-100 之间的数值。</value>
-  </data>
   <data name="Tb_OutV_Max.ToolTip" xml:space="preserve">
     <value>最高输出电压。
 取值：0-999 之间的数值。</value>
@@ -36,10 +32,6 @@
   </data>
   <data name="Tb_BattV_Min.ToolTip" xml:space="preserve">
     <value>最低电池电压。
-取值：0-100 之间的数值。</value>
-  </data>
-  <data name="Tb_Load_Min.ToolTip" xml:space="preserve">
-    <value>最低 UPS 电量等级。
 取值：0-100 之间的数值。</value>
   </data>
   <data name="Tb_OutV_Min.ToolTip" xml:space="preserve">
@@ -315,5 +307,20 @@
   </data>
   <data name="CB_Follow_FSD.ToolTip" xml:space="preserve">
     <value>指示当NUT服务器发出强制关机信号时是否应执行关机（FSD =强制关机）</value>
+  </data>
+  <data name="Cbx_Freq_Input.Margin" xml:space="preserve" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 6, 3, 3</value>
+  </data>
+  <data name="Tb_BattV_Max.Margin" xml:space="preserve" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 6, 3, 3</value>
+  </data>
+  <data name="Tb_OutV_Max.Margin" xml:space="preserve" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 6, 3, 3</value>
+  </data>
+  <data name="Tb_InF_Max.Margin" xml:space="preserve" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 6, 3, 3</value>
+  </data>
+  <data name="Lbl_LoadUPS.Font" xml:space="preserve" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt, style=Italic</value>
   </data>
 </root>
