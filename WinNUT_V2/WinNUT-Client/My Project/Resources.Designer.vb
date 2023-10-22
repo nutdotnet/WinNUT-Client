@@ -370,6 +370,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Previous preferences data detected in the Registry..
+        '''</summary>
+        Public ReadOnly Property DetectedPreviousPrefsData() As String
+            Get
+                Return ResourceManager.GetString("DetectedPreviousPrefsData", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Old ups.ini imported
         '''Ini File Moved to {0}.old.
         '''</summary>
@@ -676,6 +685,60 @@ Namespace My.Resources
         Public ReadOnly Property Log_Str_12() As String
             Get
                 Return ResourceManager.GetString("Log_Str_12", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to The old preferences delete procedure is beginning....
+        '''</summary>
+        Public ReadOnly Property UpgradePrefsDialog_DeleteProcedureBeginning() As String
+            Get
+                Return ResourceManager.GetString("UpgradePrefsDialog_DeleteProcedureBeginning", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to The old preferences have been removed from your Registry..
+        '''</summary>
+        Public ReadOnly Property UpgradePrefsDialog_DeleteProcedureComplete() As String
+            Get
+                Return ResourceManager.GetString("UpgradePrefsDialog_DeleteProcedureComplete", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to An error occurred while deleting the old preferences: {0}.
+        '''</summary>
+        Public ReadOnly Property UpgradePrefsDialog_DeleteProcedureError() As String
+            Get
+                Return ResourceManager.GetString("UpgradePrefsDialog_DeleteProcedureError", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to The old preferences import procedure is beginning....
+        '''</summary>
+        Public ReadOnly Property UpgradePrefsDialog_ImportProcedureBeginning() As String
+            Get
+                Return ResourceManager.GetString("UpgradePrefsDialog_ImportProcedureBeginning", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to The old preferences import procedure has completed..
+        '''</summary>
+        Public ReadOnly Property UpgradePrefsDialog_ImportProcedureCompleted() As String
+            Get
+                Return ResourceManager.GetString("UpgradePrefsDialog_ImportProcedureCompleted", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to There were {0} unknown preferences: {1}.
+        '''</summary>
+        Public ReadOnly Property UpgradePrefsDialog_UnmatchedPairs() As String
+            Get
+                Return ResourceManager.GetString("UpgradePrefsDialog_UnmatchedPairs", resourceCulture)
             End Get
         End Property
         

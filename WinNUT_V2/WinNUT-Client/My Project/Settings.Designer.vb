@@ -57,6 +57,18 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property UpgradePrefsCompleted() As Boolean
+            Get
+                Return CType(Me("UpgradePrefsCompleted"),Boolean)
+            End Get
+            Set
+                Me("UpgradePrefsCompleted") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
         Public Property StartWithWindows() As Boolean
             Get
                 Return CType(Me("StartWithWindows"),Boolean)
@@ -175,11 +187,10 @@ Namespace My
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property UP_LastCheck() As String
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
+        Public Property UP_LastCheck() As Date
             Get
-                Return CType(Me("UP_LastCheck"),String)
+                Return CType(Me("UP_LastCheck"),Date)
             End Get
             Set
                 Me("UP_LastCheck") = value
@@ -343,11 +354,10 @@ Namespace My
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property NUT_PasswordEnc() As String
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
+        Public Property NUT_PasswordEnc() As Global.WinNUT_Client_Common.Utils.SerializedProtectedString
             Get
-                Return CType(Me("NUT_PasswordEnc"),String)
+                Return CType(Me("NUT_PasswordEnc"),Global.WinNUT_Client_Common.Utils.SerializedProtectedString)
             End Get
             Set
                 Me("NUT_PasswordEnc") = value

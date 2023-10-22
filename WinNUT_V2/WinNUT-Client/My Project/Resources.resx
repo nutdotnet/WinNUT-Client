@@ -211,6 +211,10 @@
   <data name="Delete_LogFile_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Delete_LogFile_24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="DetectedPreviousPrefsData" xml:space="preserve">
+    <value>Previous preferences data detected in the Registry.</value>
+    <comment>Notify the user that preferences data from the old system was detected in the Registry hive.</comment>
+  </data>
   <data name="Frm_Main_Str_01" xml:space="preserve">
     <value>Old ups.ini imported
 Ini File Moved to {0}.old</value>
@@ -316,6 +320,30 @@ Cancel to Save Msi and Install Later</value>
   </data>
   <data name="Log_Str_12" xml:space="preserve">
     <value>Stop condition imposed by the NUT server</value>
+  </data>
+  <data name="UpgradePrefsDialog_DeleteProcedureBeginning" xml:space="preserve">
+    <value>The old preferences delete procedure is beginning...</value>
+    <comment>Notify the user that the old preferences deletion procedure is beginning.</comment>
+  </data>
+  <data name="UpgradePrefsDialog_DeleteProcedureComplete" xml:space="preserve">
+    <value>The old preferences have been removed from your Registry.</value>
+    <comment>Notify the user that the old preferences have been removed from their Registry.</comment>
+  </data>
+  <data name="UpgradePrefsDialog_DeleteProcedureError" xml:space="preserve">
+    <value>An error occurred while deleting the old preferences: {0}</value>
+    <comment>Notify the user that an error occurred while deleteing the old preferences.</comment>
+  </data>
+  <data name="UpgradePrefsDialog_ImportProcedureBeginning" xml:space="preserve">
+    <value>The old preferences import procedure is beginning...</value>
+    <comment>Notify the user that the old preferences procedure is beginning.</comment>
+  </data>
+  <data name="UpgradePrefsDialog_ImportProcedureCompleted" xml:space="preserve">
+    <value>The old preferences import procedure has completed.</value>
+    <comment>Notify the user that the import procedure has completed.</comment>
+  </data>
+  <data name="UpgradePrefsDialog_UnmatchedPairs" xml:space="preserve">
+    <value>There were {0} unknown preferences: {1}</value>
+    <comment>Alert the user to how many unmatched preferences there were {0}, then list them {1}.</comment>
   </data>
   <data name="ups_104x104" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ups_104x104.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

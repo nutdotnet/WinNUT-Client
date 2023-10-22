@@ -2,6 +2,9 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
   <Profiles />
   <Settings>
+    <Setting Name="UpgradePrefsCompleted" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
     <Setting Name="StartWithWindows" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
@@ -32,7 +35,7 @@
     <Setting Name="UP_Branch" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="UP_LastCheck" Type="System.String" Scope="User">
+    <Setting Name="UP_LastCheck" Type="System.DateTime" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="PW_BattChrgFloor" Type="System.Int32" Scope="User">
@@ -74,7 +77,7 @@
     <Setting Name="NUT_Username" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="NUT_PasswordEnc" Type="System.String" Scope="User">
+    <Setting Name="NUT_PasswordEnc" Type="WinNUT_Client_Common.Utils.SerializedProtectedString" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="NUT_AutoReconnect" Type="System.Boolean" Scope="User">
