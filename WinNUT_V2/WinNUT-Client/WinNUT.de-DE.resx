@@ -102,7 +102,4 @@
   <data name="Lbl_InV_Dial.Text" xml:space="preserve">
     <value>Eingangsspannung</value>
   </data>
-  <data name="Menu_Import_Ini.Text" xml:space="preserve">
-    <value>INI-Datei importieren (v1.x)</value>
-  </data>
 </root>

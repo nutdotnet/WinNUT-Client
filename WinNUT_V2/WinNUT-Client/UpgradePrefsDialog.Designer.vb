@@ -31,24 +31,26 @@ Partial Class UpgradePrefsDialog
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(UpgradePrefsDialog))
         Me.primaryActions = New System.Windows.Forms.TableLayoutPanel()
         Me.OK_Button = New System.Windows.Forms.Button()
+        Me.UpgradePrefsDialogBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.Cancel_Button = New System.Windows.Forms.Button()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TopContentTlp = New System.Windows.Forms.TableLayoutPanel()
-        Me.ButtonOpenRegedit = New System.Windows.Forms.Button()
         Me.ImportSettingsCheckBox = New System.Windows.Forms.CheckBox()
         Me.DeleteSettingsCheckBox = New System.Windows.Forms.CheckBox()
         Me.PrevSettngsGroupBox = New System.Windows.Forms.GroupBox()
-        Me.mainFlowLayoutPanel = New System.Windows.Forms.FlowLayoutPanel()
         Me.buttonPanel = New System.Windows.Forms.Panel()
+        Me.UpgradeWorker = New System.ComponentModel.BackgroundWorker()
+        Me.UpgradeProgressBar = New System.Windows.Forms.ProgressBar()
         Me.primaryActions.SuspendLayout()
+        CType(Me.UpgradePrefsDialogBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TopContentTlp.SuspendLayout()
         Me.PrevSettngsGroupBox.SuspendLayout()
-        Me.mainFlowLayoutPanel.SuspendLayout()
         Me.buttonPanel.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -60,23 +62,28 @@ Partial Class UpgradePrefsDialog
         Me.primaryActions.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.primaryActions.Controls.Add(Me.OK_Button, 0, 0)
         Me.primaryActions.Controls.Add(Me.Cancel_Button, 1, 0)
-        Me.primaryActions.Location = New System.Drawing.Point(285, 0)
+        Me.primaryActions.Location = New System.Drawing.Point(292, 0)
         Me.primaryActions.Margin = New System.Windows.Forms.Padding(0)
         Me.primaryActions.Name = "primaryActions"
         Me.primaryActions.RowCount = 1
         Me.primaryActions.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.primaryActions.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.primaryActions.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29.0!))
         Me.primaryActions.Size = New System.Drawing.Size(146, 29)
         Me.primaryActions.TabIndex = 0
         '
         'OK_Button
         '
         Me.OK_Button.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.OK_Button.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.UpgradePrefsDialogBindingSource, "OKButtonEnabled", True))
         Me.OK_Button.Location = New System.Drawing.Point(3, 3)
         Me.OK_Button.Name = "OK_Button"
         Me.OK_Button.Size = New System.Drawing.Size(67, 23)
         Me.OK_Button.TabIndex = 0
         Me.OK_Button.Text = "OK"
+        '
+        'UpgradePrefsDialogBindingSource
+        '
+        Me.UpgradePrefsDialogBindingSource.DataSource = GetType(WinNUT_Client.UpgradePrefsDialog)
         '
         'Cancel_Button
         '
@@ -103,12 +110,14 @@ Partial Class UpgradePrefsDialog
         Me.Label1.AutoSize = True
         Me.Label1.Location = New System.Drawing.Point(59, 3)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(372, 108)
+        Me.Label1.Size = New System.Drawing.Size(372, 110)
         Me.Label1.TabIndex = 2
         Me.Label1.Text = resources.GetString("Label1.Text")
         '
         'TopContentTlp
         '
+        Me.TopContentTlp.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TopContentTlp.ColumnCount = 2
         Me.TopContentTlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 53.0!))
         Me.TopContentTlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
@@ -120,23 +129,16 @@ Partial Class UpgradePrefsDialog
         Me.TopContentTlp.Padding = New System.Windows.Forms.Padding(3)
         Me.TopContentTlp.RowCount = 1
         Me.TopContentTlp.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TopContentTlp.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TopContentTlp.Size = New System.Drawing.Size(437, 114)
+        Me.TopContentTlp.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
+        Me.TopContentTlp.Size = New System.Drawing.Size(438, 116)
         Me.TopContentTlp.TabIndex = 3
-        '
-        'ButtonOpenRegedit
-        '
-        Me.ButtonOpenRegedit.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.ButtonOpenRegedit.Location = New System.Drawing.Point(3, 3)
-        Me.ButtonOpenRegedit.Name = "ButtonOpenRegedit"
-        Me.ButtonOpenRegedit.Size = New System.Drawing.Size(84, 23)
-        Me.ButtonOpenRegedit.TabIndex = 4
-        Me.ButtonOpenRegedit.Text = "Open RegEdit"
-        Me.ButtonOpenRegedit.UseVisualStyleBackColor = True
         '
         'ImportSettingsCheckBox
         '
         Me.ImportSettingsCheckBox.AutoSize = True
+        Me.ImportSettingsCheckBox.Checked = True
+        Me.ImportSettingsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.ImportSettingsCheckBox.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.UpgradePrefsDialogBindingSource, "ImportPreviousSettigns", True))
         Me.ImportSettingsCheckBox.Location = New System.Drawing.Point(6, 19)
         Me.ImportSettingsCheckBox.Name = "ImportSettingsCheckBox"
         Me.ImportSettingsCheckBox.Size = New System.Drawing.Size(55, 17)
@@ -147,6 +149,7 @@ Partial Class UpgradePrefsDialog
         'DeleteSettingsCheckBox
         '
         Me.DeleteSettingsCheckBox.AutoSize = True
+        Me.DeleteSettingsCheckBox.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Me.UpgradePrefsDialogBindingSource, "DeletePreviousSettings", True))
         Me.DeleteSettingsCheckBox.Location = New System.Drawing.Point(6, 42)
         Me.DeleteSettingsCheckBox.Name = "DeleteSettingsCheckBox"
         Me.DeleteSettingsCheckBox.Size = New System.Drawing.Size(57, 17)
@@ -156,39 +159,40 @@ Partial Class UpgradePrefsDialog
         '
         'PrevSettngsGroupBox
         '
+        Me.PrevSettngsGroupBox.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PrevSettngsGroupBox.Controls.Add(Me.DeleteSettingsCheckBox)
         Me.PrevSettngsGroupBox.Controls.Add(Me.ImportSettingsCheckBox)
-        Me.PrevSettngsGroupBox.Dock = System.Windows.Forms.DockStyle.Top
-        Me.PrevSettngsGroupBox.Location = New System.Drawing.Point(3, 126)
+        Me.PrevSettngsGroupBox.Location = New System.Drawing.Point(6, 122)
         Me.PrevSettngsGroupBox.Margin = New System.Windows.Forms.Padding(3, 9, 3, 3)
         Me.PrevSettngsGroupBox.Name = "PrevSettngsGroupBox"
-        Me.PrevSettngsGroupBox.Size = New System.Drawing.Size(431, 79)
+        Me.PrevSettngsGroupBox.Size = New System.Drawing.Size(426, 64)
         Me.PrevSettngsGroupBox.TabIndex = 7
         Me.PrevSettngsGroupBox.TabStop = False
         Me.PrevSettngsGroupBox.Text = "Previous Settings"
         '
-        'mainFlowLayoutPanel
-        '
-        Me.mainFlowLayoutPanel.Controls.Add(Me.TopContentTlp)
-        Me.mainFlowLayoutPanel.Controls.Add(Me.PrevSettngsGroupBox)
-        Me.mainFlowLayoutPanel.Controls.Add(Me.buttonPanel)
-        Me.mainFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.mainFlowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
-        Me.mainFlowLayoutPanel.Location = New System.Drawing.Point(0, 0)
-        Me.mainFlowLayoutPanel.Name = "mainFlowLayoutPanel"
-        Me.mainFlowLayoutPanel.Size = New System.Drawing.Size(437, 243)
-        Me.mainFlowLayoutPanel.TabIndex = 7
-        Me.mainFlowLayoutPanel.WrapContents = False
-        '
         'buttonPanel
         '
-        Me.buttonPanel.Controls.Add(Me.ButtonOpenRegedit)
         Me.buttonPanel.Controls.Add(Me.primaryActions)
-        Me.buttonPanel.Dock = System.Windows.Forms.DockStyle.Top
-        Me.buttonPanel.Location = New System.Drawing.Point(3, 211)
+        Me.buttonPanel.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.buttonPanel.Location = New System.Drawing.Point(0, 220)
         Me.buttonPanel.Name = "buttonPanel"
-        Me.buttonPanel.Size = New System.Drawing.Size(431, 32)
+        Me.buttonPanel.Size = New System.Drawing.Size(438, 32)
         Me.buttonPanel.TabIndex = 7
+        '
+        'UpgradeWorker
+        '
+        Me.UpgradeWorker.WorkerReportsProgress = True
+        '
+        'UpgradeProgressBar
+        '
+        Me.UpgradeProgressBar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.UpgradeProgressBar.DataBindings.Add(New System.Windows.Forms.Binding("Value", Me.UpgradePrefsDialogBindingSource, "ProgressPercent", True))
+        Me.UpgradeProgressBar.Location = New System.Drawing.Point(6, 191)
+        Me.UpgradeProgressBar.Name = "UpgradeProgressBar"
+        Me.UpgradeProgressBar.Size = New System.Drawing.Size(426, 23)
+        Me.UpgradeProgressBar.TabIndex = 9
         '
         'UpgradePrefsDialog
         '
@@ -196,24 +200,26 @@ Partial Class UpgradePrefsDialog
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.Cancel_Button
-        Me.ClientSize = New System.Drawing.Size(437, 243)
+        Me.ClientSize = New System.Drawing.Size(438, 252)
         Me.ControlBox = False
-        Me.Controls.Add(Me.mainFlowLayoutPanel)
+        Me.Controls.Add(Me.UpgradeProgressBar)
+        Me.Controls.Add(Me.TopContentTlp)
+        Me.Controls.Add(Me.PrevSettngsGroupBox)
+        Me.Controls.Add(Me.buttonPanel)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "UpgradePrefsDialog"
-        Me.ShowInTaskbar = False
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Migrate to New Settings Format"
         Me.primaryActions.ResumeLayout(False)
+        CType(Me.UpgradePrefsDialogBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TopContentTlp.ResumeLayout(False)
         Me.TopContentTlp.PerformLayout()
         Me.PrevSettngsGroupBox.ResumeLayout(False)
         Me.PrevSettngsGroupBox.PerformLayout()
-        Me.mainFlowLayoutPanel.ResumeLayout(False)
         Me.buttonPanel.ResumeLayout(False)
         Me.ResumeLayout(False)
 
@@ -223,11 +229,12 @@ Partial Class UpgradePrefsDialog
     Friend WithEvents Cancel_Button As System.Windows.Forms.Button
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Label1 As Label
-    Friend WithEvents TopContentTlp As TableLayoutPanel
-    Friend WithEvents ButtonOpenRegedit As Button
     Friend WithEvents ImportSettingsCheckBox As CheckBox
     Friend WithEvents DeleteSettingsCheckBox As CheckBox
     Friend WithEvents PrevSettngsGroupBox As GroupBox
-    Friend WithEvents mainFlowLayoutPanel As FlowLayoutPanel
     Friend WithEvents buttonPanel As Panel
+    Friend WithEvents UpgradePrefsDialogBindingSource As BindingSource
+    Protected WithEvents TopContentTlp As TableLayoutPanel
+    Protected WithEvents UpgradeWorker As System.ComponentModel.BackgroundWorker
+    Private WithEvents UpgradeProgressBar As ProgressBar
 End Class

@@ -117,10 +117,11 @@ Public Class UPS_Device
     Public MaxRetry As Integer = 30
     Private LogFile As Logger
 
-    Public Sub New(ByRef Nut_Config As Nut_Parameter, ByRef LogFile As Logger, pollInterval As Integer)
+    Public Sub New(ByRef Nut_Config As Nut_Parameter, ByRef LogFile As Logger, pollInterval As Integer, defaultFrequency As Integer)
         Me.LogFile = LogFile
         Me.Nut_Config = Nut_Config
         PollingInterval = pollInterval
+        Freq_Fallback = defaultFrequency
         ciClone = CType(CultureInfo.InvariantCulture.Clone(), CultureInfo)
         ciClone.NumberFormat.NumberDecimalSeparator = "."
         Nut_Socket = New Nut_Socket(Me.Nut_Config, LogFile)
@@ -249,7 +250,13 @@ Public Class UPS_Device
 
         ' Other constant values for UPS calibration.
         freshData.UPS_Value.Batt_Capacity = Double.Parse(GetUPSVar("battery.capacity", 7), ciClone)
-        Freq_Fallback = Double.Parse(GetUPSVar("output.frequency.nominal", (50 + CInt(Arr_Reg_Key.Item("FrequencySupply")) * 10)), ciClone)
+        Try
+            Freq_Fallback = Double.Parse(GetUPSVar("output.frequency.nominal"), ciClone)
+        Catch
+
+        End Try
+
+
 
         Return freshData
     End Function

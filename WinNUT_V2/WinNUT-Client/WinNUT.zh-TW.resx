@@ -24,9 +24,6 @@
   <data name="Menu_Sys_Exit.Text" xml:space="preserve">
     <value>離開</value>
   </data>
-  <data name="Menu_Import_Ini.Text" xml:space="preserve">
-    <value>匯入 ini 檔案 (v1.x 版本)</value>
-  </data>
   <data name="Menu_UPS_Var.Text" xml:space="preserve">
     <value>UPS 變數</value>
   </data>

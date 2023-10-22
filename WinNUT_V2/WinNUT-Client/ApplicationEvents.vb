@@ -7,6 +7,7 @@
 '
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
+Imports System.Configuration
 Imports System.Globalization
 Imports System.IO
 Imports System.Text.RegularExpressions
@@ -32,6 +33,8 @@ Namespace My
         Private Msg_Crash As New Label
         Private Msg_Error As New TextBox
 
+        Private SensitiveProperties As List(Of String) = New List(Of String)({"NUT_ServerAddress", "NUT_ServerPort", "NUT_UPSName",
+                                                           "NUT_Username", "NUT_PasswordEnc"})
         Private crashReportData As String
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
@@ -107,7 +110,7 @@ Namespace My
             WinNUT.HasCrashed = True
         End Sub
 
-        Private Shared Function GenerateCrashReport(ex As Exception) As String
+        Private Function GenerateCrashReport(ex As Exception) As String
             Dim jsonSerializerSettings As New JsonSerializerSettings()
             jsonSerializerSettings.Culture = DEF_CULTURE_INFO
             jsonSerializerSettings.Formatting = Formatting.Indented
@@ -120,31 +123,22 @@ Namespace My
             reportStream.WriteLine("WinNUT Version: " & ProgramVersion)
 
 #Region "Config output"
-            Dim confCopy = New Dictionary(Of String, Object)
-
             reportStream.WriteLine()
-            reportStream.WriteLine("==== Parameters ====")
+            reportStream.WriteLine("==== Settings ====")
             reportStream.WriteLine()
 
-            ' Censor any identifying information
-            If Arr_Reg_Key IsNot Nothing AndAlso Arr_Reg_Key.Count > 0 Then
-                For Each kvp As KeyValuePair(Of String, Object) In Arr_Reg_Key
-                    Dim newVal As String
-                    Select Case kvp.Key
-                        Case "ServerAddress", "Port", "UPSName", "NutLogin", "NutPassword"
-                            newVal = "*****"
-                        Case Else
-                            newVal = kvp.Value
-                    End Select
+            For Each setProp As SettingsProperty In Settings.Properties
+                Dim setVal As String
 
-                    confCopy.Add(kvp.Key, newVal)
-                Next
+                If SensitiveProperties.Contains(setProp.Name) Then
+                    setVal = "{Removed}"
+                    SensitiveProperties.Remove(setProp.Name)
+                Else
+                    setVal = Settings.Item(setProp.Name)
+                End If
 
-                reportStream.WriteLine(JsonConvert.SerializeObject(confCopy, jsonSerializerSettings))
-                reportStream.WriteLine()
-            Else
-                reportStream.WriteLine("[EMPTY]")
-            End If
+                reportStream.WriteLine(setProp.Name & ": " & setVal & " (" & setProp.DefaultValue & ")")
+            Next
 #End Region
 
 #Region "Exceptions"

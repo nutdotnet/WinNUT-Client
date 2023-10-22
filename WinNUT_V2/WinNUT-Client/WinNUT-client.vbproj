@@ -300,7 +300,24 @@
     <EmbeddedResource Include="Update_Gui.zh-TW.resx">
       <DependentUpon>Update_Gui.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UpgradePrefsDialog.de-DE.resx">
+      <DependentUpon>UpgradePrefsDialog.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpgradePrefsDialog.fr-FR.resx">
+      <DependentUpon>UpgradePrefsDialog.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UpgradePrefsDialog.resx">
+      <DependentUpon>UpgradePrefsDialog.vb</DependentUpon>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpgradePrefsDialog.ru-RU.resx">
+      <DependentUpon>UpgradePrefsDialog.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpgradePrefsDialog.zh-CN.resx">
+      <DependentUpon>UpgradePrefsDialog.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpgradePrefsDialog.zh-TW.resx">
       <DependentUpon>UpgradePrefsDialog.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinNUT.de-DE.resx">
@@ -336,6 +353,7 @@
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
+    <None Include="My Project\DataSources\UpgradePrefsDialog.datasource" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <CustomToolNamespace>My</CustomToolNamespace>

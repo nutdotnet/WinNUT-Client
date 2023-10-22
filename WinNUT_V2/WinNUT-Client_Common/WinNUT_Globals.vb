@@ -7,8 +7,6 @@
 '
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
-Imports System.IO
-
 Public Module WinNUT_Globals
 
 #Region "Constants/Shareds"
