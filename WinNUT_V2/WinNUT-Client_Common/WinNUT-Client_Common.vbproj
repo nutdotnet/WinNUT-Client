@@ -83,9 +83,11 @@
       <Link>My Project\SharedAssemblyInfo.vb</Link>
     </Compile>
     <Compile Include="Common_Classes.vb" />
+    <Compile Include="OldParams\UpgradableParams.vb" />
+    <Compile Include="OldParams\WinNUT_Params.vb" />
+    <Compile Include="SerializedProtectedString.vb" />
     <Compile Include="StringEnum.vb" />
     <Compile Include="Common_Enums.vb" />
-    <Compile Include="IniFileVb.vb" />
     <Compile Include="Logger.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -99,11 +101,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Nut_Socket.vb" />
-    <Compile Include="UpgradePrefs.vb" />
     <Compile Include="UPS_Device.vb" />
-    <Compile Include="Utils\SerializedProtectedString.vb" />
     <Compile Include="WinNUT_Globals.vb" />
-    <Compile Include="WinNUT_Params.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -114,7 +113,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include=".editorconfig" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
