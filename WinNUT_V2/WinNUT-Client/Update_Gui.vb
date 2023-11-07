@@ -7,7 +7,6 @@
 '
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
-Imports WinNUT_Params = WinNUT_Client_Common.WinNUT_Params
 Imports LogLvl = WinNUT_Client_Common.LogLvl
 Imports AppResxStr = WinNUT_Client_Common.AppResxStr
 Imports WinNUT_Globals = WinNUT_Client_Common.WinNUT_Globals

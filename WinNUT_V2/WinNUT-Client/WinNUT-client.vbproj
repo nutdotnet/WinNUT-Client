@@ -115,6 +115,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -146,6 +147,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="Models\UpgradePrefsDialogModel.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -179,7 +181,7 @@
     <Compile Include="Pref_Gui.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UpgradePrefsDialog.Designer.vb">
+    <Compile Include="UpgradePrefsDialog.designer.vb">
       <DependentUpon>UpgradePrefsDialog.vb</DependentUpon>
     </Compile>
     <Compile Include="UpgradePrefsDialog.vb">
@@ -308,8 +310,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UpgradePrefsDialog.resx">
       <DependentUpon>UpgradePrefsDialog.vb</DependentUpon>
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UpgradePrefsDialog.ru-RU.resx">
       <DependentUpon>UpgradePrefsDialog.vb</DependentUpon>
@@ -347,13 +347,12 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include=".editorconfig" />
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
-    <None Include="My Project\DataSources\UpgradePrefsDialog.datasource" />
+    <None Include="My Project\DataSources\UpgradePrefsDialog.UpgradePrefsDialogModel.datasource" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <CustomToolNamespace>My</CustomToolNamespace>
@@ -404,7 +403,6 @@
     <None Include="Resources\Battery_Charging.png" />
     <None Include="Resources\Battery_Discharging.png" />
     <None Include="Resources\XP_Information.png" />
-    <Content Include="WinNut.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
@@ -443,7 +441,12 @@
       <Version>13.0.3</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\regedit.exe_14_100-0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Utils\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.ResxResources.targets" Label="MultilingualAppToolkit" Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\v$(MultilingualAppToolkitVersion)\Microsoft.Multilingual.ResxResources.targets')" />
   <Target Name="MATPrerequisite" BeforeTargets="PrepareForBuild" Condition="!Exists('$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.ResxResources.targets')" Label="MultilingualAppToolkit">

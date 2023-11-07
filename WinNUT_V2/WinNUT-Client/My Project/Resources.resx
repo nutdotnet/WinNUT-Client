@@ -321,29 +321,44 @@ Cancel to Save Msi and Install Later</value>
   <data name="Log_Str_12" xml:space="preserve">
     <value>Stop condition imposed by the NUT server</value>
   </data>
-  <data name="UpgradePrefsDialog_DeleteProcedureBeginning" xml:space="preserve">
-    <value>The old preferences delete procedure is beginning...</value>
-    <comment>Notify the user that the old preferences deletion procedure is beginning.</comment>
+  <data name="regedit_exe_14_100_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\regedit.exe_14_100-0.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UpgradePrefsDialog_BackupLocationTitle" xml:space="preserve">
+    <value>Save WinNUT Registry Key</value>
+    <comment>Title of the SaveFileDialog that prompts the user to select the file and location they would like to save their WinNUT Registry preferences to.</comment>
+  </data>
+  <data name="UpgradePrefsDialog_BackupProcedureCompleted" xml:space="preserve">
+    <value>The old preferences have been backed up to {0}</value>
+    <comment>Notify the user that the old preferences have been exported to a file, and give the full path with {0}.</comment>
+  </data>
+  <data name="UpgradePrefsDialog_Cancelled" xml:space="preserve">
+    <value>The upgrade process was cancelled: using default settings.</value>
+    <comment>Notify the user that the upgrade dialog was cancelled, and that default settings will be used instead.</comment>
   </data>
   <data name="UpgradePrefsDialog_DeleteProcedureComplete" xml:space="preserve">
     <value>The old preferences have been removed from your Registry.</value>
     <comment>Notify the user that the old preferences have been removed from their Registry.</comment>
   </data>
-  <data name="UpgradePrefsDialog_DeleteProcedureError" xml:space="preserve">
-    <value>An error occurred while deleting the old preferences: {0}</value>
-    <comment>Notify the user that an error occurred while deleteing the old preferences.</comment>
-  </data>
-  <data name="UpgradePrefsDialog_ImportProcedureBeginning" xml:space="preserve">
-    <value>The old preferences import procedure is beginning...</value>
-    <comment>Notify the user that the old preferences procedure is beginning.</comment>
+  <data name="UpgradePrefsDialog_ErrorEncountered" xml:space="preserve">
+    <value>: {0}   See the log for more information.</value>
+    <comment>Alert the user that an error occurred during the upgrade procedure, attempt to give a brief summary of the error, and direct them to the log file for more information.</comment>
   </data>
   <data name="UpgradePrefsDialog_ImportProcedureCompleted" xml:space="preserve">
-    <value>The old preferences import procedure has completed.</value>
+    <value>The old preferences have been imported.</value>
     <comment>Notify the user that the import procedure has completed.</comment>
   </data>
+  <data name="UpgradePrefsDialog_NoPrefsExistCaption" xml:space="preserve">
+    <value>No preferences detected</value>
+    <comment>A brief caption for the error message.</comment>
+  </data>
+  <data name="UpgradePrefsDialog_NoPrefsExistError" xml:space="preserve">
+    <value>No preferences were detected in the Registry. Unable to continue.</value>
+    <comment>Alert the user that the dialog is unable to continue, since no preferences are detected in the Registry.</comment>
+  </data>
   <data name="UpgradePrefsDialog_UnmatchedPairs" xml:space="preserve">
-    <value>There were {0} unknown preferences: {1}</value>
-    <comment>Alert the user to how many unmatched preferences there were {0}, then list them {1}.</comment>
+    <value>There were {0} unknown preferences. See log for more details.</value>
+    <comment>Alert the user to how many unmatched preferences there were {0}.</comment>
   </data>
   <data name="ups_104x104" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ups_104x104.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

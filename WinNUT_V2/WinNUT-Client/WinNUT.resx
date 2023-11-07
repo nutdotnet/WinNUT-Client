@@ -117,12 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="NotifyIcon.TrayLocation" type="System.Drawing.Point, System.Drawing">
+  <metadata name="NotifyIcon.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>133, 17</value>
-  </data>
-  <data name="ContextMenu_Systray.TrayLocation" type="System.Drawing.Point, System.Drawing">
+  </metadata>
+  <metadata name="ContextMenu_Systray.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>364, 17</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="ContextMenu_Systray.Size" type="System.Drawing.Size, System.Drawing">
+    <value>145, 110</value>
+  </data>
+  <data name="&gt;&gt;ContextMenu_Systray.Name" xml:space="preserve">
+    <value>ContextMenu_Systray</value>
+  </data>
+  <data name="&gt;&gt;ContextMenu_Systray.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="NotifyIcon.Text" xml:space="preserve">
+    <value>NotifyIcon1</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="NotifyIcon.Visible" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="Menu_Sys_Settings.Size" type="System.Drawing.Size, System.Drawing">
     <value>144, 22</value>
@@ -157,28 +173,12 @@
   <data name="Menu_Sys_Exit.Text" xml:space="preserve">
     <value>Exit</value>
   </data>
-  <data name="ContextMenu_Systray.Size" type="System.Drawing.Size, System.Drawing">
-    <value>145, 110</value>
-  </data>
-  <data name="&gt;&gt;ContextMenu_Systray.Name" xml:space="preserve">
-    <value>ContextMenu_Systray</value>
-  </data>
-  <data name="&gt;&gt;ContextMenu_Systray.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="NotifyIcon.Text" xml:space="preserve">
-    <value>NotifyIcon1</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="NotifyIcon.Visible" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="Main_Menu.TrayLocation" type="System.Drawing.Point, System.Drawing">
+  <metadata name="Main_Menu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>248, 17</value>
-  </data>
-  <data name="Main_Menu.Locked" type="System.Boolean, mscorlib">
+  </metadata>
+  <metadata name="Main_Menu.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
+  </metadata>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Main_Menu.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Left</value>
@@ -187,34 +187,37 @@
     <value>None</value>
   </data>
   <data name="Menu_UPS_Var.Size" type="System.Drawing.Size, System.Drawing">
-    <value>139, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="Menu_UPS_Var.Text" xml:space="preserve">
     <value>UPS Variable</value>
   </data>
   <data name="Menu_Quit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>139, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="Menu_Quit.Text" xml:space="preserve">
     <value>Exit</value>
+  </data>
+  <data name="ManageOldPrefsToolStripMenuItem.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="ManageOldPrefsToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ManageOldPrefsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="ManageOldPrefsToolStripMenuItem.Text" xml:space="preserve">
+    <value>Manage Old Prefs...</value>
+  </data>
+  <data name="ManageOldPrefsToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Previous old preferences detected. Continue to begin the dialog.</value>
   </data>
   <data name="Menu_File.Size" type="System.Drawing.Size, System.Drawing">
     <value>37, 20</value>
   </data>
   <data name="Menu_File.Text" xml:space="preserve">
     <value>File</value>
-  </data>
-  <data name="Menu_Reconnect.Size" type="System.Drawing.Size, System.Drawing">
-    <value>133, 22</value>
-  </data>
-  <data name="Menu_Reconnect.Text" xml:space="preserve">
-    <value>Reconnect</value>
-  </data>
-  <data name="Menu_Disconnect.Size" type="System.Drawing.Size, System.Drawing">
-    <value>133, 22</value>
-  </data>
-  <data name="Menu_Disconnect.Text" xml:space="preserve">
-    <value>Disconnect</value>
   </data>
   <data name="Menu_Connection.Size" type="System.Drawing.Size, System.Drawing">
     <value>81, 20</value>
@@ -227,21 +230,6 @@
   </data>
   <data name="Menu_Settings.Text" xml:space="preserve">
     <value>Settings</value>
-  </data>
-  <data name="Menu_About.Size" type="System.Drawing.Size, System.Drawing">
-    <value>144, 22</value>
-  </data>
-  <data name="Menu_About.Text" xml:space="preserve">
-    <value>About</value>
-  </data>
-  <data name="Menu_Help_Sep1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>141, 6</value>
-  </data>
-  <data name="Menu_Update.Size" type="System.Drawing.Size, System.Drawing">
-    <value>144, 22</value>
-  </data>
-  <data name="Menu_Update.Text" xml:space="preserve">
-    <value>Verify Update</value>
   </data>
   <data name="Menu_Help.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 20</value>
@@ -256,7 +244,7 @@
     <value>0, 24</value>
   </data>
   <data name="Main_Menu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>231, 24</value>
+    <value>351, 24</value>
   </data>
   <data name="Main_Menu.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -276,14 +264,284 @@
   <data name="&gt;&gt;Main_Menu.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
-  <data name="GB_Status.Locked" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="Menu_Reconnect.Size" type="System.Drawing.Size, System.Drawing">
+    <value>133, 22</value>
   </data>
+  <data name="Menu_Reconnect.Text" xml:space="preserve">
+    <value>Reconnect</value>
+  </data>
+  <data name="Menu_Disconnect.Size" type="System.Drawing.Size, System.Drawing">
+    <value>133, 22</value>
+  </data>
+  <data name="Menu_Disconnect.Text" xml:space="preserve">
+    <value>Disconnect</value>
+  </data>
+  <data name="Menu_About.Size" type="System.Drawing.Size, System.Drawing">
+    <value>144, 22</value>
+  </data>
+  <data name="Menu_About.Text" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="Menu_Help_Sep1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>141, 6</value>
+  </data>
+  <data name="Menu_Update.Size" type="System.Drawing.Size, System.Drawing">
+    <value>144, 22</value>
+  </data>
+  <data name="Menu_Update.Text" xml:space="preserve">
+    <value>Verify Update</value>
+  </data>
+  <metadata name="GB_Status.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <data name="GB_Status.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Left</value>
   </data>
   <data name="GB_Status.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>None</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VSerial.Name" xml:space="preserve">
+    <value>Lbl_VSerial</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VSerial.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VSerial.Parent" xml:space="preserve">
+    <value>GB_Status</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VSerial.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VFirmware.Name" xml:space="preserve">
+    <value>Lbl_VFirmware</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VFirmware.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VFirmware.Parent" xml:space="preserve">
+    <value>GB_Status</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VFirmware.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VName.Name" xml:space="preserve">
+    <value>Lbl_VName</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VName.Parent" xml:space="preserve">
+    <value>GB_Status</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VName.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VMfr.Name" xml:space="preserve">
+    <value>Lbl_VMfr</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VMfr.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VMfr.Parent" xml:space="preserve">
+    <value>GB_Status</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VMfr.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VRTime.Name" xml:space="preserve">
+    <value>Lbl_VRTime</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VRTime.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VRTime.Parent" xml:space="preserve">
+    <value>GB_Status</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VRTime.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VOB.Name" xml:space="preserve">
+    <value>Lbl_VOB</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VOB.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VOB.Parent" xml:space="preserve">
+    <value>GB_Status</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VOB.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VOLoad.Name" xml:space="preserve">
+    <value>Lbl_VOLoad</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VOLoad.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VOLoad.Parent" xml:space="preserve">
+    <value>GB_Status</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VOLoad.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VBL.Name" xml:space="preserve">
+    <value>Lbl_VBL</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VBL.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VBL.Parent" xml:space="preserve">
+    <value>GB_Status</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VBL.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VOL.Name" xml:space="preserve">
+    <value>Lbl_VOL</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VOL.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VOL.Parent" xml:space="preserve">
+    <value>GB_Status</value>
+  </data>
+  <data name="&gt;&gt;Lbl_VOL.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;Lbl_Firmware.Name" xml:space="preserve">
+    <value>Lbl_Firmware</value>
+  </data>
+  <data name="&gt;&gt;Lbl_Firmware.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Lbl_Firmware.Parent" xml:space="preserve">
+    <value>GB_Status</value>
+  </data>
+  <data name="&gt;&gt;Lbl_Firmware.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;Lbl_Serial.Name" xml:space="preserve">
+    <value>Lbl_Serial</value>
+  </data>
+  <data name="&gt;&gt;Lbl_Serial.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Lbl_Serial.Parent" xml:space="preserve">
+    <value>GB_Status</value>
+  </data>
+  <data name="&gt;&gt;Lbl_Serial.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;Lbl_Name.Name" xml:space="preserve">
+    <value>Lbl_Name</value>
+  </data>
+  <data name="&gt;&gt;Lbl_Name.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Lbl_Name.Parent" xml:space="preserve">
+    <value>GB_Status</value>
+  </data>
+  <data name="&gt;&gt;Lbl_Name.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;Lbl_Mfr.Name" xml:space="preserve">
+    <value>Lbl_Mfr</value>
+  </data>
+  <data name="&gt;&gt;Lbl_Mfr.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Lbl_Mfr.Parent" xml:space="preserve">
+    <value>GB_Status</value>
+  </data>
+  <data name="&gt;&gt;Lbl_Mfr.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;Lbl_RTime.Name" xml:space="preserve">
+    <value>Lbl_RTime</value>
+  </data>
+  <data name="&gt;&gt;Lbl_RTime.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Lbl_RTime.Parent" xml:space="preserve">
+    <value>GB_Status</value>
+  </data>
+  <data name="&gt;&gt;Lbl_RTime.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;Lbl_BL.Name" xml:space="preserve">
+    <value>Lbl_BL</value>
+  </data>
+  <data name="&gt;&gt;Lbl_BL.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Lbl_BL.Parent" xml:space="preserve">
+    <value>GB_Status</value>
+  </data>
+  <data name="&gt;&gt;Lbl_BL.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;Lbl_OLoad.Name" xml:space="preserve">
+    <value>Lbl_OLoad</value>
+  </data>
+  <data name="&gt;&gt;Lbl_OLoad.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Lbl_OLoad.Parent" xml:space="preserve">
+    <value>GB_Status</value>
+  </data>
+  <data name="&gt;&gt;Lbl_OLoad.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;Lbl_OB.Name" xml:space="preserve">
+    <value>Lbl_OB</value>
+  </data>
+  <data name="&gt;&gt;Lbl_OB.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Lbl_OB.Parent" xml:space="preserve">
+    <value>GB_Status</value>
+  </data>
+  <data name="&gt;&gt;Lbl_OB.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;Lbl_OL.Name" xml:space="preserve">
+    <value>Lbl_OL</value>
+  </data>
+  <data name="&gt;&gt;Lbl_OL.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Lbl_OL.Parent" xml:space="preserve">
+    <value>GB_Status</value>
+  </data>
+  <data name="&gt;&gt;Lbl_OL.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="GB_Status.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 27</value>
+  </data>
+  <data name="GB_Status.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>180, 320</value>
+  </data>
+  <data name="GB_Status.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>180, 320</value>
+  </data>
+  <data name="GB_Status.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 320</value>
+  </data>
+  <data name="GB_Status.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;GB_Status.Name" xml:space="preserve">
+    <value>GB_Status</value>
+  </data>
+  <data name="&gt;&gt;GB_Status.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GB_Status.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;GB_Status.ZOrder" xml:space="preserve">
+    <value>7</value>
   </data>
   <data name="Lbl_VSerial.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
@@ -900,59 +1158,56 @@
   <data name="&gt;&gt;Lbl_OL.ZOrder" xml:space="preserve">
     <value>17</value>
   </data>
-  <data name="GB_Status.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 27</value>
-  </data>
-  <data name="GB_Status.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>180, 320</value>
-  </data>
-  <data name="GB_Status.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>180, 320</value>
-  </data>
-  <data name="GB_Status.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 320</value>
-  </data>
-  <data name="GB_Status.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;GB_Status.Name" xml:space="preserve">
-    <value>GB_Status</value>
-  </data>
-  <data name="&gt;&gt;GB_Status.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;GB_Status.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;GB_Status.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="GB_InV_Dial.Locked" type="System.Boolean, mscorlib">
+  <metadata name="GB_InV_Dial.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
+  </metadata>
   <data name="GB_InV_Dial.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Left</value>
-  </data>
-  <data name="AG_InV.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 26</value>
-  </data>
-  <data name="AG_InV.Size" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_InV.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
   </data>
   <data name="&gt;&gt;AG_InV.Name" xml:space="preserve">
     <value>AG_InV</value>
   </data>
   <data name="&gt;&gt;AG_InV.Type" xml:space="preserve">
-    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8695.22387, Culture=neutral, PublicKeyToken=null</value>
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8702.29738, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;AG_InV.Parent" xml:space="preserve">
     <value>GB_InV_Dial</value>
   </data>
   <data name="&gt;&gt;AG_InV.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="&gt;&gt;Lbl_InV_Dial.Name" xml:space="preserve">
+    <value>Lbl_InV_Dial</value>
+  </data>
+  <data name="&gt;&gt;Lbl_InV_Dial.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Lbl_InV_Dial.Parent" xml:space="preserve">
+    <value>GB_InV_Dial</value>
+  </data>
+  <data name="&gt;&gt;Lbl_InV_Dial.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="GB_InV_Dial.Location" type="System.Drawing.Point, System.Drawing">
+    <value>200, 27</value>
+  </data>
+  <data name="GB_InV_Dial.Size" type="System.Drawing.Size, System.Drawing">
+    <value>160, 160</value>
+  </data>
+  <data name="GB_InV_Dial.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;GB_InV_Dial.Name" xml:space="preserve">
+    <value>GB_InV_Dial</value>
+  </data>
+  <data name="&gt;&gt;GB_InV_Dial.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GB_InV_Dial.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;GB_InV_Dial.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="Lbl_InV_Dial.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -993,59 +1248,56 @@
   <data name="&gt;&gt;Lbl_InV_Dial.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="GB_InV_Dial.Location" type="System.Drawing.Point, System.Drawing">
-    <value>200, 27</value>
-  </data>
-  <data name="GB_InV_Dial.Size" type="System.Drawing.Size, System.Drawing">
-    <value>160, 160</value>
-  </data>
-  <data name="GB_InV_Dial.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;GB_InV_Dial.Name" xml:space="preserve">
-    <value>GB_InV_Dial</value>
-  </data>
-  <data name="&gt;&gt;GB_InV_Dial.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;GB_InV_Dial.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;GB_InV_Dial.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="GB_OutV_Dial.Locked" type="System.Boolean, mscorlib">
+  <metadata name="GB_OutV_Dial.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
+  </metadata>
   <data name="GB_OutV_Dial.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Left</value>
-  </data>
-  <data name="AG_OutV.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 26</value>
-  </data>
-  <data name="AG_OutV.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_OutV.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_OutV.Size" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_OutV.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
   </data>
   <data name="&gt;&gt;AG_OutV.Name" xml:space="preserve">
     <value>AG_OutV</value>
   </data>
   <data name="&gt;&gt;AG_OutV.Type" xml:space="preserve">
-    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8695.22387, Culture=neutral, PublicKeyToken=null</value>
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8702.29738, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;AG_OutV.Parent" xml:space="preserve">
     <value>GB_OutV_Dial</value>
   </data>
   <data name="&gt;&gt;AG_OutV.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="&gt;&gt;Lbl_OutV_Dial.Name" xml:space="preserve">
+    <value>Lbl_OutV_Dial</value>
+  </data>
+  <data name="&gt;&gt;Lbl_OutV_Dial.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Lbl_OutV_Dial.Parent" xml:space="preserve">
+    <value>GB_OutV_Dial</value>
+  </data>
+  <data name="&gt;&gt;Lbl_OutV_Dial.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="GB_OutV_Dial.Location" type="System.Drawing.Point, System.Drawing">
+    <value>532, 27</value>
+  </data>
+  <data name="GB_OutV_Dial.Size" type="System.Drawing.Size, System.Drawing">
+    <value>160, 160</value>
+  </data>
+  <data name="GB_OutV_Dial.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;GB_OutV_Dial.Name" xml:space="preserve">
+    <value>GB_OutV_Dial</value>
+  </data>
+  <data name="&gt;&gt;GB_OutV_Dial.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GB_OutV_Dial.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;GB_OutV_Dial.ZOrder" xml:space="preserve">
+    <value>6</value>
   </data>
   <data name="Lbl_OutV_Dial.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1086,32 +1338,68 @@
   <data name="&gt;&gt;Lbl_OutV_Dial.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="GB_OutV_Dial.Location" type="System.Drawing.Point, System.Drawing">
-    <value>532, 27</value>
-  </data>
-  <data name="GB_OutV_Dial.Size" type="System.Drawing.Size, System.Drawing">
-    <value>160, 160</value>
-  </data>
-  <data name="GB_OutV_Dial.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;GB_OutV_Dial.Name" xml:space="preserve">
-    <value>GB_OutV_Dial</value>
-  </data>
-  <data name="&gt;&gt;GB_OutV_Dial.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;GB_OutV_Dial.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;GB_OutV_Dial.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="GB_BattCh_Dial.Locked" type="System.Boolean, mscorlib">
+  <metadata name="GB_BattCh_Dial.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
+  </metadata>
   <data name="GB_BattCh_Dial.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Left</value>
+  </data>
+  <data name="&gt;&gt;PBox_Battery_State.Name" xml:space="preserve">
+    <value>PBox_Battery_State</value>
+  </data>
+  <data name="&gt;&gt;PBox_Battery_State.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PBox_Battery_State.Parent" xml:space="preserve">
+    <value>GB_BattCh_Dial</value>
+  </data>
+  <data name="&gt;&gt;PBox_Battery_State.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;Lbl_BattCh_Dial.Name" xml:space="preserve">
+    <value>Lbl_BattCh_Dial</value>
+  </data>
+  <data name="&gt;&gt;Lbl_BattCh_Dial.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Lbl_BattCh_Dial.Parent" xml:space="preserve">
+    <value>GB_BattCh_Dial</value>
+  </data>
+  <data name="&gt;&gt;Lbl_BattCh_Dial.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;AG_BattCh.Name" xml:space="preserve">
+    <value>AG_BattCh</value>
+  </data>
+  <data name="&gt;&gt;AG_BattCh.Type" xml:space="preserve">
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8702.29738, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;AG_BattCh.Parent" xml:space="preserve">
+    <value>GB_BattCh_Dial</value>
+  </data>
+  <data name="&gt;&gt;AG_BattCh.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="GB_BattCh_Dial.Location" type="System.Drawing.Point, System.Drawing">
+    <value>200, 188</value>
+  </data>
+  <data name="GB_BattCh_Dial.Size" type="System.Drawing.Size, System.Drawing">
+    <value>160, 160</value>
+  </data>
+  <data name="GB_BattCh_Dial.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;GB_BattCh_Dial.Name" xml:space="preserve">
+    <value>GB_BattCh_Dial</value>
+  </data>
+  <data name="&gt;&gt;GB_BattCh_Dial.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GB_BattCh_Dial.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;GB_BattCh_Dial.ZOrder" xml:space="preserve">
+    <value>8</value>
   </data>
   <data name="PBox_Battery_State.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -1176,86 +1464,56 @@
   <data name="&gt;&gt;Lbl_BattCh_Dial.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="AG_BattCh.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 27</value>
-  </data>
-  <data name="AG_BattCh.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_BattCh.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_BattCh.Size" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_BattCh.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;AG_BattCh.Name" xml:space="preserve">
-    <value>AG_BattCh</value>
-  </data>
-  <data name="&gt;&gt;AG_BattCh.Type" xml:space="preserve">
-    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8695.22387, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;AG_BattCh.Parent" xml:space="preserve">
-    <value>GB_BattCh_Dial</value>
-  </data>
-  <data name="&gt;&gt;AG_BattCh.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="GB_BattCh_Dial.Location" type="System.Drawing.Point, System.Drawing">
-    <value>200, 188</value>
-  </data>
-  <data name="GB_BattCh_Dial.Size" type="System.Drawing.Size, System.Drawing">
-    <value>160, 160</value>
-  </data>
-  <data name="GB_BattCh_Dial.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;GB_BattCh_Dial.Name" xml:space="preserve">
-    <value>GB_BattCh_Dial</value>
-  </data>
-  <data name="&gt;&gt;GB_BattCh_Dial.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;GB_BattCh_Dial.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;GB_BattCh_Dial.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="GB_Load_Dial.Locked" type="System.Boolean, mscorlib">
+  <metadata name="GB_Load_Dial.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
+  </metadata>
   <data name="GB_Load_Dial.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Left</value>
-  </data>
-  <data name="AG_Load.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 26</value>
-  </data>
-  <data name="AG_Load.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_Load.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_Load.Size" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_Load.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
   </data>
   <data name="&gt;&gt;AG_Load.Name" xml:space="preserve">
     <value>AG_Load</value>
   </data>
   <data name="&gt;&gt;AG_Load.Type" xml:space="preserve">
-    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8695.22387, Culture=neutral, PublicKeyToken=null</value>
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8702.29738, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;AG_Load.Parent" xml:space="preserve">
     <value>GB_Load_Dial</value>
   </data>
   <data name="&gt;&gt;AG_Load.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="&gt;&gt;Lbl_Load_Dial.Name" xml:space="preserve">
+    <value>Lbl_Load_Dial</value>
+  </data>
+  <data name="&gt;&gt;Lbl_Load_Dial.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Lbl_Load_Dial.Parent" xml:space="preserve">
+    <value>GB_Load_Dial</value>
+  </data>
+  <data name="&gt;&gt;Lbl_Load_Dial.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="GB_Load_Dial.Location" type="System.Drawing.Point, System.Drawing">
+    <value>366, 188</value>
+  </data>
+  <data name="GB_Load_Dial.Size" type="System.Drawing.Size, System.Drawing">
+    <value>160, 160</value>
+  </data>
+  <data name="GB_Load_Dial.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;GB_Load_Dial.Name" xml:space="preserve">
+    <value>GB_Load_Dial</value>
+  </data>
+  <data name="&gt;&gt;GB_Load_Dial.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GB_Load_Dial.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;GB_Load_Dial.ZOrder" xml:space="preserve">
+    <value>5</value>
   </data>
   <data name="Lbl_Load_Dial.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1296,59 +1554,56 @@
   <data name="&gt;&gt;Lbl_Load_Dial.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="GB_Load_Dial.Location" type="System.Drawing.Point, System.Drawing">
-    <value>366, 188</value>
-  </data>
-  <data name="GB_Load_Dial.Size" type="System.Drawing.Size, System.Drawing">
-    <value>160, 160</value>
-  </data>
-  <data name="GB_Load_Dial.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;GB_Load_Dial.Name" xml:space="preserve">
-    <value>GB_Load_Dial</value>
-  </data>
-  <data name="&gt;&gt;GB_Load_Dial.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;GB_Load_Dial.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;GB_Load_Dial.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="GB_BattV_Dial.Locked" type="System.Boolean, mscorlib">
+  <metadata name="GB_BattV_Dial.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
+  </metadata>
   <data name="GB_BattV_Dial.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Left</value>
-  </data>
-  <data name="AG_BattV.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 26</value>
-  </data>
-  <data name="AG_BattV.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_BattV.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_BattV.Size" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_BattV.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
   </data>
   <data name="&gt;&gt;AG_BattV.Name" xml:space="preserve">
     <value>AG_BattV</value>
   </data>
   <data name="&gt;&gt;AG_BattV.Type" xml:space="preserve">
-    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8695.22387, Culture=neutral, PublicKeyToken=null</value>
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8702.29738, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;AG_BattV.Parent" xml:space="preserve">
     <value>GB_BattV_Dial</value>
   </data>
   <data name="&gt;&gt;AG_BattV.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="&gt;&gt;Lbl_BattV_Dial.Name" xml:space="preserve">
+    <value>Lbl_BattV_Dial</value>
+  </data>
+  <data name="&gt;&gt;Lbl_BattV_Dial.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Lbl_BattV_Dial.Parent" xml:space="preserve">
+    <value>GB_BattV_Dial</value>
+  </data>
+  <data name="&gt;&gt;Lbl_BattV_Dial.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="GB_BattV_Dial.Location" type="System.Drawing.Point, System.Drawing">
+    <value>532, 188</value>
+  </data>
+  <data name="GB_BattV_Dial.Size" type="System.Drawing.Size, System.Drawing">
+    <value>160, 160</value>
+  </data>
+  <data name="GB_BattV_Dial.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;GB_BattV_Dial.Name" xml:space="preserve">
+    <value>GB_BattV_Dial</value>
+  </data>
+  <data name="&gt;&gt;GB_BattV_Dial.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GB_BattV_Dial.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;GB_BattV_Dial.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
   <data name="Lbl_BattV_Dial.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1389,59 +1644,56 @@
   <data name="&gt;&gt;Lbl_BattV_Dial.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="GB_BattV_Dial.Location" type="System.Drawing.Point, System.Drawing">
-    <value>532, 188</value>
-  </data>
-  <data name="GB_BattV_Dial.Size" type="System.Drawing.Size, System.Drawing">
-    <value>160, 160</value>
-  </data>
-  <data name="GB_BattV_Dial.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;GB_BattV_Dial.Name" xml:space="preserve">
-    <value>GB_BattV_Dial</value>
-  </data>
-  <data name="&gt;&gt;GB_BattV_Dial.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;GB_BattV_Dial.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;GB_BattV_Dial.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="GB_InF_Dial.Locked" type="System.Boolean, mscorlib">
+  <metadata name="GB_InF_Dial.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
+  </metadata>
   <data name="GB_InF_Dial.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Left</value>
-  </data>
-  <data name="AG_InF.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 26</value>
-  </data>
-  <data name="AG_InF.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_InF.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_InF.Size" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_InF.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
   </data>
   <data name="&gt;&gt;AG_InF.Name" xml:space="preserve">
     <value>AG_InF</value>
   </data>
   <data name="&gt;&gt;AG_InF.Type" xml:space="preserve">
-    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8695.22387, Culture=neutral, PublicKeyToken=null</value>
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8702.29738, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;AG_InF.Parent" xml:space="preserve">
     <value>GB_InF_Dial</value>
   </data>
   <data name="&gt;&gt;AG_InF.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="&gt;&gt;Lbl_InF_Dial.Name" xml:space="preserve">
+    <value>Lbl_InF_Dial</value>
+  </data>
+  <data name="&gt;&gt;Lbl_InF_Dial.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Lbl_InF_Dial.Parent" xml:space="preserve">
+    <value>GB_InF_Dial</value>
+  </data>
+  <data name="&gt;&gt;Lbl_InF_Dial.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="GB_InF_Dial.Location" type="System.Drawing.Point, System.Drawing">
+    <value>366, 27</value>
+  </data>
+  <data name="GB_InF_Dial.Size" type="System.Drawing.Size, System.Drawing">
+    <value>160, 160</value>
+  </data>
+  <data name="GB_InF_Dial.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;GB_InF_Dial.Name" xml:space="preserve">
+    <value>GB_InF_Dial</value>
+  </data>
+  <data name="&gt;&gt;GB_InF_Dial.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GB_InF_Dial.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;GB_InF_Dial.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="Lbl_InF_Dial.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1482,30 +1734,9 @@
   <data name="&gt;&gt;Lbl_InF_Dial.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="GB_InF_Dial.Location" type="System.Drawing.Point, System.Drawing">
-    <value>366, 27</value>
-  </data>
-  <data name="GB_InF_Dial.Size" type="System.Drawing.Size, System.Drawing">
-    <value>160, 160</value>
-  </data>
-  <data name="GB_InF_Dial.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;GB_InF_Dial.Name" xml:space="preserve">
-    <value>GB_InF_Dial</value>
-  </data>
-  <data name="&gt;&gt;GB_InF_Dial.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;GB_InF_Dial.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;GB_InF_Dial.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="CB_CurrentLog.Locked" type="System.Boolean, mscorlib">
+  <metadata name="CB_CurrentLog.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
+  </metadata>
   <data name="CB_CurrentLog.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 356</value>
   </data>
@@ -1533,17 +1764,176 @@
   <data name="&gt;&gt;CB_CurrentLog.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="$this.Localizable" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="AG_InF.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 26</value>
   </data>
-  <data name="$this.Locked" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="AG_InF.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
   </data>
-  <data name="$this.TrayHeight" type="System.Int32, mscorlib">
+  <data name="AG_InF.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_InF.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_InF.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;AG_InF.Name" xml:space="preserve">
+    <value>AG_InF</value>
+  </data>
+  <data name="&gt;&gt;AG_InF.Type" xml:space="preserve">
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8702.29738, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;AG_InF.Parent" xml:space="preserve">
+    <value>GB_InF_Dial</value>
+  </data>
+  <data name="&gt;&gt;AG_InF.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="AG_InV.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 26</value>
+  </data>
+  <data name="AG_InV.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_InV.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;AG_InV.Name" xml:space="preserve">
+    <value>AG_InV</value>
+  </data>
+  <data name="&gt;&gt;AG_InV.Type" xml:space="preserve">
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8702.29738, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;AG_InV.Parent" xml:space="preserve">
+    <value>GB_InV_Dial</value>
+  </data>
+  <data name="&gt;&gt;AG_InV.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="AG_BattV.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 26</value>
+  </data>
+  <data name="AG_BattV.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_BattV.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_BattV.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_BattV.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;AG_BattV.Name" xml:space="preserve">
+    <value>AG_BattV</value>
+  </data>
+  <data name="&gt;&gt;AG_BattV.Type" xml:space="preserve">
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8702.29738, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;AG_BattV.Parent" xml:space="preserve">
+    <value>GB_BattV_Dial</value>
+  </data>
+  <data name="&gt;&gt;AG_BattV.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="AG_Load.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 26</value>
+  </data>
+  <data name="AG_Load.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_Load.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_Load.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_Load.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;AG_Load.Name" xml:space="preserve">
+    <value>AG_Load</value>
+  </data>
+  <data name="&gt;&gt;AG_Load.Type" xml:space="preserve">
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8702.29738, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;AG_Load.Parent" xml:space="preserve">
+    <value>GB_Load_Dial</value>
+  </data>
+  <data name="&gt;&gt;AG_Load.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="AG_OutV.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 26</value>
+  </data>
+  <data name="AG_OutV.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_OutV.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_OutV.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_OutV.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;AG_OutV.Name" xml:space="preserve">
+    <value>AG_OutV</value>
+  </data>
+  <data name="&gt;&gt;AG_OutV.Type" xml:space="preserve">
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8702.29738, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;AG_OutV.Parent" xml:space="preserve">
+    <value>GB_OutV_Dial</value>
+  </data>
+  <data name="&gt;&gt;AG_OutV.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="AG_BattCh.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 27</value>
+  </data>
+  <data name="AG_BattCh.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_BattCh.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_BattCh.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_BattCh.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;AG_BattCh.Name" xml:space="preserve">
+    <value>AG_BattCh</value>
+  </data>
+  <data name="&gt;&gt;AG_BattCh.Type" xml:space="preserve">
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8702.29738, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;AG_BattCh.Parent" xml:space="preserve">
+    <value>GB_BattCh_Dial</value>
+  </data>
+  <data name="&gt;&gt;AG_BattCh.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>58</value>
-  </data>
+  </metadata>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>704, 381</value>
+  </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>720, 420</value>
@@ -1618,6 +2008,12 @@
     <value>Menu_Quit</value>
   </data>
   <data name="&gt;&gt;Menu_Quit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ManageOldPrefsToolStripMenuItem.Name" xml:space="preserve">
+    <value>ManageOldPrefsToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;ManageOldPrefsToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Menu_Connection.Name" xml:space="preserve">

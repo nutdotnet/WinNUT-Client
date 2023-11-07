@@ -7,7 +7,6 @@
 '
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
-Imports WinNUT_Params = WinNUT_Client_Common.WinNUT_Params
 Imports LogLvl = WinNUT_Client_Common.LogLvl
 Imports System.IO
 Imports WinNUT_Client_Common
@@ -33,7 +32,7 @@ Public Class Pref_Gui
             My.Settings.NUT_UPSName = Tb_UPS_Name.Text
             My.Settings.NUT_PollIntervalMsec = CInt(Tb_Delay_Com.Text)
             My.Settings.NUT_Username = Tb_Login_Nut.Text
-            My.Settings.NUT_PasswordEnc.Value = Tb_Pwd_Nut.Text
+            My.Settings.NUT_Password = Tb_Pwd_Nut.Text
             My.Settings.NUT_AutoReconnect = Cb_Reconnect.Checked
             My.Settings.CAL_VoltInMin = CInt(Tb_InV_Min.Text)
             My.Settings.CAL_VoltInMax = CInt(Tb_InV_Max.Text)
@@ -113,7 +112,7 @@ Public Class Pref_Gui
             Tb_UPS_Name.Text = My.Settings.NUT_UPSName
             Tb_Delay_Com.Text = My.Settings.NUT_PollIntervalMsec
             Tb_Login_Nut.Text = My.Settings.NUT_Username
-            Tb_Pwd_Nut.Text = My.Settings.NUT_PasswordEnc.Value
+            Tb_Pwd_Nut.Text = My.Settings.NUT_Password
             Cb_Reconnect.Checked = My.Settings.NUT_AutoReconnect
             Tb_InV_Min.Text = My.Settings.CAL_VoltInMin
             Tb_InV_Max.Text = My.Settings.CAL_VoltInMax

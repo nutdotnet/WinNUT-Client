@@ -34,7 +34,7 @@ Namespace My
         Private Msg_Error As New TextBox
 
         Private SensitiveProperties As List(Of String) = New List(Of String)({"NUT_ServerAddress", "NUT_ServerPort", "NUT_UPSName",
-                                                           "NUT_Username", "NUT_PasswordEnc"})
+                                                           "NUT_Username", "NUT_Password"})
         Private crashReportData As String
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup

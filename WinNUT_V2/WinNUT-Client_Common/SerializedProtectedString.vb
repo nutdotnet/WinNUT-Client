@@ -7,7 +7,6 @@
 '
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
-Imports System.Runtime.Serialization
 Imports System.Security.Cryptography
 Imports System.Text
 

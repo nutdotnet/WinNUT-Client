@@ -7,7 +7,6 @@
 '
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
-Imports Windows.ApplicationModel.AppService
 Imports WinNUT_Client_Common
 
 Public Class WinNUT
@@ -86,6 +85,8 @@ Public Class WinNUT
     ' UPS object operation 
     Private Event RequestConnect()
 
+#Region "Form Event Handling"
+
     Private Sub WinNUT_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Add Main Gui's Strings
         StrLog.Insert(AppResxStr.STR_MAIN_OLDINI_RENAMED, My.Resources.Frm_Main_Str_01)
@@ -130,20 +131,6 @@ Public Class WinNUT
         StrLog.Insert(AppResxStr.STR_LOG_NO_UPDATE, My.Resources.Log_Str_10)
         StrLog.Insert(AppResxStr.STR_LOG_UPDATE, My.Resources.Log_Str_11)
         StrLog.Insert(AppResxStr.STR_LOG_NUT_FSD, My.Resources.Log_Str_12)
-
-        ' Determine if old Preferences need to be upgraded.
-        If Not My.Settings.UpgradePrefsCompleted Then
-            LogFile.LogTracing("UpgradePrefs check has not completed yet, running...", LogLvl.LOG_NOTICE, Me)
-            If UpgradePrefs.OldPrefKeysExist Then
-                LogFile.LogTracing("Previous preferences data detected in the Registry.", LogLvl.LOG_NOTICE, Me,
-                                   My.Resources.DetectedPreviousPrefsData)
-
-                Dim upPrefsDg As New UpgradePrefsDialog()
-                Dim upPrefsDgRes = upPrefsDg.ShowDialog()
-            End If
-        End If
-
-        WinNUT_PrefsChanged(True)
 
         'Init Systray
         NotifyIcon.Text = LongProgramName & " - " & ShortProgramVersion
@@ -263,6 +250,128 @@ Public Class WinNUT
                            LogLvl.LOG_NOTICE, Me)
     End Sub
 
+    ''' <summary>
+    ''' Second-to-last step in loading the Form. "Occurs when the form is activated in code or by the user."
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub WinNUT_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
+        LogFile.LogTracing("Main GUI activated.", LogLvl.LOG_DEBUG, Me)
+
+        If WinNUT_Crashed Then
+            Hide()
+
+            Return
+        End If
+
+        HasFocus = True
+
+        ' TODO: Merge icon update code into single method.
+        Dim Tmp_App_Mode As Integer
+        If AppDarkMode Then
+            Tmp_App_Mode = AppIconIdx.WIN_DARK Or AppIconIdx.IDX_OFFSET
+        Else
+            Tmp_App_Mode = AppIconIdx.IDX_OFFSET
+        End If
+        Dim TmpGuiIDX = ActualAppIconIdx Or Tmp_App_Mode
+        Icon = GetIcon(TmpGuiIDX)
+        LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
+        UpdateIcon_NotifyIcon()
+    End Sub
+
+    ''' <summary>
+    ''' Final step in loading the main form for the first time.
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub WinNUT_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
+        LogFile.LogTracing("WinNUT_Shown for the first time.", LogLvl.LOG_DEBUG, Me)
+
+        LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
+        UpdateIcon_NotifyIcon()
+        If My.Settings.MinimizeToTray = True And My.Settings.MinimizeOnStart = True Then
+            LogFile.LogTracing("Minimize WinNut On Start", LogLvl.LOG_DEBUG, Me)
+            WindowState = FormWindowState.Minimized
+            NotifyIcon.Visible = True
+        Else
+            LogFile.LogTracing("Show WinNut Main Gui", LogLvl.LOG_DEBUG, Me)
+            NotifyIcon.Visible = False
+        End If
+
+        If OldParams.WinNUT_Params.RegistryKeyRoot IsNot Nothing Then
+            LogFile.LogTracing("Previous preferences data detected in the Registry.", LogLvl.LOG_NOTICE, Me,
+                               My.Resources.DetectedPreviousPrefsData)
+            ManageOldPrefsToolStripMenuItem.Enabled = True
+
+            If Not My.Settings.UpgradePrefsCompleted Then
+                RunRegPrefsUpgrade()
+            End If
+        End If
+
+        ' Begin auto-connecting if user indicated they wanted it. (Note: Will hang form because we don't do threading yet)
+        If My.Settings.NUT_AutoReconnect Then
+            LogFile.LogTracing("Auto-connecting to UPS on startup.", LogLvl.LOG_NOTICE, Me)
+            UPS_Connect(True)
+        End If
+    End Sub
+
+    Private Sub WinNUT_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        LogFile.LogTracing("Received FormClosing event. Reason: " + e.CloseReason.ToString(), LogLvl.LOG_NOTICE, Me)
+
+        If e.CloseReason = CloseReason.UserClosing AndAlso My.Settings.CloseToTray = True And My.Settings.MinimizeToTray = True Then
+            LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
+            UpdateIcon_NotifyIcon()
+            LogFile.LogTracing("Minimize Main Gui To Notify Icon", LogLvl.LOG_DEBUG, Me)
+            WindowState = FormWindowState.Minimized
+            Visible = False
+            NotifyIcon.Visible = True
+            e.Cancel = True
+        Else
+            LogFile.LogTracing("Init Disconnecting Before Close WinNut", LogLvl.LOG_DEBUG, Me)
+            UPSDisconnect()
+        End If
+    End Sub
+
+    Private Sub WinNUT_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
+        If sender.WindowState = FormWindowState.Minimized Then
+            If My.Settings.MinimizeToTray = True Then
+                LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
+                UpdateIcon_NotifyIcon()
+                LogFile.LogTracing("Minimize Main Gui To Notify Icon", LogLvl.LOG_DEBUG, Me)
+                WindowState = FormWindowState.Minimized
+                Visible = False
+                NotifyIcon.Visible = True
+            End If
+            If NotifyIcon.Visible = False Then
+                Text = FormText
+            Else
+                Text = "WinNUT"
+            End If
+        ElseIf sender.WindowState = FormWindowState.Maximized Or sender.WindowState = FormWindowState.Normal Then
+            Text = "WinNUT"
+        End If
+    End Sub
+
+    Private Sub WinNUT_Deactivate(sender As Object, e As EventArgs) Handles MyBase.Deactivate
+        If WinNUT_Crashed Then
+            Hide()
+        Else
+            LogFile.LogTracing("Main Gui Lose Focus", LogLvl.LOG_DEBUG, Me)
+            HasFocus = False
+            Dim Tmp_App_Mode As Integer
+            If Not AppDarkMode Then
+                Tmp_App_Mode = AppIconIdx.WIN_DARK Or AppIconIdx.IDX_OFFSET
+            Else
+                Tmp_App_Mode = AppIconIdx.IDX_OFFSET
+            End If
+            Dim TmpGuiIDX = ActualAppIconIdx Or Tmp_App_Mode
+            Icon = GetIcon(TmpGuiIDX)
+            LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
+            UpdateIcon_NotifyIcon()
+        End If
+    End Sub
+
+#End Region
     Private Sub SystemEvents_PowerModeChanged(sender As Object, e As Microsoft.Win32.PowerModeChangedEventArgs)
         LogFile.LogTracing("PowerModeChangedEvent: " & [Enum].GetName(GetType(Microsoft.Win32.PowerModes), e.Mode), LogLvl.LOG_NOTICE, Me)
         Select Case e.Mode
@@ -273,6 +382,13 @@ Public Class WinNUT
                 End If
         End Select
     End Sub
+    Private Sub RunRegPrefsUpgrade()
+        LogFile.LogTracing("Starting Upgrade dialog.", LogLvl.LOG_NOTICE, Me)
+        Dim upPrefsDg As New Forms.UpgradePrefsDialog()
+        upPrefsDg.ShowDialog()
+
+        WinNUT_PrefsChanged(True)
+    End Sub
 
     Private Sub UPS_Connect(Optional retryOnConnFailure = False)
         Dim Nut_Config As Nut_Parameter
@@ -281,7 +397,7 @@ Public Class WinNUT
         Nut_Config = New Nut_Parameter(My.Settings.NUT_ServerAddress,
                                        My.Settings.NUT_ServerPort,
                                        My.Settings.NUT_Username,
-                                       My.Settings.NUT_PasswordEnc.ToString(),
+                                       My.Settings.NUT_Password,
                                        My.Settings.NUT_UPSName,
                                        My.Settings.NUT_AutoReconnect)
 
@@ -366,44 +482,6 @@ Public Class WinNUT
         LogFile.LogTracing("Disconnected from Nut Host", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_LOG_LOGOFF))
     End Sub
 
-    Private Sub WinNUT_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
-        LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
-        UpdateIcon_NotifyIcon()
-        If My.Settings.MinimizeToTray = True And My.Settings.MinimizeOnStart = True Then
-            LogFile.LogTracing("Minimize WinNut On Start", LogLvl.LOG_DEBUG, Me)
-            WindowState = FormWindowState.Minimized
-            NotifyIcon.Visible = True
-        Else
-            LogFile.LogTracing("Show WinNut Main Gui", LogLvl.LOG_DEBUG, Me)
-            NotifyIcon.Visible = False
-        End If
-
-        ' Begin auto-connecting if user indicated they wanted it. (Note: Will hang form because we don't do threading yet)
-        If My.Settings.NUT_AutoReconnect Then
-            LogFile.LogTracing("Auto-connecting to UPS on startup.", LogLvl.LOG_NOTICE, Me)
-            UPS_Connect(True)
-        End If
-
-        LogFile.LogTracing("Completed WinNUT_Shown", LogLvl.LOG_DEBUG, Me)
-    End Sub
-
-    Private Sub WinNUT_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-        LogFile.LogTracing("Received FormClosing event. Reason: " + e.CloseReason.ToString(), LogLvl.LOG_NOTICE, Me)
-
-        If e.CloseReason = CloseReason.UserClosing AndAlso My.Settings.CloseToTray = True And My.Settings.MinimizeToTray = True Then
-            LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
-            UpdateIcon_NotifyIcon()
-            LogFile.LogTracing("Minimize Main Gui To Notify Icon", LogLvl.LOG_DEBUG, Me)
-            WindowState = FormWindowState.Minimized
-            Visible = False
-            NotifyIcon.Visible = True
-            e.Cancel = True
-        Else
-            LogFile.LogTracing("Init Disconnecting Before Close WinNut", LogLvl.LOG_DEBUG, Me)
-            UPSDisconnect()
-        End If
-    End Sub
-
     Private Sub Menu_Quit_Click_1(sender As Object, e As EventArgs) Handles Menu_Quit.Click
         LogFile.LogTracing("Close WinNut From Menu Quit", LogLvl.LOG_DEBUG, Me)
         Application.Exit()
@@ -436,26 +514,6 @@ Public Class WinNUT
             Visible = True
             NotifyIcon.Visible = False
             WindowState = FormWindowState.Normal
-        End If
-    End Sub
-
-    Private Sub WinNUT_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
-        If sender.WindowState = FormWindowState.Minimized Then
-            If My.Settings.MinimizeToTray = True Then
-                LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
-                UpdateIcon_NotifyIcon()
-                LogFile.LogTracing("Minimize Main Gui To Notify Icon", LogLvl.LOG_DEBUG, Me)
-                WindowState = FormWindowState.Minimized
-                Visible = False
-                NotifyIcon.Visible = True
-            End If
-            If NotifyIcon.Visible = False Then
-                Text = FormText
-            Else
-                Text = "WinNUT"
-            End If
-        ElseIf sender.WindowState = FormWindowState.Maximized Or sender.WindowState = FormWindowState.Normal Then
-            Text = "WinNUT"
         End If
     End Sub
 
@@ -744,45 +802,8 @@ Public Class WinNUT
         UPS_Connect()
     End Sub
 
-    Private Sub WinNUT_Deactivate(sender As Object, e As EventArgs) Handles MyBase.Deactivate
-        If WinNUT_Crashed Then
-            Hide()
-        Else
-            LogFile.LogTracing("Main Gui Lose Focus", LogLvl.LOG_DEBUG, Me)
-            HasFocus = False
-            Dim Tmp_App_Mode As Integer
-            If Not AppDarkMode Then
-                Tmp_App_Mode = AppIconIdx.WIN_DARK Or AppIconIdx.IDX_OFFSET
-            Else
-                Tmp_App_Mode = AppIconIdx.IDX_OFFSET
-            End If
-            Dim TmpGuiIDX = ActualAppIconIdx Or Tmp_App_Mode
-            Icon = GetIcon(TmpGuiIDX)
-            LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
-            UpdateIcon_NotifyIcon()
-        End If
-    End Sub
-
-    Private Sub WinNUT_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
-        If WinNUT_Crashed Then
-            Hide()
-        Else
-            LogFile.LogTracing("Main Gui Has Focus", LogLvl.LOG_DEBUG, Me)
-            HasFocus = True
-            Dim Tmp_App_Mode As Integer
-            If AppDarkMode Then
-                Tmp_App_Mode = AppIconIdx.WIN_DARK Or AppIconIdx.IDX_OFFSET
-            Else
-                Tmp_App_Mode = AppIconIdx.IDX_OFFSET
-            End If
-            Dim TmpGuiIDX = ActualAppIconIdx Or Tmp_App_Mode
-            Icon = GetIcon(TmpGuiIDX)
-            LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
-            UpdateIcon_NotifyIcon()
-        End If
-    End Sub
-
     Public Sub WinNUT_PrefsChanged(isChanged As Boolean)
+        My.Settings.Save()
         LogFile.LogTracing("Beginning WinNUT_PrefsChanged subroutine.", LogLvl.LOG_DEBUG, Me)
 
         ' Setup logging preferences
@@ -1033,6 +1054,10 @@ Public Class WinNUT
         Update_Frm.Activate()
         Update_Frm.Visible = True
         HasFocus = False
+    End Sub
+
+    Private Sub ManageOldPrefsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ManageOldPrefsToolStripMenuItem.Click
+        RunRegPrefsUpgrade()
     End Sub
 End Class
 

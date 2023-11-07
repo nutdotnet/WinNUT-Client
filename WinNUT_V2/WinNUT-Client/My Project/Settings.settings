@@ -74,10 +74,10 @@
     <Setting Name="NUT_PollIntervalMsec" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1000</Value>
     </Setting>
-    <Setting Name="NUT_Username" Type="System.String" Scope="User">
+    <Setting Name="NUT_Username" Type="WinNUT_Client_Common.SerializedProtectedString" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="NUT_PasswordEnc" Type="WinNUT_Client_Common.Utils.SerializedProtectedString" Scope="User">
+    <Setting Name="NUT_Password" Type="WinNUT_Client_Common.SerializedProtectedString" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="NUT_AutoReconnect" Type="System.Boolean" Scope="User">

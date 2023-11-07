@@ -5,6 +5,6 @@
     Renaming the file extension or editing the content of this file may   
     cause the file to be unrecognizable by the program.
 -->
-<GenericObjectDataSource DisplayName="UpgradePrefsDialog" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>WinNUT_Client.UpgradePrefsDialog, WinNUT-Client, Version=2.2.8693.27691, Culture=neutral, PublicKeyToken=null</TypeInfo>
+<GenericObjectDataSource DisplayName="UpgradePrefsDialog+UpgradePrefsDialogModel" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+   <TypeInfo>WinNUT_Client.UpgradePrefsDialog+UpgradePrefsDialogModel, WinNUT-Client, Version=2.2.8698.23423, Culture=neutral, PublicKeyToken=null</TypeInfo>
 </GenericObjectDataSource>

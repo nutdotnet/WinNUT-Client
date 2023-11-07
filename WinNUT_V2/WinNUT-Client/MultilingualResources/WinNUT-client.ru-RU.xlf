@@ -792,35 +792,54 @@ Cancel to Save Msi and Install Later</source>
           <target state="new">Previous preferences data detected in the Registry.</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Notify the user that preferences data from the old system was detected in the Registry hive.</note>
         </trans-unit>
-        <trans-unit id="UpgradePrefsDialog_ImportProcedureBeginning" translate="yes" xml:space="preserve">
-          <source>The old preferences import procedure is beginning...</source>
-          <target state="new">The old preferences import procedure is beginning...</target>
-          <note from="MultilingualBuild" annotates="source" priority="2">Notify the user that the old preferences procedure is beginning.</note>
-        </trans-unit>
         <trans-unit id="UpgradePrefsDialog_ImportProcedureCompleted" translate="yes" xml:space="preserve">
-          <source>The old preferences import procedure has completed.</source>
-          <target state="new">The old preferences import procedure has completed.</target>
+          <source>The old preferences have been imported.</source>
+          <target state="new">The old preferences have been imported.</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Notify the user that the import procedure has completed.</note>
         </trans-unit>
         <trans-unit id="UpgradePrefsDialog_UnmatchedPairs" translate="yes" xml:space="preserve">
-          <source>There were {0} unknown preferences: {1}</source>
-          <target state="new">There were {0} unknown preferences: {1}</target>
-          <note from="MultilingualBuild" annotates="source" priority="2">Alert the user to how many unmatched preferences there were {0}, then list them {1}.</note>
-        </trans-unit>
-        <trans-unit id="UpgradePrefsDialog_DeleteProcedureBeginning" translate="yes" xml:space="preserve">
-          <source>The old preferences delete procedure is beginning...</source>
-          <target state="new">The old preferences delete procedure is beginning...</target>
-          <note from="MultilingualBuild" annotates="source" priority="2">Notify the user that the old preferences deletion procedure is beginning.</note>
+          <source>There were {0} unknown preferences. See log for more details.</source>
+          <target state="new">There were {0} unknown preferences. See log for more details.</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Alert the user to how many unmatched preferences there were {0}.</note>
         </trans-unit>
         <trans-unit id="UpgradePrefsDialog_DeleteProcedureComplete" translate="yes" xml:space="preserve">
           <source>The old preferences have been removed from your Registry.</source>
           <target state="new">The old preferences have been removed from your Registry.</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Notify the user that the old preferences have been removed from their Registry.</note>
         </trans-unit>
-        <trans-unit id="UpgradePrefsDialog_DeleteProcedureError" translate="yes" xml:space="preserve">
-          <source>An error occurred while deleting the old preferences: {0}</source>
-          <target state="new">An error occurred while deleting the old preferences: {0}</target>
-          <note from="MultilingualBuild" annotates="source" priority="2">Notify the user that an error occurred while deleteing the old preferences.</note>
+        <trans-unit id="UpgradePrefsDialog_Cancelled" translate="yes" xml:space="preserve">
+          <source>The upgrade process was cancelled: using default settings.</source>
+          <target state="new">The upgrade process was cancelled: using default settings.</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Notify the user that the upgrade dialog was cancelled, and that default settings will be used instead.</note>
+        </trans-unit>
+        <trans-unit id="UpgradePrefsDialog_BackupLocationTitle" translate="yes" xml:space="preserve">
+          <source>Save WinNUT Registry Key</source>
+          <target state="new">Save WinNUT Registry Key</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Title of the SaveFileDialog that prompts the user to select the file and location they would like to save their WinNUT Registry preferences to.</note>
+        </trans-unit>
+        <trans-unit id="UpgradePrefsDialog_BackupProcedureCompleted" translate="yes" xml:space="preserve">
+          <source>The old preferences have been backed up to {0}</source>
+          <target state="new">The old preferences have been backed up to {0}</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Notify the user that the old preferences have been exported to a file, and give the full path with {0}.</note>
+        </trans-unit>
+        <trans-unit id="UpgradePrefsDialog_ErrorEncountered" translate="yes" xml:space="preserve">
+          <source>: {0}   See the log for more information.</source>
+          <target state="new">: {0}   See the log for more information.</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Alert the user that an error occurred during the upgrade procedure, attempt to give a brief summary of the error, and direct them to the log file for more information.</note>
+        </trans-unit>
+        <trans-unit id="regedit_exe_14_100_0" translate="yes" xml:space="preserve" extype="System.Resources.ResXFileRef, System.Windows.Forms">
+          <source>..\Resources\regedit.exe_14_100-0.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</source>
+          <target state="needs-review-translation">..\Resources\regedit.exe_14_100-0.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</target>
+        </trans-unit>
+        <trans-unit id="UpgradePrefsDialog_NoPrefsExistCaption" translate="yes" xml:space="preserve">
+          <source>No preferences detected</source>
+          <target state="new">No preferences detected</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">A brief caption for the error message.</note>
+        </trans-unit>
+        <trans-unit id="UpgradePrefsDialog_NoPrefsExistError" translate="yes" xml:space="preserve">
+          <source>No preferences were detected in the Registry. Unable to continue.</source>
+          <target state="new">No preferences were detected in the Registry. Unable to continue.</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Alert the user that the dialog is unable to continue, since no preferences are detected in the Registry.</note>
         </trans-unit>
       </group>
     </body>
@@ -2508,16 +2527,16 @@ Accepted value: Numeric value from 0 to 100.</source>
           <target state="final">None</target>
         </trans-unit>
         <trans-unit id="Menu_UPS_Var.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
-          <source>139, 22</source>
-          <target state="final">139, 22</target>
+          <source>180, 22</source>
+          <target state="final">180, 22</target>
         </trans-unit>
         <trans-unit id="Menu_UPS_Var.Text" translate="yes" xml:space="preserve">
           <source>UPS Variable</source>
           <target state="final">Переменные ИБП</target>
         </trans-unit>
         <trans-unit id="Menu_Quit.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
-          <source>139, 22</source>
-          <target state="final">139, 22</target>
+          <source>180, 22</source>
+          <target state="final">180, 22</target>
         </trans-unit>
         <trans-unit id="Menu_Quit.Text" translate="yes" xml:space="preserve">
           <source>Exit</source>
@@ -2600,8 +2619,8 @@ Accepted value: Numeric value from 0 to 100.</source>
           <target state="final">0, 24</target>
         </trans-unit>
         <trans-unit id="Main_Menu.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
-          <source>231, 24</source>
-          <target state="final">231, 24</target>
+          <source>351, 24</source>
+          <target state="final">351, 24</target>
         </trans-unit>
         <trans-unit id="Main_Menu.TabIndex" translate="no" extype="System.Int32, mscorlib" xml:space="preserve">
           <source>0</source>
@@ -3643,69 +3662,93 @@ Accepted value: Numeric value from 0 to 100.</source>
           <source>WinNUT</source>
           <target state="final">Windows NUT CLient</target>
         </trans-unit>
-        <trans-unit id="NotifyIcon.TrayLocation" translate="no" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
+        <trans-unit id="NotifyIcon.TrayLocation" translate="no" extype="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" xml:space="preserve" extradata="metadata">
           <source>133, 17</source>
           <target state="final">133, 17</target>
         </trans-unit>
-        <trans-unit id="ContextMenu_Systray.TrayLocation" translate="no" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
+        <trans-unit id="ContextMenu_Systray.TrayLocation" translate="no" extype="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" xml:space="preserve" extradata="metadata">
           <source>364, 17</source>
           <target state="final">364, 17</target>
         </trans-unit>
-        <trans-unit id="Main_Menu.TrayLocation" translate="no" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
+        <trans-unit id="Main_Menu.TrayLocation" translate="no" extype="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" xml:space="preserve" extradata="metadata">
           <source>248, 17</source>
           <target state="final">248, 17</target>
         </trans-unit>
-        <trans-unit id="Main_Menu.Locked" translate="no" extype="System.Boolean, mscorlib" xml:space="preserve">
+        <trans-unit id="Main_Menu.Locked" translate="no" extype="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xml:space="preserve" extradata="metadata">
           <source>True</source>
           <target state="final">True</target>
         </trans-unit>
-        <trans-unit id="GB_Status.Locked" translate="no" extype="System.Boolean, mscorlib" xml:space="preserve">
+        <trans-unit id="GB_Status.Locked" translate="no" extype="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xml:space="preserve" extradata="metadata">
           <source>True</source>
           <target state="final">True</target>
         </trans-unit>
-        <trans-unit id="GB_InV_Dial.Locked" translate="no" extype="System.Boolean, mscorlib" xml:space="preserve">
+        <trans-unit id="GB_InV_Dial.Locked" translate="no" extype="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xml:space="preserve" extradata="metadata">
           <source>True</source>
           <target state="final">True</target>
         </trans-unit>
-        <trans-unit id="GB_OutV_Dial.Locked" translate="no" extype="System.Boolean, mscorlib" xml:space="preserve">
+        <trans-unit id="GB_OutV_Dial.Locked" translate="no" extype="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xml:space="preserve" extradata="metadata">
           <source>True</source>
           <target state="final">True</target>
         </trans-unit>
-        <trans-unit id="GB_BattCh_Dial.Locked" translate="no" extype="System.Boolean, mscorlib" xml:space="preserve">
+        <trans-unit id="GB_BattCh_Dial.Locked" translate="no" extype="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xml:space="preserve" extradata="metadata">
           <source>True</source>
           <target state="final">True</target>
         </trans-unit>
-        <trans-unit id="GB_Load_Dial.Locked" translate="no" extype="System.Boolean, mscorlib" xml:space="preserve">
+        <trans-unit id="GB_Load_Dial.Locked" translate="no" extype="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xml:space="preserve" extradata="metadata">
           <source>True</source>
           <target state="final">True</target>
         </trans-unit>
-        <trans-unit id="GB_BattV_Dial.Locked" translate="no" extype="System.Boolean, mscorlib" xml:space="preserve">
+        <trans-unit id="GB_BattV_Dial.Locked" translate="no" extype="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xml:space="preserve" extradata="metadata">
           <source>True</source>
           <target state="final">True</target>
         </trans-unit>
-        <trans-unit id="GB_InF_Dial.Locked" translate="no" extype="System.Boolean, mscorlib" xml:space="preserve">
+        <trans-unit id="GB_InF_Dial.Locked" translate="no" extype="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xml:space="preserve" extradata="metadata">
           <source>True</source>
           <target state="final">True</target>
         </trans-unit>
-        <trans-unit id="CB_CurrentLog.Locked" translate="no" extype="System.Boolean, mscorlib" xml:space="preserve">
+        <trans-unit id="CB_CurrentLog.Locked" translate="no" extype="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xml:space="preserve" extradata="metadata">
           <source>True</source>
           <target state="final">True</target>
         </trans-unit>
-        <trans-unit id="$this.Localizable" translate="no" extype="System.Boolean, mscorlib" xml:space="preserve">
+        <trans-unit id="$this.Localizable" translate="no" extype="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xml:space="preserve" extradata="metadata">
           <source>True</source>
           <target state="final">True</target>
         </trans-unit>
-        <trans-unit id="$this.Locked" translate="no" extype="System.Boolean, mscorlib" xml:space="preserve">
+        <trans-unit id="$this.Locked" translate="no" extype="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xml:space="preserve" extradata="metadata">
           <source>True</source>
           <target state="final">True</target>
         </trans-unit>
-        <trans-unit id="$this.TrayHeight" translate="no" extype="System.Int32, mscorlib" xml:space="preserve">
+        <trans-unit id="$this.TrayHeight" translate="no" extype="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xml:space="preserve" extradata="metadata">
           <source>58</source>
           <target state="final">58</target>
         </trans-unit>
         <trans-unit id="PBox_Battery_State.ImeMode" translate="no" extype="System.Windows.Forms.ImeMode, System.Windows.Forms" xml:space="preserve">
           <source>NoControl</source>
           <target state="final">NoControl</target>
+        </trans-unit>
+        <trans-unit id="ManageOldPrefsToolStripMenuItem.Enabled" translate="yes" xml:space="preserve" extype="System.Boolean, mscorlib">
+          <source>False</source>
+          <target state="needs-review-translation">False</target>
+        </trans-unit>
+        <trans-unit id="ManageOldPrefsToolStripMenuItem.Size" translate="yes" xml:space="preserve" extype="System.Drawing.Size, System.Drawing">
+          <source>180, 22</source>
+          <target state="needs-review-translation">180, 22</target>
+        </trans-unit>
+        <trans-unit id="ManageOldPrefsToolStripMenuItem.Text" translate="yes" xml:space="preserve">
+          <source>Manage Old Prefs...</source>
+          <target state="new">Manage Old Prefs...</target>
+        </trans-unit>
+        <trans-unit id="ManageOldPrefsToolStripMenuItem.ShortcutKeyDisplayString" translate="yes" xml:space="preserve">
+          <source></source>
+          <target state="new"></target>
+        </trans-unit>
+        <trans-unit id="ManageOldPrefsToolStripMenuItem.ToolTipText" translate="yes" xml:space="preserve">
+          <source>Previous old preferences detected. Continue to begin the dialog.</source>
+          <target state="new">Previous old preferences detected. Continue to begin the dialog.</target>
+        </trans-unit>
+        <trans-unit id="$this.ImeMode" translate="yes" xml:space="preserve" extype="System.Windows.Forms.ImeMode, System.Windows.Forms">
+          <source>NoControl</source>
+          <target state="needs-review-translation">NoControl</target>
         </trans-unit>
       </group>
     </body>
@@ -3716,33 +3759,297 @@ Accepted value: Numeric value from 0 to 100.</source>
     </header>
     <body>
       <group id="WINNUT-CLIENT/UPGRADEPREFSDIALOG.RESX" datatype="resx">
-        <trans-unit id="Label1.Text" translate="yes" xml:space="preserve">
-          <source>WinNUT has been upgraded to a new Settings and Preferences system, and must use that going forward. Items leftover from the previous system have been deteceted in your user Registry hive.
-
-You can import the previous set of settings, and/or delete them from your system. You can also do nothing and start with the default settings. This message will not be displayed again as long as the new program data remains intact.
+        <trans-unit id="PictureBox1.ImeMode" translate="yes" extype="System.Windows.Forms.ImeMode, System.Windows.Forms" xml:space="preserve">
+          <source>NoControl</source>
+          <target state="needs-review-translation">NoControl</target>
+        </trans-unit>
+        <trans-unit id="PictureBox1.Location" translate="yes" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
+          <source>6, 6</source>
+          <target state="needs-review-translation">6, 6</target>
+        </trans-unit>
+        <trans-unit id="PictureBox1.Size" translate="yes" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
+          <source>48, 48</source>
+          <target state="needs-review-translation">48, 48</target>
+        </trans-unit>
+        <trans-unit id="PictureBox1.SizeMode" translate="yes" extype="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms" xml:space="preserve">
+          <source>AutoSize</source>
+          <target state="needs-review-translation">AutoSize</target>
+        </trans-unit>
+        <trans-unit id="PictureBox1.TabIndex" translate="yes" extype="System.Int32, mscorlib" xml:space="preserve">
+          <source>1</source>
+          <target state="needs-review-translation">1</target>
+        </trans-unit>
+        <trans-unit id="IntroMessage.Anchor" translate="yes" extype="System.Windows.Forms.AnchorStyles, System.Windows.Forms" xml:space="preserve">
+          <source>Top, Bottom, Left, Right</source>
+          <target state="needs-review-translation">Top, Bottom, Left, Right</target>
+        </trans-unit>
+        <trans-unit id="IntroMessage.ImeMode" translate="yes" extype="System.Windows.Forms.ImeMode, System.Windows.Forms" xml:space="preserve">
+          <source>NoControl</source>
+          <target state="needs-review-translation">NoControl</target>
+        </trans-unit>
+        <trans-unit id="IntroMessage.Location" translate="yes" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
+          <source>59, 3</source>
+          <target state="needs-review-translation">59, 3</target>
+        </trans-unit>
+        <trans-unit id="IntroMessage.Size" translate="yes" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
+          <source>367, 107</source>
+          <target state="needs-review-translation">367, 107</target>
+        </trans-unit>
+        <trans-unit id="IntroMessage.TabIndex" translate="yes" extype="System.Int32, mscorlib" xml:space="preserve">
+          <source>2</source>
+          <target state="needs-review-translation">2</target>
+        </trans-unit>
+        <trans-unit id="IntroMessage.Text" translate="yes" xml:space="preserve">
+          <source>WinNUT has been upgraded to a new Settings and Preferences system, and must use that going forward. Items leftover from the previous system have been deteceted in your user Registry hive. Select the actions below that you would like to have performed on the old preferences. If you wish to take no action, select Cancel and the default settings will be used. This message will not be displayed again as long as the new program data remains intact.
 
 </source>
-          <target state="new">WinNUT has been upgraded to a new Settings and Preferences system, and must use that going forward. Items leftover from the previous system have been deteceted in your user Registry hive.
-
-You can import the previous set of settings, and/or delete them from your system. You can also do nothing and start with the default settings. This message will not be displayed again as long as the new program data remains intact.
+          <target state="new">WinNUT has been upgraded to a new Settings and Preferences system, and must use that going forward. Items leftover from the previous system have been deteceted in your user Registry hive. Select the actions below that you would like to have performed on the old preferences. If you wish to take no action, select Cancel and the default settings will be used. This message will not be displayed again as long as the new program data remains intact.
 
 </target>
         </trans-unit>
-        <trans-unit id="UpgradePrefsDialogBindingSource.TrayLocation" translate="yes" extype="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" xml:space="preserve" extradata="metadata">
-          <source>17, 17</source>
-          <target state="needs-review-translation">17, 17</target>
+        <trans-unit id="OK_Button.Anchor" translate="yes" extype="System.Windows.Forms.AnchorStyles, System.Windows.Forms" xml:space="preserve">
+          <source>Right</source>
+          <target state="needs-review-translation">Right</target>
         </trans-unit>
-        <trans-unit id="UpgradeWorker.TrayLocation" translate="yes" extype="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" xml:space="preserve" extradata="metadata">
-          <source>253, 17</source>
-          <target state="needs-review-translation">253, 17</target>
+        <trans-unit id="OK_Button.ImeMode" translate="yes" extype="System.Windows.Forms.ImeMode, System.Windows.Forms" xml:space="preserve">
+          <source>NoControl</source>
+          <target state="needs-review-translation">NoControl</target>
         </trans-unit>
-        <trans-unit id="$this.TrayHeight" translate="yes" extype="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xml:space="preserve" extradata="metadata">
-          <source>44</source>
-          <target state="needs-review-translation">44</target>
+        <trans-unit id="OK_Button.Location" translate="yes" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
+          <source>365, 3</source>
+          <target state="needs-review-translation">365, 3</target>
         </trans-unit>
-        <trans-unit id="$this.Locked" translate="yes" xml:space="preserve" extype="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" extradata="metadata">
+        <trans-unit id="OK_Button.Size" translate="yes" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
+          <source>67, 23</source>
+          <target state="needs-review-translation">67, 23</target>
+        </trans-unit>
+        <trans-unit id="OK_Button.TabIndex" translate="yes" extype="System.Int32, mscorlib" xml:space="preserve">
+          <source>0</source>
+          <target state="needs-review-translation">0</target>
+        </trans-unit>
+        <trans-unit id="OK_Button.Text" translate="yes" xml:space="preserve">
+          <source>OK</source>
+          <target state="new">OK</target>
+        </trans-unit>
+        <trans-unit id="Cancel_Button.Anchor" translate="yes" extype="System.Windows.Forms.AnchorStyles, System.Windows.Forms" xml:space="preserve">
+          <source>Right</source>
+          <target state="needs-review-translation">Right</target>
+        </trans-unit>
+        <trans-unit id="Cancel_Button.ImeMode" translate="yes" extype="System.Windows.Forms.ImeMode, System.Windows.Forms" xml:space="preserve">
+          <source>NoControl</source>
+          <target state="needs-review-translation">NoControl</target>
+        </trans-unit>
+        <trans-unit id="Cancel_Button.Location" translate="yes" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
+          <source>292, 3</source>
+          <target state="needs-review-translation">292, 3</target>
+        </trans-unit>
+        <trans-unit id="Cancel_Button.Size" translate="yes" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
+          <source>67, 23</source>
+          <target state="needs-review-translation">67, 23</target>
+        </trans-unit>
+        <trans-unit id="Cancel_Button.TabIndex" translate="yes" extype="System.Int32, mscorlib" xml:space="preserve">
+          <source>1</source>
+          <target state="needs-review-translation">1</target>
+        </trans-unit>
+        <trans-unit id="Cancel_Button.Text" translate="yes" xml:space="preserve">
+          <source>Cancel</source>
+          <target state="new">Cancel</target>
+        </trans-unit>
+        <trans-unit id="ImportSettingsCheckBox.AutoSize" translate="yes" extype="System.Boolean, mscorlib" xml:space="preserve">
           <source>True</source>
           <target state="needs-review-translation">True</target>
+        </trans-unit>
+        <trans-unit id="ImportSettingsCheckBox.ImeMode" translate="yes" extype="System.Windows.Forms.ImeMode, System.Windows.Forms" xml:space="preserve">
+          <source>NoControl</source>
+          <target state="needs-review-translation">NoControl</target>
+        </trans-unit>
+        <trans-unit id="ImportSettingsCheckBox.Location" translate="yes" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
+          <source>6, 19</source>
+          <target state="needs-review-translation">6, 19</target>
+        </trans-unit>
+        <trans-unit id="ImportSettingsCheckBox.Size" translate="yes" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
+          <source>55, 17</source>
+          <target state="needs-review-translation">55, 17</target>
+        </trans-unit>
+        <trans-unit id="ImportSettingsCheckBox.TabIndex" translate="yes" extype="System.Int32, mscorlib" xml:space="preserve">
+          <source>5</source>
+          <target state="needs-review-translation">5</target>
+        </trans-unit>
+        <trans-unit id="ImportSettingsCheckBox.Text" translate="yes" xml:space="preserve">
+          <source>Import</source>
+          <target state="new">Import</target>
+        </trans-unit>
+        <trans-unit id="ImportSettingsCheckBox.ToolTip" translate="yes" xml:space="preserve">
+          <source>The previous preferences will be imported from the Registry and into the new Settings system.</source>
+          <target state="new">The previous preferences will be imported from the Registry and into the new Settings system.</target>
+        </trans-unit>
+        <trans-unit id="DeleteSettingsCheckBox.AutoSize" translate="yes" extype="System.Boolean, mscorlib" xml:space="preserve">
+          <source>True</source>
+          <target state="needs-review-translation">True</target>
+        </trans-unit>
+        <trans-unit id="DeleteSettingsCheckBox.ImeMode" translate="yes" extype="System.Windows.Forms.ImeMode, System.Windows.Forms" xml:space="preserve">
+          <source>NoControl</source>
+          <target state="needs-review-translation">NoControl</target>
+        </trans-unit>
+        <trans-unit id="DeleteSettingsCheckBox.Location" translate="yes" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
+          <source>6, 66</source>
+          <target state="needs-review-translation">6, 66</target>
+        </trans-unit>
+        <trans-unit id="DeleteSettingsCheckBox.Size" translate="yes" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
+          <source>57, 17</source>
+          <target state="needs-review-translation">57, 17</target>
+        </trans-unit>
+        <trans-unit id="DeleteSettingsCheckBox.TabIndex" translate="yes" extype="System.Int32, mscorlib" xml:space="preserve">
+          <source>6</source>
+          <target state="needs-review-translation">6</target>
+        </trans-unit>
+        <trans-unit id="DeleteSettingsCheckBox.Text" translate="yes" xml:space="preserve">
+          <source>Delete</source>
+          <target state="new">Delete</target>
+        </trans-unit>
+        <trans-unit id="DeleteSettingsCheckBox.ToolTip" translate="yes" xml:space="preserve">
+          <source>The previous preferences will be deleted from the Registry.</source>
+          <target state="new">The previous preferences will be deleted from the Registry.</target>
+        </trans-unit>
+        <trans-unit id="PrevSettngsGroupBox.Anchor" translate="yes" extype="System.Windows.Forms.AnchorStyles, System.Windows.Forms" xml:space="preserve">
+          <source>Top, Left, Right</source>
+          <target state="needs-review-translation">Top, Left, Right</target>
+        </trans-unit>
+        <trans-unit id="BackupSettingsCheckbox.AutoSize" translate="yes" extype="System.Boolean, mscorlib" xml:space="preserve">
+          <source>True</source>
+          <target state="needs-review-translation">True</target>
+        </trans-unit>
+        <trans-unit id="BackupSettingsCheckbox.ImeMode" translate="yes" extype="System.Windows.Forms.ImeMode, System.Windows.Forms" xml:space="preserve">
+          <source>NoControl</source>
+          <target state="needs-review-translation">NoControl</target>
+        </trans-unit>
+        <trans-unit id="BackupSettingsCheckbox.Location" translate="yes" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
+          <source>6, 43</source>
+          <target state="needs-review-translation">6, 43</target>
+        </trans-unit>
+        <trans-unit id="BackupSettingsCheckbox.Size" translate="yes" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
+          <source>63, 17</source>
+          <target state="needs-review-translation">63, 17</target>
+        </trans-unit>
+        <trans-unit id="BackupSettingsCheckbox.TabIndex" translate="yes" extype="System.Int32, mscorlib" xml:space="preserve">
+          <source>7</source>
+          <target state="needs-review-translation">7</target>
+        </trans-unit>
+        <trans-unit id="BackupSettingsCheckbox.Text" translate="yes" xml:space="preserve">
+          <source>Backup</source>
+          <target state="new">Backup</target>
+        </trans-unit>
+        <trans-unit id="BackupSettingsCheckbox.ToolTip" translate="yes" xml:space="preserve">
+          <source>The previous settings will be exported to a file.</source>
+          <target state="new">The previous settings will be exported to a file.</target>
+        </trans-unit>
+        <trans-unit id="PrevSettngsGroupBox.Location" translate="yes" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
+          <source>6, 122</source>
+          <target state="needs-review-translation">6, 122</target>
+        </trans-unit>
+        <trans-unit id="PrevSettngsGroupBox.Margin" translate="yes" extype="System.Windows.Forms.Padding, System.Windows.Forms" xml:space="preserve">
+          <source>3, 9, 3, 3</source>
+          <target state="needs-review-translation">3, 9, 3, 3</target>
+        </trans-unit>
+        <trans-unit id="PrevSettngsGroupBox.Size" translate="yes" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
+          <source>426, 89</source>
+          <target state="needs-review-translation">426, 89</target>
+        </trans-unit>
+        <trans-unit id="PrevSettngsGroupBox.TabIndex" translate="yes" extype="System.Int32, mscorlib" xml:space="preserve">
+          <source>7</source>
+          <target state="needs-review-translation">7</target>
+        </trans-unit>
+        <trans-unit id="PrevSettngsGroupBox.Text" translate="yes" xml:space="preserve">
+          <source>Previous Settings</source>
+          <target state="new">Previous Settings</target>
+        </trans-unit>
+        <trans-unit id="buttonPanel.Dock" translate="yes" extype="System.Windows.Forms.DockStyle, System.Windows.Forms" xml:space="preserve">
+          <source>Bottom</source>
+          <target state="needs-review-translation">Bottom</target>
+        </trans-unit>
+        <trans-unit id="buttonPanel.Location" translate="yes" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
+          <source>0, 246</source>
+          <target state="needs-review-translation">0, 246</target>
+        </trans-unit>
+        <trans-unit id="buttonPanel.Size" translate="yes" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
+          <source>438, 32</source>
+          <target state="needs-review-translation">438, 32</target>
+        </trans-unit>
+        <trans-unit id="buttonPanel.TabIndex" translate="yes" extype="System.Int32, mscorlib" xml:space="preserve">
+          <source>7</source>
+          <target state="needs-review-translation">7</target>
+        </trans-unit>
+        <trans-unit id="UpgradeProgressBar.Anchor" translate="yes" extype="System.Windows.Forms.AnchorStyles, System.Windows.Forms" xml:space="preserve">
+          <source>Bottom, Left, Right</source>
+          <target state="needs-review-translation">Bottom, Left, Right</target>
+        </trans-unit>
+        <trans-unit id="UpgradeProgressBar.ImeMode" translate="yes" extype="System.Windows.Forms.ImeMode, System.Windows.Forms" xml:space="preserve">
+          <source>NoControl</source>
+          <target state="needs-review-translation">NoControl</target>
+        </trans-unit>
+        <trans-unit id="UpgradeProgressBar.Location" translate="yes" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
+          <source>6, 217</source>
+          <target state="needs-review-translation">6, 217</target>
+        </trans-unit>
+        <trans-unit id="UpgradeProgressBar.Size" translate="yes" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
+          <source>426, 23</source>
+          <target state="needs-review-translation">426, 23</target>
+        </trans-unit>
+        <trans-unit id="UpgradeProgressBar.TabIndex" translate="yes" extype="System.Int32, mscorlib" xml:space="preserve">
+          <source>9</source>
+          <target state="needs-review-translation">9</target>
+        </trans-unit>
+        <trans-unit id="TopContentPanel.Dock" translate="yes" extype="System.Windows.Forms.DockStyle, System.Windows.Forms" xml:space="preserve">
+          <source>Top</source>
+          <target state="needs-review-translation">Top</target>
+        </trans-unit>
+        <trans-unit id="TopContentPanel.Location" translate="yes" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
+          <source>0, 0</source>
+          <target state="needs-review-translation">0, 0</target>
+        </trans-unit>
+        <trans-unit id="TopContentPanel.Size" translate="yes" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
+          <source>438, 110</source>
+          <target state="needs-review-translation">438, 110</target>
+        </trans-unit>
+        <trans-unit id="TopContentPanel.TabIndex" translate="yes" extype="System.Int32, mscorlib" xml:space="preserve">
+          <source>7</source>
+          <target state="needs-review-translation">7</target>
+        </trans-unit>
+        <trans-unit id="$this.AutoScaleDimensions" translate="yes" extype="System.Drawing.SizeF, System.Drawing" xml:space="preserve">
+          <source>6, 13</source>
+          <target state="needs-review-translation">6, 13</target>
+        </trans-unit>
+        <trans-unit id="$this.ClientSize" translate="yes" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
+          <source>438, 278</source>
+          <target state="needs-review-translation">438, 278</target>
+        </trans-unit>
+        <trans-unit id="$this.StartPosition" translate="yes" extype="System.Windows.Forms.FormStartPosition, System.Windows.Forms" xml:space="preserve">
+          <source>CenterParent</source>
+          <target state="needs-review-translation">CenterParent</target>
+        </trans-unit>
+        <trans-unit id="$this.Text" translate="yes" xml:space="preserve">
+          <source>Migrate to New Settings Format</source>
+          <target state="new">Migrate to New Settings Format</target>
+        </trans-unit>
+        <trans-unit id="UpgradePrefsDialogModelBindingSource.TrayLocation" translate="yes" extype="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" extradata="metadata" xml:space="preserve">
+          <source>488, 17</source>
+          <target state="needs-review-translation">488, 17</target>
+        </trans-unit>
+        <trans-unit id="ToolTip1.TrayLocation" translate="yes" extype="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" extradata="metadata" xml:space="preserve">
+          <source>390, 17</source>
+          <target state="needs-review-translation">390, 17</target>
+        </trans-unit>
+        <trans-unit id="$this.Localizable" translate="yes" extype="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" extradata="metadata" xml:space="preserve">
+          <source>True</source>
+          <target state="needs-review-translation">True</target>
+        </trans-unit>
+        <trans-unit id="$this.Locked" translate="yes" extype="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" extradata="metadata" xml:space="preserve">
+          <source>True</source>
+          <target state="needs-review-translation">True</target>
+        </trans-unit>
+        <trans-unit id="$this.TrayHeight" translate="yes" extype="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" extradata="metadata" xml:space="preserve">
+          <source>44</source>
+          <target state="needs-review-translation">44</target>
         </trans-unit>
       </group>
     </body>

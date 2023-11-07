@@ -689,11 +689,39 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to The old preferences delete procedure is beginning....
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
-        Public ReadOnly Property UpgradePrefsDialog_DeleteProcedureBeginning() As String
+        Public ReadOnly Property regedit_exe_14_100_0() As System.Drawing.Bitmap
             Get
-                Return ResourceManager.GetString("UpgradePrefsDialog_DeleteProcedureBeginning", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("regedit_exe_14_100_0", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Save WinNUT Registry Key.
+        '''</summary>
+        Public ReadOnly Property UpgradePrefsDialog_BackupLocationTitle() As String
+            Get
+                Return ResourceManager.GetString("UpgradePrefsDialog_BackupLocationTitle", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to The old preferences have been backed up to {0}.
+        '''</summary>
+        Public ReadOnly Property UpgradePrefsDialog_BackupProcedureCompleted() As String
+            Get
+                Return ResourceManager.GetString("UpgradePrefsDialog_BackupProcedureCompleted", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to The upgrade process was cancelled: using default settings..
+        '''</summary>
+        Public ReadOnly Property UpgradePrefsDialog_Cancelled() As String
+            Get
+                Return ResourceManager.GetString("UpgradePrefsDialog_Cancelled", resourceCulture)
             End Get
         End Property
         
@@ -707,25 +735,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to An error occurred while deleting the old preferences: {0}.
+        '''  Looks up a localized string similar to : {0}   See the log for more information..
         '''</summary>
-        Public ReadOnly Property UpgradePrefsDialog_DeleteProcedureError() As String
+        Public ReadOnly Property UpgradePrefsDialog_ErrorEncountered() As String
             Get
-                Return ResourceManager.GetString("UpgradePrefsDialog_DeleteProcedureError", resourceCulture)
+                Return ResourceManager.GetString("UpgradePrefsDialog_ErrorEncountered", resourceCulture)
             End Get
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to The old preferences import procedure is beginning....
-        '''</summary>
-        Public ReadOnly Property UpgradePrefsDialog_ImportProcedureBeginning() As String
-            Get
-                Return ResourceManager.GetString("UpgradePrefsDialog_ImportProcedureBeginning", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized string similar to The old preferences import procedure has completed..
+        '''  Looks up a localized string similar to The old preferences have been imported..
         '''</summary>
         Public ReadOnly Property UpgradePrefsDialog_ImportProcedureCompleted() As String
             Get
@@ -734,7 +753,25 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to There were {0} unknown preferences: {1}.
+        '''  Looks up a localized string similar to No preferences detected.
+        '''</summary>
+        Public ReadOnly Property UpgradePrefsDialog_NoPrefsExistCaption() As String
+            Get
+                Return ResourceManager.GetString("UpgradePrefsDialog_NoPrefsExistCaption", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to No preferences were detected in the Registry. Unable to continue..
+        '''</summary>
+        Public ReadOnly Property UpgradePrefsDialog_NoPrefsExistError() As String
+            Get
+                Return ResourceManager.GetString("UpgradePrefsDialog_NoPrefsExistError", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to There were {0} unknown preferences. See log for more details..
         '''</summary>
         Public ReadOnly Property UpgradePrefsDialog_UnmatchedPairs() As String
             Get
