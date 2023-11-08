@@ -17,6 +17,14 @@ runs:
       run: echo "SHORT_SHA=$("${{ github.sha }}".SubString(0, 8))" >> $env:GITHUB_ENV
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1
+    - name: Install DNF 4.8.1 packs
+      shell: pwsh
+      working-directory: "C:\\Program Files (x86)\\Microsoft Visual Studio\\Installer"
+      run: |
+        $InstallPath = "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise"
+        $WorkLoads = '--add Microsoft.Net.Component.4.8.1.SDK --add Microsoft.Net.Component.4.8.1.TargetingPack -add Microsoft.Net.ComponentGroup.4.8.1.DeveloperTools'
+        $Arguments = ('/c', "vs_installer.exe", 'modify', '--installPath', "`"$InstallPath`"", $WorkLoads, '--quiet', '--norestart', '--nocache')
+        $process = Start-Process -FilePath cmd.exe -ArgumentList $Arguments -Wait -PassThru -WindowStyle Hidden
     - name: Restore Packages
       working-directory: WinNUT_V2
       shell: pwsh
