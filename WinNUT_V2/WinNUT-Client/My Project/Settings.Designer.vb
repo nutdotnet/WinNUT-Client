@@ -351,15 +351,15 @@ Namespace My
                 Me("NUT_Username") = value
             End Set
         End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(),
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
         Public Property NUT_Password() As Global.WinNUT_Client_Common.SerializedProtectedString
             Get
-                Return CType(Me("NUT_Password"), Global.WinNUT_Client_Common.SerializedProtectedString)
+                Return CType(Me("NUT_Password"),Global.WinNUT_Client_Common.SerializedProtectedString)
             End Get
             Set
-                Me("NUT_Password") = Value
+                Me("NUT_Password") = value
             End Set
         End Property
         

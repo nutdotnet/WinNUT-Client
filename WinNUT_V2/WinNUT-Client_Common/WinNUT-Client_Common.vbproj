@@ -10,7 +10,7 @@
     <AssemblyName>WinNUT-Client_Common</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <Deterministic>false</Deterministic>
     <TargetFrameworkProfile />
   </PropertyGroup>
