@@ -58,7 +58,7 @@
     <value>從睡眠喚醒 Windows 後重新啟動 WinNUT。</value>
   </data>
   <data name="Frm_Main_Str_15" xml:space="preserve">
-    <value>Windows 待機時，WinNUT 將中斷連線。 </value>
+    <value>Windows 待機時，WinNUT 將中斷連線。</value>
   </data>
   <data name="Frm_Shutdown_Str_01" xml:space="preserve">
     <value>電池電量：{0} 剩餘時間：{1}</value>
@@ -73,7 +73,7 @@
     <value>隱藏更新日誌</value>
   </data>
   <data name="Frm_Update_Str_04" xml:space="preserve">
-    <value>您是否要立即更新 WinNUT-Client? 點選確定以關閉 WinNUT 並安裝新版本，點選取消以儲存 Msi 檔案並於稍後手動安裝。</value>
+    <value>您是否要立即更新 WinNUT Client？點選確定以關閉 WinNUT 並安裝新版本，點選取消以儲存 msi 檔案並於稍後手動安裝。</value>
   </data>
   <data name="Frm_Update_Str_05" xml:space="preserve">
     <value>下載新版本來源：</value>
@@ -82,16 +82,16 @@
     <value>WinNUT 設定已變更</value>
   </data>
   <data name="Log_Str_02" xml:space="preserve">
-    <value>連線到 NUT 主機 {0}:{1} 成功</value>
+    <value>連線到 NUT 伺服器 {0}:{1} 成功</value>
   </data>
   <data name="Log_Str_03" xml:space="preserve">
-    <value>連線到 NUT 主機 {0}:{1} 失敗：{2}</value>
+    <value>連線到 NUT 伺服器 {0}:{1} 失敗：{2}</value>
   </data>
   <data name="Log_Str_04" xml:space="preserve">
     <value>自動重新連線</value>
   </data>
   <data name="Log_Str_05" xml:space="preserve">
-    <value>已與 NUT 主機中斷連線。</value>
+    <value>已與 NUT 伺服器中斷連線。</value>
   </data>
   <data name="Log_Str_06" xml:space="preserve">
     <value>重試連線 {0} / {1}</value>
@@ -100,10 +100,10 @@
     <value>已達最大重試次數，等待手動重新連線。</value>
   </data>
   <data name="Log_Str_08" xml:space="preserve">
-    <value>啟動關機程序的條件</value>
+    <value>啟動停機程序的條件</value>
   </data>
   <data name="Log_Str_09" xml:space="preserve">
-    <value>取消關機程序</value>
+    <value>取消停機程序</value>
   </data>
   <data name="Log_Str_10" xml:space="preserve">
     <value>沒有可用的更新</value>
