@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="App_Event_Str_01" xml:space="preserve">
+    <value>Anwendung heruntergefahren um </value>
+  </data>
+  <data name="Frm_Shutdown_Str_01" xml:space="preserve">
+    <value>Akkuladung: {0} Verbleibende Zeit: {1}</value>
+  </data>
+  <data name="Frm_Update_Str_01" xml:space="preserve">
+    <value>Update verfügbar : Version {0}</value>
+  </data>
+  <data name="Frm_Update_Str_02" xml:space="preserve">
+    <value>Change-Log anzeigen</value>
+  </data>
+  <data name="Frm_Update_Str_03" xml:space="preserve">
+    <value>Change-Log ausblenden</value>
+  </data>
+  <data name="Frm_Update_Str_04" xml:space="preserve">
+    <value>WinNUT-Client jetzt aktualisieren? OK um WinNUT zu schließen und neue Version zu installieren Abbrechen um MSI-Datei zu speichern und später zu installieren</value>
+  </data>
+  <data name="Frm_Update_Str_05" xml:space="preserve">
+    <value>Neue Version herunterladen von :</value>
+  </data>
+  <data name="Frm_Main_Str_01" xml:space="preserve">
+    <value>Alte ups.ini importiert INI-Datei nach {0}.old verschoben</value>
+  </data>
+  <data name="Frm_Main_Str_02" xml:space="preserve">
+    <value>Alte ups.ini importiert</value>
+  </data>
+  <data name="Frm_Main_Str_03" xml:space="preserve">
+    <value>Wiederverbindung läuft</value>
+  </data>
+  <data name="Frm_Main_Str_04" xml:space="preserve">
+    <value>Versuch {0} von {1}</value>
+  </data>
+  <data name="Frm_Main_Str_05" xml:space="preserve">
+    <value>Nicht verbunden</value>
+  </data>
+  <data name="Frm_Main_Str_06" xml:space="preserve">
+    <value>Verbunden</value>
+  </data>
+  <data name="Frm_Main_Str_07" xml:space="preserve">
+    <value>Im Netzbetrieb</value>
+  </data>
+  <data name="Frm_Main_Str_08" xml:space="preserve">
+    <value>Im Akkubetrieb ({0}%)</value>
+  </data>
+  <data name="Frm_Main_Str_09" xml:space="preserve">
+    <value>Niedrige Akkuladung</value>
+  </data>
+  <data name="Log_Str_01" xml:space="preserve">
+    <value>WinNut-Einstellungen geändert</value>
+  </data>
+  <data name="Log_Str_02" xml:space="preserve">
+    <value>Verbindung zum Nut Host {0}:{1} hergestellt</value>
+  </data>
+  <data name="Log_Str_03" xml:space="preserve">
+    <value>Verbindung zum Nut Host {0}: {1} fehlgeschlagen: {2}</value>
+  </data>
+  <data name="Log_Str_04" xml:space="preserve">
+    <value>Automatische Wiederverbindung</value>
+  </data>
+  <data name="Log_Str_05" xml:space="preserve">
+    <value>Verbindung zum NUT-Host verloren</value>
+  </data>
+  <data name="Log_Str_06" xml:space="preserve">
+    <value>Versuche Wiederverbindung {0} / {1}</value>
+  </data>
+  <data name="Log_Str_07" xml:space="preserve">
+    <value>Maximale Anzahl Verbindungsversuche erreicht. Auf manuelle Wiederverbindung warten.</value>
+  </data>
+  <data name="Log_Str_08" xml:space="preserve">
+    <value>Voraussetzungen für den Start des Löschprozesses liegen vor</value>
+  </data>
+  <data name="Log_Str_09" xml:space="preserve">
+    <value>Abbruch des Löschprozesses</value>
+  </data>
+  <data name="Log_Str_10" xml:space="preserve">
+    <value>Kein Update verfügbar</value>
+  </data>
+  <data name="Log_Str_11" xml:space="preserve">
+    <value>Version {0} verfügbar</value>
+  </data>
+  <data name="Frm_Main_Str_10" xml:space="preserve">
+    <value>Akku OK</value>
+  </data>
+  <data name="Frm_Main_Str_11" xml:space="preserve">
+    <value>Unbekannter USV-Name</value>
+  </data>
+  <data name="Frm_Main_Str_12" xml:space="preserve">
+    <value>Verbindung zu {0}:{1} verloren</value>
+  </data>
+  <data name="Frm_Main_Str_13" xml:space="preserve">
+    <value>Falsche Login-ID (Benutzername oder Passwort)</value>
+  </data>
+  <data name="Log_Str_12" xml:space="preserve">
+    <value>Vom NUT-Server auferlegte Stopp-Bedingung</value>
+  </data>
+  <data name="Frm_Main_Str_14" xml:space="preserve">
+    <value>Windows Standby, WinNUT wird getrennt.</value>
+  </data>
+  <data name="Frm_Main_Str_15" xml:space="preserve">
+    <value>Windows Standby. WinNUT wird getrennt. </value>
+  </data>
+</root>

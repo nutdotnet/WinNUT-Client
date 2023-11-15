@@ -1,0 +1,306 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Cb_Reconnect.Text" xml:space="preserve">
+    <value>Verbindung wiederherstellen</value>
+  </data>
+  <data name="Lbl_Delay_Com.Text" xml:space="preserve">
+    <value>Abrufintervall</value>
+  </data>
+  <data name="Lbl_Name_UPS.Text" xml:space="preserve">
+    <value>USV-Name</value>
+  </data>
+  <data name="Lbl_Port.Text" xml:space="preserve">
+    <value>NUT-Port</value>
+  </data>
+  <data name="Lbl_Server_IP.Text" xml:space="preserve">
+    <value>NUT-Host</value>
+  </data>
+  <data name="Tab_Connexion.Text" xml:space="preserve">
+    <value>Verbindung</value>
+  </data>
+  <data name="Lbl_Maxi.Text" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="Lbl_Mini.Text" xml:space="preserve">
+    <value>Min</value>
+  </data>
+  <data name="Lbl_BattV.Text" xml:space="preserve">
+    <value>Akkuspannung</value>
+  </data>
+  <data name="Lbl_LoadUPS.Text" xml:space="preserve">
+    <value>USV-Last</value>
+  </data>
+  <data name="Lbl_OutputV.Text" xml:space="preserve">
+    <value>Ausgangsspannung</value>
+  </data>
+  <data name="Lbl_InputF.Text" xml:space="preserve">
+    <value>Eingangsfrequenz</value>
+  </data>
+  <data name="Lbl_PowerF.Text" xml:space="preserve">
+    <value>Netzfrequenz.</value>
+  </data>
+  <data name="Lbl_InputV.Text" xml:space="preserve">
+    <value>Eingangsspannung</value>
+  </data>
+  <data name="Tab_Calibrage.Text" xml:space="preserve">
+    <value>Kalibrierung</value>
+  </data>
+  <data name="Cbx_LogLevel.Items" xml:space="preserve">
+    <value>Hinweis</value>
+  </data>
+  <data name="Cbx_LogLevel.Items1" xml:space="preserve">
+    <value>Alarm</value>
+  </data>
+  <data name="Cbx_LogLevel.Items2" xml:space="preserve">
+    <value>Fehler</value>
+  </data>
+  <data name="Cbx_LogLevel.Items3" xml:space="preserve">
+    <value>Debuggen</value>
+  </data>
+  <data name="Lbl_LevelLog.Text" xml:space="preserve">
+    <value>Detailstufe des Logs</value>
+  </data>
+  <data name="CB_Use_Logfile.Text" xml:space="preserve">
+    <value>Logdatei erstellen</value>
+  </data>
+  <data name="CB_Start_W_Win.Text" xml:space="preserve">
+    <value>Mit Windows starten</value>
+  </data>
+  <data name="CB_Close_Tray.Text" xml:space="preserve">
+    <value>In Systray minimieren</value>
+  </data>
+  <data name="CB_Start_Mini.Text" xml:space="preserve">
+    <value>Minimiert starten</value>
+  </data>
+  <data name="CB_Systray.Text" xml:space="preserve">
+    <value>Auf Systray minimieren</value>
+  </data>
+  <data name="Tab_Miscellanous.Text" xml:space="preserve">
+    <value>Verschiedenes</value>
+  </data>
+  <data name="Cb_ExtendTime.Text" xml:space="preserve">
+    <value>Längere Abschaltzeit zulassen</value>
+  </data>
+  <data name="Cbx_TypeStop.Items" xml:space="preserve">
+    <value>Herunterfahren</value>
+  </data>
+  <data name="Cbx_TypeStop.Items1" xml:space="preserve">
+    <value>Energie sparen</value>
+  </data>
+  <data name="Cbx_TypeStop.Items2" xml:space="preserve">
+    <value>Ruhezustand</value>
+  </data>
+  <data name="Cb_ImmediateStop.Text" xml:space="preserve">
+    <value>Sofortige Stopp-Aktion</value>
+  </data>
+  <data name="Lbl_GraceTime.Text" xml:space="preserve">
+    <value>Verzögerung vor Herunterfahren (Sek.)</value>
+  </data>
+  <data name="Lbl_Delay_Stop.Text" xml:space="preserve">
+    <value>Verzögerung vor dem Herunterfahren (Sek.)</value>
+  </data>
+  <data name="Lbl_StopType.Text" xml:space="preserve">
+    <value>Art des Stopps</value>
+  </data>
+  <data name="Lbl_BattLimit_Time.Text" xml:space="preserve">
+    <value>Herunterfahren wenn Laufzeit niedriger als (Sek.)</value>
+  </data>
+  <data name="Lbl_BattLimit_Load.Text" xml:space="preserve">
+    <value>Herunterfahren wenn Akkuladung weniger als</value>
+  </data>
+  <data name="Tab_Shutdown.Text" xml:space="preserve">
+    <value>Optionen zum Herunterfahren</value>
+  </data>
+  <data name="Cbx_Branch_Update.Items" xml:space="preserve">
+    <value>Stabil</value>
+  </data>
+  <data name="Cbx_Branch_Update.Items1" xml:space="preserve">
+    <value>Entwicklung</value>
+  </data>
+  <data name="Cbx_Delay_Verif.Items" xml:space="preserve">
+    <value>Täglich</value>
+  </data>
+  <data name="Cbx_Delay_Verif.Items1" xml:space="preserve">
+    <value>Wöchentlich</value>
+  </data>
+  <data name="Cbx_Delay_Verif.Items2" xml:space="preserve">
+    <value>Monatlich</value>
+  </data>
+  <data name="Lbl_Branch_Update.Text" xml:space="preserve">
+    <value>Stabiler- oder Entwicklungszweig</value>
+  </data>
+  <data name="Lbl_Delay_Verif.Text" xml:space="preserve">
+    <value>Verzögerung zwischen Überprüfungen</value>
+  </data>
+  <data name="Cb_Update_At_Start.Text" xml:space="preserve">
+    <value>Beim Start auf Updates prüfen</value>
+  </data>
+  <data name="Cb_Verify_Update.Text" xml:space="preserve">
+    <value>Auf Update prüfen</value>
+  </data>
+  <data name="Tab_Update.Text" xml:space="preserve">
+    <value>Aktualisieren</value>
+  </data>
+  <data name="Btn_Ok.Text" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Btn_Apply.Text" xml:space="preserve">
+    <value>Anwenden</value>
+  </data>
+  <data name="Btn_Cancel.Text" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Optionen</value>
+  </data>
+  <data name="Tb_Delay_Com.ToolTip" xml:space="preserve">
+    <value>Zeit zwischen jeder Aktualisierung der USV-Daten (Standard = 5).Wertebereich: Numerischer Wert von 1 bis 60 Sekunden.</value>
+  </data>
+  <data name="Tb_UPS_Name.ToolTip" xml:space="preserve">
+    <value>Name der zu überwachenden USV. Wertebereich: Name der auf dem NUT-Server konfigurierten USV.</value>
+  </data>
+  <data name="Tb_Port.ToolTip" xml:space="preserve">
+    <value>NUT-Server Portnummer (Standard = 3493). Wertebereich: Numerischer Wert von 1 bis 65535.</value>
+  </data>
+  <data name="Tb_Server_IP.ToolTip" xml:space="preserve">
+    <value>NUT-Serveradresse. Wertebereich: IPV4 / IPV6 / FQDN-Adresse.</value>
+  </data>
+  <data name="Cb_Reconnect.ToolTip" xml:space="preserve">
+    <value>Automatische Verbindung / Wiederverbindung aktivieren</value>
+  </data>
+  <data name="Cbx_Freq_Input.ToolTip" xml:space="preserve">
+    <value>Legt die Eingangsfrequenz fest wenn dieser Wert nicht von der USV geliefert wird.</value>
+  </data>
+  <data name="Tb_BattV_Max.ToolTip" xml:space="preserve">
+    <value>Maximale Akkuspannung. Wertebereich: Numerischer Wert von 0 bis 100.</value>
+  </data>
+  <data name="Tb_OutV_Max.ToolTip" xml:space="preserve">
+    <value>Maximale Ausgangsspannung. Wertebereich: Numerischer Wert von 0 bis 999.</value>
+  </data>
+  <data name="Tb_InF_Max.ToolTip" xml:space="preserve">
+    <value>Maximale Eingangsfrequenz. Wertebereich: Numerischer Wert von 0 bis 100.</value>
+  </data>
+  <data name="Tb_BattV_Min.ToolTip" xml:space="preserve">
+    <value>Minimale Akkuspannung. Wertebereich: Numerischer Wert von 0 bis 100.</value>
+  </data>
+  <data name="Tb_OutV_Min.ToolTip" xml:space="preserve">
+    <value>Minimale Ausgangsspannung. Wertebereich: Numerischer Wert von 0 bis 999.</value>
+  </data>
+  <data name="Tb_InF_Min.ToolTip" xml:space="preserve">
+    <value>Minimale Eingangsfrequenz. Wertebereich: Numerischer Wert von 0 bis 100.</value>
+  </data>
+  <data name="Tb_InV_Max.ToolTip" xml:space="preserve">
+    <value>Maximale Eingangsspannung. Wertebereich: Numerischer Wert von 0 bis 999.</value>
+  </data>
+  <data name="Tb_InV_Min.ToolTip" xml:space="preserve">
+    <value>Minimale Eingangsspannung. Wertebereich: Numerischer Wert von 0 bis 999.</value>
+  </data>
+  <data name="Cbx_LogLevel.ToolTip" xml:space="preserve">
+    <value>Detailstufe des Logs.</value>
+  </data>
+  <data name="Btn_DeleteLog.ToolTip" xml:space="preserve">
+    <value>Logdatei löschen.</value>
+  </data>
+  <data name="Btn_ViewLog.ToolTip" xml:space="preserve">
+    <value>Logdatei öffnen.</value>
+  </data>
+  <data name="Lbl_LevelLog.ToolTip" xml:space="preserve">
+    <value>Detailstufe für die Logdatei</value>
+  </data>
+  <data name="CB_Use_Logfile.ToolTip" xml:space="preserve">
+    <value>Eine Logdatei (Datei WinNUT-client.log im WinNUT-Installationsverzeichnis) erstellen.</value>
+  </data>
+  <data name="CB_Start_W_Win.ToolTip" xml:space="preserve">
+    <value>Startet WinNUT beim Start von Windows.</value>
+  </data>
+  <data name="CB_Close_Tray.ToolTip" xml:space="preserve">
+    <value>Ins Systray minimieren anstatt zu schliessen.</value>
+  </data>
+  <data name="CB_Start_Mini.ToolTip" xml:space="preserve">
+    <value>Startet WinNUT minimiert.</value>
+  </data>
+  <data name="CB_Systray.ToolTip" xml:space="preserve">
+    <value>In Taskleiste oder Systray minimieren.</value>
+  </data>
+  <data name="Tb_GraceTime.ToolTip" xml:space="preserve">
+    <value>Limit für zusätzliche Verzögerung. Wertebereich: Numerischer Wert von 0 bis 3600.</value>
+  </data>
+  <data name="Cb_ExtendTime.ToolTip" xml:space="preserve">
+    <value>Zusätzliche Zeit zum Herunterfahrens erlauben. Hinweis: Diese zusätzliche Zeit kann über die Verfügbarkeit der USV hinausgehen - MIT VORSICHT VERWENDEN !!!</value>
+  </data>
+  <data name="Tb_Delay_Stop.ToolTip" xml:space="preserve">
+    <value>Prozedurverzögerung bei Verzögerung stoppen. Wertebereich: Numerischer Wert von 0 bis 3600.</value>
+  </data>
+  <data name="Cbx_TypeStop.ToolTip" xml:space="preserve">
+    <value>Art des Stopps am Ende des Stoppvorgangs.</value>
+  </data>
+  <data name="Cb_ImmediateStop.ToolTip" xml:space="preserve">
+    <value>Startet das Herunterfahren sofort oder zeitgesteuert.</value>
+  </data>
+  <data name="Tb_BattLimit_Time.ToolTip" xml:space="preserve">
+    <value>Unteres Backup-Zeitlimit welches das Herunterfahren auslöst. Wertebereich: Numerischer Wert von 0 bis 3600.</value>
+  </data>
+  <data name="Tb_BattLimit_Load.ToolTip" xml:space="preserve">
+    <value>Untergrenze des Akkustands der den Abschaltvorgang auslöst. Wertebereich: Numerischer Wert von 0 bis 100.</value>
+  </data>
+  <data name="Cbx_Branch_Update.ToolTip" xml:space="preserve">
+    <value>Bei der Versionsüberprüfung den stabilen oder Entwicklungszweig verwenden.</value>
+  </data>
+  <data name="Cbx_Delay_Verif.ToolTip" xml:space="preserve">
+    <value>Häufigkeit der Überprüfung.</value>
+  </data>
+  <data name="Cb_Update_At_Start.ToolTip" xml:space="preserve">
+    <value>Sucht beim Start nach Updates.</value>
+  </data>
+  <data name="Cb_Verify_Update.ToolTip" xml:space="preserve">
+    <value>Auf Updates prüfen.</value>
+  </data>
+  <data name="Tb_Pwd_Nut.ToolTip" xml:space="preserve">
+    <value>Anmeldekennwort des NUT-Servers</value>
+  </data>
+  <data name="Tb_Login_Nut.ToolTip" xml:space="preserve">
+    <value>Verbindungskennung des NUT-Servers</value>
+  </data>
+  <data name="Label3.Text" xml:space="preserve">
+    <value>Anmeldeinformationen des NUT-Server (Leer lassen wenn nicht erforderlich)</value>
+  </data>
+  <data name="Lbl_Pwd_Nut.Text" xml:space="preserve">
+    <value>Passwort</value>
+  </data>
+  <data name="Lbl_Login_Nut.Text" xml:space="preserve">
+    <value>Anmeldung</value>
+  </data>
+  <data name="CB_Follow_FSD.Text" xml:space="preserve">
+    <value>Herunterfahren bei FSD-Signal des NUT</value>
+  </data>
+  <data name="CB_Follow_FSD.ToolTip" xml:space="preserve">
+    <value>Gibt an ob ein Herunterfahren durchgeführt werden soll wenn der NUT-Server ein erzwungenes Herunterfahren signalisiert (FSD = Force ShutDown).</value>
+  </data>
+  <data name="Cbx_Freq_Input.Margin" xml:space="preserve" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 6, 3, 3</value>
+  </data>
+  <data name="Tb_BattV_Max.Margin" xml:space="preserve" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 6, 3, 3</value>
+  </data>
+  <data name="Tb_OutV_Max.Margin" xml:space="preserve" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 6, 3, 3</value>
+  </data>
+  <data name="Tb_InF_Max.Margin" xml:space="preserve" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 6, 3, 3</value>
+  </data>
+  <data name="Lbl_LoadUPS.Font" xml:space="preserve" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt, style=Italic</value>
+  </data>
+</root>
