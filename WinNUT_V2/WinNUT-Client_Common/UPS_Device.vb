@@ -216,13 +216,15 @@ Public Class UPS_Device
     ''' </summary>
     ''' <returns></returns>
     Private Function GetUPSProductInfo() As UPSData
+        LogFile.LogTracing("Retrieving basic UPS product information...", LogLvl.LOG_NOTICE, Me)
+
         Dim freshData = New UPSData(
             Trim(GetUPSVar("ups.mfr", "Unknown")),
             Trim(GetUPSVar("ups.model", "Unknown")),
             Trim(GetUPSVar("ups.serial", "Unknown")),
             Trim(GetUPSVar("ups.firmware", "Unknown")))
 
-        ' Determine available power & load data
+        LogFile.LogTracing("Determining best method to calculate power usage...", LogLvl.LOG_NOTICE, Me)
         Try
             GetUPSVar("ups.realpower")
             _PowerCalculationMethod = PowerMethod.RealPower
@@ -251,6 +253,7 @@ Public Class UPS_Device
         freshData.UPS_Value.Batt_Capacity = Double.Parse(GetUPSVar("battery.capacity", 7), ciClone)
         Freq_Fallback = Double.Parse(GetUPSVar("output.frequency.nominal", (50 + CInt(Arr_Reg_Key.Item("FrequencySupply")) * 10)), ciClone)
 
+        LogFile.LogTracing("Completed retrieval of basic UPS product information.", LogLvl.LOG_NOTICE, Me)
         Return freshData
     End Function
 
@@ -333,8 +336,16 @@ Public Class UPS_Device
         If _PowerCalculationMethod = PowerMethod.RealPower Then
             Return Integer.Parse(GetUPSVar("ups.realpower"))
         ElseIf _PowerCalculationMethod = PowerMethod.NominalPowerCalc Then
-            Return Integer.Parse(GetUPSVar("ups.realpower.nominal")) *
-                (UPS_Datas.UPS_Value.Load / 100.0)
+            Dim nomPower = GetUPSVar("ups.realpower.nominal")
+            Try
+                Return Integer.Parse(nomPower) * (UPS_Datas.UPS_Value.Load / 100.0)
+            Catch ex As Exception
+                LogFile.LogTracing("Failed to parse the nominal realpower: " & vbNewLine & ex.ToString() &
+                                   vbNewLine & vbNewLine & "nomPower is: " & nomPower & " Type: " &
+                                   nomPower.GetType().ToString(), LogLvl.LOG_ERROR, Me)
+                Return 0
+            End Try
+
         ElseIf _PowerCalculationMethod = PowerMethod.VoltAmpCalc Then
             Dim nomCurrent = Double.Parse(GetUPSVar("input.current.nominal"))
             Dim nomVoltage = Double.Parse(GetUPSVar("input.voltage.nominal"))
