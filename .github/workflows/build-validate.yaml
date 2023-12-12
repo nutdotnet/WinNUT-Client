@@ -7,7 +7,7 @@ defaults:
 on:
   workflow_dispatch:
   pull_request:
-    branches: [ main, Dev-2.2 ] # Build for dev primarily, probably don't need main...?
+    branches: [ main, dev-* ] # Build for dev primarily, probably don't need main...?
     paths:
     - '**.vb'
     - '**.vbproj'
