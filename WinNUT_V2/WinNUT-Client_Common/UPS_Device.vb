@@ -259,8 +259,9 @@ Public Class UPS_Device
 
     Private oldStatusBitmask As Integer
 
-    Public Sub Retrieve_UPS_Datas() Handles Update_Data.Tick ' As UPSData
+    Private Sub Retrieve_UPS_Datas() Handles Update_Data.Tick
         LogFile.LogTracing("Enter Retrieve_UPS_Datas", LogLvl.LOG_DEBUG, Me)
+
         Try
             Dim UPS_rt_Status As String
 
@@ -273,8 +274,37 @@ Public Class UPS_Device
                     .Input_Voltage = Double.Parse(GetUPSVar("input.voltage", 220), ciClone)
                     .Output_Voltage = Double.Parse(GetUPSVar("output.voltage", .Input_Voltage), ciClone)
                     .Load = Double.Parse(GetUPSVar("ups.load", 0), ciClone)
-                    .Output_Power = If(_PowerCalculationMethod <> PowerMethod.Unavailable, GetPowerUsage(), 0)
 
+                    ' Retrieve and/or calculate output power if possible.
+                    If _PowerCalculationMethod <> PowerMethod.Unavailable Then
+                        Dim parsedValue As Double
+
+                        Try
+                            If _PowerCalculationMethod = PowerMethod.RealPower Then
+                                parsedValue = Double.Parse(GetUPSVar("ups.realpower"))
+
+                            ElseIf _PowerCalculationMethod = PowerMethod.NominalPowerCalc Then
+                                parsedValue = Double.Parse(GetUPSVar("ups.realpower.nominal"))
+                                parsedValue *= UPS_Datas.UPS_Value.Load / 100.0
+
+                            ElseIf _PowerCalculationMethod = PowerMethod.VoltAmpCalc Then
+                                Dim nomCurrent = Double.Parse(GetUPSVar("input.current.nominal"))
+                                Dim nomVoltage = Double.Parse(GetUPSVar("input.voltage.nominal"))
+
+                                parsedValue = (nomCurrent * nomVoltage * 0.8) * (UPS_Datas.UPS_Value.Load / 100.0)
+                            Else
+                                Throw New InvalidOperationException("Insufficient variables to calculate power.")
+                            End If
+                        Catch ex As FormatException
+                            LogFile.LogTracing("Unexpected format trying to parse value from UPS. Exception:", LogLvl.LOG_ERROR, Me)
+                            LogFile.LogTracing(ex.ToString(), LogLvl.LOG_ERROR, Me)
+                            LogFile.LogTracing("parsedValue: " & parsedValue, LogLvl.LOG_ERROR, Me)
+                        End Try
+
+                        .Output_Power = parsedValue
+                    End If
+
+                    ' Handle cases of UPSs that are unable to report battery runtime or load correctly while on battery.
                     Dim PowerDivider As Double = 0.5
                     Select Case .Load
                         Case 76 To 100
@@ -282,14 +312,13 @@ Public Class UPS_Device
                         Case 51 To 75
                             PowerDivider = 0.3
                     End Select
+
                     If .Batt_Charge = 255 Then
                         Dim nBatt = Math.Floor(.Batt_Voltage / 12)
                         .Batt_Charge = Math.Floor((.Batt_Voltage - (11.6 * nBatt)) / (0.02 * nBatt))
                     End If
+
                     If .Batt_Runtime >= 86400 Then
-                        'If Load is 0, the calculation results in infinity. This causes an exception in DataUpdated(), causing Me.Disconnect to run in the exception handler below.
-                        'Thus a connection is established, but is forcefully disconneced almost immediately. This cycle repeats on each connect until load is <> 0
-                        '(Example: I have a 0% load if only Pi, Microtik Router, Wifi AP and switches are running)
                         .Load = If(.Load <> 0, .Load, 0.1)
                         Dim BattInstantCurrent = (.Output_Voltage * .Load) / (.Batt_Voltage * 100)
                         .Batt_Runtime = Math.Floor(.Batt_Capacity * 0.6 * .Batt_Charge * (1 - PowerDivider) * 3600 / (BattInstantCurrent * 100))
@@ -326,35 +355,6 @@ Public Class UPS_Device
             Socket_Broken()
         End Try
     End Sub
-
-    ''' <summary>
-    ''' Attempts to get the power usage of this UPS.
-    ''' </summary>
-    ''' <returns></returns>
-    ''' <throws><see cref="NutException"/></throws>
-    Private Function GetPowerUsage() As Double
-        If _PowerCalculationMethod = PowerMethod.RealPower Then
-            Return Integer.Parse(GetUPSVar("ups.realpower"))
-        ElseIf _PowerCalculationMethod = PowerMethod.NominalPowerCalc Then
-            Dim nomPower = GetUPSVar("ups.realpower.nominal")
-            Try
-                Return Integer.Parse(nomPower) * (UPS_Datas.UPS_Value.Load / 100.0)
-            Catch ex As Exception
-                LogFile.LogTracing("Failed to parse the nominal realpower: " & vbNewLine & ex.ToString() &
-                                   vbNewLine & vbNewLine & "nomPower is: " & nomPower & " Type: " &
-                                   nomPower.GetType().ToString(), LogLvl.LOG_ERROR, Me)
-                Return 0
-            End Try
-
-        ElseIf _PowerCalculationMethod = PowerMethod.VoltAmpCalc Then
-            Dim nomCurrent = Double.Parse(GetUPSVar("input.current.nominal"))
-            Dim nomVoltage = Double.Parse(GetUPSVar("input.voltage.nominal"))
-
-            Return (nomCurrent * nomVoltage * 0.8) * (UPS_Datas.UPS_Value.Load / 100.0)
-        Else
-            Throw New InvalidOperationException("Insufficient variables to calculate power.")
-        End If
-    End Function
 
     Private Const MAX_VAR_RETRIES = 3
     Public Function GetUPSVar(varName As String, Optional Fallback_value As Object = Nothing, Optional recursing As Boolean = False) As String
