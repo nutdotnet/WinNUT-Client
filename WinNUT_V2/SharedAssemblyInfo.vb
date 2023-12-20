@@ -18,7 +18,7 @@ Imports System.Reflection
 
 <Assembly: AssemblyCompany("NUTDotNet")>
 <Assembly: AssemblyProduct("WinNUT Client")>
-<Assembly: AssemblyCopyright("NUTDotNet contributors © 2019-2022")>
+<Assembly: AssemblyCopyright("NUTDotNet contributors © 2019-2024")>
 <Assembly: AssemblyTrademark("https://github.com/nutdotnet/WinNUT-Client")>
 
 ' Les informations de version pour un assembly se composent des quatre valeurs suivantes :
@@ -32,5 +32,5 @@ Imports System.Reflection
 ' en utilisant '*', comme indiqué ci-dessous :
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("2.2.*")>
+<Assembly: AssemblyVersion("2.3.*")>
 <Assembly: NeutralResourcesLanguage("en-US")>
