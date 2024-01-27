@@ -36,7 +36,7 @@ Public Class Pref_Gui
             My.Settings.NUT_AutoReconnect = Cb_Reconnect.Checked
             My.Settings.CAL_VoltInMin = CInt(Tb_InV_Min.Text)
             My.Settings.CAL_VoltInMax = CInt(Tb_InV_Max.Text)
-            My.Settings.CAL_FreqInNom = Cbx_Freq_Input.SelectedIndex
+            My.Settings.CAL_FreqInNom = Cbx_Freq_Input.SelectedItem
             My.Settings.CAL_FreqInMin = CInt(Tb_InF_Min.Text)
             My.Settings.CAL_FreqInMax = CInt(Tb_InF_Max.Text)
             My.Settings.CAL_VoltOutMin = CInt(Tb_OutV_Min.Text)
@@ -116,7 +116,7 @@ Public Class Pref_Gui
             Cb_Reconnect.Checked = My.Settings.NUT_AutoReconnect
             Tb_InV_Min.Text = My.Settings.CAL_VoltInMin
             Tb_InV_Max.Text = My.Settings.CAL_VoltInMax
-            Cbx_Freq_Input.SelectedIndex = My.Settings.CAL_FreqInNom
+            Cbx_Freq_Input.SelectedIndex = Cbx_Freq_Input.FindStringExact(My.Settings.CAL_FreqInNom)
             Tb_InF_Min.Text = My.Settings.CAL_FreqInMin
             Tb_InF_Max.Text = My.Settings.CAL_FreqInMax
             Tb_OutV_Min.Text = My.Settings.CAL_VoltOutMin
@@ -188,7 +188,7 @@ Public Class Pref_Gui
         Catch Except As Exception
             IsShowed = False
             Close()
-            LogFile.LogTracing("Error on Opening Pref_Gui.", LogLvl.LOG_ERROR, Me)
+            LogFile.LogTracing("Error on Opening Pref_Gui:" & vbNewLine & Except.ToString(), LogLvl.LOG_ERROR, Me)
         End Try
     End Sub
 
