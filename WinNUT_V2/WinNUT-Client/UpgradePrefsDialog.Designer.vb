@@ -38,6 +38,7 @@ Namespace Forms
             Me.PictureBox1 = New System.Windows.Forms.PictureBox()
             Me.IntroMessage = New System.Windows.Forms.Label()
             Me.OK_Button = New System.Windows.Forms.Button()
+            Me.UpgradePrefsDialogModelBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             Me.Cancel_Button = New System.Windows.Forms.Button()
             Me.ImportSettingsCheckBox = New System.Windows.Forms.CheckBox()
             Me.DeleteSettingsCheckBox = New System.Windows.Forms.CheckBox()
@@ -47,12 +48,11 @@ Namespace Forms
             Me.UpgradeProgressBar = New System.Windows.Forms.ProgressBar()
             Me.TopContentPanel = New System.Windows.Forms.Panel()
             Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-            Me.UpgradePrefsDialogModelBindingSource = New System.Windows.Forms.BindingSource(Me.components)
             CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.UpgradePrefsDialogModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.PrevSettngsGroupBox.SuspendLayout()
             Me.buttonPanel.SuspendLayout()
             Me.TopContentPanel.SuspendLayout()
-            CType(Me.UpgradePrefsDialogModelBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
             'PictureBox1
@@ -72,6 +72,10 @@ Namespace Forms
             resources.ApplyResources(Me.OK_Button, "OK_Button")
             Me.OK_Button.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.UpgradePrefsDialogModelBindingSource, "OKButtonEnabled", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
             Me.OK_Button.Name = "OK_Button"
+            '
+            'UpgradePrefsDialogModelBindingSource
+            '
+            Me.UpgradePrefsDialogModelBindingSource.DataSource = GetType(WinNUT_Client.Models.UpgradePrefsDialogModel)
             '
             'Cancel_Button
             '
@@ -134,10 +138,6 @@ Namespace Forms
             resources.ApplyResources(Me.TopContentPanel, "TopContentPanel")
             Me.TopContentPanel.Name = "TopContentPanel"
             '
-            'UpgradePrefsDialogModelBindingSource
-            '
-            Me.UpgradePrefsDialogModelBindingSource.DataSource = GetType(WinNUT_Client.Models.UpgradePrefsDialogModel)
-            '
             'UpgradePrefsDialog
             '
             Me.AcceptButton = Me.OK_Button
@@ -150,19 +150,19 @@ Namespace Forms
             Me.Controls.Add(Me.buttonPanel)
             Me.Controls.Add(Me.UpgradeProgressBar)
             Me.DataBindings.Add(New System.Windows.Forms.Binding("Enabled", Me.UpgradePrefsDialogModelBindingSource, "FormEnabled", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-            Me.DataBindings.Add(New System.Windows.Forms.Binding("Icon", Me.UpgradePrefsDialogModelBindingSource, "Icon", True))
+            Me.DataBindings.Add(New System.Windows.Forms.Binding("Icon", Me.UpgradePrefsDialogModelBindingSource, "Icon", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
             Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
             Me.MaximizeBox = False
             Me.MinimizeBox = False
             Me.Name = "UpgradePrefsDialog"
             Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
             CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.UpgradePrefsDialogModelBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
             Me.PrevSettngsGroupBox.ResumeLayout(False)
             Me.PrevSettngsGroupBox.PerformLayout()
             Me.buttonPanel.ResumeLayout(False)
             Me.TopContentPanel.ResumeLayout(False)
             Me.TopContentPanel.PerformLayout()
-            CType(Me.UpgradePrefsDialogModelBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
 
         End Sub

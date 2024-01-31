@@ -8,9 +8,7 @@
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
 Imports System.ComponentModel
-Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports System.Threading
 Imports WinNUT_Client_Common
 
 Namespace Models
@@ -18,9 +16,11 @@ Namespace Models
         Implements INotifyPropertyChanged
 
         Private ReadOnly upgradeWorker As New BackgroundWorker With {
-            .WorkerReportsProgress = True
+            .WorkerReportsProgress = True,
+            .WorkerSupportsCancellation = True
         }
         Private oldPrefs As OldParams.UpgradableParams
+        Private _parentForm As Form
 
 #Region "Properties and backing fields"
 
@@ -31,7 +31,7 @@ Namespace Models
         Private _FormEnabled As Boolean
         Private _FormUseWaitCursor As Boolean
         Private _ProgressPercent = 0
-        Private _Icon As Bitmap = My.Resources.regedit_exe_14_100_0
+        Private _Icon As Icon
 
         Public Property ImportPreviousSettigns As Boolean
             Get
@@ -123,18 +123,12 @@ Namespace Models
             End Set
         End Property
 
-        Public ReadOnly Property UpgradeInProgress As Boolean
-            Get
-                Return upgradeWorker IsNot Nothing AndAlso upgradeWorker.IsBusy
-            End Get
-        End Property
-
-        Public Property Icon As Bitmap
+        Public Property Icon As Icon
             Get
                 Return _Icon
             End Get
-            Private Set(value As Bitmap)
-                If Not _Icon.Equals(value) Then
+            Private Set(value As Icon)
+                If _Icon IsNot Nothing AndAlso Not _Icon.Equals(value) Then
                     _Icon = value
                     NotifyPropertyChanged()
                 End If
@@ -142,8 +136,6 @@ Namespace Models
         End Property
 
 #End Region
-
-        Public Event WorkComplete As RunWorkerCompletedEventHandler
 
 #Region "INotifyPropertyChanged implementation"
 
@@ -158,25 +150,62 @@ Namespace Models
 
 #End Region
 
-        Friend Sub New()
-            FormEnabled = True
-            FormUseWaitCursor = False
-            ImportPreviousSettigns = True
-            BackupPreviousSettings = True
+        Friend Sub New(parentForm As Form)
+            _parentForm = parentForm
 
             AddHandler upgradeWorker.DoWork, AddressOf ProcessUpgradeWork
             AddHandler upgradeWorker.ProgressChanged, AddressOf UpgradeProgressChanged
             AddHandler upgradeWorker.RunWorkerCompleted, AddressOf UpgradeWorkComplete
         End Sub
 
-        Friend Sub BeginUpgradeWorkAsync()
-            FormEnabled = False
-            FormUseWaitCursor = True
-            upgradeWorker.RunWorkerAsync()
+        Friend Sub InitializeProperties()
+            FormEnabled = True
+            FormUseWaitCursor = False
+            ImportPreviousSettigns = True
+            BackupPreviousSettings = True
+            Icon = My.Resources.WinNut
         End Sub
 
-        Friend Sub CancelUpgradeWork()
-            upgradeWorker.CancelAsync()
+        Friend Sub BeginUpgradeWorkAsync()
+            Dim workerArgs As New UpgradeWorkerArguments()
+
+            If BackupPreviousSettings Then
+                ' Capture user's backup location preference on this thread before starting background worker.
+                Dim saveFileDialog = New SaveFileDialog() With {
+                    .FileName = "WinNUT-Prefs-Export",
+                    .Filter = "Windows Registry files (*.reg)|*.reg|All files (*.*)|*.*",
+                    .InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                    .Title = My.Resources.UpgradePrefsDialog_BackupLocationTitle
+                }
+
+                Dim dialogRes = saveFileDialog.ShowDialog()
+
+                If dialogRes = DialogResult.Cancel Then
+                    LogFile.LogTracing("User cancelled upgrade prefs process while selecting backup target.",
+                                       LogLvl.LOG_NOTICE, Me)
+                    Return
+                End If
+
+                workerArgs.BackupPath = saveFileDialog.FileName
+            End If
+
+            FormEnabled = False
+            FormUseWaitCursor = True
+            upgradeWorker.RunWorkerAsync(workerArgs)
+        End Sub
+
+        Friend Sub CancelButtonClicked()
+            LogFile.LogTracing("Handling Cancel button click...", LogLvl.LOG_DEBUG, Me)
+
+            If upgradeWorker IsNot Nothing AndAlso upgradeWorker.IsBusy Then
+                LogFile.LogTracing("Requesting cancellation of upgradeWorker.", LogLvl.LOG_NOTICE, Me)
+                upgradeWorker.CancelAsync()
+            Else
+                LogFile.LogTracing("Exiting out of upgrade dialog.", LogLvl.LOG_NOTICE, Me)
+                _parentForm.DialogResult = DialogResult.Cancel
+                My.Settings.UpgradePrefsCompleted = True
+                _parentForm.Close()
+            End If
         End Sub
 
         Private Sub CalculateOKButtonState(Optional sender As Object = Nothing, Optional args As PropertyChangedEventArgs = Nothing) _
@@ -196,39 +225,64 @@ Namespace Models
         ''' <param name="sender"></param>
         ''' <param name="e"></param>
         Private Sub ProcessUpgradeWork(sender As Object, e As DoWorkEventArgs)
+            Dim args As UpgradeWorkerArguments = e.Argument
+
             If Not e.Cancel AndAlso ImportPreviousSettigns Then
                 DoImportWork()
-                Thread.Sleep(2000)
             End If
 
             If Not e.Cancel AndAlso BackupPreviousSettings Then
-                DoBackupWork()
-                Thread.Sleep(2000)
+                DoBackupWork(args.BackupPath)
             End If
 
             If Not e.Cancel AndAlso DeletePreviousSettings Then
                 DoDeleteWork()
-                Thread.Sleep(2000)
             End If
         End Sub
 
+        ''' <summary>
+        ''' Execution of <see cref="ProcessUpgradeWork(Object, DoWorkEventArgs)"/> has ended and returned to the
+        ''' UI thread.
+        ''' </summary>
+        ''' <param name="sender"></param>
+        ''' <param name="e"></param>
         Private Sub UpgradeWorkComplete(sender As Object, e As RunWorkerCompletedEventArgs)
             oldPrefs = Nothing
 
-            If e.Cancelled Then
-                LogFile.LogTracing("Upgrade work was cancelled.", LogLvl.LOG_WARNING, Me, My.Resources.UpgradePrefsDialog_Cancelled)
-            End If
+            FormEnabled = True
+            FormUseWaitCursor = False
 
             If e.Error IsNot Nothing Then
-                LogFile.LogTracing("Error encountered while doing upgrade work: " & e.Error.ToString(), LogLvl.LOG_ERROR, Me,
-                                   String.Format(My.Resources.UpgradePrefsDialog_ErrorEncountered, e.Error.Message))
+                ProgressPercent = 0
+                Dim localError = String.Format(My.Resources.UpgradePrefsDialog_ErrorEncountered, e.Error.Message)
+                LogFile.LogTracing("UpgradeWorkComplete with error: " & vbNewLine & e.Error.ToString(),
+                                   LogLvl.LOG_ERROR, Me, localError)
+                MessageBox.Show(localError)
+                Return
+            End If
+
+            If e.Cancelled Then
+                ProgressPercent = 0
+                LogFile.LogTracing("Upgrade work was cancelled.", LogLvl.LOG_WARNING, Me, My.Resources.UpgradePrefsDialog_Cancelled)
+                Return
             End If
 
             ProgressPercent = 100
 
-            RaiseEvent WorkComplete(sender, e)
+            My.Settings.UpgradePrefsCompleted = True
+            _parentForm.Close()
         End Sub
 
+        ''' <summary>
+        ''' Reports progress from within the BackgroundWorker thread, back to the calling thread.
+        ''' WARNING: This is not a reliably quick way to synchronize information back to the calling thread.
+        ''' From testing, the <see cref="ProcessUpgradeWork"/> routine moves much faster than the main thread.
+        ''' </summary>
+        ''' <param name="percentComplete"></param>
+        ''' <param name="logMsg"></param>
+        ''' <param name="logLevel"></param>
+        ''' <param name="sender"></param>
+        ''' <param name="logRes"></param>
         Private Sub ReportProgress(percentComplete As Integer, logMsg As String, logLevel As LogLvl, sender As Object,
                                    Optional logRes As String = Nothing)
             upgradeWorker.ReportProgress(percentComplete,
@@ -289,26 +343,12 @@ Namespace Models
         ''' <summary>
         ''' Performs synchronous work to backup Registry data. Throws exceptions if any error occurs.
         ''' </summary>
-        Private Sub DoBackupWork()
-            ReportProgress(0, "Beginning backup procedure.", LogLvl.LOG_NOTICE, Me)
-
-            Dim saveFileDialog = New SaveFileDialog() With {
-                .DefaultExt = "reg",
-                .FileName = "WinNUT-Prefs-Export",
-                .InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
-                .Title = My.Resources.UpgradePrefsDialog_BackupLocationTitle
-            }
-            Dim dialogRes = saveFileDialog.ShowDialog()
-
-            If dialogRes = DialogResult.Cancel Then
-                Throw New InvalidOperationException("User opted to cancel the backup file dialog.")
-            End If
-
-            Dim fileLoc = Path.GetDirectoryName(saveFileDialog.FileName) & "\\" & saveFileDialog.FileName
-            ReportProgress(50, "Beginning reg export process to " & fileLoc, LogLvl.LOG_NOTICE, Me)
-            OldParams.WinNUT_Params.ExportParams(fileLoc)
+        ''' <param name="targetPath">Full path and filename where registry items will be backed up to.</param>
+        Private Sub DoBackupWork(targetPath As String)
+            ReportProgress(0, "Beginning reg export process to " & targetPath, LogLvl.LOG_NOTICE, Me)
+            OldParams.WinNUT_Params.ExportParams(targetPath)
             ReportProgress(100, "reg export process exited. Backup complete.", LogLvl.LOG_NOTICE, Me,
-                String.Format(My.Resources.UpgradePrefsDialog_BackupProcedureCompleted, fileLoc))
+                String.Format(My.Resources.UpgradePrefsDialog_BackupProcedureCompleted, targetPath))
         End Sub
 
         Private Sub DoDeleteWork()
@@ -332,6 +372,10 @@ Namespace Models
                 Me.Sender = sender
                 Me.LogResourceString = logRes
             End Sub
+        End Class
+
+        Private Class UpgradeWorkerArguments
+            Public Property BackupPath As String
         End Class
 
     End Class
