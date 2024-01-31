@@ -7,8 +7,10 @@
 '
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
+Imports System.Runtime.InteropServices
 Imports System.Security.Cryptography
 Imports System.Text
+Imports System.Windows.Forms
 Imports Microsoft.Win32
 
 Namespace OldParams
@@ -80,7 +82,7 @@ Namespace OldParams
 
         Public Shared ReadOnly Property RegistryKeyRoot As RegistryKey
             Get
-                Return Registry.CurrentUser.OpenSubKey(REG_KEY_ROOT)
+                Return Registry.CurrentUser.OpenSubKey(REG_KEY_ROOT, True)
             End Get
         End Property
 
@@ -127,10 +129,15 @@ Namespace OldParams
         ''' </summary>
         ''' <param name="destinationPath">The location of the exported file.</param>
         Public Shared Sub ExportParams(destinationPath As String)
+            ' Duplicate file must be removed now otherwise reg.exe will hang waiting for an input to overwrite.
+            If IO.File.Exists(destinationPath) Then
+                ' Allow any exceptions to be passed up to caller.
+                IO.File.Delete(destinationPath)
+            End If
+
             Dim regExpProcStartInfo As New ProcessStartInfo With {
                 .FileName = "reg.exe",
                 .UseShellExecute = False,
-                .RedirectStandardOutput = True,
                 .RedirectStandardError = True,
                 .CreateNoWindow = True,
                 .Arguments = "export """ & RegistryKeyRoot.Name & """ """ & destinationPath & """"
@@ -138,6 +145,9 @@ Namespace OldParams
 
             Dim proc = Process.Start(regExpProcStartInfo)
             proc.WaitForExit()
+            If proc.ExitCode = 1 Then
+                Throw New InvalidOperationException("reg.exe encountered an error: " & proc.StandardError.ReadToEnd())
+            End If
         End Sub
 
         Public Shared Sub DeleteParams()
