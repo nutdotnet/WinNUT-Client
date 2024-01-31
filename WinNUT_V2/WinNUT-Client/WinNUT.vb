@@ -234,6 +234,16 @@ Public Class WinNUT
         LogFile.LogTracing("Update Icon at Startup", LogLvl.LOG_DEBUG, Me)
         ' Start_Tray_Icon = Nothing
 
+        If OldParams.WinNUT_Params.RegistryKeyRoot IsNot Nothing Then
+            LogFile.LogTracing("Previous preferences data detected in the Registry.", LogLvl.LOG_NOTICE, Me,
+                               My.Resources.DetectedPreviousPrefsData)
+            ManageOldPrefsToolStripMenuItem.Enabled = True
+
+            If Not My.Settings.UpgradePrefsCompleted Then
+                RunRegPrefsUpgrade()
+            End If
+        End If
+
         'Run Update
         If My.Settings.UP_AutoUpdate And My.Settings.UP_CheckAtStart Then
             LogFile.LogTracing("Run Automatic Update", LogLvl.LOG_DEBUG, Me)
@@ -296,16 +306,6 @@ Public Class WinNUT
         Else
             LogFile.LogTracing("Show WinNut Main Gui", LogLvl.LOG_DEBUG, Me)
             NotifyIcon.Visible = False
-        End If
-
-        If OldParams.WinNUT_Params.RegistryKeyRoot IsNot Nothing Then
-            LogFile.LogTracing("Previous preferences data detected in the Registry.", LogLvl.LOG_NOTICE, Me,
-                               My.Resources.DetectedPreviousPrefsData)
-            ManageOldPrefsToolStripMenuItem.Enabled = True
-
-            If Not My.Settings.UpgradePrefsCompleted Then
-                RunRegPrefsUpgrade()
-            End If
         End If
 
         ' Begin auto-connecting if user indicated they wanted it. (Note: Will hang form because we don't do threading yet)
