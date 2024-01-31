@@ -16,11 +16,11 @@
         </trans-unit>
         <trans-unit id="Grace_Button.Text" translate="yes" xml:space="preserve">
           <source>Grace Time</source>
-          <target state="translated">寬限時間</target>
+          <target state="translated">延遲停機</target>
         </trans-unit>
         <trans-unit id="ShutDown_Btn.Text" translate="yes" xml:space="preserve">
           <source>Immediate Shutdown</source>
-          <target state="translated">立即關機</target>
+          <target state="translated">立刻停機</target>
         </trans-unit>
         <trans-unit id="ShutDown_Btn.Location" translate="no" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
           <source>216, 70</source>
@@ -93,7 +93,7 @@ Remaining Time : {WinNUT.Lbl_VRTime.Text}</source>
         </trans-unit>
         <trans-unit id="$this.Text" translate="yes" xml:space="preserve">
           <source>Extinction In Progress</source>
-          <target state="translated">正在進行關機程序</target>
+          <target state="translated">正在進行停機程序</target>
         </trans-unit>
         <trans-unit id="Run_Timer.TrayLocation" translate="no" extype="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" extradata="metadata" xml:space="preserve">
           <source>264, 20</source>
@@ -681,7 +681,7 @@ Ini File Moved to {0}.old</source>
         </trans-unit>
         <trans-unit id="Frm_Main_Str_15" translate="yes" xml:space="preserve">
           <source>Windows standby. WinNUT will disconnect.</source>
-          <target state="translated">Windows 待機時，WinNUT 將中斷連線。 </target>
+          <target state="translated">Windows 待機時，WinNUT 將中斷連線。</target>
         </trans-unit>
         <trans-unit id="Frm_Shutdown_Str_01" translate="yes" xml:space="preserve">
           <source>Battery_Charge : {0}
@@ -704,7 +704,7 @@ Remaining Time : {1}</source>
           <source>Update WinNUT-Client Now?
 Ok to Close WinNut and Install New Version
 Cancel to Save Msi and Install Later</source>
-          <target state="translated">您是否要立即更新 WinNUT-Client? 點選確定以關閉 WinNUT 並安裝新版本，點選取消以儲存 Msi 檔案並於稍後手動安裝。</target>
+          <target state="translated">您是否要立即更新 WinNUT Client？點選確定以關閉 WinNUT 並安裝新版本，點選取消以儲存 msi 檔案並於稍後手動安裝。</target>
         </trans-unit>
         <trans-unit id="Frm_Update_Str_05" translate="yes" xml:space="preserve">
           <source>Download New Version from :</source>
@@ -720,11 +720,11 @@ Cancel to Save Msi and Install Later</source>
         </trans-unit>
         <trans-unit id="Log_Str_02" translate="yes" xml:space="preserve">
           <source>Connection to Nut Host {0}:{1} Established</source>
-          <target state="translated">連線到 NUT 主機 {0}:{1} 成功</target>
+          <target state="translated">連線到 NUT 伺服器 {0}:{1} 成功</target>
         </trans-unit>
         <trans-unit id="Log_Str_03" translate="yes" xml:space="preserve">
           <source>Connection to Nut Host {0}:{1} Failed: {2}</source>
-          <target state="translated">連線到 NUT 主機 {0}:{1} 失敗：{2}</target>
+          <target state="translated">連線到 NUT 伺服器 {0}:{1} 失敗：{2}</target>
         </trans-unit>
         <trans-unit id="Log_Str_04" translate="yes" xml:space="preserve">
           <source>Automatic Reconnection</source>
@@ -732,7 +732,7 @@ Cancel to Save Msi and Install Later</source>
         </trans-unit>
         <trans-unit id="Log_Str_05" translate="yes" xml:space="preserve">
           <source>Disconnected from Nut Host</source>
-          <target state="translated">已與 NUT 主機中斷連線。</target>
+          <target state="translated">已與 NUT 伺服器中斷連線。</target>
         </trans-unit>
         <trans-unit id="Log_Str_06" translate="yes" xml:space="preserve">
           <source>Try Reconnect {0} / {1}</source>
@@ -744,11 +744,11 @@ Cancel to Save Msi and Install Later</source>
         </trans-unit>
         <trans-unit id="Log_Str_08" translate="yes" xml:space="preserve">
           <source>Conditions met for launching the Extinguishing Process</source>
-          <target state="translated">啟動關機程序的條件</target>
+          <target state="translated">啟動停機程序的條件</target>
         </trans-unit>
         <trans-unit id="Log_Str_09" translate="yes" xml:space="preserve">
           <source>Cancellation of the Extinguishing Process</source>
-          <target state="translated">取消關機程序</target>
+          <target state="translated">取消停機程序</target>
         </trans-unit>
         <trans-unit id="Log_Str_10" translate="yes" xml:space="preserve">
           <source>No Update Available</source>
@@ -898,7 +898,7 @@ along with this program. If not, see https://www.gnu.org/licenses/.</target>
         </trans-unit>
         <trans-unit id="CB_Close_Tray.ToolTip" translate="yes" xml:space="preserve">
           <source>Sends in Systray at closing.</source>
-          <target state="translated">關閉程式視窗時縮小到工作列角落圖示。</target>
+          <target state="translated">關閉程式視窗時縮小到工作列系統匣。</target>
         </trans-unit>
         <trans-unit id="Lbl_Delay_Verif.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
           <source>134, 13</source>
@@ -906,7 +906,7 @@ along with this program. If not, see https://www.gnu.org/licenses/.</target>
         </trans-unit>
         <trans-unit id="Lbl_Branch_Update.Text" translate="yes" xml:space="preserve">
           <source>Stable Or Dev Branch</source>
-          <target state="translated">穩定或開發版本</target>
+          <target state="translated">版本</target>
         </trans-unit>
         <trans-unit id="Lbl_Server_IP.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
           <source>53, 13</source>
@@ -958,7 +958,7 @@ along with this program. If not, see https://www.gnu.org/licenses/.</target>
         </trans-unit>
         <trans-unit id="Tb_Login_Nut.ToolTip" translate="yes" xml:space="preserve">
           <source>NUT server connection identifier</source>
-          <target state="new">NUT server connection identifier</target>
+          <target state="new">NUT 伺服器連線索引</target>
         </trans-unit>
         <trans-unit id="CB_Systray.RightToLeft" translate="no" extype="System.Windows.Forms.RightToLeft, System.Windows.Forms" xml:space="preserve">
           <source>No</source>
@@ -990,7 +990,7 @@ along with this program. If not, see https://www.gnu.org/licenses/.</target>
         </trans-unit>
         <trans-unit id="Cb_Verify_Update.Text" translate="yes" xml:space="preserve">
           <source>Verify Update</source>
-          <target state="translated">驗證更新</target>
+          <target state="translated">檢查更新</target>
         </trans-unit>
         <trans-unit id="CB_Start_W_Win.CheckAlign" translate="no" extype="System.Drawing.ContentAlignment, System.Drawing" xml:space="preserve">
           <source>MiddleRight</source>
@@ -1014,7 +1014,7 @@ along with this program. If not, see https://www.gnu.org/licenses/.</target>
         </trans-unit>
         <trans-unit id="Tab_Shutdown.Text" translate="yes" xml:space="preserve">
           <source>Shutdown Options</source>
-          <target state="translated">關機選項</target>
+          <target state="translated">停機選項</target>
         </trans-unit>
         <trans-unit id="Cb_Verify_Update.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
           <source>310, 17</source>
@@ -1039,7 +1039,7 @@ Accepted value: Numeric value from 1 to 65535.</source>
         </trans-unit>
         <trans-unit id="Lbl_Login_Nut.Text" translate="yes" xml:space="preserve">
           <source>Login</source>
-          <target state="translated">登入</target>
+          <target state="translated">登入帳號</target>
         </trans-unit>
         <trans-unit id="Tb_InV_Min.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
           <source>51, 20</source>
@@ -1055,7 +1055,7 @@ Accepted value: Numeric value from 1 to 65535.</source>
         </trans-unit>
         <trans-unit id="Cbx_Delay_Verif.ToolTip" translate="yes" xml:space="preserve">
           <source>Frequency of verification.</source>
-          <target state="translated">驗證頻率。</target>
+          <target state="translated">檢查更新頻率</target>
         </trans-unit>
         <trans-unit id="Lbl_PowerF.AutoSize" translate="no" extype="System.Boolean, mscorlib" xml:space="preserve">
           <source>True</source>
@@ -1096,7 +1096,7 @@ Accepted value: Numeric value from 0 to 100.</source>
         </trans-unit>
         <trans-unit id="Cb_ExtendTime.Text" translate="yes" xml:space="preserve">
           <source>Allow Extended Shutdown Time</source>
-          <target state="translated">允許的延長關機時間</target>
+          <target state="translated">允許的延長停機時間</target>
         </trans-unit>
         <trans-unit id="Cb_Update_At_Start.MinimumSize" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
           <source>310, 0</source>
@@ -1136,7 +1136,7 @@ Accepted value: Numeric value from 0 to 100.</source>
         </trans-unit>
         <trans-unit id="Lbl_Delay_Verif.Text" translate="yes" xml:space="preserve">
           <source>Delay Between Verification</source>
-          <target state="translated">每次檢驗延遲</target>
+          <target state="translated">每次檢查更新間隔</target>
         </trans-unit>
         <trans-unit id="Lbl_OutputV.TabIndex" translate="no" extype="System.Int32, mscorlib" xml:space="preserve">
           <source>15</source>
@@ -1257,7 +1257,7 @@ Accepted Value: Name of the UPS configured in the Nut server.</source>
         </trans-unit>
         <trans-unit id="Lbl_Port.Text" translate="yes" xml:space="preserve">
           <source>NUT Port</source>
-          <target state="translated">NUT 埠號</target>
+          <target state="translated">NUT 伺服器埠號</target>
         </trans-unit>
         <trans-unit id="Tb_OutV_Max.Location" translate="no" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
           <source>265, 129</source>
@@ -1394,7 +1394,7 @@ Accepted value: Numeric value from 0 to 999.</source>
         </trans-unit>
         <trans-unit id="Cbx_Branch_Update.ToolTip" translate="yes" xml:space="preserve">
           <source>Use the Stable or Devellop branch during verification.</source>
-          <target state="translated">在驗證期間使用穩定或開發分支。</target>
+          <target state="translated">決定使用穩定或開發分支。</target>
         </trans-unit>
         <trans-unit id="CB_Systray.MinimumSize" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
           <source>220, 0</source>
@@ -1497,7 +1497,7 @@ Accepted value: Numeric value from 0 to 100.</source>
           <source>Allow additional time during the shutdown procedure.
 Note: 
 This additional time could go beyond the UPS backup time - USE WITH CAUTION!!!</source>
-          <target state="translated">在關機過程中留出額外的時間。注意：這個額外的時間可能會超過 UPS 的備援時間，請謹慎使用！</target>
+          <target state="translated">在停機過程中留出額外的時間。注意：這個額外的時間可能會超過 UPS 的備援時間，請謹慎使用！</target>
         </trans-unit>
         <trans-unit id="$this.ClientSize" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
           <source>354, 311</source>
@@ -1517,7 +1517,7 @@ This additional time could go beyond the UPS backup time - USE WITH CAUTION!!!</
         </trans-unit>
         <trans-unit id="Lbl_BattLimit_Time.Text" translate="yes" xml:space="preserve">
           <source>Shutdown if runtime lower than (sec)</source>
-          <target state="translated">若續航時間低於秒數時關機</target>
+          <target state="translated">若備援時間低於秒數時關機</target>
         </trans-unit>
         <trans-unit id="Lbl_PowerF.TabIndex" translate="no" extype="System.Int32, mscorlib" xml:space="preserve">
           <source>10</source>
@@ -1529,7 +1529,7 @@ This additional time could go beyond the UPS backup time - USE WITH CAUTION!!!</
         </trans-unit>
         <trans-unit id="Cb_Update_At_Start.Text" translate="yes" xml:space="preserve">
           <source>Verify Update At Start</source>
-          <target state="translated">在啟動時驗證更新</target>
+          <target state="translated">在啟動時檢查更新</target>
         </trans-unit>
         <trans-unit id="Tb_UPS_Name.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
           <source>162, 20</source>
@@ -1570,7 +1570,7 @@ This additional time could go beyond the UPS backup time - USE WITH CAUTION!!!</
         <trans-unit id="Tb_BattLimit_Time.ToolTip" translate="yes" xml:space="preserve">
           <source>Lower backup time limit triggering the shutdown procedure.
 Accepted value: Numeric value from 0 to 3600.</source>
-          <target state="translated">觸發停機流程的最低續航時間，範圍：0-3600。</target>
+          <target state="translated">觸發停機流程的最低備援時間，範圍：0-3600。</target>
         </trans-unit>
         <trans-unit id="Cb_ExtendTime.Location" translate="no" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
           <source>6, 147</source>
@@ -1606,7 +1606,7 @@ Accepted value: Numeric value from 0 to 3600.</source>
         </trans-unit>
         <trans-unit id="CB_Systray.ToolTip" translate="yes" xml:space="preserve">
           <source>Reduced to the taskbar or Systray.</source>
-          <target state="translated">縮小到工作列或角落圖示。</target>
+          <target state="translated">縮小到工作列系統匣。</target>
         </trans-unit>
         <trans-unit id="CB_Use_Logfile.CheckAlign" translate="no" extype="System.Drawing.ContentAlignment, System.Drawing" xml:space="preserve">
           <source>MiddleRight</source>
@@ -1634,7 +1634,7 @@ Accepted value: Numeric value from 0 to 3600.</source>
         </trans-unit>
         <trans-unit id="Lbl_BattLimit_Load.Text" translate="yes" xml:space="preserve">
           <source>Shutdown if battery lower than</source>
-          <target state="translated">若電池電量低於百分比數值時關機</target>
+          <target state="translated">若電池電量低於百分比數值時停機</target>
         </trans-unit>
         <trans-unit id="Lbl_Pwd_Nut.AutoSize" translate="no" extype="System.Boolean, mscorlib" xml:space="preserve">
           <source>True</source>
@@ -1666,7 +1666,7 @@ Accepted value: Numeric value from 0 to 3600.</source>
         </trans-unit>
         <trans-unit id="CB_Start_W_Win.Text" translate="yes" xml:space="preserve">
           <source>Start with Windows</source>
-          <target state="translated">随 Windows 启动当前应用</target>
+          <target state="translated">Windows 開機後自動啟動此應用程式</target>
         </trans-unit>
         <trans-unit id="Lbl_LevelLog.Location" translate="no" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
           <source>6, 162</source>
@@ -1723,7 +1723,7 @@ Accepted value: Numeric value from 0 to 100.</source>
         </trans-unit>
         <trans-unit id="Lbl_GraceTime.Text" translate="yes" xml:space="preserve">
           <source>Grace Delay to Shutdown (sec)</source>
-          <target state="translated">關機前寬限時間 (秒)：</target>
+          <target state="translated">關機前延遲時間 (秒)：</target>
         </trans-unit>
         <trans-unit id="Lbl_Login_Nut.TabIndex" translate="no" extype="System.Int32, mscorlib" xml:space="preserve">
           <source>14</source>
@@ -1744,7 +1744,7 @@ Accepted value: Numeric value from 0 to 100.</source>
         <trans-unit id="Tb_Delay_Com.ToolTip" translate="yes" xml:space="preserve">
           <source>Time between each update of UPS data (default = 5).
 Accepted value: Numerical value from 1 to 60 seconds.</source>
-          <target state="translated">UPS 數據更新頻率 (預設值 5 秒)。範圍：1-60 秒。</target>
+          <target state="translated">UPS 資料更新頻率 (預設值 5 秒)。範圍：1-60 秒。</target>
         </trans-unit>
         <trans-unit id="Label3.ImeMode" translate="no" extype="System.Windows.Forms.ImeMode, System.Windows.Forms" xml:space="preserve">
           <source>NoControl</source>
@@ -1808,7 +1808,7 @@ Accepted value: Numerical value from 1 to 60 seconds.</source>
         </trans-unit>
         <trans-unit id="CB_Systray.Text" translate="yes" xml:space="preserve">
           <source>Minimize to Systray</source>
-          <target state="translated">最小化至工作列角落圖示</target>
+          <target state="translated">最小化至系統匣</target>
         </trans-unit>
         <trans-unit id="Tb_BattLimit_Time.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
           <source>50, 20</source>
@@ -1834,7 +1834,7 @@ Accepted value: Numeric value from 0 to 100.</source>
         <trans-unit id="Tb_GraceTime.ToolTip" translate="yes" xml:space="preserve">
           <source>Additional grace period limit.
 Accepted value: Numeric value from 0 to 3600.</source>
-          <target state="translated">額外的寬限期。範圍：0-3600。</target>
+          <target state="translated">額外的延遲時間。範圍：0-3600。</target>
         </trans-unit>
         <trans-unit id="Tb_InV_Min.Location" translate="no" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
           <source>179, 41</source>
@@ -2010,7 +2010,7 @@ Accepted value: Numeric value from 0 to 3600.</source>
         </trans-unit>
         <trans-unit id="CB_Close_Tray.Text" translate="yes" xml:space="preserve">
           <source>Close to Systray</source>
-          <target state="translated">關閉至工作列角落圖示</target>
+          <target state="translated">關閉至系統匣</target>
         </trans-unit>
         <trans-unit id="Tb_Server_IP.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
           <source>162, 20</source>
@@ -2061,7 +2061,7 @@ Accepted value: Numeric value from 0 to 999.</source>
         </trans-unit>
         <trans-unit id="Lbl_Server_IP.Text" translate="yes" xml:space="preserve">
           <source>NUT host</source>
-          <target state="translated">NUT 主機</target>
+          <target state="translated">NUT 伺服器位址</target>
         </trans-unit>
         <trans-unit id="Cbx_TypeStop.Items" translate="yes" xml:space="preserve">
           <source>Shutdown</source>
@@ -2255,7 +2255,7 @@ Accepted value: Numeric value from 0 to 999.</source>
         </trans-unit>
         <trans-unit id="Tb_Pwd_Nut.ToolTip" translate="yes" xml:space="preserve">
           <source>NUT server login password</source>
-          <target state="new">NUT server login password</target>
+          <target state="new">NUT 伺服器登入密碼</target>
         </trans-unit>
         <trans-unit id="Lbl_Name_UPS.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
           <source>60, 13</source>
@@ -2271,7 +2271,7 @@ Accepted value: Numeric value from 0 to 999.</source>
         </trans-unit>
         <trans-unit id="CB_Follow_FSD.ToolTip" translate="yes" xml:space="preserve">
           <source>Indicates whether a shutdown should be performed when the NUT server signals a forced shutdown (FSD = Force ShutDown)</source>
-          <target state="translated">指示當 NUT 伺服器發出強制關機訊號 (FSD) 時是否應執行關機</target>
+          <target state="translated">指示當 NUT 伺服器發出強制關機訊號 (FSD) 時是否應執行停機</target>
         </trans-unit>
         <trans-unit id="CB_Start_Mini.CheckAlign" translate="no" extype="System.Drawing.ContentAlignment, System.Drawing" xml:space="preserve">
           <source>MiddleRight</source>
@@ -2376,7 +2376,7 @@ Accepted value: Numeric value from 0 to 100.</source>
         </trans-unit>
         <trans-unit id="CB_Start_Mini.ToolTip" translate="yes" xml:space="preserve">
           <source>Starts WinNut Minimized.</source>
-          <target state="translated">啟動時最小化 WinNUT。</target>
+          <target state="translated">啟動時最小化 WinNUT 視窗。</target>
         </trans-unit>
         <trans-unit id="Tab_Connexion.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
           <source>322, 234</source>
@@ -2400,7 +2400,7 @@ Accepted value: Numeric value from 0 to 100.</source>
         </trans-unit>
         <trans-unit id="Cb_ImmediateStop.ToolTip" translate="yes" xml:space="preserve">
           <source>Starts the shutdown procedure immediately or timed.</source>
-          <target state="translated">立即或定時執行關機程序。</target>
+          <target state="translated">立即或定時執行停機程序。</target>
         </trans-unit>
         <trans-unit id="Cbx_Freq_Input.Items1" translate="no" xml:space="preserve">
           <source>60</source>
@@ -2465,7 +2465,7 @@ Accepted value: Numeric value from 0 to 100.</source>
         </trans-unit>
         <trans-unit id="Menu_Sys_Update.Text" translate="yes" xml:space="preserve">
           <source>Verify Update</source>
-          <target state="translated">驗證更新</target>
+          <target state="translated">檢查更新</target>
         </trans-unit>
         <trans-unit id="Menu_Sys_Sep2.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
           <source>141, 6</source>
@@ -3041,7 +3041,7 @@ Accepted value: Numeric value from 0 to 100.</source>
         </trans-unit>
         <trans-unit id="Lbl_RTime.Text" translate="yes" xml:space="preserve">
           <source>Remaining Time :</source>
-          <target state="translated">預估剩餘時間：</target>
+          <target state="translated">預估備援時間：</target>
         </trans-unit>
         <trans-unit id="Lbl_BL.ImeMode" translate="no" extype="System.Windows.Forms.ImeMode, System.Windows.Forms" xml:space="preserve">
           <source>NoControl</source>

@@ -249,12 +249,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_2FE95EC14D3C411D8F0A93940FFCBCF3"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_314CE5030A4040E69371869B1C94AA16"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -561,7 +555,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_59DB70358CA5F4CED555B7CE7A226FDF"
+        "MsmKey" = "8:_5C99D3FB8E4CBB81209F637E049611DF"
+        "OwnerKey" = "8:_70DBA11C2BF449198BA594449914C1BC"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_5CDEF598B7A95AF327FA51A3488FAD54"
         "OwnerKey" = "8:_70DBA11C2BF449198BA594449914C1BC"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -2823,14 +2823,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_869845581A9866B44DBED568C68F8D20"
-        "OwnerKey" = "8:_4A481B8AE348191C9E5343DBDAADD142"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_869845581A9866B44DBED568C68F8D20"
-        "OwnerKey" = "8:_4FBF49FC0C81EBB2568861BC1E029FD1"
+        "MsmKey" = "8:_B8623759245285260351785642DF324A"
+        "OwnerKey" = "8:_70DBA11C2BF449198BA594449914C1BC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -2949,14 +2943,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_869845581A9866B44DBED568C68F8D20"
-        "OwnerKey" = "8:_3C02EAEA0AD8AD7328CC2692CD4C19D1"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_869845581A9866B44DBED568C68F8D20"
-        "OwnerKey" = "8:_D32504F64F9A2A6E38B71B8EB76D9394"
+        "MsmKey" = "8:_D0520ED356733B2390CC4FB9F5BE0685"
+        "OwnerKey" = "8:_70DBA11C2BF449198BA594449914C1BC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -4533,32 +4521,32 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_FE65F691A8229B618E6EA507F54C7373"
-        "OwnerKey" = "8:_D237FD453993A62AA805FDFAFC4E91B3"
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_E8BB0E2A241C1023B684B55FEB5B745F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_FFD5BC8B5752556F4EEB32562763513F"
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_929B73992E930343CA5B90A2038D04AB"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_63C8A279ECA1961108679E2A93D5C62B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_70DBA11C2BF449198BA594449914C1BC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_314CE5030A4040E69371869B1C94AA16"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_70DBA11C2BF449198BA594449914C1BC"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B8073AE507D3E3454F05FE38F157CEDD"
+        "OwnerKey" = "8:_5C99D3FB8E4CBB81209F637E049611DF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -6861,27 +6849,7 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2FE95EC14D3C411D8F0A93940FFCBCF3"
-            {
-            "SourcePath" = "8:..\\WinNUT-Client\\bin\\PreRelease\\WinNUT-Client_Common.pdb"
-            "TargetName" = "8:WinNUT-Client_Common.pdb"
-            "Tag" = "8:"
-            "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_322057BF22611785D57C82E3481AEC6C"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_33BCB1EF059B4E9B87FA7435A8F2499C"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
@@ -8110,7 +8078,38 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5744BE703D4FC2DA54FF8308CDF1F9AB"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5C99D3FB8E4CBB81209F637E049611DF"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:WinNUT-Client_Common, Version=2.3.8754.31581, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_5C99D3FB8E4CBB81209F637E049611DF"
+                    {
+                    "Name" = "8:WinNUT-Client_Common.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:WinNUT-Client_Common.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5CDEF598B7A95AF327FA51A3488FAD54"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
@@ -8878,7 +8877,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:AGauge, Version=2.1.8711.31129, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:AGauge, Version=2.1.8754.31581, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_7643B2E01E55816C8BA2265FF9E9B786"
@@ -9299,19 +9298,8 @@
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7F619FE6A380D79E80E85D6E6822F82A"
             {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:System.ObjectModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_7F619FE6A380D79E80E85D6E6822F82A"
-                    {
-                    "Name" = "8:System.ObjectModel.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.ObjectModel.dll"
-            "TargetName" = "8:"
+            "SourcePath" = "8:..\\WinNUT-Client\\bin\\Release\\WinNUT-Client.application"
+            "TargetName" = "8:WinNUT-Client.application"
             "Tag" = "8:"
             "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
             "Condition" = "8:"
@@ -9587,7 +9575,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8F516739982C425688412235CC687A27"
             {
-            "SourcePath" = "8:..\\WinNUT-Client\\bin\\PreRelease\\WinNUT-Client.exe.manifest"
+            "SourcePath" = "8:..\\WinNUT-Client\\bin\\Release\\WinNUT-Client.exe.manifest"
             "TargetName" = "8:WinNUT-Client.exe.manifest"
             "Tag" = "8:"
             "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
@@ -10535,38 +10523,7 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BD1928F091D308BD781F515E249DD3AC"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:System.ServiceModel.NetTcp, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
-                "ScatterAssemblies"
-                {
-                    "_BD1928F091D308BD781F515E249DD3AC"
-                    {
-                    "Name" = "8:System.ServiceModel.NetTcp.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.ServiceModel.NetTcp.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BDE23F8885AA229AB7F8BBBAD762B9F2"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B8623759245285260351785642DF324A"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
@@ -11124,27 +11081,7 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CF5B448F58B94552BC2A4C280C2AB8EB"
-            {
-            "SourcePath" = "8:..\\WinNUT-Client\\bin\\PreRelease\\AGauge.pdb"
-            "TargetName" = "8:AGauge.pdb"
-            "Tag" = "8:"
-            "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D01840AFE77F186C1F75D4D15EFF57EE"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D0520ED356733B2390CC4FB9F5BE0685"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
@@ -12502,15 +12439,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:WinNUT"
-        "ProductCode" = "8:{6D31D0C8-D73A-482F-B98A-DAA529A961CA}"
-        "PackageCode" = "8:{9087DB0B-BB27-47FB-BD23-2B42D99D2DFB}"
+        "ProductCode" = "8:{7F5E0939-E82F-4762-BD4A-53A73DB046DB}"
+        "PackageCode" = "8:{9C45453D-6108-44F8-8FD3-33343A0B0F68}"
         "UpgradeCode" = "8:{7EA17151-76E7-4E29-8F6A-621C1B4144C2}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:2.2.8693"
+        "ProductVersion" = "8:2.3.8754"
         "Manufacturer" = "8:NUTDotNet"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://github.com/nutdotnet/WinNUT-Client/issues"
@@ -13090,7 +13027,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_70DBA11C2BF449198BA594449914C1BC"
             {
-            "SourcePath" = "8:..\\WinNUT-Client\\obj\\PreRelease\\WinNUT-Client.exe"
+            "SourcePath" = "8:..\\WinNUT-Client\\obj\\Release\\WinNUT-Client.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"

@@ -16,7 +16,7 @@
     <value>設定</value>
   </data>
   <data name="Menu_Sys_Update.Text" xml:space="preserve">
-    <value>驗證更新</value>
+    <value>檢查更新</value>
   </data>
   <data name="Menu_Sys_About.Text" xml:space="preserve">
     <value>關於</value>
@@ -67,7 +67,7 @@
     <value>廠牌：</value>
   </data>
   <data name="Lbl_RTime.Text" xml:space="preserve">
-    <value>預估剩餘時間：</value>
+    <value>預估備援時間：</value>
   </data>
   <data name="Lbl_BL.Text" xml:space="preserve">
     <value>UPS 低電池電量</value>
