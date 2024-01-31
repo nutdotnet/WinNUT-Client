@@ -341,8 +341,12 @@ Cancel to Save Msi and Install Later</value>
     <comment>Notify the user that the old preferences have been removed from their Registry.</comment>
   </data>
   <data name="UpgradePrefsDialog_ErrorEncountered" xml:space="preserve">
-    <value>: {0}   See the log for more information.</value>
-    <comment>Alert the user that an error occurred during the upgrade procedure, attempt to give a brief summary of the error, and direct them to the log file for more information.</comment>
+    <value>An error occurred during the upgrade procedure:
+
+{0}
+
+Please correct the error, or cancel the upgrade dialog to continue with the default settings.</value>
+    <comment>Alert the user that an error occurred during the upgrade procedure, attempt to give a brief summary of the error, and prompt them to take the next step.</comment>
   </data>
   <data name="UpgradePrefsDialog_ImportProcedureCompleted" xml:space="preserve">
     <value>The old preferences have been imported.</value>

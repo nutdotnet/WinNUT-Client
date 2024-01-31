@@ -823,9 +823,17 @@ Cancel to Save Msi and Install Later</source>
           <note from="MultilingualBuild" annotates="source" priority="2">Notify the user that the old preferences have been exported to a file, and give the full path with {0}.</note>
         </trans-unit>
         <trans-unit id="UpgradePrefsDialog_ErrorEncountered" translate="yes" xml:space="preserve">
-          <source>: {0}   See the log for more information.</source>
-          <target state="new">: {0}   See the log for more information.</target>
-          <note from="MultilingualBuild" annotates="source" priority="2">Alert the user that an error occurred during the upgrade procedure, attempt to give a brief summary of the error, and direct them to the log file for more information.</note>
+          <source>An error occurred during the upgrade procedure:
+
+{0}
+
+Please correct the error, or cancel the upgrade dialog to continue with the default settings.</source>
+          <target state="new">An error occurred during the upgrade procedure:
+
+{0}
+
+Please correct the error, or cancel the upgrade dialog to continue with the default settings.</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Alert the user that an error occurred during the upgrade procedure, attempt to give a brief summary of the error, and prompt them to take the next step.</note>
         </trans-unit>
         <trans-unit id="regedit_exe_14_100_0" translate="yes" xml:space="preserve" extype="System.Resources.ResXFileRef, System.Windows.Forms">
           <source>..\Resources\regedit.exe_14_100-0.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</source>

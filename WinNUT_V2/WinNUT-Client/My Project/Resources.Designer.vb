@@ -735,7 +735,11 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to : {0}   See the log for more information..
+        '''  Looks up a localized string similar to An error occurred during the upgrade procedure:
+        '''
+        '''{0}
+        '''
+        '''Please correct the error, or cancel the upgrade dialog to continue with the default settings..
         '''</summary>
         Public ReadOnly Property UpgradePrefsDialog_ErrorEncountered() As String
             Get
