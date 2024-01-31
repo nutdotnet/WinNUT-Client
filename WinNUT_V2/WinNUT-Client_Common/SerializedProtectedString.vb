@@ -99,6 +99,10 @@ Public Class SerializedProtectedString
     ''' <param name="protStr"></param>
     ''' <returns></returns>
     Public Shared Widening Operator CType(protStr As SerializedProtectedString) As String
-        Return protStr.ToString()
+        If protStr IsNot Nothing Then
+            Return protStr.ToString()
+        Else
+            Return Nothing
+        End If
     End Operator
 End Class
