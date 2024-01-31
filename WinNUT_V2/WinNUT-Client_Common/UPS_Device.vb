@@ -129,6 +129,7 @@ Public Class UPS_Device
         Me.LogFile = LogFile
         Me.Nut_Config = Nut_Config
         PollingInterval = pollInterval
+        Freq_Fallback = defaultFrequency
         Nut_Socket = New Nut_Socket(Me.Nut_Config, LogFile)
 
         With Reconnect_Nut
@@ -264,7 +265,7 @@ Public Class UPS_Device
 
         ' Other constant values for UPS calibration.
         freshData.UPS_Value.Batt_Capacity = Double.Parse(GetUPSVar("battery.capacity", 7), INVARIANT_CULTURE)
-        Freq_Fallback = Double.Parse(GetUPSVar("output.frequency.nominal", (50 + CInt(Arr_Reg_Key.Item("FrequencySupply")) * 10)), INVARIANT_CULTURE)
+        Freq_Fallback = Double.Parse(GetUPSVar("output.frequency.nominal", Freq_Fallback), INVARIANT_CULTURE)
 
         LogFile.LogTracing("Completed retrieval of basic UPS product information.", LogLvl.LOG_NOTICE, Me)
         Return freshData

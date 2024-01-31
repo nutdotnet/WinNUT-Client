@@ -401,7 +401,7 @@ Public Class WinNUT
                                        My.Settings.NUT_UPSName,
                                        My.Settings.NUT_AutoReconnect)
 
-        UPS_Device = New UPS_Device(Nut_Config, LogFile, My.Settings.NUT_PollIntervalMsec, (50 + My.Settings.CAL_FreqInNom * 10))
+        UPS_Device = New UPS_Device(Nut_Config, LogFile, My.Settings.NUT_PollIntervalMsec, My.Settings.CAL_FreqInNom)
         AddHandler UPS_Device.EncounteredNUTException, AddressOf HandleNUTException
         UPS_Device.Connect_UPS(retryOnConnFailure)
     End Sub

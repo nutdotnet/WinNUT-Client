@@ -308,7 +308,15 @@ Namespace Models
                         Dim pairLookupRes = oldPrefs.PrefSettingsLookup.First(Function(p As OldParams.UpgradableParams.PrefSettingPair)
                                                                                   Return p.OldPreferenceName.Equals(oldPref.Key)
                                                                               End Function)
-                        My.Settings.Item(pairLookupRes.NewSettingsName) = oldPref.Value
+
+                        Dim oldValue = oldPref.Value
+                        ' Handle special case of converting the default input frequency calibration value
+                        If oldPref.Key = "FrequencySupply" Then
+                            oldValue = (oldValue * 10) + 50
+                        End If
+
+                        My.Settings.Item(pairLookupRes.NewSettingsName) = oldValue
+
                         ReportProgress(percentComplete, "Imported " & oldPref.Key & " into " & pairLookupRes.NewSettingsName,
                             LogLvl.LOG_NOTICE, Me)
 
