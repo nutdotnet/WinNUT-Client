@@ -2512,16 +2512,16 @@ Accepted value: Numeric value from 0 to 100.</source>
           <target state="final">None</target>
         </trans-unit>
         <trans-unit id="Menu_UPS_Var.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
-          <source>180, 22</source>
-          <target state="final">180, 22</target>
+          <source>177, 22</source>
+          <target state="final">177, 22</target>
         </trans-unit>
         <trans-unit id="Menu_UPS_Var.Text" translate="yes" xml:space="preserve">
           <source>UPS Variable</source>
           <target state="translated">UPS 變數</target>
         </trans-unit>
         <trans-unit id="Menu_Quit.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
-          <source>180, 22</source>
-          <target state="final">180, 22</target>
+          <source>177, 22</source>
+          <target state="final">177, 22</target>
         </trans-unit>
         <trans-unit id="Menu_Quit.Text" translate="yes" xml:space="preserve">
           <source>Exit</source>
@@ -2604,8 +2604,8 @@ Accepted value: Numeric value from 0 to 100.</source>
           <target state="final">0, 24</target>
         </trans-unit>
         <trans-unit id="Main_Menu.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
-          <source>351, 24</source>
-          <target state="final">351, 24</target>
+          <source>231, 24</source>
+          <target state="final">231, 24</target>
         </trans-unit>
         <trans-unit id="Main_Menu.TabIndex" translate="no" extype="System.Int32, mscorlib" xml:space="preserve">
           <source>0</source>
@@ -3648,8 +3648,8 @@ Accepted value: Numeric value from 0 to 100.</source>
           <target state="final">720, 420</target>
         </trans-unit>
         <trans-unit id="$this.Text" translate="no" xml:space="preserve">
-          <source>WinNUT</source>
-          <target state="final">WinNUT</target>
+          <source>WinNUT Client</source>
+          <target state="final">WinNUT Client</target>
         </trans-unit>
         <trans-unit id="NotifyIcon.TrayLocation" translate="no" extype="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" xml:space="preserve" extradata="metadata">
           <source>133, 17</source>
@@ -3716,8 +3716,9 @@ Accepted value: Numeric value from 0 to 100.</source>
           <target state="needs-review-translation">False</target>
         </trans-unit>
         <trans-unit id="ManageOldPrefsToolStripMenuItem.Size" translate="yes" xml:space="preserve" extype="System.Drawing.Size, System.Drawing">
-          <source>180, 22</source>
+          <source>177, 22</source>
           <target state="needs-review-translation">180, 22</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="ManageOldPrefsToolStripMenuItem.Text" translate="yes" xml:space="preserve">
           <source>Manage Old Prefs...</source>
@@ -3730,10 +3731,6 @@ Accepted value: Numeric value from 0 to 100.</source>
         <trans-unit id="ManageOldPrefsToolStripMenuItem.ToolTipText" translate="yes" xml:space="preserve">
           <source>Previous old preferences detected. Continue to begin the dialog.</source>
           <target state="new">Previous old preferences detected. Continue to begin the dialog.</target>
-        </trans-unit>
-        <trans-unit id="$this.ImeMode" translate="yes" xml:space="preserve" extype="System.Windows.Forms.ImeMode, System.Windows.Forms">
-          <source>NoControl</source>
-          <target state="needs-review-translation">NoControl</target>
         </trans-unit>
       </group>
     </body>
