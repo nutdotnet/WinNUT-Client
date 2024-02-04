@@ -52,7 +52,7 @@ Public Class List_Var_Gui
 
         action = Sub() TView_UPSVar.Nodes.Clear()
         TView_UPSVar.Invoke(action)
-        action = Sub() TView_UPSVar.Nodes.Add(Arr_Reg_Key.Item("UPSName"), Arr_Reg_Key.Item("UPSName"))
+        action = Sub() TView_UPSVar.Nodes.Add(My.Settings.NUT_UPSName, My.Settings.NUT_UPSName)
         TView_UPSVar.Invoke(action)
         Dim TreeChild As New TreeNode
         Dim LastNode As New TreeNode
@@ -126,7 +126,7 @@ Public Class List_Var_Gui
 
     Private Sub TView_UPSVar_NodeChanged(sender As Object, e As TreeViewEventArgs) Handles TView_UPSVar.AfterSelect
         Dim index As Integer = 0
-        Dim UPSName = Arr_Reg_Key.Item("UPSName")
+        Dim UPSName = My.Settings.NUT_UPSName
         Dim SelectedChild = Replace(e.Node.FullPath, UPSName & ".", "", 1, 1)
         Dim FindChild As Predicate(Of UPS_List_Datas) = Function(ByVal x As UPS_List_Datas)
                                                             If x.VarKey = SelectedChild Then
@@ -152,7 +152,7 @@ Public Class List_Var_Gui
         LogFile.LogTracing("Export TreeView To Clipboard", LogLvl.LOG_DEBUG, Me)
         Dim ToClipBoard As String = Nothing
         With WinNUT.UPS_Device.UPS_Datas
-            ToClipBoard = Arr_Reg_Key.Item("UPSName") & " (" & .Mfr & "/" & .Model & "/" & .Firmware & ")" & vbNewLine
+            ToClipBoard = My.Settings.NUT_UPSName & " (" & .Mfr & "/" & .Model & "/" & .Firmware & ")" & vbNewLine
         End With
         For Each LDatas In List_Var_Datas
             ToClipBoard &= LDatas.VarKey & " (" & LDatas.VarDesc & ") : " & LDatas.VarValue & vbNewLine

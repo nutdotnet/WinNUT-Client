@@ -27,7 +27,7 @@ Public Class Shutdown_Gui
         Grace_Button.Enabled = False
         Grace_Timer.Enabled = True
         Grace_Timer.Start()
-        Offset_STimer = Arr_Reg_Key.Item("ExtendedShutdownDelay")
+        Offset_STimer = My.Settings.PW_ExtendDelaySec
     End Sub
 
     Private Sub Shutdown_Gui_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -38,14 +38,14 @@ Public Class Shutdown_Gui
         'If ExtendedShutdownDelay = 0 (the default value), the next line fails and the whole shutdown sequence fails - Thus no shutdown
         'Moved next line lower down
         'Me.Grace_Timer.Interval = (WinNUT_Params.Arr_Reg_Key.Item("ExtendedShutdownDelay") * 1000)
-        Shutdown_Timer.Interval = (Arr_Reg_Key.Item("DelayToShutdown") * 1000)
-        STimer = Arr_Reg_Key.Item("DelayToShutdown")
+        Shutdown_Timer.Interval = (My.Settings.PW_StopDelaySec * 1000)
+        STimer = My.Settings.PW_StopDelaySec
         Remained = STimer
-        If Arr_Reg_Key.Item("AllowExtendedShutdownDelay") Then
+        If My.Settings.PW_UserExtendStopTimer Then
             Grace_Button.Enabled = True
             'Moved here so it is only used if grace period is allowed
             Try
-                Grace_Timer.Interval = (Arr_Reg_Key.Item("ExtendedShutdownDelay") * 1000)
+                Grace_Timer.Interval = (My.Settings.PW_ExtendDelaySec * 1000)
             Catch ex As Exception
                 'Disable Grace peroid option if Interval is set to 0
                 Grace_Button.Enabled = False

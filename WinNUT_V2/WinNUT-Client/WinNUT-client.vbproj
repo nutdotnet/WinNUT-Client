@@ -14,8 +14,7 @@
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>
-    </PublishUrl>
+    <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -45,6 +44,8 @@
     </DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <Optimize>false</Optimize>
+    <DefineConstants>
+    </DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -74,7 +75,7 @@
   </PropertyGroup>
   <PropertyGroup Label="MultilingualAppToolkit">
     <MultilingualAppToolkitVersion>4.0</MultilingualAppToolkitVersion>
-    <MultilingualFallbackLanguage>fr</MultilingualFallbackLanguage>
+    <MultilingualFallbackLanguage>en</MultilingualFallbackLanguage>
     <TranslationReport Condition="'$(Configuration)' == 'Release'">true</TranslationReport>
     <SuppressPseudoWarning Condition="'$(Configuration)' == 'Debug'">true</SuppressPseudoWarning>
   </PropertyGroup>
@@ -114,6 +115,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -145,6 +147,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="Models\UpgradePrefsDialogModel.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -176,6 +179,12 @@
       <DependentUpon>Pref_Gui.vb</DependentUpon>
     </Compile>
     <Compile Include="Pref_Gui.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UpgradePrefsDialog.designer.vb">
+      <DependentUpon>UpgradePrefsDialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UpgradePrefsDialog.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="WinNUT.vb">
@@ -293,6 +302,24 @@
     <EmbeddedResource Include="Update_Gui.zh-TW.resx">
       <DependentUpon>Update_Gui.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UpgradePrefsDialog.de-DE.resx">
+      <DependentUpon>UpgradePrefsDialog.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpgradePrefsDialog.fr-FR.resx">
+      <DependentUpon>UpgradePrefsDialog.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpgradePrefsDialog.resx">
+      <DependentUpon>UpgradePrefsDialog.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpgradePrefsDialog.ru-RU.resx">
+      <DependentUpon>UpgradePrefsDialog.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpgradePrefsDialog.zh-CN.resx">
+      <DependentUpon>UpgradePrefsDialog.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpgradePrefsDialog.zh-TW.resx">
+      <DependentUpon>UpgradePrefsDialog.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WinNUT.de-DE.resx">
       <DependentUpon>WinNUT.vb</DependentUpon>
     </EmbeddedResource>
@@ -325,6 +352,7 @@
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
+    <None Include="My Project\DataSources\UpgradePrefsDialog.UpgradePrefsDialogModel.datasource" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <CustomToolNamespace>My</CustomToolNamespace>
@@ -374,12 +402,12 @@
     <None Include="Resources\Battery_Charged.png" />
     <None Include="Resources\Battery_Charging.png" />
     <None Include="Resources\Battery_Discharging.png" />
-    <Content Include="WinNut.ico" />
+    <None Include="Resources\XP_Information.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 et x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
@@ -412,6 +440,12 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.3</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\regedit.exe_14_100-0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Utils\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.ResxResources.targets" Label="MultilingualAppToolkit" Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\v$(MultilingualAppToolkitVersion)\Microsoft.Multilingual.ResxResources.targets')" />

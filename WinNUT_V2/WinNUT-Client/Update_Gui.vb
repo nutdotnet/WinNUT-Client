@@ -7,7 +7,6 @@
 '
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
-Imports WinNUT_Params = WinNUT_Client_Common.WinNUT_Params
 Imports LogLvl = WinNUT_Client_Common.LogLvl
 Imports AppResxStr = WinNUT_Client_Common.AppResxStr
 Imports WinNUT_Globals = WinNUT_Client_Common.WinNUT_Globals
@@ -35,16 +34,16 @@ Public Class Update_Gui
     End Sub
 
     Protected Overrides Sub SetVisibleCore(value As Boolean)
-        If Me.UpdateInfoRetrieved Then
-            If Me.HasUpdate Then
+        If UpdateInfoRetrieved Then
+            If HasUpdate Then
                 MyBase.SetVisibleCore(True)
             Else
-                Me.Close()
+                Close()
             End If
         Else
             MyBase.SetVisibleCore(False)
             WinNUT.NotifyIcon.Visible = False
-            Me.Icon = WinNUT.Icon
+            Icon = WinNUT.Icon
             ' LogFile = WinNUT.LogFile
             VerifyUpdate()
         End If
@@ -62,9 +61,9 @@ Public Class Update_Gui
 
     Public Sub VerifyUpdate()
         LogFile.LogTracing("Verify Update", LogLvl.LOG_DEBUG, Me)
-        If WinNUT_Params.Arr_Reg_Key.Item("VerifyUpdate") Or Me.ManualUpdate Then
+        If My.Settings.UP_AutoUpdate Or ManualUpdate Then
             Dim DelayVerif As DateInterval = DateInterval.Month
-            Select Case WinNUT_Params.Arr_Reg_Key.Item("DelayBetweenEachVerification")
+            Select Case My.Settings.UP_AutoChkDelay
                 Case 0
                     DelayVerif = DateInterval.Day
                 Case 1
@@ -74,14 +73,10 @@ Public Class Update_Gui
             End Select
             Dim Today As Date = Now
             Dim Diff As Integer = 1
-            Dim lastCheckDate = WinNUT_Params.Arr_Reg_Key.Item("LastDateVerification")
+            Dim lastCheckDate = My.Settings.UP_LastCheck
 
-            If lastCheckDate <> "" Then
-                Try
-                    Diff = DateDiff(DelayVerif, Convert.ToDateTime(lastCheckDate), Today)
-                Catch ex As FormatException
-                    LogFile.LogTracing("Format exception when parsing last check date: " + lastCheckDate, LogLvl.LOG_ERROR, Me)
-                End Try
+            If lastCheckDate <> Date.MinValue Then
+                Diff = DateDiff(DelayVerif, lastCheckDate, Today)
             End If
 
             If Diff >= 1 Or ManualUpdate Then
@@ -92,7 +87,7 @@ Public Class Update_Gui
                 AddHandler WebC.DownloadStringCompleted, AddressOf Changelog_Downloaded
                 WebC.DownloadStringAsync(New Uri(GitApiURL))
             Else
-                Me.Close()
+                Close()
             End If
         End If
     End Sub
@@ -113,16 +108,16 @@ Public Class Update_Gui
                         Dim ReleaseName = JSONRelease("name")
                         Dim RegExVersion = sPattern.Match(ReleaseName)
 
-                        If Not DraftRelease And ((PreRelease And WinNUT_Params.Arr_Reg_Key.Item("StableOrDevBranch") = 1) Or Not PreRelease) Then
+                        If Not DraftRelease And ((PreRelease And My.Settings.UP_Branch = 1) Or Not PreRelease) Then
                             If RegExVersion.Groups.Count > 1 Then
                                 Dim ReleaseVersion As Version = Version.Parse(RegExVersion.Groups(1).Value)
                                 If ActualVersion.CompareTo(ReleaseVersion) = -1 Then
                                     If HighestVersion = Nothing Or (HighestVersion <> Nothing AndAlso ReleaseVersion.CompareTo(Version.Parse(HighestVersion))) > 0 Then
                                         HighestVersion = RegExVersion.Groups(1).Value
-                                        Me.NewVersion = HighestVersion
+                                        NewVersion = HighestVersion
                                         ChangeLogDiff = "Changelog :" & vbNewLine
                                         ChangeLogDiff &= WinNUT_Globals.ProgramVersion & " => " & ReleaseVersion.ToString & vbNewLine
-                                        Me.NewVersionMsiURL = JSONRelease("assets")(0)("browser_download_url").ToString
+                                        NewVersionMsiURL = JSONRelease("assets")(0)("browser_download_url").ToString
                                     End If
                                     ChangeLogDiff &= vbNewLine & ReleaseName & vbNewLine & JSONRelease("body").ToString & vbNewLine
                                 End If
@@ -131,10 +126,10 @@ Public Class Update_Gui
                             ChangeLogDiff &= vbNewLine & ReleaseName & vbNewLine & JSONRelease("body").ToString & vbNewLine
                         End If
                     Next
-                    If ChangeLogDiff IsNot Nothing And Me.NewVersionMsiURL IsNot Nothing Then
-                        Me.sChangeLog = ChangeLogDiff
-                        Me.HasUpdate = True
-                        LogFile.LogTracing(String.Format("New Version Available : {0}", Me.NewVersion), LogLvl.LOG_DEBUG, Me, String.Format(WinNUT_Globals.StrLog.Item(AppResxStr.STR_LOG_UPDATE), Me.NewVersion))
+                    If ChangeLogDiff IsNot Nothing And NewVersionMsiURL IsNot Nothing Then
+                        sChangeLog = ChangeLogDiff
+                        HasUpdate = True
+                        LogFile.LogTracing(String.Format("New Version Available : {0}", NewVersion), LogLvl.LOG_DEBUG, Me, String.Format(WinNUT_Globals.StrLog.Item(AppResxStr.STR_LOG_UPDATE), NewVersion))
                     Else
                         HighestVersion = Nothing
                         LogFile.LogTracing("No Update Available", LogLvl.LOG_DEBUG, Me, WinNUT_Globals.StrLog.Item(AppResxStr.STR_LOG_NO_UPDATE))
@@ -145,26 +140,25 @@ Public Class Update_Gui
             LogFile.LogTracing(excep.Message, LogLvl.LOG_ERROR, Me)
         End Try
 
-        ' Use the 's' format to get a standard datetime for error-free parsing in the future.
-        WinNUT_Params.Arr_Reg_Key.Item("LastDateVerification") = Date.Now.ToString("s")
-        WinNUT_Params.Save_Params()
-        Me.UpdateInfoRetrieved = True
-        Me.Show()
+        My.Settings.UP_LastCheck = Date.Now
+        My.Settings.Save()
+        UpdateInfoRetrieved = True
+        Show()
     End Sub
 
     Private Sub Update_Gui_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         TB_ChgLog.Text = sChangeLog
         TB_ChgLog.Visible = False
-        Lbl.Text = String.Format(WinNUT_Globals.StrLog.Item(AppResxStr.STR_UP_AVAIL), Me.NewVersion)
+        Lbl.Text = String.Format(WinNUT_Globals.StrLog.Item(AppResxStr.STR_UP_AVAIL), NewVersion)
         GB1.Size = New Point(GB1.Size.Width, GB1.Size.Height - 160)
         Update_Btn.Location = New Point(Update_Btn.Location.X, Update_Btn.Location.Y - 160)
         ShowLog_Button.Location = New Point(ShowLog_Button.Location.X, ShowLog_Button.Location.Y - 160)
         Close_Btn.Location = New Point(Close_Btn.Location.X, Close_Btn.Location.Y - 160)
-        Me.Size = New Point(Me.Size.Width, Me.Size.Height - 160)
+        Size = New Point(Size.Width, Size.Height - 160)
     End Sub
 
     Private Sub Close_Btn_Click(sender As Object, e As EventArgs) Handles Close_Btn.Click
-        Me.Close()
+        Close()
     End Sub
 
     Private Sub ShowLog_Button_Click(sender As Object, e As EventArgs) Handles ShowLog_Button.Click
@@ -175,7 +169,7 @@ Public Class Update_Gui
             Update_Btn.Location = New Point(Update_Btn.Location.X, Update_Btn.Location.Y - 160)
             ShowLog_Button.Location = New Point(ShowLog_Button.Location.X, ShowLog_Button.Location.Y - 160)
             Close_Btn.Location = New Point(Close_Btn.Location.X, Close_Btn.Location.Y - 160)
-            Me.Size = New Point(Me.Size.Width, Me.Size.Height - 160)
+            Size = New Point(Size.Width, Size.Height - 160)
         Else
             TB_ChgLog.Visible = True
             ShowLog_Button.Text = WinNUT_Globals.StrLog.Item(AppResxStr.STR_UP_SHOW)
@@ -183,19 +177,19 @@ Public Class Update_Gui
             Update_Btn.Location = New Point(Update_Btn.Location.X, Update_Btn.Location.Y + 160)
             ShowLog_Button.Location = New Point(ShowLog_Button.Location.X, ShowLog_Button.Location.Y + 160)
             Close_Btn.Location = New Point(Close_Btn.Location.X, Close_Btn.Location.Y + 160)
-            Me.Size = New Point(Me.Size.Width, Me.Size.Height + 160)
+            Size = New Point(Size.Width, Size.Height + 160)
         End If
     End Sub
 
     Private Sub Update_Btn_Click(sender As Object, e As EventArgs) Handles Update_Btn.Click
         Dim MSIURL As String = Nothing
-        MSIURL = Me.NewVersionMsiURL
+        MSIURL = NewVersionMsiURL
         Download_Form = New Form
         DPBar = New WinFormControls.CProgressBar
         Dlbl = New Label
 
         With Download_Form
-            .Icon = Me.Icon
+            .Icon = Icon
             .Size = New Point(320, 150)
             .FormBorderStyle = FormBorderStyle.Sizable
             .MaximizeBox = False
@@ -217,7 +211,7 @@ Public Class Update_Gui
             .Size = New Point(280, (.Size.Height * 2))
         End With
         Download_Form.Show()
-        Dim MSIFile = IO.Path.GetTempPath() + "WinNUT_" & Me.NewVersion & "_Setup.msi"
+        Dim MSIFile = IO.Path.GetTempPath() + "WinNUT_" & NewVersion & "_Setup.msi"
 
         Using WebC = New Net.WebClient
             Net.ServicePointManager.SecurityProtocol = Net.SecurityProtocolType.Tls12
@@ -251,8 +245,8 @@ Public Class Update_Gui
                 End If
                 DPBar.Value = 100
                 Threading.Thread.Sleep(1000)
-                Me.Download_Form.Close()
-                Me.Close()
+                Download_Form.Close()
+                Close()
         End Select
     End Sub
 End Class

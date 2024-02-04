@@ -24,9 +24,6 @@
   <data name="Menu_Sys_Exit.Text" xml:space="preserve">
     <value>Выход</value>
   </data>
-  <data name="Menu_Import_Ini.Text" xml:space="preserve">
-    <value>Импорт ini (из версии 1.x)</value>
-  </data>
   <data name="Menu_UPS_Var.Text" xml:space="preserve">
     <value>Переменные ИБП</value>
   </data>
@@ -104,5 +101,14 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Windows NUT CLient</value>
+  </data>
+  <data name="ManageOldPrefsToolStripMenuItem.Enabled" xml:space="preserve" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="ManageOldPrefsToolStripMenuItem.Size" xml:space="preserve" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="$this.ImeMode" xml:space="preserve" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
 </root>

@@ -24,9 +24,6 @@
   <data name="Menu_Sys_Exit.Text" xml:space="preserve">
     <value>離開</value>
   </data>
-  <data name="Menu_Import_Ini.Text" xml:space="preserve">
-    <value>匯入 ini 檔案 (v1.x 版本)</value>
-  </data>
   <data name="Menu_UPS_Var.Text" xml:space="preserve">
     <value>UPS 變數</value>
   </data>
@@ -101,5 +98,14 @@
   </data>
   <data name="Lbl_InF_Dial.Text" xml:space="preserve">
     <value>頻率</value>
+  </data>
+  <data name="ManageOldPrefsToolStripMenuItem.Enabled" xml:space="preserve" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="ManageOldPrefsToolStripMenuItem.Size" xml:space="preserve" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="$this.ImeMode" xml:space="preserve" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
 </root>

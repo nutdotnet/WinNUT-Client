@@ -7,7 +7,6 @@
 '
 ' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
-Imports WinNUT_Params = WinNUT_Client_Common.WinNUT_Params
 Imports LogLvl = WinNUT_Client_Common.LogLvl
 Imports System.IO
 Imports WinNUT_Client_Common
@@ -28,42 +27,42 @@ Public Class Pref_Gui
         Try
             ' PrefsModified = False
             LogFile.LogTracing("Save Parameters.", LogLvl.LOG_DEBUG, Me)
-            Arr_Reg_Key.Item("ServerAddress") = Tb_Server_IP.Text
-            Arr_Reg_Key.Item("Port") = CInt(Tb_Port.Text)
-            Arr_Reg_Key.Item("UPSName") = Tb_UPS_Name.Text
-            Arr_Reg_Key.Item("Delay") = (CInt(Tb_Delay_Com.Text) * 1000)
-            Arr_Reg_Key.Item("NutLogin") = Tb_Login_Nut.Text
-            Arr_Reg_Key.Item("NutPassword") = Tb_Pwd_Nut.Text
-            Arr_Reg_Key.Item("AutoReconnect") = Cb_Reconnect.Checked
-            Arr_Reg_Key.Item("MinInputVoltage") = CInt(Tb_InV_Min.Text)
-            Arr_Reg_Key.Item("MaxInputVoltage") = CInt(Tb_InV_Max.Text)
-            Arr_Reg_Key.Item("FrequencySupply") = Cbx_Freq_Input.SelectedIndex
-            Arr_Reg_Key.Item("MinInputFrequency") = CInt(Tb_InF_Min.Text)
-            Arr_Reg_Key.Item("MaxInputFrequency") = CInt(Tb_InF_Max.Text)
-            Arr_Reg_Key.Item("MinOutputVoltage") = CInt(Tb_OutV_Min.Text)
-            Arr_Reg_Key.Item("MaxOutputVoltage") = CInt(Tb_OutV_Max.Text)
-            Arr_Reg_Key.Item("MinBattVoltage") = CInt(Tb_BattV_Min.Text)
-            Arr_Reg_Key.Item("MaxBattVoltage") = CInt(Tb_BattV_Max.Text)
-            Arr_Reg_Key.Item("MinimizeToTray") = CB_Systray.Checked
-            Arr_Reg_Key.Item("MinimizeOnStart") = CB_Start_Mini.Checked
-            Arr_Reg_Key.Item("CloseToTray") = CB_Close_Tray.Checked
-            Arr_Reg_Key.Item("StartWithWindows") = CB_Start_W_Win.Checked
-            Arr_Reg_Key.Item("UseLogFile") = CB_Use_Logfile.Checked
-            Arr_Reg_Key.Item("Log Level") = Cbx_LogLevel.SelectedIndex
-            Arr_Reg_Key.Item("ShutdownLimitBatteryCharge") = CInt(Tb_BattLimit_Load.Text)
-            Arr_Reg_Key.Item("ShutdownLimitUPSRemainTime") = CInt(Tb_BattLimit_Time.Text)
-            Arr_Reg_Key.Item("ImmediateStopAction") = Cb_ImmediateStop.Checked
-            Arr_Reg_Key.Item("Follow_FSD") = CB_Follow_FSD.Checked
-            Arr_Reg_Key.Item("TypeOfStop") = Cbx_TypeStop.SelectedIndex
-            Arr_Reg_Key.Item("DelayToShutdown") = CInt(Tb_Delay_Stop.Text)
-            Arr_Reg_Key.Item("AllowExtendedShutdownDelay") = Cb_ExtendTime.Checked
-            Arr_Reg_Key.Item("ExtendedShutdownDelay") = CInt(Tb_GraceTime.Text)
-            Arr_Reg_Key.Item("VerifyUpdate") = Cb_Verify_Update.Checked
-            Arr_Reg_Key.Item("VerifyUpdateAtStart") = Cb_Update_At_Start.Checked
-            Arr_Reg_Key.Item("DelayBetweenEachVerification") = Cbx_Delay_Verif.SelectedIndex
-            Arr_Reg_Key.Item("StableOrDevBranch") = Cbx_Branch_Update.SelectedIndex
+            My.Settings.NUT_ServerAddress = Tb_Server_IP.Text
+            My.Settings.NUT_ServerPort = CInt(Tb_Port.Text)
+            My.Settings.NUT_UPSName = Tb_UPS_Name.Text
+            My.Settings.NUT_PollIntervalMsec = CInt(Tb_Delay_Com.Text)
+            My.Settings.NUT_Username = Tb_Login_Nut.Text
+            My.Settings.NUT_Password = Tb_Pwd_Nut.Text
+            My.Settings.NUT_AutoReconnect = Cb_Reconnect.Checked
+            My.Settings.CAL_VoltInMin = CInt(Tb_InV_Min.Text)
+            My.Settings.CAL_VoltInMax = CInt(Tb_InV_Max.Text)
+            My.Settings.CAL_FreqInNom = Cbx_Freq_Input.SelectedItem
+            My.Settings.CAL_FreqInMin = CInt(Tb_InF_Min.Text)
+            My.Settings.CAL_FreqInMax = CInt(Tb_InF_Max.Text)
+            My.Settings.CAL_VoltOutMin = CInt(Tb_OutV_Min.Text)
+            My.Settings.CAL_VoltOutMax = CInt(Tb_OutV_Max.Text)
+            My.Settings.CAL_BattVMin = CInt(Tb_BattV_Min.Text)
+            My.Settings.CAL_BattVMax = CInt(Tb_BattV_Max.Text)
+            My.Settings.MinimizeToTray = CB_Systray.Checked
+            My.Settings.MinimizeOnStart = CB_Start_Mini.Checked
+            My.Settings.CloseToTray = CB_Close_Tray.Checked
+            My.Settings.StartWithWindows = CB_Start_W_Win.Checked
+            My.Settings.LG_LogToFile = CB_Use_Logfile.Checked
+            My.Settings.LG_LogLevel = Cbx_LogLevel.SelectedIndex
+            My.Settings.PW_BattChrgFloor = CInt(Tb_BattLimit_Load.Text)
+            My.Settings.PW_RuntimeFloor = CInt(Tb_BattLimit_Time.Text)
+            My.Settings.PW_Immediate = Cb_ImmediateStop.Checked
+            My.Settings.PW_RespectFSD = CB_Follow_FSD.Checked
+            My.Settings.PW_StopType = Cbx_TypeStop.SelectedIndex
+            My.Settings.PW_StopDelaySec = CInt(Tb_Delay_Stop.Text)
+            My.Settings.PW_UserExtendStopTimer = Cb_ExtendTime.Checked
+            My.Settings.PW_ExtendDelaySec = CInt(Tb_GraceTime.Text)
+            My.Settings.UP_AutoUpdate = Cb_Verify_Update.Checked
+            My.Settings.UP_CheckAtStart = Cb_Update_At_Start.Checked
+            My.Settings.UP_AutoChkDelay = Cbx_Delay_Verif.SelectedIndex
+            My.Settings.UP_Branch = Cbx_Branch_Update.SelectedIndex
 
-            WinNUT_Params.Save_Params()
+            My.Settings.Save()
             If CB_Start_W_Win.Checked Then
                 If My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\", Application.ProductName, Nothing) Is Nothing Then
                     My.Computer.Registry.CurrentUser.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Run", True).SetValue(Application.ProductName, Application.ExecutablePath)
@@ -108,40 +107,40 @@ Public Class Pref_Gui
     Private Sub Pref_Gui_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         Try
             IsShowed = False
-            Tb_Server_IP.Text = CStr(Arr_Reg_Key.Item("ServerAddress"))
-            Tb_Port.Text = CStr(Arr_Reg_Key.Item("Port"))
-            Tb_UPS_Name.Text = CStr(Arr_Reg_Key.Item("UPSName"))
-            Tb_Delay_Com.Text = CStr(Math.Round(Arr_Reg_Key.Item("Delay") / 1000))
-            Tb_Login_Nut.Text = Arr_Reg_Key.Item("NutLogin")
-            Tb_Pwd_Nut.Text = Arr_Reg_Key.Item("NutPassword")
-            Cb_Reconnect.Checked = Arr_Reg_Key.Item("AutoReconnect")
-            Tb_InV_Min.Text = CStr(Arr_Reg_Key.Item("MinInputVoltage"))
-            Tb_InV_Max.Text = CStr(Arr_Reg_Key.Item("MaxInputVoltage"))
-            Cbx_Freq_Input.SelectedIndex = Arr_Reg_Key.Item("FrequencySupply")
-            Tb_InF_Min.Text = CStr(Arr_Reg_Key.Item("MinInputFrequency"))
-            Tb_InF_Max.Text = CStr(Arr_Reg_Key.Item("MaxInputFrequency"))
-            Tb_OutV_Min.Text = CStr(Arr_Reg_Key.Item("MinOutputVoltage"))
-            Tb_OutV_Max.Text = CStr(Arr_Reg_Key.Item("MaxOutputVoltage"))
-            Tb_BattV_Min.Text = CStr(Arr_Reg_Key.Item("MinBattVoltage"))
-            Tb_BattV_Max.Text = CStr(Arr_Reg_Key.Item("MaxBattVoltage"))
-            CB_Systray.Checked = Arr_Reg_Key.Item("MinimizeToTray")
-            CB_Start_Mini.Checked = Arr_Reg_Key.Item("MinimizeOnStart")
-            CB_Close_Tray.Checked = Arr_Reg_Key.Item("CloseToTray")
-            CB_Start_W_Win.Checked = Arr_Reg_Key.Item("StartWithWindows")
-            CB_Use_Logfile.Checked = Arr_Reg_Key.Item("UseLogFile")
-            Cbx_LogLevel.SelectedIndex = Arr_Reg_Key.Item("Log Level")
-            Tb_BattLimit_Load.Text = CStr(Arr_Reg_Key.Item("ShutdownLimitBatteryCharge"))
-            Tb_BattLimit_Time.Text = CStr(Arr_Reg_Key.Item("ShutdownLimitUPSRemainTime"))
-            Cb_ImmediateStop.Checked = Arr_Reg_Key.Item("ImmediateStopAction")
-            CB_Follow_FSD.Checked = Arr_Reg_Key.Item("Follow_FSD")
-            Cbx_TypeStop.SelectedIndex = Arr_Reg_Key.Item("TypeOfStop")
-            Tb_Delay_Stop.Text = CStr(Arr_Reg_Key.Item("DelayToShutdown"))
-            Cb_ExtendTime.Checked = Arr_Reg_Key.Item("AllowExtendedShutdownDelay")
-            Tb_GraceTime.Text = CStr(Arr_Reg_Key.Item("ExtendedShutdownDelay"))
-            Cb_Verify_Update.Checked = Arr_Reg_Key.Item("VerifyUpdate")
-            Cb_Update_At_Start.Checked = Arr_Reg_Key.Item("VerifyUpdateAtStart")
-            Cbx_Delay_Verif.SelectedIndex = Arr_Reg_Key.Item("DelayBetweenEachVerification")
-            Cbx_Branch_Update.SelectedIndex = Arr_Reg_Key.Item("StableOrDevBranch")
+            Tb_Server_IP.Text = My.Settings.NUT_ServerAddress
+            Tb_Port.Text = My.Settings.NUT_ServerPort
+            Tb_UPS_Name.Text = My.Settings.NUT_UPSName
+            Tb_Delay_Com.Text = My.Settings.NUT_PollIntervalMsec
+            Tb_Login_Nut.Text = My.Settings.NUT_Username
+            Tb_Pwd_Nut.Text = My.Settings.NUT_Password
+            Cb_Reconnect.Checked = My.Settings.NUT_AutoReconnect
+            Tb_InV_Min.Text = My.Settings.CAL_VoltInMin
+            Tb_InV_Max.Text = My.Settings.CAL_VoltInMax
+            Cbx_Freq_Input.SelectedIndex = Cbx_Freq_Input.FindStringExact(My.Settings.CAL_FreqInNom)
+            Tb_InF_Min.Text = My.Settings.CAL_FreqInMin
+            Tb_InF_Max.Text = My.Settings.CAL_FreqInMax
+            Tb_OutV_Min.Text = My.Settings.CAL_VoltOutMin
+            Tb_OutV_Max.Text = My.Settings.CAL_VoltOutMax
+            Tb_BattV_Min.Text = My.Settings.CAL_BattVMin
+            Tb_BattV_Max.Text = My.Settings.CAL_BattVMax
+            CB_Systray.Checked = My.Settings.MinimizeToTray
+            CB_Start_Mini.Checked = My.Settings.MinimizeOnStart
+            CB_Close_Tray.Checked = My.Settings.CloseToTray
+            CB_Start_W_Win.Checked = My.Settings.StartWithWindows
+            CB_Use_Logfile.Checked = My.Settings.LG_LogToFile
+            Cbx_LogLevel.SelectedIndex = My.Settings.LG_LogLevel
+            Tb_BattLimit_Load.Text = My.Settings.PW_BattChrgFloor
+            Tb_BattLimit_Time.Text = My.Settings.PW_RuntimeFloor
+            Cb_ImmediateStop.Checked = My.Settings.PW_Immediate
+            CB_Follow_FSD.Checked = My.Settings.PW_RespectFSD
+            Cbx_TypeStop.SelectedIndex = My.Settings.PW_StopType
+            Tb_Delay_Stop.Text = My.Settings.PW_StopDelaySec
+            Cb_ExtendTime.Checked = My.Settings.PW_UserExtendStopTimer
+            Tb_GraceTime.Text = My.Settings.PW_ExtendDelaySec
+            Cb_Verify_Update.Checked = My.Settings.UP_AutoUpdate
+            Cb_Update_At_Start.Checked = My.Settings.UP_CheckAtStart
+            Cbx_Delay_Verif.SelectedIndex = My.Settings.UP_AutoChkDelay
+            Cbx_Branch_Update.SelectedIndex = My.Settings.UP_Branch
             If CB_Systray.Checked Then
                 CB_Start_Mini.Enabled = True
                 CB_Close_Tray.Enabled = True
@@ -189,7 +188,7 @@ Public Class Pref_Gui
         Catch Except As Exception
             IsShowed = False
             Close()
-            LogFile.LogTracing("Error on Opening Pref_Gui.", LogLvl.LOG_ERROR, Me)
+            LogFile.LogTracing("Error on Opening Pref_Gui:" & vbNewLine & Except.ToString(), LogLvl.LOG_ERROR, Me)
         End Try
     End Sub
 
@@ -369,7 +368,7 @@ Public Class Pref_Gui
     ''' Enable or disable controls to view and delete log data if it's available.
     ''' </summary>
     Private Sub SetLogControlsStatus()
-        If Arr_Reg_Key.Item("UseLogFile") Then ' Directory.Exists(Logger.LogFolder)
+        If My.Settings.LG_LogToFile Then ' Directory.Exists(Logger.LogFolder)
             Btn_ViewLog.Enabled = True
             Btn_DeleteLog.Enabled = True
         Else

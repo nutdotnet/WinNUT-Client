@@ -370,6 +370,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Previous preferences data detected in the Registry..
+        '''</summary>
+        Public ReadOnly Property DetectedPreviousPrefsData() As String
+            Get
+                Return ResourceManager.GetString("DetectedPreviousPrefsData", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Old ups.ini imported
         '''Ini File Moved to {0}.old.
         '''</summary>
@@ -682,6 +691,101 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
+        Public ReadOnly Property regedit_exe_14_100_0() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("regedit_exe_14_100_0", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Save WinNUT Registry Key.
+        '''</summary>
+        Public ReadOnly Property UpgradePrefsDialog_BackupLocationTitle() As String
+            Get
+                Return ResourceManager.GetString("UpgradePrefsDialog_BackupLocationTitle", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to The old preferences have been backed up to {0}.
+        '''</summary>
+        Public ReadOnly Property UpgradePrefsDialog_BackupProcedureCompleted() As String
+            Get
+                Return ResourceManager.GetString("UpgradePrefsDialog_BackupProcedureCompleted", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to The upgrade process was cancelled: using default settings..
+        '''</summary>
+        Public ReadOnly Property UpgradePrefsDialog_Cancelled() As String
+            Get
+                Return ResourceManager.GetString("UpgradePrefsDialog_Cancelled", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to The old preferences have been removed from your Registry..
+        '''</summary>
+        Public ReadOnly Property UpgradePrefsDialog_DeleteProcedureComplete() As String
+            Get
+                Return ResourceManager.GetString("UpgradePrefsDialog_DeleteProcedureComplete", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to An error occurred during the upgrade procedure:
+        '''
+        '''{0}
+        '''
+        '''Please correct the error, or cancel the upgrade dialog to continue with the default settings..
+        '''</summary>
+        Public ReadOnly Property UpgradePrefsDialog_ErrorEncountered() As String
+            Get
+                Return ResourceManager.GetString("UpgradePrefsDialog_ErrorEncountered", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to The old preferences have been imported..
+        '''</summary>
+        Public ReadOnly Property UpgradePrefsDialog_ImportProcedureCompleted() As String
+            Get
+                Return ResourceManager.GetString("UpgradePrefsDialog_ImportProcedureCompleted", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to No preferences detected.
+        '''</summary>
+        Public ReadOnly Property UpgradePrefsDialog_NoPrefsExistCaption() As String
+            Get
+                Return ResourceManager.GetString("UpgradePrefsDialog_NoPrefsExistCaption", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to No preferences were detected in the Registry. Unable to continue..
+        '''</summary>
+        Public ReadOnly Property UpgradePrefsDialog_NoPrefsExistError() As String
+            Get
+                Return ResourceManager.GetString("UpgradePrefsDialog_NoPrefsExistError", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to There were {0} unknown preferences. See log for more details..
+        '''</summary>
+        Public ReadOnly Property UpgradePrefsDialog_UnmatchedPairs() As String
+            Get
+                Return ResourceManager.GetString("UpgradePrefsDialog_UnmatchedPairs", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
         Public ReadOnly Property ups_104x104() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("ups_104x104", resourceCulture)
@@ -716,6 +820,16 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("WinNUT_Updater", resourceCulture)
                 Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property XP_Information() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("XP_Information", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
     End Module
