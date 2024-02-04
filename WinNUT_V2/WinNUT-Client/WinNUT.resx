@@ -186,57 +186,6 @@
   <data name="Main_Menu.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>None</value>
   </data>
-  <data name="Menu_UPS_Var.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="Menu_UPS_Var.Text" xml:space="preserve">
-    <value>UPS Variable</value>
-  </data>
-  <data name="Menu_Quit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="Menu_Quit.Text" xml:space="preserve">
-    <value>Exit</value>
-  </data>
-  <data name="ManageOldPrefsToolStripMenuItem.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="ManageOldPrefsToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ManageOldPrefsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="ManageOldPrefsToolStripMenuItem.Text" xml:space="preserve">
-    <value>Manage Old Prefs...</value>
-  </data>
-  <data name="ManageOldPrefsToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Previous old preferences detected. Continue to begin the dialog.</value>
-  </data>
-  <data name="Menu_File.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 20</value>
-  </data>
-  <data name="Menu_File.Text" xml:space="preserve">
-    <value>File</value>
-  </data>
-  <data name="Menu_Connection.Size" type="System.Drawing.Size, System.Drawing">
-    <value>81, 20</value>
-  </data>
-  <data name="Menu_Connection.Text" xml:space="preserve">
-    <value>Connection</value>
-  </data>
-  <data name="Menu_Settings.Size" type="System.Drawing.Size, System.Drawing">
-    <value>61, 20</value>
-  </data>
-  <data name="Menu_Settings.Text" xml:space="preserve">
-    <value>Settings</value>
-  </data>
-  <data name="Menu_Help.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 20</value>
-  </data>
-  <data name="Menu_Help.Text" xml:space="preserve">
-    <value>Help</value>
-  </data>
   <data name="Main_Menu.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
@@ -244,7 +193,7 @@
     <value>0, 24</value>
   </data>
   <data name="Main_Menu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>351, 24</value>
+    <value>231, 24</value>
   </data>
   <data name="Main_Menu.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -264,6 +213,45 @@
   <data name="&gt;&gt;Main_Menu.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
+  <data name="Menu_File.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 20</value>
+  </data>
+  <data name="Menu_File.Text" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="Menu_UPS_Var.Size" type="System.Drawing.Size, System.Drawing">
+    <value>177, 22</value>
+  </data>
+  <data name="Menu_UPS_Var.Text" xml:space="preserve">
+    <value>UPS Variable</value>
+  </data>
+  <data name="Menu_Quit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>177, 22</value>
+  </data>
+  <data name="Menu_Quit.Text" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="ManageOldPrefsToolStripMenuItem.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="ManageOldPrefsToolStripMenuItem.ShortcutKeyDisplayString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ManageOldPrefsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>177, 22</value>
+  </data>
+  <data name="ManageOldPrefsToolStripMenuItem.Text" xml:space="preserve">
+    <value>Manage Old Prefs...</value>
+  </data>
+  <data name="ManageOldPrefsToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Previous old preferences detected. Continue to begin the dialog.</value>
+  </data>
+  <data name="Menu_Connection.Size" type="System.Drawing.Size, System.Drawing">
+    <value>81, 20</value>
+  </data>
+  <data name="Menu_Connection.Text" xml:space="preserve">
+    <value>Connection</value>
+  </data>
   <data name="Menu_Reconnect.Size" type="System.Drawing.Size, System.Drawing">
     <value>133, 22</value>
   </data>
@@ -275,6 +263,18 @@
   </data>
   <data name="Menu_Disconnect.Text" xml:space="preserve">
     <value>Disconnect</value>
+  </data>
+  <data name="Menu_Settings.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 20</value>
+  </data>
+  <data name="Menu_Settings.Text" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Menu_Help.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 20</value>
+  </data>
+  <data name="Menu_Help.Text" xml:space="preserve">
+    <value>Help</value>
   </data>
   <data name="Menu_About.Size" type="System.Drawing.Size, System.Drawing">
     <value>144, 22</value>
@@ -1168,7 +1168,7 @@
     <value>AG_InV</value>
   </data>
   <data name="&gt;&gt;AG_InV.Type" xml:space="preserve">
-    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8702.29738, Culture=neutral, PublicKeyToken=null</value>
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8800.22772, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;AG_InV.Parent" xml:space="preserve">
     <value>GB_InV_Dial</value>
@@ -1208,6 +1208,27 @@
   </data>
   <data name="&gt;&gt;GB_InV_Dial.ZOrder" xml:space="preserve">
     <value>3</value>
+  </data>
+  <data name="AG_InV.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 26</value>
+  </data>
+  <data name="AG_InV.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_InV.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;AG_InV.Name" xml:space="preserve">
+    <value>AG_InV</value>
+  </data>
+  <data name="&gt;&gt;AG_InV.Type" xml:space="preserve">
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8800.22772, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;AG_InV.Parent" xml:space="preserve">
+    <value>GB_InV_Dial</value>
+  </data>
+  <data name="&gt;&gt;AG_InV.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="Lbl_InV_Dial.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1258,7 +1279,7 @@
     <value>AG_OutV</value>
   </data>
   <data name="&gt;&gt;AG_OutV.Type" xml:space="preserve">
-    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8702.29738, Culture=neutral, PublicKeyToken=null</value>
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8800.22772, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;AG_OutV.Parent" xml:space="preserve">
     <value>GB_OutV_Dial</value>
@@ -1298,6 +1319,33 @@
   </data>
   <data name="&gt;&gt;GB_OutV_Dial.ZOrder" xml:space="preserve">
     <value>6</value>
+  </data>
+  <data name="AG_OutV.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 26</value>
+  </data>
+  <data name="AG_OutV.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_OutV.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_OutV.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_OutV.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;AG_OutV.Name" xml:space="preserve">
+    <value>AG_OutV</value>
+  </data>
+  <data name="&gt;&gt;AG_OutV.Type" xml:space="preserve">
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8800.22772, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;AG_OutV.Parent" xml:space="preserve">
+    <value>GB_OutV_Dial</value>
+  </data>
+  <data name="&gt;&gt;AG_OutV.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="Lbl_OutV_Dial.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1372,7 +1420,7 @@
     <value>AG_BattCh</value>
   </data>
   <data name="&gt;&gt;AG_BattCh.Type" xml:space="preserve">
-    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8702.29738, Culture=neutral, PublicKeyToken=null</value>
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8800.22772, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;AG_BattCh.Parent" xml:space="preserve">
     <value>GB_BattCh_Dial</value>
@@ -1464,6 +1512,33 @@
   <data name="&gt;&gt;Lbl_BattCh_Dial.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="AG_BattCh.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 27</value>
+  </data>
+  <data name="AG_BattCh.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_BattCh.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_BattCh.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_BattCh.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;AG_BattCh.Name" xml:space="preserve">
+    <value>AG_BattCh</value>
+  </data>
+  <data name="&gt;&gt;AG_BattCh.Type" xml:space="preserve">
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8800.22772, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;AG_BattCh.Parent" xml:space="preserve">
+    <value>GB_BattCh_Dial</value>
+  </data>
+  <data name="&gt;&gt;AG_BattCh.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <metadata name="GB_Load_Dial.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -1474,7 +1549,7 @@
     <value>AG_Load</value>
   </data>
   <data name="&gt;&gt;AG_Load.Type" xml:space="preserve">
-    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8702.29738, Culture=neutral, PublicKeyToken=null</value>
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8800.22772, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;AG_Load.Parent" xml:space="preserve">
     <value>GB_Load_Dial</value>
@@ -1514,6 +1589,33 @@
   </data>
   <data name="&gt;&gt;GB_Load_Dial.ZOrder" xml:space="preserve">
     <value>5</value>
+  </data>
+  <data name="AG_Load.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 26</value>
+  </data>
+  <data name="AG_Load.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_Load.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_Load.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_Load.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;AG_Load.Name" xml:space="preserve">
+    <value>AG_Load</value>
+  </data>
+  <data name="&gt;&gt;AG_Load.Type" xml:space="preserve">
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8800.22772, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;AG_Load.Parent" xml:space="preserve">
+    <value>GB_Load_Dial</value>
+  </data>
+  <data name="&gt;&gt;AG_Load.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="Lbl_Load_Dial.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1564,7 +1666,7 @@
     <value>AG_BattV</value>
   </data>
   <data name="&gt;&gt;AG_BattV.Type" xml:space="preserve">
-    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8702.29738, Culture=neutral, PublicKeyToken=null</value>
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8800.22772, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;AG_BattV.Parent" xml:space="preserve">
     <value>GB_BattV_Dial</value>
@@ -1604,6 +1706,33 @@
   </data>
   <data name="&gt;&gt;GB_BattV_Dial.ZOrder" xml:space="preserve">
     <value>4</value>
+  </data>
+  <data name="AG_BattV.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 26</value>
+  </data>
+  <data name="AG_BattV.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_BattV.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_BattV.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_BattV.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;AG_BattV.Name" xml:space="preserve">
+    <value>AG_BattV</value>
+  </data>
+  <data name="&gt;&gt;AG_BattV.Type" xml:space="preserve">
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8800.22772, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;AG_BattV.Parent" xml:space="preserve">
+    <value>GB_BattV_Dial</value>
+  </data>
+  <data name="&gt;&gt;AG_BattV.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="Lbl_BattV_Dial.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1654,7 +1783,7 @@
     <value>AG_InF</value>
   </data>
   <data name="&gt;&gt;AG_InF.Type" xml:space="preserve">
-    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8702.29738, Culture=neutral, PublicKeyToken=null</value>
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8800.22772, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;AG_InF.Parent" xml:space="preserve">
     <value>GB_InF_Dial</value>
@@ -1694,6 +1823,33 @@
   </data>
   <data name="&gt;&gt;GB_InF_Dial.ZOrder" xml:space="preserve">
     <value>2</value>
+  </data>
+  <data name="AG_InF.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 26</value>
+  </data>
+  <data name="AG_InF.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_InF.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_InF.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 130</value>
+  </data>
+  <data name="AG_InF.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;AG_InF.Name" xml:space="preserve">
+    <value>AG_InF</value>
+  </data>
+  <data name="&gt;&gt;AG_InF.Type" xml:space="preserve">
+    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8800.22772, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;AG_InF.Parent" xml:space="preserve">
+    <value>GB_InF_Dial</value>
+  </data>
+  <data name="&gt;&gt;AG_InF.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="Lbl_InF_Dial.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1764,162 +1920,6 @@
   <data name="&gt;&gt;CB_CurrentLog.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="AG_InF.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 26</value>
-  </data>
-  <data name="AG_InF.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_InF.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_InF.Size" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_InF.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;AG_InF.Name" xml:space="preserve">
-    <value>AG_InF</value>
-  </data>
-  <data name="&gt;&gt;AG_InF.Type" xml:space="preserve">
-    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8702.29738, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;AG_InF.Parent" xml:space="preserve">
-    <value>GB_InF_Dial</value>
-  </data>
-  <data name="&gt;&gt;AG_InF.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="AG_InV.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 26</value>
-  </data>
-  <data name="AG_InV.Size" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_InV.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;AG_InV.Name" xml:space="preserve">
-    <value>AG_InV</value>
-  </data>
-  <data name="&gt;&gt;AG_InV.Type" xml:space="preserve">
-    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8702.29738, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;AG_InV.Parent" xml:space="preserve">
-    <value>GB_InV_Dial</value>
-  </data>
-  <data name="&gt;&gt;AG_InV.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="AG_BattV.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 26</value>
-  </data>
-  <data name="AG_BattV.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_BattV.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_BattV.Size" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_BattV.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;AG_BattV.Name" xml:space="preserve">
-    <value>AG_BattV</value>
-  </data>
-  <data name="&gt;&gt;AG_BattV.Type" xml:space="preserve">
-    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8702.29738, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;AG_BattV.Parent" xml:space="preserve">
-    <value>GB_BattV_Dial</value>
-  </data>
-  <data name="&gt;&gt;AG_BattV.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="AG_Load.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 26</value>
-  </data>
-  <data name="AG_Load.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_Load.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_Load.Size" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_Load.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;AG_Load.Name" xml:space="preserve">
-    <value>AG_Load</value>
-  </data>
-  <data name="&gt;&gt;AG_Load.Type" xml:space="preserve">
-    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8702.29738, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;AG_Load.Parent" xml:space="preserve">
-    <value>GB_Load_Dial</value>
-  </data>
-  <data name="&gt;&gt;AG_Load.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="AG_OutV.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 26</value>
-  </data>
-  <data name="AG_OutV.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_OutV.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_OutV.Size" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_OutV.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;AG_OutV.Name" xml:space="preserve">
-    <value>AG_OutV</value>
-  </data>
-  <data name="&gt;&gt;AG_OutV.Type" xml:space="preserve">
-    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8702.29738, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;AG_OutV.Parent" xml:space="preserve">
-    <value>GB_OutV_Dial</value>
-  </data>
-  <data name="&gt;&gt;AG_OutV.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="AG_BattCh.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 27</value>
-  </data>
-  <data name="AG_BattCh.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_BattCh.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_BattCh.Size" type="System.Drawing.Size, System.Drawing">
-    <value>148, 130</value>
-  </data>
-  <data name="AG_BattCh.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;AG_BattCh.Name" xml:space="preserve">
-    <value>AG_BattCh</value>
-  </data>
-  <data name="&gt;&gt;AG_BattCh.Type" xml:space="preserve">
-    <value>System.Windows.Forms.AGauge, AGauge, Version=2.1.8702.29738, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;AG_BattCh.Parent" xml:space="preserve">
-    <value>GB_BattCh_Dial</value>
-  </data>
-  <data name="&gt;&gt;AG_BattCh.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -1932,9 +1932,6 @@
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>704, 381</value>
   </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>720, 420</value>
   </data>
@@ -1942,7 +1939,7 @@
     <value>720, 420</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>WinNUT</value>
+    <value>WinNUT Client</value>
   </data>
   <data name="&gt;&gt;NotifyIcon.Name" xml:space="preserve">
     <value>NotifyIcon</value>

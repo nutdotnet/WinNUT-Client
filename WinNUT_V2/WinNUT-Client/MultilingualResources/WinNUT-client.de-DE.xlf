@@ -1925,16 +1925,16 @@ Please correct the error, or cancel the upgrade dialog to continue with the defa
           <target state="final">248, 17</target>
         </trans-unit>
         <trans-unit id="Menu_UPS_Var.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
-          <source>180, 22</source>
-          <target state="final">180, 22</target>
+          <source>177, 22</source>
+          <target state="final">177, 22</target>
         </trans-unit>
         <trans-unit id="Menu_UPS_Var.Text" translate="yes" xml:space="preserve">
           <source>UPS Variable</source>
           <target state="translated">USV-Variablen</target>
         </trans-unit>
         <trans-unit id="Menu_Quit.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
-          <source>180, 22</source>
-          <target state="final">180, 22</target>
+          <source>177, 22</source>
+          <target state="final">177, 22</target>
         </trans-unit>
         <trans-unit id="Menu_Quit.Text" translate="yes" xml:space="preserve">
           <source>Exit</source>
@@ -2013,8 +2013,8 @@ Please correct the error, or cancel the upgrade dialog to continue with the defa
           <target state="final">0, 0</target>
         </trans-unit>
         <trans-unit id="Main_Menu.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
-          <source>351, 24</source>
-          <target state="final">351, 24</target>
+          <source>231, 24</source>
+          <target state="final">231, 24</target>
         </trans-unit>
         <trans-unit id="Main_Menu.TabIndex" translate="no" extype="System.Int32, mscorlib" xml:space="preserve">
           <source>0</source>
@@ -2029,8 +2029,9 @@ Please correct the error, or cancel the upgrade dialog to continue with the defa
           <target state="final">704, 381</target>
         </trans-unit>
         <trans-unit id="$this.Text" translate="yes" xml:space="preserve">
-          <source>WinNUT</source>
-          <target state="final">Windows NUT Client</target>
+          <source>WinNUT Client</source>
+          <target state="needs-review-translation">Windows NUT Client</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="$this.Localizable" translate="no" extype="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" xml:space="preserve" extradata="metadata">
           <source>True</source>
@@ -3189,8 +3190,9 @@ Please correct the error, or cancel the upgrade dialog to continue with the defa
           <target state="needs-review-translation">False</target>
         </trans-unit>
         <trans-unit id="ManageOldPrefsToolStripMenuItem.Size" translate="yes" xml:space="preserve" extype="System.Drawing.Size, System.Drawing">
-          <source>180, 22</source>
+          <source>177, 22</source>
           <target state="needs-review-translation">180, 22</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="ManageOldPrefsToolStripMenuItem.Text" translate="yes" xml:space="preserve">
           <source>Manage Old Prefs...</source>
@@ -3203,10 +3205,6 @@ Please correct the error, or cancel the upgrade dialog to continue with the defa
         <trans-unit id="ManageOldPrefsToolStripMenuItem.ToolTipText" translate="yes" xml:space="preserve">
           <source>Previous old preferences detected. Continue to begin the dialog.</source>
           <target state="new">Previous old preferences detected. Continue to begin the dialog.</target>
-        </trans-unit>
-        <trans-unit id="$this.ImeMode" translate="yes" xml:space="preserve" extype="System.Windows.Forms.ImeMode, System.Windows.Forms">
-          <source>NoControl</source>
-          <target state="needs-review-translation">NoControl</target>
         </trans-unit>
       </group>
     </body>

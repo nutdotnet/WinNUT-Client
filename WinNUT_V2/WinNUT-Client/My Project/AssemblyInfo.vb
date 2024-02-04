@@ -18,7 +18,7 @@ Imports System.Runtime.InteropServices
 ' Vérifiez les valeurs des attributs de l'assembly
 
 <Assembly: AssemblyTitle("WinNUT Client")>
-<Assembly: AssemblyDescription("Windows NUT Client")>
+<Assembly: AssemblyDescription("")>
 
 <Assembly: ComVisible(False)>
 
