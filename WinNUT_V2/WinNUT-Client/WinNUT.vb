@@ -584,7 +584,6 @@ Public Class WinNUT
     End Sub
 
     Private Sub Event_UpdateBatteryState(Optional Reason As String = Nothing) Handles Me.UpdateBatteryState
-        Static Dim Old_Battery_Value As Integer = UPS_BattCh
         Dim Status As String = "Unknown"
         Select Case Reason
             Case Nothing, "Deconnected", "Lost Connect"
@@ -606,7 +605,6 @@ Public Class WinNUT
                     End If
                 End If
         End Select
-        Old_Battery_Value = UPS_BattCh
         LogFile.LogTracing("Battery Status => " & Status, LogLvl.LOG_DEBUG, Me)
     End Sub
 
