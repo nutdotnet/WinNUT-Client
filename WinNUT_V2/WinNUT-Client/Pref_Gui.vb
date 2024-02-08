@@ -338,10 +338,10 @@ Public Class Pref_Gui
 
     Private Sub Btn_ViewLog_Click(sender As Object, e As EventArgs) Handles Btn_ViewLog.Click
         LogFile.LogTracing("Show LogFile", LogLvl.LOG_DEBUG, Me)
-        If File.Exists(LogFile.LogFilePath) Then
+        If LogFile IsNot Nothing AndAlso File.Exists(LogFile.LogFilePath) Then
             Process.Start(LogFile.LogFilePath)
         Else
-            LogFile.LogTracing("LogFile does not exists", LogLvl.LOG_WARNING, Me)
+            LogFile.LogTracing("LogFile does not exists", LogLvl.LOG_ERROR, Me)
             Btn_ViewLog.Enabled = False
             Btn_DeleteLog.Enabled = False
         End If
@@ -368,14 +368,14 @@ Public Class Pref_Gui
     ''' Enable or disable controls to view and delete log data if it's available.
     ''' </summary>
     Private Sub SetLogControlsStatus()
-        If My.Settings.LG_LogToFile Then ' Directory.Exists(Logger.LogFolder)
+        LogFile.LogTracing("Setting LogControl statuses.", LogLvl.LOG_DEBUG, Me)
+
+        If LogFile.IsWritingToFile Then
             Btn_ViewLog.Enabled = True
             Btn_DeleteLog.Enabled = True
         Else
             Btn_ViewLog.Enabled = False
             Btn_DeleteLog.Enabled = False
         End If
-
-        LogFile.LogTracing("Setting LogControl statuses.", LogLvl.LOG_DEBUG, Me)
     End Sub
 End Class
