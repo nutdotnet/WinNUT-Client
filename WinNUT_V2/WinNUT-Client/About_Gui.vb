@@ -11,7 +11,7 @@ Imports WinNUT_Client_Common
 
 Public Class About_Gui
     Private Sub About_Gui_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Lbl_ProgNameVersion.Text = LongProgramName & vbNewLine & "Version " & ProgramVersion
+        Lbl_ProgNameVersion.Text = ProgramName & vbNewLine & "Version " & ProgramVersion
         Lbl_Copyright_2019.Text = Replace(Copyright, "©", vbNewLine & "©")
         LkLbl_Github.Text = GitHubURL
         Icon = WinNUT.Icon

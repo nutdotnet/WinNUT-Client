@@ -361,9 +361,10 @@ Public Class UPS_Device
                 End With
                 RaiseEvent DataUpdated()
             End If
-        Catch Excep As Exception
             ' Something went wrong while trying to read the data... Consider the socket broken and proceed from here.
-            LogFile.LogTracing("Something went wrong in Retrieve_UPS_Datas: " & Excep.ToString(), LogLvl.LOG_ERROR, Me)
+        Catch Excep As Exception
+            LogFile.LogTracing("Something went wrong in Retrieve_UPS_Datas:", LogLvl.LOG_ERROR, Me)
+            LogFile.LogException(Excep, Me)
             Disconnect(False, True)
             Socket_Broken()
         End Try

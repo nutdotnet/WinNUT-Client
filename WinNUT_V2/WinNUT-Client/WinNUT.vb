@@ -133,7 +133,7 @@ Public Class WinNUT
         StrLog.Insert(AppResxStr.STR_LOG_NUT_FSD, My.Resources.Log_Str_12)
 
         'Init Systray
-        NotifyIcon.Text = LongProgramName & " - " & ShortProgramVersion
+        NotifyIcon.Text = ProgramName & " - " & ShortProgramVersion
         NotifyIcon.Visible = False
         LogFile.LogTracing("NotifyIcons Initialised", LogLvl.LOG_DEBUG, Me)
 
@@ -576,7 +576,7 @@ Public Class WinNUT
         If Me.WindowState = System.Windows.Forms.FormWindowState.Minimized And NotifyIcon.Visible = False Then
             Text = FormText
         Else
-            Text = LongProgramName
+            Text = ProgramName
         End If
         Me.FormText = FormText
 
@@ -730,6 +730,7 @@ Public Class WinNUT
             End Select
 
             ' Calculate and display estimated remaining time on battery.
+            ' TODO: overflow exception?
             Dim iSpan As TimeSpan = TimeSpan.FromSeconds(UPS_BattRuntime)
             LogFile.LogTracing("Calculated estimated remaining battery time: " & iSpan.ToString(), LogLvl.LOG_DEBUG, Me)
 
@@ -1032,6 +1033,13 @@ Public Class WinNUT
         LogFile.LogTracing("Windows going down, WinNUT will disconnect.", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_MAIN_GOTOSLEEP))
         UPSDisconnect()
 
+        ' Stub out stop action when debugging.
+#If DEBUG Then
+        If Debugger.IsAttached Then
+            LogFile.LogTracing("Aborting stopAction " & stopAction & " due to attached debugger.", LogLvl.LOG_NOTICE, Me)
+            Return
+        End If
+#Else
         Select Case stopAction
             Case 0
                 Process.Start("C:\WINDOWS\system32\Shutdown.exe", "-f -s -t 0")
@@ -1040,6 +1048,7 @@ Public Class WinNUT
             Case 2
                 Application.SetSuspendState(PowerState.Hibernate, False, True)
         End Select
+#End If
     End Sub
 
     Private Sub Menu_Update_Click(sender As Object, e As EventArgs) Handles Menu_Update.Click

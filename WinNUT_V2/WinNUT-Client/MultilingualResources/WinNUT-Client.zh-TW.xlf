@@ -1742,9 +1742,10 @@ Accepted value: Numeric value from 0 to 100.</source>
           <target state="translated">除錯</target>
         </trans-unit>
         <trans-unit id="Tb_Delay_Com.ToolTip" translate="yes" xml:space="preserve">
-          <source>Time between each update of UPS data (default = 5).
-Accepted value: Numerical value from 1 to 60 seconds.</source>
-          <target state="translated">UPS 資料更新頻率 (預設值 5 秒)。範圍：1-60 秒。</target>
+          <source>Milliseconds between data updates from NUT server.
+Min: 100, Max: 60 000.</source>
+          <target state="needs-review-translation">UPS 資料更新頻率 (預設值 5 秒)。範圍：1-60 秒。</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="Label3.ImeMode" translate="no" extype="System.Windows.Forms.ImeMode, System.Windows.Forms" xml:space="preserve">
           <source>NoControl</source>

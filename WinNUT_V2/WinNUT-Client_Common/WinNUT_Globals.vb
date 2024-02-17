@@ -12,7 +12,6 @@ Public Module WinNUT_Globals
 #Region "Constants/Shareds"
 
     Public ReadOnly ProgramName = My.Application.Info.ProductName
-    Public ReadOnly LongProgramName = My.Application.Info.Description
     Public ReadOnly ProgramVersion = My.Application.Info.Version.ToString()
     Public ReadOnly ShortProgramVersion = ProgramVersion.Substring(0, ProgramVersion.IndexOf(".", ProgramVersion.IndexOf(".") + 1))
     Public ReadOnly GitHubURL = My.Application.Info.Trademark
