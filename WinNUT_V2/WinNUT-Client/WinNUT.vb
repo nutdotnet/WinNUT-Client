@@ -686,21 +686,23 @@ Public Class WinNUT
                 Lbl_VOB.BackColor = Color.Green
                 ActualAppIconIdx = 0
 
-                If Not ShutdownStatus Then
-                    If .Batt_Charge <= My.Settings.PW_BattChrgFloor Or
-                    .Batt_Runtime <= My.Settings.PW_RuntimeFloor Then
-                        LogFile.LogTracing("UPS battery has dropped below stop condition limits.",
-                                           LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_LOG_SHUT_START))
-                        Shutdown_Event()
-                    Else
-                        LogFile.LogTracing(String.Format("UPS charge ({0}%) or Runtime ({1}) have not met shutdown conditions {2} or {3}.",
-                        .Batt_Charge, .Batt_Runtime, My.Settings.PW_BattChrgFloor, My.Settings.PW_RuntimeFloor),
-                        LogLvl.LOG_DEBUG, Me)
+                If .Batt_Charge = -1 AndAlso .Batt_Runtime = -1 Then
+                    LogFile.LogTracing("Battery properties unavailable, unable to validate shutdown conditions.", LogLvl.LOG_WARNING, Me)
+                ElseIf Not ShutdownStatus Then
+                If .Batt_Charge <= My.Settings.PW_BattChrgFloor Or
+                        .Batt_Runtime <= My.Settings.PW_RuntimeFloor Then
+                            LogFile.LogTracing("UPS battery has dropped below stop condition limits.",
+                                               LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_LOG_SHUT_START))
+                            Shutdown_Event()
+                        Else
+                            LogFile.LogTracing(String.Format("UPS charge ({0}%) or Runtime ({1}) have not met shutdown conditions {2} or {3}.",
+                            .Batt_Charge, .Batt_Runtime, My.Settings.PW_BattChrgFloor, My.Settings.PW_RuntimeFloor),
+                            LogLvl.LOG_DEBUG, Me)
+                        End If
                     End If
                 End If
-            End If
 
-            If .UPS_Status.HasFlag(UPS_States.OVER) Then
+                If .UPS_Status.HasFlag(UPS_States.OVER) Then
                 Lbl_VOLoad.BackColor = Color.Red
             Else
                 Lbl_VOLoad.BackColor = Color.White
@@ -730,17 +732,20 @@ Public Class WinNUT
             End Select
 
             ' Calculate and display estimated remaining time on battery.
-            ' TODO: overflow exception?
-            Dim iSpan As TimeSpan = TimeSpan.FromSeconds(UPS_BattRuntime)
-            LogFile.LogTracing("Calculated estimated remaining battery time: " & iSpan.ToString(), LogLvl.LOG_DEBUG, Me)
+            If UPS_BattRuntime >= 0 AndAlso UPS_BattRuntime <= 86400 Then
+                Dim iSpan As TimeSpan = TimeSpan.FromSeconds(UPS_BattRuntime)
+                LogFile.LogTracing("Calculated estimated remaining battery time: " & iSpan.ToString(), LogLvl.LOG_DEBUG, Me)
 
-            ' Format the TimeSpan using a standard format (g = 0:00:00)
-            ' https://docs.microsoft.com/en-us/dotnet/api/system.timespan.tostring
-            Lbl_VRTime.Text = iSpan.ToString("g")
-            'Lbl_VRTime.Text = iSpan.Hours.ToString.PadLeft(2, "0"c) & ":" &
-            'iSpan.Minutes.ToString.PadLeft(2, "0"c) & ":" &
-            'iSpan.Seconds.ToString.PadLeft(2, "0"c)
-            'End If
+                ' Format the TimeSpan using a standard format (g = 0:00:00)
+                ' https://docs.microsoft.com/en-us/dotnet/api/system.timespan.tostring
+                Lbl_VRTime.Text = iSpan.ToString("g")
+                'Lbl_VRTime.Text = iSpan.Hours.ToString.PadLeft(2, "0"c) & ":" &
+                'iSpan.Minutes.ToString.PadLeft(2, "0"c) & ":" &
+                'iSpan.Seconds.ToString.PadLeft(2, "0"c)
+                'End If
+            Else
+                Lbl_VRTime.Text = My.Resources.VariableUnavailable
+            End If
 
             LogFile.LogTracing("Update Dial", LogLvl.LOG_DEBUG, Me)
             AG_InV.Value1 = UPS_InputV

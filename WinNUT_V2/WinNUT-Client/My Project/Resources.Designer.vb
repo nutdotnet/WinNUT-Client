@@ -794,6 +794,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Unavailable.
+        '''</summary>
+        Public ReadOnly Property VariableUnavailable() As String
+            Get
+                Return ResourceManager.GetString("VariableUnavailable", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
         Public ReadOnly Property ViewLogFile_24x24() As System.Drawing.Bitmap
