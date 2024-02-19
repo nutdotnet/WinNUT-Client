@@ -689,6 +689,24 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Old preferences were not detected in your system..
+        '''</summary>
+        Public ReadOnly Property ManageOldPrefsToolstripMenuItem_Disabled_TooltipText() As String
+            Get
+                Return ResourceManager.GetString("ManageOldPrefsToolstripMenuItem_Disabled_TooltipText", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Old preferences detected. Click to run the import wizard..
+        '''</summary>
+        Public ReadOnly Property ManageOldPrefsToolstripMenuItem_Enabled_TooltipText() As String
+            Get
+                Return ResourceManager.GetString("ManageOldPrefsToolstripMenuItem_Enabled_TooltipText", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
         Public ReadOnly Property regedit_exe_14_100_0() As System.Drawing.Bitmap

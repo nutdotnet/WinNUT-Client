@@ -318,7 +318,7 @@ Public Class UPS_Device
                     End If
 
                     ' Handle out-of-range battery charge
-                    If .Batt_Charge > 0 AndAlso .Batt_Charge <= 100 Then
+                    If .Batt_Charge < 0 OrElse .Batt_Charge > 100 Then
                         If .Batt_Voltage > 0 Then
                             Dim nBatt = Math.Floor(.Batt_Voltage / 12)
                             .Batt_Charge = Math.Floor((.Batt_Voltage - (11.6 * nBatt)) / (0.02 * nBatt))
@@ -327,7 +327,7 @@ Public Class UPS_Device
                         End If
                     End If
 
-                    ' Handle cases of UPSs that are unable to report battery runtime or load correctly while on battery.
+                    ' Attempt to calculate battery runtime if not given by the UPS.
                     If .Batt_Runtime = -1 Then
                         If .Output_Voltage = -1 OrElse .Batt_Voltage = -1 OrElse .Batt_Capacity = -1 OrElse .Batt_Charge = -1 Then
                             LogFile.LogTracing("Unable to calculate battery runtime, missing UPS variables.", LogLvl.LOG_WARNING, Me)

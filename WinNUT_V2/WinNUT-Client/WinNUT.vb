@@ -32,6 +32,12 @@ Public Class WinNUT
         End Set
     End Property
 
+    Private ReadOnly Property OldPrefsExist As Boolean
+        Get
+            Return OldParams.WinNUT_Params.RegistryKeyRoot IsNot Nothing
+        End Get
+    End Property
+
 #End Region
     Private WithEvents LogFile As Logger = WinNUT_Globals.LogFile
 
@@ -234,14 +240,13 @@ Public Class WinNUT
         LogFile.LogTracing("Update Icon at Startup", LogLvl.LOG_DEBUG, Me)
         ' Start_Tray_Icon = Nothing
 
-        If OldParams.WinNUT_Params.RegistryKeyRoot IsNot Nothing Then
+        ' If this is the first time WinNUT has been launched with the Settings system, check if old preferences exist
+        ' and prompt the user to upgrade.
+        If Not My.Settings.UpgradePrefsCompleted AndAlso OldPrefsExist Then
             LogFile.LogTracing("Previous preferences data detected in the Registry.", LogLvl.LOG_NOTICE, Me,
                                My.Resources.DetectedPreviousPrefsData)
-            ManageOldPrefsToolStripMenuItem.Enabled = True
 
-            If Not My.Settings.UpgradePrefsCompleted Then
-                RunRegPrefsUpgrade()
-            End If
+            RunRegPrefsUpgrade()
         End If
 
         'Run Update
@@ -382,11 +387,27 @@ Public Class WinNUT
                 End If
         End Select
     End Sub
+
+    ''' <summary>
+    ''' Updates the Manage old prefs File menu item status depending on the presence of old preferences.
+    ''' </summary>
+    Private Sub UpdateManageOldPrefsMenuItemStatus()
+        If OldParams.WinNUT_Params.RegistryKeyRoot IsNot Nothing Then
+
+            ManageOldPrefsToolStripMenuItem.Enabled = True
+            ManageOldPrefsToolStripMenuItem.ToolTipText = My.Resources.ManageOldPrefsToolstripMenuItem_Enabled_TooltipText
+        Else
+            ManageOldPrefsToolStripMenuItem.Enabled = False
+            ManageOldPrefsToolStripMenuItem.ToolTipText = My.Resources.ManageOldPrefsToolstripMenuItem_Disabled_TooltipText
+        End If
+    End Sub
+
     Private Sub RunRegPrefsUpgrade()
         LogFile.LogTracing("Starting Upgrade dialog.", LogLvl.LOG_NOTICE, Me)
         Dim upPrefsDg As New Forms.UpgradePrefsDialog()
         upPrefsDg.ShowDialog()
 
+        UpdateManageOldPrefsMenuItemStatus()
         WinNUT_PrefsChanged(True)
     End Sub
 
