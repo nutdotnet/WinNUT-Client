@@ -849,6 +849,21 @@ Please correct the error, or cancel the upgrade dialog to continue with the defa
           <target state="new">No preferences were detected in the Registry. Unable to continue.</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Alert the user that the dialog is unable to continue, since no preferences are detected in the Registry.</note>
         </trans-unit>
+        <trans-unit id="ManageOldPrefsToolstripMenuItem_Disabled_TooltipText" translate="yes" xml:space="preserve">
+          <source>Old preferences were not detected in your system.</source>
+          <target state="new">Old preferences were not detected in your system.</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Similar to _Enabled tooltip, except that the preferences were not detected.</note>
+        </trans-unit>
+        <trans-unit id="ManageOldPrefsToolstripMenuItem_Enabled_TooltipText" translate="yes" xml:space="preserve">
+          <source>Old preferences detected. Click to run the import wizard.</source>
+          <target state="new">Old preferences detected. Click to run the import wizard.</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Tooltip of the "manage old prefs" menu item, explaining that the old preferences were detected and that clicking will open the wizard dialog.</note>
+        </trans-unit>
+        <trans-unit id="VariableUnavailable" translate="yes" xml:space="preserve">
+          <source>Unavailable</source>
+          <target state="new">Unavailable</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Indicate that a variable is unavailable</note>
+        </trans-unit>
       </group>
     </body>
   </file>
@@ -2536,16 +2551,16 @@ Accepted value: Numeric value from 0 to 100.</source>
           <target state="final">None</target>
         </trans-unit>
         <trans-unit id="Menu_UPS_Var.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
-          <source>177, 22</source>
-          <target state="final">177, 22</target>
+          <source>180, 22</source>
+          <target state="final">180, 22</target>
         </trans-unit>
         <trans-unit id="Menu_UPS_Var.Text" translate="yes" xml:space="preserve">
           <source>UPS Variable</source>
           <target state="final">Переменные ИБП</target>
         </trans-unit>
         <trans-unit id="Menu_Quit.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
-          <source>177, 22</source>
-          <target state="final">177, 22</target>
+          <source>180, 22</source>
+          <target state="final">180, 22</target>
         </trans-unit>
         <trans-unit id="Menu_Quit.Text" translate="yes" xml:space="preserve">
           <source>Exit</source>
@@ -2628,8 +2643,8 @@ Accepted value: Numeric value from 0 to 100.</source>
           <target state="final">0, 24</target>
         </trans-unit>
         <trans-unit id="Main_Menu.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
-          <source>231, 24</source>
-          <target state="final">231, 24</target>
+          <source>351, 24</source>
+          <target state="final">351, 24</target>
         </trans-unit>
         <trans-unit id="Main_Menu.TabIndex" translate="no" extype="System.Int32, mscorlib" xml:space="preserve">
           <source>0</source>
@@ -3741,7 +3756,7 @@ Accepted value: Numeric value from 0 to 100.</source>
           <target state="needs-review-translation">False</target>
         </trans-unit>
         <trans-unit id="ManageOldPrefsToolStripMenuItem.Size" translate="yes" xml:space="preserve" extype="System.Drawing.Size, System.Drawing">
-          <source>177, 22</source>
+          <source>180, 22</source>
           <target state="needs-review-translation">180, 22</target>
           <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
@@ -3752,10 +3767,6 @@ Accepted value: Numeric value from 0 to 100.</source>
         <trans-unit id="ManageOldPrefsToolStripMenuItem.ShortcutKeyDisplayString" translate="yes" xml:space="preserve">
           <source></source>
           <target state="new"></target>
-        </trans-unit>
-        <trans-unit id="ManageOldPrefsToolStripMenuItem.ToolTipText" translate="yes" xml:space="preserve">
-          <source>Previous old preferences detected. Continue to begin the dialog.</source>
-          <target state="new">Previous old preferences detected. Continue to begin the dialog.</target>
         </trans-unit>
       </group>
     </body>
