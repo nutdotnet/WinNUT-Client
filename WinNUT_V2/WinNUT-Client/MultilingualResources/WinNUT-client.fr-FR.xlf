@@ -1238,10 +1238,11 @@ inférieur à</target>
           <target state="final">17, 17</target>
         </trans-unit>
         <trans-unit id="Tb_Delay_Com.ToolTip" translate="yes" xml:space="preserve">
-          <source>Time between each update of UPS data (default = 5).
-Accepted value: Numerical value from 1 to 60 seconds.</source>
-          <target state="final">Temps entre chaque mise à jour des données UPS (par défaut = 5).
+          <source>Milliseconds between data updates from NUT server.
+Min: 100, Max: 60 000.</source>
+          <target state="needs-review-translation">Temps entre chaque mise à jour des données UPS (par défaut = 5).
 Valeur acceptée: valeur numérique de 1 à 60 secondes.</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="Tb_UPS_Name.ToolTip" translate="yes" xml:space="preserve">
           <source>UPS name to monitor.

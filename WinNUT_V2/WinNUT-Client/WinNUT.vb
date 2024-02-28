@@ -32,6 +32,12 @@ Public Class WinNUT
         End Set
     End Property
 
+    Private ReadOnly Property OldPrefsExist As Boolean
+        Get
+            Return OldParams.WinNUT_Params.RegistryKeyRoot IsNot Nothing
+        End Get
+    End Property
+
 #End Region
     Private WithEvents LogFile As Logger = WinNUT_Globals.LogFile
 
@@ -133,7 +139,7 @@ Public Class WinNUT
         StrLog.Insert(AppResxStr.STR_LOG_NUT_FSD, My.Resources.Log_Str_12)
 
         'Init Systray
-        NotifyIcon.Text = LongProgramName & " - " & ShortProgramVersion
+        NotifyIcon.Text = ProgramName & " - " & ShortProgramVersion
         NotifyIcon.Visible = False
         LogFile.LogTracing("NotifyIcons Initialised", LogLvl.LOG_DEBUG, Me)
 
@@ -234,14 +240,13 @@ Public Class WinNUT
         LogFile.LogTracing("Update Icon at Startup", LogLvl.LOG_DEBUG, Me)
         ' Start_Tray_Icon = Nothing
 
-        If OldParams.WinNUT_Params.RegistryKeyRoot IsNot Nothing Then
+        ' If this is the first time WinNUT has been launched with the Settings system, check if old preferences exist
+        ' and prompt the user to upgrade.
+        If Not My.Settings.UpgradePrefsCompleted AndAlso OldPrefsExist Then
             LogFile.LogTracing("Previous preferences data detected in the Registry.", LogLvl.LOG_NOTICE, Me,
                                My.Resources.DetectedPreviousPrefsData)
-            ManageOldPrefsToolStripMenuItem.Enabled = True
 
-            If Not My.Settings.UpgradePrefsCompleted Then
-                RunRegPrefsUpgrade()
-            End If
+            RunRegPrefsUpgrade()
         End If
 
         'Run Update
@@ -382,11 +387,27 @@ Public Class WinNUT
                 End If
         End Select
     End Sub
+
+    ''' <summary>
+    ''' Updates the Manage old prefs File menu item status depending on the presence of old preferences.
+    ''' </summary>
+    Private Sub UpdateManageOldPrefsMenuItemStatus()
+        If OldParams.WinNUT_Params.RegistryKeyRoot IsNot Nothing Then
+
+            ManageOldPrefsToolStripMenuItem.Enabled = True
+            ManageOldPrefsToolStripMenuItem.ToolTipText = My.Resources.ManageOldPrefsToolstripMenuItem_Enabled_TooltipText
+        Else
+            ManageOldPrefsToolStripMenuItem.Enabled = False
+            ManageOldPrefsToolStripMenuItem.ToolTipText = My.Resources.ManageOldPrefsToolstripMenuItem_Disabled_TooltipText
+        End If
+    End Sub
+
     Private Sub RunRegPrefsUpgrade()
         LogFile.LogTracing("Starting Upgrade dialog.", LogLvl.LOG_NOTICE, Me)
         Dim upPrefsDg As New Forms.UpgradePrefsDialog()
         upPrefsDg.ShowDialog()
 
+        UpdateManageOldPrefsMenuItemStatus()
         WinNUT_PrefsChanged(True)
     End Sub
 
@@ -576,7 +597,7 @@ Public Class WinNUT
         If Me.WindowState = System.Windows.Forms.FormWindowState.Minimized And NotifyIcon.Visible = False Then
             Text = FormText
         Else
-            Text = LongProgramName
+            Text = ProgramName
         End If
         Me.FormText = FormText
 
@@ -584,7 +605,6 @@ Public Class WinNUT
     End Sub
 
     Private Sub Event_UpdateBatteryState(Optional Reason As String = Nothing) Handles Me.UpdateBatteryState
-        Static Dim Old_Battery_Value As Integer = UPS_BattCh
         Dim Status As String = "Unknown"
         Select Case Reason
             Case Nothing, "Deconnected", "Lost Connect"
@@ -606,7 +626,6 @@ Public Class WinNUT
                     End If
                 End If
         End Select
-        Old_Battery_Value = UPS_BattCh
         LogFile.LogTracing("Battery Status => " & Status, LogLvl.LOG_DEBUG, Me)
     End Sub
 
@@ -688,21 +707,23 @@ Public Class WinNUT
                 Lbl_VOB.BackColor = Color.Green
                 ActualAppIconIdx = 0
 
-                If Not ShutdownStatus Then
-                    If .Batt_Charge <= My.Settings.PW_BattChrgFloor Or
-                    .Batt_Runtime <= My.Settings.PW_RuntimeFloor Then
-                        LogFile.LogTracing("UPS battery has dropped below stop condition limits.",
-                                           LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_LOG_SHUT_START))
-                        Shutdown_Event()
-                    Else
-                        LogFile.LogTracing(String.Format("UPS charge ({0}%) or Runtime ({1}) have not met shutdown conditions {2} or {3}.",
-                        .Batt_Charge, .Batt_Runtime, My.Settings.PW_BattChrgFloor, My.Settings.PW_RuntimeFloor),
-                        LogLvl.LOG_DEBUG, Me)
+                If .Batt_Charge = -1 AndAlso .Batt_Runtime = -1 Then
+                    LogFile.LogTracing("Battery properties unavailable, unable to validate shutdown conditions.", LogLvl.LOG_WARNING, Me)
+                ElseIf Not ShutdownStatus Then
+                If .Batt_Charge <= My.Settings.PW_BattChrgFloor Or
+                        .Batt_Runtime <= My.Settings.PW_RuntimeFloor Then
+                            LogFile.LogTracing("UPS battery has dropped below stop condition limits.",
+                                               LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_LOG_SHUT_START))
+                            Shutdown_Event()
+                        Else
+                            LogFile.LogTracing(String.Format("UPS charge ({0}%) or Runtime ({1}) have not met shutdown conditions {2} or {3}.",
+                            .Batt_Charge, .Batt_Runtime, My.Settings.PW_BattChrgFloor, My.Settings.PW_RuntimeFloor),
+                            LogLvl.LOG_DEBUG, Me)
+                        End If
                     End If
                 End If
-            End If
 
-            If .UPS_Status.HasFlag(UPS_States.OVER) Then
+                If .UPS_Status.HasFlag(UPS_States.OVER) Then
                 Lbl_VOLoad.BackColor = Color.Red
             Else
                 Lbl_VOLoad.BackColor = Color.White
@@ -732,16 +753,20 @@ Public Class WinNUT
             End Select
 
             ' Calculate and display estimated remaining time on battery.
-            Dim iSpan As TimeSpan = TimeSpan.FromSeconds(UPS_BattRuntime)
-            LogFile.LogTracing("Calculated estimated remaining battery time: " & iSpan.ToString(), LogLvl.LOG_DEBUG, Me)
+            If UPS_BattRuntime >= 0 AndAlso UPS_BattRuntime <= 86400 Then
+                Dim iSpan As TimeSpan = TimeSpan.FromSeconds(UPS_BattRuntime)
+                LogFile.LogTracing("Calculated estimated remaining battery time: " & iSpan.ToString(), LogLvl.LOG_DEBUG, Me)
 
-            ' Format the TimeSpan using a standard format (g = 0:00:00)
-            ' https://docs.microsoft.com/en-us/dotnet/api/system.timespan.tostring
-            Lbl_VRTime.Text = iSpan.ToString("g")
-            'Lbl_VRTime.Text = iSpan.Hours.ToString.PadLeft(2, "0"c) & ":" &
-            'iSpan.Minutes.ToString.PadLeft(2, "0"c) & ":" &
-            'iSpan.Seconds.ToString.PadLeft(2, "0"c)
-            'End If
+                ' Format the TimeSpan using a standard format (g = 0:00:00)
+                ' https://docs.microsoft.com/en-us/dotnet/api/system.timespan.tostring
+                Lbl_VRTime.Text = iSpan.ToString("g")
+                'Lbl_VRTime.Text = iSpan.Hours.ToString.PadLeft(2, "0"c) & ":" &
+                'iSpan.Minutes.ToString.PadLeft(2, "0"c) & ":" &
+                'iSpan.Seconds.ToString.PadLeft(2, "0"c)
+                'End If
+            Else
+                Lbl_VRTime.Text = My.Resources.VariableUnavailable
+            End If
 
             LogFile.LogTracing("Update Dial", LogLvl.LOG_DEBUG, Me)
             AG_InV.Value1 = UPS_InputV
@@ -1034,6 +1059,13 @@ Public Class WinNUT
         LogFile.LogTracing("Windows going down, WinNUT will disconnect.", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_MAIN_GOTOSLEEP))
         UPSDisconnect()
 
+        ' Stub out stop action when debugging.
+#If DEBUG Then
+        If Debugger.IsAttached Then
+            LogFile.LogTracing("Aborting stopAction " & stopAction & " due to attached debugger.", LogLvl.LOG_NOTICE, Me)
+            Return
+        End If
+#Else
         Select Case stopAction
             Case 0
                 Process.Start("C:\WINDOWS\system32\Shutdown.exe", "-f -s -t 0")
@@ -1042,6 +1074,7 @@ Public Class WinNUT
             Case 2
                 Application.SetSuspendState(PowerState.Hibernate, False, True)
         End Select
+#End If
     End Sub
 
     Private Sub Menu_Update_Click(sender As Object, e As EventArgs) Handles Menu_Update.Click

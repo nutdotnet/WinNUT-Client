@@ -264,7 +264,7 @@ Public Class UPS_Device
         End Try
 
         ' Other constant values for UPS calibration.
-        freshData.UPS_Value.Batt_Capacity = Double.Parse(GetUPSVar("battery.capacity", 7), INVARIANT_CULTURE)
+        freshData.UPS_Value.Batt_Capacity = Double.Parse(GetUPSVar("battery.capacity", -1), INVARIANT_CULTURE)
         Freq_Fallback = Double.Parse(GetUPSVar("output.frequency.nominal", Freq_Fallback), INVARIANT_CULTURE)
 
         LogFile.LogTracing("Completed retrieval of basic UPS product information.", LogLvl.LOG_NOTICE, Me)
@@ -280,11 +280,11 @@ Public Class UPS_Device
 
             If IsConnected Then
                 With UPS_Datas.UPS_Value
-                    .Batt_Charge = Double.Parse(GetUPSVar("battery.charge", 255), INVARIANT_CULTURE)
-                    .Batt_Voltage = Double.Parse(GetUPSVar("battery.voltage", 12), INVARIANT_CULTURE)
-                    .Batt_Runtime = Double.Parse(GetUPSVar("battery.runtime", 86400), INVARIANT_CULTURE)
+                    .Batt_Charge = Double.Parse(GetUPSVar("battery.charge", -1), INVARIANT_CULTURE)
+                    .Batt_Voltage = Double.Parse(GetUPSVar("battery.voltage", -1), INVARIANT_CULTURE)
+                    .Batt_Runtime = Double.Parse(GetUPSVar("battery.runtime", -1), INVARIANT_CULTURE)
                     .Power_Frequency = Double.Parse(GetUPSVar("input.frequency", Double.Parse(GetUPSVar("output.frequency", Freq_Fallback), INVARIANT_CULTURE)), INVARIANT_CULTURE)
-                    .Input_Voltage = Double.Parse(GetUPSVar("input.voltage", 220), INVARIANT_CULTURE)
+                    .Input_Voltage = Double.Parse(GetUPSVar("input.voltage", -1), INVARIANT_CULTURE)
                     .Output_Voltage = Double.Parse(GetUPSVar("output.voltage", .Input_Voltage), INVARIANT_CULTURE)
                     .Load = Double.Parse(GetUPSVar("ups.load", 0), INVARIANT_CULTURE)
 
@@ -317,24 +317,36 @@ Public Class UPS_Device
                         .Output_Power = parsedValue
                     End If
 
-                    ' Handle cases of UPSs that are unable to report battery runtime or load correctly while on battery.
-                    Dim PowerDivider As Double = 0.5
-                    Select Case .Load
-                        Case 76 To 100
-                            PowerDivider = 0.4
-                        Case 51 To 75
-                            PowerDivider = 0.3
-                    End Select
-
-                    If .Batt_Charge = 255 Then
-                        Dim nBatt = Math.Floor(.Batt_Voltage / 12)
-                        .Batt_Charge = Math.Floor((.Batt_Voltage - (11.6 * nBatt)) / (0.02 * nBatt))
+                    ' Handle out-of-range battery charge
+                    If .Batt_Charge < 0 OrElse .Batt_Charge > 100 Then
+                        If .Batt_Voltage > 0 Then
+                            Dim nBatt = Math.Floor(.Batt_Voltage / 12)
+                            .Batt_Charge = Math.Floor((.Batt_Voltage - (11.6 * nBatt)) / (0.02 * nBatt))
+                        Else
+                            LogFile.LogTracing("Unable to calculate UPS Batt_Charge: Batt_Voltage (" & .Batt_Voltage & ") out of range.", LogLvl.LOG_WARNING, Me)
+                        End If
                     End If
 
-                    If .Batt_Runtime >= 86400 Then
-                        .Load = If(.Load <> 0, .Load, 0.1)
-                        Dim BattInstantCurrent = (.Output_Voltage * .Load) / (.Batt_Voltage * 100)
-                        .Batt_Runtime = Math.Floor(.Batt_Capacity * 0.6 * .Batt_Charge * (1 - PowerDivider) * 3600 / (BattInstantCurrent * 100))
+                    ' Attempt to calculate battery runtime if not given by the UPS.
+                    If .Batt_Runtime = -1 Then
+                        If .Output_Voltage = -1 OrElse .Batt_Voltage = -1 OrElse .Batt_Capacity = -1 OrElse .Batt_Charge = -1 Then
+                            LogFile.LogTracing("Unable to calculate battery runtime, missing UPS variables.", LogLvl.LOG_WARNING, Me)
+                            LogFile.LogTracing(String.Format("Output_Voltage: {0}, Batt_Voltage: {1}, Batt_Capacity: {2}, Batt_Charge: {3}",
+                                .Output_Voltage, .Batt_Voltage, .Batt_Capacity, .Batt_Charge), LogLvl.LOG_WARNING, Me)
+
+                        Else
+                            Dim PowerDivider As Double = 0.5
+                            Select Case .Load
+                                Case 76 To 100
+                                    PowerDivider = 0.4
+                                Case 51 To 75
+                                    PowerDivider = 0.3
+                            End Select
+
+                            .Load = If(.Load <> 0, .Load, 0.1)
+                            Dim BattInstantCurrent = (.Output_Voltage * .Load) / (.Batt_Voltage * 100)
+                            .Batt_Runtime = Math.Floor(.Batt_Capacity * 0.6 * .Batt_Charge * (1 - PowerDivider) * 3600 / (BattInstantCurrent * 100))
+                        End If
                     End If
 
                     UPS_rt_Status = GetUPSVar("ups.status", UPS_States.None)
@@ -361,9 +373,10 @@ Public Class UPS_Device
                 End With
                 RaiseEvent DataUpdated()
             End If
-        Catch Excep As Exception
             ' Something went wrong while trying to read the data... Consider the socket broken and proceed from here.
-            LogFile.LogTracing("Something went wrong in Retrieve_UPS_Datas: " & Excep.ToString(), LogLvl.LOG_ERROR, Me)
+        Catch Excep As Exception
+            LogFile.LogTracing("Something went wrong in Retrieve_UPS_Datas:", LogLvl.LOG_ERROR, Me)
+            LogFile.LogException(Excep, Me)
             Disconnect(False, True)
             Socket_Broken()
         End Try

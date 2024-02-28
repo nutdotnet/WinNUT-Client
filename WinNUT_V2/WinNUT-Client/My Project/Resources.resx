@@ -321,6 +321,14 @@ Cancel to Save Msi and Install Later</value>
   <data name="Log_Str_12" xml:space="preserve">
     <value>Stop condition imposed by the NUT server</value>
   </data>
+  <data name="ManageOldPrefsToolstripMenuItem_Disabled_TooltipText" xml:space="preserve">
+    <value>Old preferences were not detected in your system.</value>
+    <comment>Similar to _Enabled tooltip, except that the preferences were not detected.</comment>
+  </data>
+  <data name="ManageOldPrefsToolstripMenuItem_Enabled_TooltipText" xml:space="preserve">
+    <value>Old preferences detected. Click to run the import wizard.</value>
+    <comment>Tooltip of the "manage old prefs" menu item, explaining that the old preferences were detected and that clicking will open the wizard dialog.</comment>
+  </data>
   <data name="regedit_exe_14_100_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\regedit.exe_14_100-0.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -366,6 +374,10 @@ Please correct the error, or cancel the upgrade dialog to continue with the defa
   </data>
   <data name="ups_104x104" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ups_104x104.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="VariableUnavailable" xml:space="preserve">
+    <value>Unavailable</value>
+    <comment>Indicate that a variable is unavailable</comment>
   </data>
   <data name="ViewLogFile_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ViewLogFile_24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

@@ -9,6 +9,7 @@
 
 Imports System.Globalization
 Imports System.IO
+Imports System.Text
 Imports Microsoft.VisualBasic.Logging
 
 Public Class Logger
@@ -129,7 +130,7 @@ Public Class Logger
             LogFile.CustomLocation = baseDataFolder
         End If
 
-        LogTracing(String.Format("{0} {1} Log file init", LongProgramName, ProgramVersion), LogLvl.LOG_NOTICE, Me)
+        LogTracing(String.Format("{0} {1} Log file init", ProgramName, ProgramVersion), LogLvl.LOG_NOTICE, Me)
 
         If LastEventsList.Count > 0 Then
             ' Fill new file with the LastEventsList buffer
@@ -202,6 +203,22 @@ Public Class Logger
             L_CurrentLogData = LogToDisplay
             RaiseEvent NewData(sender)
         End If
+    End Sub
+
+    Public Sub LogException(ex As Exception, sender As Object)
+        Dim sb As New StringBuilder
+        sb.AppendLine(ex.GetType().ToString() & " thrown in " & ex.Source)
+        sb.AppendLine("Message: " & ex.Message)
+        sb.AppendLine(ex.StackTrace)
+
+        LogTracing(sb.ToString(), LogLvl.LOG_ERROR, sender)
+
+        If ex.InnerException IsNot Nothing Then
+            LogTracing("Inner exception present:", LogLvl.LOG_ERROR, sender)
+            LogException(ex.InnerException, ex)
+        End If
+
+        LogTracing("Exception report complete.", LogLvl.LOG_NOTICE, Me)
     End Sub
 
     Private Function FormatLogLine(message As String, logLvl As LogLvl, Optional sender As Object = Nothing)
