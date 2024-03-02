@@ -695,7 +695,7 @@ Public Class WinNUT
             UPS_InputV = .Input_Voltage
             UPS_OutputV = .Output_Voltage
             UPS_Load = .Load
-            UPS_Status = "OL"
+            UPS_Status = .UPS_Status
             UPS_OutPower = .Output_Power
 
             If .UPS_Status.HasFlag(UPS_States.OL) Then

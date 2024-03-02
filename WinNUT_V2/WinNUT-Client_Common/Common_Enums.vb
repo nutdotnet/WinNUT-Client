@@ -115,6 +115,7 @@ Public Enum UPS_States
     OVER = 1 << 10
     TRIM = 1 << 11
     BOOST = 1 << 12
+    ALARM = 1 << 13
 End Enum
 
 Public Enum PowerMethod
