@@ -1,6 +1,6 @@
 ---
-name: Bug report [please see below]
-about: Create a report to help us improve
+name: Bug report [advanced]
+about: Please consider using the Discussions if you're experiencing a problem.
 title: ''
 labels: bug
 assignees: gbakeman
@@ -9,6 +9,7 @@ assignees: gbakeman
 
 **Please make sure to fill out this form completely, and attach your program logs (set to Debug setting). You can delete this line.**
 
+- [ ] Searched to see if this issue exists
 - [ ] Completed below form
 - [ ] Attached debug log file
 - [ ] Copy output in File -> UPS Variable

@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Experiencing an issue?
+    url: https://github.com/nutdotnet/WinNUT-Client/discussions/categories/q-a
+    about: Go here to see and create Discussions.
