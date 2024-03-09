@@ -40,7 +40,24 @@ Namespace My
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
             ' Uncomment below and comment out Handles line for _UnhandledException sub when debugging unhandled exceptions.
             ' AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf AppDomainUnhandledException
+
             Init_Globals()
+
+            ' If first run indicated by Settings, attempt upgrade in case older version is present.
+            ' Only necessary when deploying MSI. Remove once using pure ClickOnce.
+            If Settings.IsFirstRun Then
+                Try
+                    Settings.Upgrade()
+                    LogFile.LogTracing("Settings upgrade completed without exception.", LogLvl.LOG_NOTICE, Me)
+                Catch ex As ConfigurationErrorsException
+                    LogFile.LogTracing("Error encountered while trying to upgrade Settings:", LogLvl.LOG_ERROR, Me)
+                    LogFile.LogException(ex, Me)
+                End Try
+
+                Settings.IsFirstRun = False
+                Settings.Save()
+            End If
+
             LogFile.LogTracing("MyApplication_Startup complete.", LogLvl.LOG_DEBUG, Me)
         End Sub
 
