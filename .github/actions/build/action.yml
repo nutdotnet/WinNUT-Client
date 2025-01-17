@@ -1,0 +1,32 @@
+name: Prepare environment and build
+
+description: Prepares the environment for building, and builds the solution with the given parameters.
+
+inputs:
+  multilingualBuild:
+    description: "Installs the Multilingual App Toolkit to enable language compiling."
+    default: true
+    required: false
+    type: boolean
+
+  buildConfig:
+    description: "What configuration MSBuild will build for."
+    required: false
+    default: "Debug"
+    type: string
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Install Multilingual App Toolkit extension
+      if: ${{ inputs.multilingualBuild }}
+      uses: ./.github/actions/test-vsix-installer
+      with:
+        packagename: 'dts-publisher.mat2022'
+
+    - name: Build solution
+      shell: pwsh
+      run: msbuild -nologo -restore -t:build -p:Configuration=${{ inputs.buildConfig }} WinNUT_V2/WinNUT_V2.sln
