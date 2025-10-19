@@ -642,7 +642,7 @@ Public Class WinNUT
                     LogFile.LogTracing("Battery properties unavailable, unable to validate shutdown conditions.", LogLvl.LOG_WARNING, Me)
                 ElseIf Not ShutdownStatus Then
                     If .Batt_Charge <= My.Settings.PW_BattChrgFloor Or
-                        .Batt_Runtime <= My.Settings.PW_RuntimeFloor Then
+                        (.Batt_Runtime <> -1 AndAlso .Batt_Runtime <= My.Settings.PW_RuntimeFloor) Then
                         LogFile.LogTracing("UPS battery has dropped below stop condition limits.",
                                                LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_LOG_SHUT_START))
                         Shutdown_Event()
