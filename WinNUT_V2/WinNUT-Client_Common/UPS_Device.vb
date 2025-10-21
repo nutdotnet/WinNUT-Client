@@ -230,9 +230,9 @@ Public Class UPS_Device
         LogFile.LogTracing("Retrieving basic UPS product information...", LogLvl.LOG_NOTICE, Me)
 
         Dim freshData = New UPSData(
-            Trim(GetUPSVar("ups.mfr", "Unknown")),
-            Trim(GetUPSVar("ups.model", "Unknown")),
-            Trim(GetUPSVar("ups.serial", "Unknown")),
+            Trim(GetUPSVar({"ups.mfr", "device.mfr"}, "Unknown")),
+            Trim(GetUPSVar({"ups.model", "device.model"}, "Unknown")),
+            Trim(GetUPSVar({"ups.serial", "device.serial"}, "Unknown")),
             Trim(GetUPSVar("ups.firmware", "Unknown")))
 
         With freshData.UPS_Value
@@ -434,16 +434,21 @@ Public Class UPS_Device
     End Sub
 
     Private Const MAX_VAR_RETRIES = 3
-    Public Function GetUPSVar(varName As String, Optional Fallback_value As Object = Nothing, Optional recursing As Boolean = False) As String
+    Public Function GetUPSVar(varNames As String(), Optional Fallback_value As Object = Nothing, Optional recursing As Boolean = False) As String
         If Not IsConnected Then
             Throw New InvalidOperationException("Tried to GetUPSVar while disconnected.")
-        Else
-            Dim Nut_Query As Transaction
+        End If
 
+        ' Try each variable in the array sequentially
+        For Each varName As String In varNames
             Try
+                LogFile.LogTracing("Trying variable: " & varName, LogLvl.LOG_DEBUG, Me)
+
+                Dim Nut_Query As Transaction
                 Nut_Query = Nut_Socket.Query_Data("GET VAR " & Name & " " & varName)
 
                 If Nut_Query.ResponseType = NUTResponse.OK Then
+                    LogFile.LogTracing("Success with " & varName, LogLvl.LOG_DEBUG, Me)
                     Return ExtractData(Nut_Query.RawResponse)
                 Else
                     Throw New NutException(Nut_Query)
@@ -452,39 +457,56 @@ Public Class UPS_Device
             Catch ex As NutException
                 Select Case ex.LastTransaction.ResponseType
                     Case NUTResponse.VARNOTSUPPORTED
-                        LogFile.LogTracing(varName & " is not supported by server.", LogLvl.LOG_WARNING, Me)
+                        LogFile.LogTracing(varName & " is not supported by server, trying next", LogLvl.LOG_WARNING, Me)
+                        ' Continue to next variable
+                        Continue For
 
                     Case NUTResponse.DATASTALE
-                        LogFile.LogTracing("DATA-STALE Error Result On Retrieving  " & varName & " : " & ex.LastTransaction.RawResponse, LogLvl.LOG_ERROR, Me)
-
+                        LogFile.LogTracing("DATA-STALE Error Result On Retrieving " & varName & " : " & ex.LastTransaction.RawResponse, LogLvl.LOG_ERROR, Me)
                         If recursing Then
-                            Return Nothing
+                            ' Continue to next variable instead of returning Nothing
+                            Continue For
                         Else
                             Dim retryNum = 1
                             Dim returnString As String = Nothing
-
                             While returnString Is Nothing AndAlso retryNum <= MAX_VAR_RETRIES
-                                LogFile.LogTracing("Attempting retry " & retryNum & " to get variable.", LogLvl.LOG_NOTICE, Me)
-                                returnString = GetUPSVar(varName, Fallback_value, True)
+                                LogFile.LogTracing("Attempting retry " & retryNum & " to get variable " & varName, LogLvl.LOG_NOTICE, Me)
+                                returnString = GetUPSVar({varName}, Fallback_value, True)
                                 retryNum += 1
                             End While
-
                             If returnString IsNot Nothing Then
                                 Return returnString
+                            Else
+                                ' Retry failed, continue to next variable
+                                Continue For
                             End If
                         End If
+
+                    Case Else
+                        LogFile.LogTracing("Error with " & varName & ", trying next", LogLvl.LOG_WARNING, Me)
+                        ' Continue to next variable
+                        Continue For
                 End Select
-
-                If Not String.IsNullOrEmpty(Fallback_value) Then
-                    LogFile.LogTracing("Apply Fallback Value when retrieving " & varName, LogLvl.LOG_WARNING, Me)
-                    Return Fallback_value
-                Else
-                    Throw
-                End If
+            Catch ex As Exception
+                LogFile.LogTracing("Exception for variable " & varName & ": " & ex.Message & ", trying next", LogLvl.LOG_WARNING, Me)
+                ' Continue to next variable
+                Continue For
             End Try
-        End If
+        Next
 
-        Return Nothing
+        ' If we reach here, all variables failed
+        If Not String.IsNullOrEmpty(Fallback_value) Then
+            LogFile.LogTracing("All variables failed, applying fallback value", LogLvl.LOG_WARNING, Me)
+            Return Fallback_value
+        Else
+            LogFile.LogTracing("All variables failed and no fallback provided", LogLvl.LOG_ERROR, Me)
+            Throw New NutException("All variables failed and no fallback provided", NUTResponse.VARNOTSUPPORTED, Nothing)
+        End If
+    End Function
+
+    ' Overload for backward compatibility with existing code
+    Public Function GetUPSVar(varName As String, Optional Fallback_value As Object = Nothing, Optional recursing As Boolean = False) As String
+        Return GetUPSVar({varName}, Fallback_value, recursing)
     End Function
 
     Public Function GetUPS_ListVar() As List(Of UPS_List_Datas)
