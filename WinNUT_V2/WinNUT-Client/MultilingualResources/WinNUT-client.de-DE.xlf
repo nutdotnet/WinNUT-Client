@@ -428,7 +428,7 @@
         </trans-unit>
         <trans-unit id="Lbl_PowerF.Text" translate="yes" xml:space="preserve">
           <source>Frequency Supply</source>
-          <target state="translated">Netzfrequenz.</target>
+          <target state="translated">Netzfrequenz</target>
         </trans-unit>
         <trans-unit id="Lbl_InputV.AutoSize" translate="no" extype="System.Boolean, mscorlib" xml:space="preserve">
           <source>True</source>
@@ -700,7 +700,7 @@
         </trans-unit>
         <trans-unit id="CB_Systray.Text" translate="yes" xml:space="preserve">
           <source>Minimize to Systray</source>
-          <target state="final">Auf Systray minimieren</target>
+          <target state="translated">In den Systray minimieren</target>
         </trans-unit>
         <trans-unit id="Tab_Miscellanous.Location" translate="no" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
           <source>4, 22</source>
@@ -840,7 +840,7 @@
         </trans-unit>
         <trans-unit id="Cb_ImmediateStop.Text" translate="yes" xml:space="preserve">
           <source>Immediate stop action</source>
-          <target state="translated">Sofortige Stopp-Aktion</target>
+          <target state="translated">Stoppvorgang sofort einleiten</target>
         </trans-unit>
         <trans-unit id="Tb_BattLimit_Time.Location" translate="no" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
           <source>240, 41</source>
@@ -884,7 +884,7 @@
         </trans-unit>
         <trans-unit id="Lbl_GraceTime.Text" translate="yes" xml:space="preserve">
           <source>Grace Delay to Shutdown (sec)</source>
-          <target state="translated">Verzögerung vor Herunterfahren (Sek.)</target>
+          <target state="translated">Manuelle Verzögerung während Stoppvorgang (Sek.)</target>
         </trans-unit>
         <trans-unit id="Lbl_Delay_Stop.AutoSize" translate="no" extype="System.Boolean, mscorlib" xml:space="preserve">
           <source>True</source>
@@ -904,7 +904,7 @@
         </trans-unit>
         <trans-unit id="Lbl_Delay_Stop.Text" translate="yes" xml:space="preserve">
           <source>Delay to Shutdown (sec)</source>
-          <target state="translated">Verzögerung vor dem Herunterfahren (Sek.)</target>
+          <target state="translated">Verzögerung vor der Stopp-Aktion (Sek.)</target>
         </trans-unit>
         <trans-unit id="Lbl_StopType.AutoSize" translate="no" extype="System.Boolean, mscorlib" xml:space="preserve">
           <source>True</source>
@@ -924,7 +924,7 @@
         </trans-unit>
         <trans-unit id="Lbl_StopType.Text" translate="yes" xml:space="preserve">
           <source>Type of Stop</source>
-          <target state="final">Art des Stopps</target>
+          <target state="translated">Auszuführende Stopp-Aktion</target>
         </trans-unit>
         <trans-unit id="Lbl_BattLimit_Time.AutoSize" translate="no" extype="System.Boolean, mscorlib" xml:space="preserve">
           <source>True</source>
@@ -944,7 +944,7 @@
         </trans-unit>
         <trans-unit id="Lbl_BattLimit_Time.Text" translate="yes" xml:space="preserve">
           <source>Shutdown if runtime lower than (sec)</source>
-          <target state="translated">Herunterfahren wenn Laufzeit niedriger als (Sek.)</target>
+          <target state="translated">Herunterfahren, wenn Laufzeit niedriger als (Sek.)</target>
         </trans-unit>
         <trans-unit id="Lbl_BattLimit_Load.AutoSize" translate="no" extype="System.Boolean, mscorlib" xml:space="preserve">
           <source>True</source>
@@ -964,7 +964,7 @@
         </trans-unit>
         <trans-unit id="Lbl_BattLimit_Load.Text" translate="yes" xml:space="preserve">
           <source>Shutdown if battery lower than</source>
-          <target state="translated">Herunterfahren wenn Akkuladung weniger als</target>
+          <target state="translated">Herunterfahren, wenn Akkuladung geringer als</target>
         </trans-unit>
         <trans-unit id="Tab_Shutdown.Location" translate="no" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
           <source>4, 22</source>
@@ -1197,17 +1197,20 @@
         <trans-unit id="Tb_UPS_Name.ToolTip" translate="yes" xml:space="preserve">
           <source>UPS name to monitor.
 Accepted Value: Name of the UPS configured in the Nut server.</source>
-          <target state="translated">Name der zu überwachenden USV. Wertebereich: Name der auf dem NUT-Server konfigurierten USV.</target>
+          <target state="translated">Name der zu überwachenden USV.
+Wertebereich: Name der auf dem NUT-Server konfigurierten USV.</target>
         </trans-unit>
         <trans-unit id="Tb_Port.ToolTip" translate="yes" xml:space="preserve">
           <source>Nut Server Port Number (default = 3493).
 Accepted value: Numeric value from 1 to 65535.</source>
-          <target state="translated">NUT-Server Portnummer (Standard = 3493). Wertebereich: Numerischer Wert von 1 bis 65535.</target>
+          <target state="translated">NUT-Server Portnummer (Standard = 3493).
+Wertebereich: Numerischer Wert von 1 bis 65535.</target>
         </trans-unit>
         <trans-unit id="Tb_Server_IP.ToolTip" translate="yes" xml:space="preserve">
           <source>Nut server address.
 Accepted value: IPV4 / IPV6 / FQDN address.</source>
-          <target state="translated">NUT-Serveradresse. Wertebereich: IPV4 / IPV6 / FQDN-Adresse.</target>
+          <target state="translated">Adresse des NUT-Servers.
+Wertebereich: IPV4 / IPV6 / FQDN-Adresse.</target>
         </trans-unit>
         <trans-unit id="Cb_Reconnect.ToolTip" translate="yes" xml:space="preserve">
           <source>Activate automatic connection / reconnection</source>
@@ -1215,47 +1218,55 @@ Accepted value: IPV4 / IPV6 / FQDN address.</source>
         </trans-unit>
         <trans-unit id="Cbx_Freq_Input.ToolTip" translate="yes" xml:space="preserve">
           <source>Sets the input frequency if not supplied by the UPS.</source>
-          <target state="translated">Legt die Eingangsfrequenz fest wenn dieser Wert nicht von der USV geliefert wird.</target>
+          <target state="translated">Legt die Eingangsfrequenz fest, wenn dieser Wert nicht von der USV geliefert wird.</target>
         </trans-unit>
         <trans-unit id="Tb_BattV_Max.ToolTip" translate="yes" xml:space="preserve">
           <source>Maximum Battery Voltage.
 Accepted value: Numeric value from 0 to 100.</source>
-          <target state="translated">Maximale Akkuspannung. Wertebereich: Numerischer Wert von 0 bis 100.</target>
+          <target state="translated">Maximale Akkuspannung.
+Wertebereich: Numerischer Wert von 0 bis 100.</target>
         </trans-unit>
         <trans-unit id="Tb_OutV_Max.ToolTip" translate="yes" xml:space="preserve">
           <source>Maximum Output Voltage.
 Accepted value: Numeric value from 0 to 999.</source>
-          <target state="translated">Maximale Ausgangsspannung. Wertebereich: Numerischer Wert von 0 bis 999.</target>
+          <target state="translated">Maximale Ausgangsspannung.
+Wertebereich: Numerischer Wert von 0 bis 999.</target>
         </trans-unit>
         <trans-unit id="Tb_InF_Max.ToolTip" translate="yes" xml:space="preserve">
           <source>Maximum input frequency.
 Accepted value: Numeric value from 0 to 100.</source>
-          <target state="translated">Maximale Eingangsfrequenz. Wertebereich: Numerischer Wert von 0 bis 100.</target>
+          <target state="translated">Maximale Eingangsfrequenz.
+Wertebereich: Numerischer Wert von 0 bis 100.</target>
         </trans-unit>
         <trans-unit id="Tb_BattV_Min.ToolTip" translate="yes" xml:space="preserve">
           <source>Minimum Battery Voltage.
 Accepted value: Numeric value from 0 to 100.</source>
-          <target state="translated">Minimale Akkuspannung. Wertebereich: Numerischer Wert von 0 bis 100.</target>
+          <target state="translated">Minimale Akkuspannung.
+Wertebereich: Numerischer Wert von 0 bis 100.</target>
         </trans-unit>
         <trans-unit id="Tb_OutV_Min.ToolTip" translate="yes" xml:space="preserve">
           <source>Minimum Output Voltage.
 Accepted value: Numeric value from 0 to 999.</source>
-          <target state="translated">Minimale Ausgangsspannung. Wertebereich: Numerischer Wert von 0 bis 999.</target>
+          <target state="translated">Minimale Ausgangsspannung.
+Wertebereich: Numerischer Wert von 0 bis 999.</target>
         </trans-unit>
         <trans-unit id="Tb_InF_Min.ToolTip" translate="yes" xml:space="preserve">
           <source>Minimum input frequency.
 Accepted value: Numeric value from 0 to 100.</source>
-          <target state="translated">Minimale Eingangsfrequenz. Wertebereich: Numerischer Wert von 0 bis 100.</target>
+          <target state="translated">Minimale Eingangsfrequenz.
+Wertebereich: Numerischer Wert von 0 bis 100.</target>
         </trans-unit>
         <trans-unit id="Tb_InV_Max.ToolTip" translate="yes" xml:space="preserve">
           <source>Maximum input voltage.
 Accepted value: Numeric value from 0 to 999.</source>
-          <target state="translated">Maximale Eingangsspannung. Wertebereich: Numerischer Wert von 0 bis 999.</target>
+          <target state="translated">Maximale Eingangsspannung.
+Wertebereich: Numerischer Wert von 0 bis 999.</target>
         </trans-unit>
         <trans-unit id="Tb_InV_Min.ToolTip" translate="yes" xml:space="preserve">
           <source>Minimum input voltage.
 Accepted value: Numeric value from 0 to 999.</source>
-          <target state="translated">Minimale Eingangsspannung. Wertebereich: Numerischer Wert von 0 bis 999.</target>
+          <target state="translated">Minimale Eingangsspannung.
+Wertebereich: Numerischer Wert von 0 bis 999.</target>
         </trans-unit>
         <trans-unit id="Cbx_LogLevel.ToolTip" translate="yes" xml:space="preserve">
           <source>Logging level.</source>
@@ -1275,7 +1286,7 @@ Accepted value: Numeric value from 0 to 999.</source>
         </trans-unit>
         <trans-unit id="CB_Use_Logfile.ToolTip" translate="yes" xml:space="preserve">
           <source>Write logging events to a file.</source>
-          <target state="new">Write logging events to a file.</target>
+          <target state="translated">Protokollierungs-Ereignisse in eine Datei schreiben.</target>
         </trans-unit>
         <trans-unit id="CB_Start_W_Win.ToolTip" translate="yes" xml:space="preserve">
           <source>Starts WinNUT when Windows starts.</source>
@@ -1283,7 +1294,7 @@ Accepted value: Numeric value from 0 to 999.</source>
         </trans-unit>
         <trans-unit id="CB_Close_Tray.ToolTip" translate="yes" xml:space="preserve">
           <source>Sends in Systray at closing.</source>
-          <target state="translated">Ins Systray minimieren anstatt zu schliessen.</target>
+          <target state="translated">Ins Systray minimieren, anstatt zu schliessen.</target>
         </trans-unit>
         <trans-unit id="CB_Start_Mini.ToolTip" translate="yes" xml:space="preserve">
           <source>Starts WinNut Minimized.</source>
@@ -1296,40 +1307,46 @@ Accepted value: Numeric value from 0 to 999.</source>
         <trans-unit id="Tb_GraceTime.ToolTip" translate="yes" xml:space="preserve">
           <source>Additional grace period limit.
 Accepted value: Numeric value from 0 to 3600.</source>
-          <target state="final">Limit für zusätzliche Verzögerung. Wertebereich: Numerischer Wert von 0 bis 3600.</target>
+          <target state="translated">Limit für zusätzliche Verzögerung.
+Wertebereich: Numerischer Wert von 0 bis 3600.</target>
         </trans-unit>
         <trans-unit id="Cb_ExtendTime.ToolTip" translate="yes" xml:space="preserve">
           <source>Allow additional time during the shutdown procedure.
 Note: 
 This additional time could go beyond the UPS backup time - USE WITH CAUTION!!!</source>
-          <target state="translated">USV-Name</target>
+          <target state="translated">Zusätzliche Zeit für das Herunterfahren erlauben.
+Hinweis:
+Diese zusätzliche Zeit kann über die Verfügbarkeit der USV hinausgehen - MIT VORSICHT VERWENDEN !!!</target>
         </trans-unit>
         <trans-unit id="Tb_Delay_Stop.ToolTip" translate="yes" xml:space="preserve">
           <source>Stop procedure delay if delayed.
 Accepted value: Numeric value from 0 to 3600.</source>
-          <target state="translated">Prozedurverzögerung bei Verzögerung stoppen. Wertebereich: Numerischer Wert von 0 bis 3600.</target>
+          <target state="translated">Stoppvorgang bei Verzögerung unterbrechen.
+Wertebereich: Numerischer Wert von 0 bis 3600.</target>
         </trans-unit>
         <trans-unit id="Cbx_TypeStop.ToolTip" translate="yes" xml:space="preserve">
           <source>Type of stop at the end of the stop procedure.</source>
-          <target state="final">Art des Stopps am Ende des Stoppvorgangs.</target>
+          <target state="translated">Art der Stopp-Aktion am Ende des Stoppvorgangs.</target>
         </trans-unit>
         <trans-unit id="Cb_ImmediateStop.ToolTip" translate="yes" xml:space="preserve">
           <source>Starts the shutdown procedure immediately or timed.</source>
-          <target state="final">Startet das Herunterfahren sofort oder zeitgesteuert.</target>
+          <target state="translated">Führt die Stopp-Aktion sofort oder zeitgesteuert aus.</target>
         </trans-unit>
         <trans-unit id="Tb_BattLimit_Time.ToolTip" translate="yes" xml:space="preserve">
           <source>Lower backup time limit triggering the shutdown procedure.
 Accepted value: Numeric value from 0 to 3600.</source>
-          <target state="translated">Unteres Backup-Zeitlimit welches das Herunterfahren auslöst. Wertebereich: Numerischer Wert von 0 bis 3600.</target>
+          <target state="translated">Unteres Backup-Zeitlimit, welches das Herunterfahren auslöst.
+Wertebereich: Numerischer Wert von 0 bis 3600.</target>
         </trans-unit>
         <trans-unit id="Tb_BattLimit_Load.ToolTip" translate="yes" xml:space="preserve">
           <source>Lower limit of the battery level triggering the shutdown procedure.
 Accepted value: Numeric value from 0 to 100.</source>
-          <target state="translated">Untergrenze des Akkustands der den Abschaltvorgang auslöst. Wertebereich: Numerischer Wert von 0 bis 100.</target>
+          <target state="translated">Untergrenze des Akkuladestands, welcher den Abschaltvorgang auslöst.
+Wertebereich: Numerischer Wert von 0 bis 100.</target>
         </trans-unit>
         <trans-unit id="Cbx_Branch_Update.ToolTip" translate="yes" xml:space="preserve">
           <source>Use the Stable or Devellop branch during verification.</source>
-          <target state="translated">Bei der Versionsüberprüfung den stabilen oder Entwicklungszweig verwenden.</target>
+          <target state="translated">Bei der Updateprüfung den stabilen oder den Entwicklungszweig verwenden.</target>
         </trans-unit>
         <trans-unit id="Cbx_Delay_Verif.ToolTip" translate="yes" xml:space="preserve">
           <source>Frequency of verification.</source>
@@ -1393,7 +1410,7 @@ Accepted value: Numeric value from 0 to 100.</source>
         </trans-unit>
         <trans-unit id="Label3.Text" translate="yes" xml:space="preserve">
           <source>Login credentials to the Nut server (leave blank if not required)</source>
-          <target state="translated">Anmeldeinformationen des NUT-Server (Leer lassen wenn nicht erforderlich)</target>
+          <target state="translated">Anmeldeinformationen des NUT-Server (Leer, wenn nicht nötig)</target>
         </trans-unit>
         <trans-unit id="Lbl_Pwd_Nut.AutoSize" translate="no" extype="System.Boolean, mscorlib" xml:space="preserve">
           <source>True</source>
@@ -1473,7 +1490,7 @@ Accepted value: Numeric value from 0 to 100.</source>
         </trans-unit>
         <trans-unit id="CB_Follow_FSD.ToolTip" translate="yes" xml:space="preserve">
           <source>Indicates whether a shutdown should be performed when the NUT server signals a forced shutdown (FSD = Force ShutDown)</source>
-          <target state="final">Gibt an ob ein Herunterfahren durchgeführt werden soll wenn der NUT-Server ein erzwungenes Herunterfahren signalisiert (FSD = Force ShutDown).</target>
+          <target state="translated">Gibt an, ob ein Herunterfahren durchgeführt werden soll, wenn der NUT-Server ein erzwungenes Herunterfahren signalisiert (FSD = Force ShutDown).</target>
         </trans-unit>
         <trans-unit id="CB_Follow_FSD.AutoSize" translate="no" extype="System.Boolean, mscorlib" xml:space="preserve">
           <source>True</source>
@@ -1529,7 +1546,7 @@ Accepted value: Numeric value from 0 to 100.</source>
         </trans-unit>
         <trans-unit id="pollingIntervalUnitLabel.Text" translate="yes" xml:space="preserve">
           <source>Seconds</source>
-          <target state="new">Seconds</target>
+          <target state="translated">Sekunden</target>
         </trans-unit>
         <trans-unit id="pollingIntervalValue.Location" translate="yes" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
           <source>154, 100</source>
@@ -1545,7 +1562,7 @@ Accepted value: Numeric value from 0 to 100.</source>
         </trans-unit>
         <trans-unit id="pollingIntervalValue.ToolTip" translate="yes" xml:space="preserve">
           <source>How often WinNUT refreshes data from the NUT server.</source>
-          <target state="new">How often WinNUT refreshes data from the NUT server.</target>
+          <target state="translated">Wie häufig WinNUT die Daten vom NUT-Server aktualisiert.</target>
         </trans-unit>
         <trans-unit id="Btn_Apply.Enabled" translate="yes" extype="System.Boolean, mscorlib" xml:space="preserve">
           <source>False</source>
@@ -1695,7 +1712,8 @@ Accepted value: Numeric value from 0 to 100.</source>
         <trans-unit id="Frm_Shutdown_Str_01" translate="yes" xml:space="preserve">
           <source>Battery_Charge : {0}
 Remaining Time : {1}</source>
-          <target state="translated">Akkuladung: {0} Verbleibende Zeit: {1}</target>
+          <target state="translated">Akkuladung: {0}
+Verbleibende Zeit: {1}</target>
         </trans-unit>
         <trans-unit id="Frm_Main_Str_01" translate="yes" xml:space="preserve">
           <source>Old ups.ini imported
@@ -1732,7 +1750,7 @@ Ini File Moved to {0}.old</source>
         </trans-unit>
         <trans-unit id="Log_Str_01" translate="yes" xml:space="preserve">
           <source>WinNut Preferences Changed</source>
-          <target state="final">WinNut-Einstellungen geändert</target>
+          <target state="translated">WinNUT-Einstellungen geändert</target>
         </trans-unit>
         <trans-unit id="Log_Str_02" translate="yes" xml:space="preserve">
           <source>Connection to Nut Host {0}:{1} Established</source>
@@ -1748,15 +1766,15 @@ Ini File Moved to {0}.old</source>
         </trans-unit>
         <trans-unit id="Log_Str_05" translate="yes" xml:space="preserve">
           <source>Disconnected from Nut Host</source>
-          <target state="translated">Verbindung zum NUT-Host verloren</target>
+          <target state="translated">Verbindung zum NUT-Host getrennt</target>
         </trans-unit>
         <trans-unit id="Log_Str_08" translate="yes" xml:space="preserve">
           <source>Conditions met for launching the Extinguishing Process</source>
-          <target state="translated">Voraussetzungen für den Start des Löschprozesses liegen vor</target>
+          <target state="translated">Voraussetzungen für den Beginn des Stoppvorgangs liegen vor</target>
         </trans-unit>
         <trans-unit id="Log_Str_09" translate="yes" xml:space="preserve">
           <source>Cancellation of the Extinguishing Process</source>
-          <target state="translated">Abbruch des Löschprozesses</target>
+          <target state="translated">Abbruch des Stoppvorgangs</target>
         </trans-unit>
         <trans-unit id="Log_Str_10" translate="yes" xml:space="preserve">
           <source>No Update Available</source>
@@ -1784,7 +1802,7 @@ Ini File Moved to {0}.old</source>
         </trans-unit>
         <trans-unit id="Log_Str_12" translate="yes" xml:space="preserve">
           <source>Stop condition imposed by the NUT server</source>
-          <target state="translated">Vom NUT-Server auferlegte Stopp-Bedingung</target>
+          <target state="translated">Vom NUT-Server festgelegte Stopp-Bedingung</target>
         </trans-unit>
         <trans-unit id="Battery_Charged" translate="no" extype="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
           <source>..\Resources\Battery_Charged.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</source>
@@ -1800,11 +1818,11 @@ Ini File Moved to {0}.old</source>
         </trans-unit>
         <trans-unit id="Frm_Main_Str_14" translate="yes" xml:space="preserve">
           <source>Restarting WinNUT after waking up from Windows.</source>
-          <target state="final">Windows Standby, WinNUT wird getrennt.</target>
+          <target state="translated">Starte WinNUT neu, nachdem Windows aus dem Standby erweckt wurde.</target>
         </trans-unit>
         <trans-unit id="Frm_Main_Str_15" translate="yes" xml:space="preserve">
           <source>Windows standby. WinNUT will disconnect.</source>
-          <target state="final">Windows Standby. WinNUT wird getrennt. </target>
+          <target state="translated">Windows-Standby. WinNUT wird getrennt. </target>
         </trans-unit>
         <trans-unit id="XP_Information" translate="no" extype="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
           <source>..\Resources\XP_Information.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</source>
@@ -1812,37 +1830,37 @@ Ini File Moved to {0}.old</source>
         </trans-unit>
         <trans-unit id="DetectedPreviousPrefsData" translate="yes" xml:space="preserve">
           <source>Previous preferences data detected in the Registry.</source>
-          <target state="new">Previous preferences data detected in the Registry.</target>
+          <target state="translated">Bisherige Einstellungen in der Registry gefunden.</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Notify the user that preferences data from the old system was detected in the Registry hive.</note>
         </trans-unit>
         <trans-unit id="UpgradePrefsDialog_ImportProcedureCompleted" translate="yes" xml:space="preserve">
           <source>The old preferences have been imported.</source>
-          <target state="new">The old preferences have been imported.</target>
+          <target state="translated">Die alten Einstellungen wurden importiert.</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Notify the user that the import procedure has completed.</note>
         </trans-unit>
         <trans-unit id="UpgradePrefsDialog_UnmatchedPairs" translate="yes" xml:space="preserve">
           <source>There were {0} unknown preferences. See log for more details.</source>
-          <target state="new">There were {0} unknown preferences. See log for more details.</target>
+          <target state="translated">Es wurden {0} unbekannte Einstellungen gefunden. Für mehr Details bitte die Log-Datei öffnen.</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Alert the user to how many unmatched preferences there were {0}.</note>
         </trans-unit>
         <trans-unit id="UpgradePrefsDialog_DeleteProcedureComplete" translate="yes" xml:space="preserve">
           <source>The old preferences have been removed from your Registry.</source>
-          <target state="new">The old preferences have been removed from your Registry.</target>
+          <target state="translated">Die alten Einstellungen wurden aus der Registry entfernt.</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Notify the user that the old preferences have been removed from their Registry.</note>
         </trans-unit>
         <trans-unit id="UpgradePrefsDialog_Cancelled" translate="yes" xml:space="preserve">
           <source>The upgrade process was cancelled: using default settings.</source>
-          <target state="new">The upgrade process was cancelled: using default settings.</target>
+          <target state="translated">Der Upgrade-Prozess wurde abgebrochen: Verwende Standardeinstellungen.</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Notify the user that the upgrade dialog was cancelled, and that default settings will be used instead.</note>
         </trans-unit>
         <trans-unit id="UpgradePrefsDialog_BackupLocationTitle" translate="yes" xml:space="preserve">
           <source>Save WinNUT Registry Key</source>
-          <target state="new">Save WinNUT Registry Key</target>
+          <target state="translated">WinNUT-Registryschlüssel speichern</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Title of the SaveFileDialog that prompts the user to select the file and location they would like to save their WinNUT Registry preferences to.</note>
         </trans-unit>
         <trans-unit id="UpgradePrefsDialog_BackupProcedureCompleted" translate="yes" xml:space="preserve">
           <source>The old preferences have been backed up to {0}</source>
-          <target state="new">The old preferences have been backed up to {0}</target>
+          <target state="translated">Die alten Einstellungen wurden gesichert nach {0}</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Notify the user that the old preferences have been exported to a file, and give the full path with {0}.</note>
         </trans-unit>
         <trans-unit id="UpgradePrefsDialog_ErrorEncountered" translate="yes" xml:space="preserve">
@@ -1851,11 +1869,11 @@ Ini File Moved to {0}.old</source>
 {0}
 
 Please correct the error, or cancel the upgrade dialog to continue with the default settings.</source>
-          <target state="new">An error occurred during the upgrade procedure:
+          <target state="translated">Während des Upgrade-Vorgangs ist ein Fehler aufgetreten:
 
 {0}
 
-Please correct the error, or cancel the upgrade dialog to continue with the default settings.</target>
+Bitte beheben Sie den Fehler oder brechen Sie den Aktualisierungsdialog ab, um mit den Standardeinstellungen fortzufahren.</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Alert the user that an error occurred during the upgrade procedure, attempt to give a brief summary of the error, and prompt them to take the next step.</note>
         </trans-unit>
         <trans-unit id="regedit_exe_14_100_0" translate="yes" extype="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
@@ -1864,44 +1882,44 @@ Please correct the error, or cancel the upgrade dialog to continue with the defa
         </trans-unit>
         <trans-unit id="UpgradePrefsDialog_NoPrefsExistCaption" translate="yes" xml:space="preserve">
           <source>No preferences detected</source>
-          <target state="new">No preferences detected</target>
+          <target state="translated">Keine Einstellungen gefunden</target>
           <note from="MultilingualBuild" annotates="source" priority="2">A brief caption for the error message.</note>
         </trans-unit>
         <trans-unit id="UpgradePrefsDialog_NoPrefsExistError" translate="yes" xml:space="preserve">
           <source>No preferences were detected in the Registry. Unable to continue.</source>
-          <target state="new">No preferences were detected in the Registry. Unable to continue.</target>
+          <target state="translated">In der Registry wurden keine Einstellungen gefunden. Fortfahren nicht möglich.</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Alert the user that the dialog is unable to continue, since no preferences are detected in the Registry.</note>
         </trans-unit>
         <trans-unit id="ManageOldPrefsToolstripMenuItem_Disabled_TooltipText" translate="yes" xml:space="preserve">
           <source>Old preferences were not detected in your system.</source>
-          <target state="new">Old preferences were not detected in your system.</target>
+          <target state="translated">Es wurden keine alten Einstellungen gefunden.</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Similar to _Enabled tooltip, except that the preferences were not detected.</note>
         </trans-unit>
         <trans-unit id="ManageOldPrefsToolstripMenuItem_Enabled_TooltipText" translate="yes" xml:space="preserve">
           <source>Old preferences detected. Click to run the import wizard.</source>
-          <target state="new">Old preferences detected. Click to run the import wizard.</target>
+          <target state="translated">Alte Einstellungen gefunden. Klicken, um den Importassistenten zu starten.</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Tooltip of the "manage old prefs" menu item, explaining that the old preferences were detected and that clicking will open the wizard dialog.</note>
         </trans-unit>
         <trans-unit id="VariableUnavailable" translate="yes" xml:space="preserve">
           <source>Unavailable</source>
-          <target state="new">Unavailable</target>
+          <target state="translated">Nicht verfügbar</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Indicate that a variable is unavailable</note>
         </trans-unit>
-        <trans-unit id="RepeatHS" translate="yes" xml:space="preserve" extype="System.Resources.ResXFileRef, System.Windows.Forms">
+        <trans-unit id="RepeatHS" translate="yes" extype="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
           <source>..\Resources\RepeatHS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</source>
           <target state="needs-review-translation">..\Resources\RepeatHS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</target>
         </trans-unit>
-        <trans-unit id="disconnect2" translate="yes" xml:space="preserve" extype="System.Resources.ResXFileRef, System.Windows.Forms">
+        <trans-unit id="disconnect2" translate="yes" extype="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
           <source>..\Resources\disconnect2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</source>
           <target state="needs-review-translation">..\Resources\disconnect2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</target>
         </trans-unit>
-        <trans-unit id="internetconnection" translate="yes" xml:space="preserve" extype="System.Resources.ResXFileRef, System.Windows.Forms">
+        <trans-unit id="internetconnection" translate="yes" extype="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
           <source>..\Resources\internetconnection.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</source>
           <target state="needs-review-translation">..\Resources\internetconnection.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</target>
         </trans-unit>
         <trans-unit id="LogCheckingForUpdate" translate="yes" xml:space="preserve">
           <source>Checking for update...</source>
-          <target state="new">Checking for update...</target>
+          <target state="translated">Updateprüfung läuft...</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Inform the user that WinNUT is checking for an update.</note>
         </trans-unit>
       </group>
@@ -1971,7 +1989,7 @@ Please correct the error, or cancel the upgrade dialog to continue with the defa
         </trans-unit>
         <trans-unit id="Menu_About.Text" translate="yes" xml:space="preserve">
           <source>About</source>
-          <target state="translated">Impressum</target>
+          <target state="translated">Über WinNUT</target>
         </trans-unit>
         <trans-unit id="Menu_Help_Sep1.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
           <source>141, 6</source>
@@ -2051,7 +2069,7 @@ Please correct the error, or cancel the upgrade dialog to continue with the defa
         </trans-unit>
         <trans-unit id="Menu_Sys_About.Text" translate="yes" xml:space="preserve">
           <source>About</source>
-          <target state="translated">Impressum</target>
+          <target state="translated">Über WinNUT</target>
         </trans-unit>
         <trans-unit id="Menu_Sys_Sep3.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
           <source>141, 6</source>
@@ -2343,7 +2361,7 @@ Please correct the error, or cancel the upgrade dialog to continue with the defa
         </trans-unit>
         <trans-unit id="Lbl_Name.Text" translate="yes" xml:space="preserve">
           <source>Name :</source>
-          <target state="final">Name :</target>
+          <target state="translated">Name:</target>
         </trans-unit>
         <trans-unit id="Lbl_Mfr.Location" translate="no" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
           <source>6, 148</source>
@@ -2375,7 +2393,7 @@ Please correct the error, or cancel the upgrade dialog to continue with the defa
         </trans-unit>
         <trans-unit id="Lbl_RTime.Text" translate="yes" xml:space="preserve">
           <source>Remaining Time :</source>
-          <target state="final">Verbleibende Zeit :</target>
+          <target state="translated">Verbleibende Zeit:</target>
         </trans-unit>
         <trans-unit id="Lbl_BL.Location" translate="no" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
           <source>6, 92</source>
@@ -3179,65 +3197,65 @@ Please correct the error, or cancel the upgrade dialog to continue with the defa
         </trans-unit>
         <trans-unit id="ManageOldPrefsToolStripMenuItem.Text" translate="yes" xml:space="preserve">
           <source>Manage Old Prefs...</source>
-          <target state="new">Manage Old Prefs...</target>
+          <target state="translated">Alte Einstellungen verwalten...</target>
         </trans-unit>
         <trans-unit id="ManageOldPrefsToolStripMenuItem.ShortcutKeyDisplayString" translate="yes" xml:space="preserve">
           <source></source>
           <target state="new"></target>
         </trans-unit>
-        <trans-unit id="Menu_Connect.Size" translate="yes" xml:space="preserve" extype="System.Drawing.Size, System.Drawing">
+        <trans-unit id="Menu_Connect.Size" translate="yes" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
           <source>180, 22</source>
           <target state="needs-review-translation">180, 22</target>
         </trans-unit>
         <trans-unit id="Menu_Connect.Text" translate="yes" xml:space="preserve">
           <source>Connect</source>
-          <target state="new">Connect</target>
+          <target state="translated">Verbinden</target>
         </trans-unit>
-        <trans-unit id="AG_InV.Text" translate="yes" xml:space="preserve" extype="System.Resources.ResXNullRef, System.Windows.Forms">
+        <trans-unit id="AG_InV.Text" translate="yes" extype="System.Resources.ResXNullRef, System.Windows.Forms" xml:space="preserve">
           <source></source>
           <target state="needs-review-translation"></target>
         </trans-unit>
-        <trans-unit id="AG_OutV.Text" translate="yes" xml:space="preserve" extype="System.Resources.ResXNullRef, System.Windows.Forms">
+        <trans-unit id="AG_OutV.Text" translate="yes" extype="System.Resources.ResXNullRef, System.Windows.Forms" xml:space="preserve">
           <source></source>
           <target state="needs-review-translation"></target>
         </trans-unit>
-        <trans-unit id="AG_BattCh.Text" translate="yes" xml:space="preserve" extype="System.Resources.ResXNullRef, System.Windows.Forms">
+        <trans-unit id="AG_BattCh.Text" translate="yes" extype="System.Resources.ResXNullRef, System.Windows.Forms" xml:space="preserve">
           <source></source>
           <target state="needs-review-translation"></target>
         </trans-unit>
-        <trans-unit id="AG_Load.Text" translate="yes" xml:space="preserve" extype="System.Resources.ResXNullRef, System.Windows.Forms">
+        <trans-unit id="AG_Load.Text" translate="yes" extype="System.Resources.ResXNullRef, System.Windows.Forms" xml:space="preserve">
           <source></source>
           <target state="needs-review-translation"></target>
         </trans-unit>
-        <trans-unit id="AG_BattV.Text" translate="yes" xml:space="preserve" extype="System.Resources.ResXNullRef, System.Windows.Forms">
+        <trans-unit id="AG_BattV.Text" translate="yes" extype="System.Resources.ResXNullRef, System.Windows.Forms" xml:space="preserve">
           <source></source>
           <target state="needs-review-translation"></target>
         </trans-unit>
-        <trans-unit id="AG_InF.Text" translate="yes" xml:space="preserve" extype="System.Resources.ResXNullRef, System.Windows.Forms">
+        <trans-unit id="AG_InF.Text" translate="yes" extype="System.Resources.ResXNullRef, System.Windows.Forms" xml:space="preserve">
           <source></source>
           <target state="needs-review-translation"></target>
         </trans-unit>
-        <trans-unit id="ToolStripSeparator1.Size" translate="yes" xml:space="preserve" extype="System.Drawing.Size, System.Drawing">
+        <trans-unit id="ToolStripSeparator1.Size" translate="yes" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
           <source>177, 6</source>
           <target state="needs-review-translation">177, 6</target>
         </trans-unit>
-        <trans-unit id="Menu_Persist.Size" translate="yes" xml:space="preserve" extype="System.Drawing.Size, System.Drawing">
+        <trans-unit id="Menu_Persist.Size" translate="yes" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
           <source>180, 22</source>
           <target state="needs-review-translation">180, 22</target>
         </trans-unit>
         <trans-unit id="Menu_Persist.Text" translate="yes" xml:space="preserve">
           <source>Persist</source>
-          <target state="new">Persist</target>
+          <target state="translated">Automatische Wiederverbindung</target>
         </trans-unit>
-        <trans-unit id="Menu_Disconnect.Enabled" translate="yes" xml:space="preserve" extype="System.Boolean, mscorlib">
+        <trans-unit id="Menu_Disconnect.Enabled" translate="yes" extype="System.Boolean, mscorlib" xml:space="preserve">
           <source>False</source>
           <target state="needs-review-translation">False</target>
         </trans-unit>
-        <trans-unit id="$this.ImeMode" translate="yes" xml:space="preserve" extype="System.Windows.Forms.ImeMode, System.Windows.Forms">
+        <trans-unit id="$this.ImeMode" translate="yes" extype="System.Windows.Forms.ImeMode, System.Windows.Forms" xml:space="preserve">
           <source>NoControl</source>
           <target state="needs-review-translation">NoControl</target>
         </trans-unit>
-        <trans-unit id="Menu_UPS_Var.Enabled" translate="yes" xml:space="preserve" extype="System.Boolean, mscorlib">
+        <trans-unit id="Menu_UPS_Var.Enabled" translate="yes" extype="System.Boolean, mscorlib" xml:space="preserve">
           <source>False</source>
           <target state="needs-review-translation">False</target>
         </trans-unit>
@@ -3379,7 +3397,7 @@ along with this program. If not, see https://www.gnu.org/licenses/.</target>
         </trans-unit>
         <trans-unit id="Lbl_D.Text" translate="yes" xml:space="preserve">
           <source>Description :</source>
-          <target state="final">Beschreibung :</target>
+          <target state="translated">Beschreibung:</target>
         </trans-unit>
         <trans-unit id="Lbl_V.AutoSize" translate="no" extype="System.Boolean, mscorlib" xml:space="preserve">
           <source>True</source>
@@ -3399,7 +3417,7 @@ along with this program. If not, see https://www.gnu.org/licenses/.</target>
         </trans-unit>
         <trans-unit id="Lbl_V.Text" translate="yes" xml:space="preserve">
           <source>Value :</source>
-          <target state="final">Value :</target>
+          <target state="translated">Wert:</target>
         </trans-unit>
         <trans-unit id="Lbl_Name.AutoSize" translate="no" extype="System.Boolean, mscorlib" xml:space="preserve">
           <source>True</source>
@@ -3419,7 +3437,7 @@ along with this program. If not, see https://www.gnu.org/licenses/.</target>
         </trans-unit>
         <trans-unit id="Lbl_Name.Text" translate="yes" xml:space="preserve">
           <source>Name :</source>
-          <target state="final">Name :</target>
+          <target state="translated">Name:</target>
         </trans-unit>
         <trans-unit id="GB1.Location" translate="no" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
           <source>6, 182</source>
@@ -3435,7 +3453,7 @@ along with this program. If not, see https://www.gnu.org/licenses/.</target>
         </trans-unit>
         <trans-unit id="GB1.Text" translate="yes" xml:space="preserve">
           <source>Item Properties</source>
-          <target state="final">Item Properties</target>
+          <target state="translated">Element-Eigenschaften</target>
         </trans-unit>
         <trans-unit id="Btn_Reload.Location" translate="no" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
           <source>9, 300</source>
@@ -3548,7 +3566,7 @@ along with this program. If not, see https://www.gnu.org/licenses/.</target>
         </trans-unit>
         <trans-unit id="Grace_Button.Text" translate="yes" xml:space="preserve">
           <source>Grace Time</source>
-          <target state="translated">Verzögerungszeit</target>
+          <target state="translated">Zusätzliche manuelle Verzögerungszeit vor dem Ausführen der Stopp-Aktion</target>
         </trans-unit>
         <trans-unit id="ShutDown_Btn.Font" translate="no" extype="System.Drawing.Font, System.Drawing" xml:space="preserve">
           <source>Microsoft Sans Serif, 14.25pt, style=Bold</source>
@@ -3601,7 +3619,8 @@ along with this program. If not, see https://www.gnu.org/licenses/.</target>
         <trans-unit id="lbl_UPSStatus.Text" translate="yes" xml:space="preserve">
           <source>Battery_Charge : {WinNUT.UPS_BattCh}
 Remaining Time : {WinNUT.Lbl_VRTime.Text}</source>
-          <target state="translated">Akkuladungladung: {WinNUT.UPS_BattCh} Verbleibende Zeit: {WinNUT.Lbl_VRTime.Text}</target>
+          <target state="translated">Akkuladung: {WinNUT.UPS_BattCh}
+Verbleibende Zeit: {WinNUT.Lbl_VRTime.Text}</target>
         </trans-unit>
         <trans-unit id="lbl_UPSStatus.TextAlign" translate="no" extype="System.Drawing.ContentAlignment, System.Drawing" xml:space="preserve">
           <source>MiddleCenter</source>
@@ -3617,7 +3636,7 @@ Remaining Time : {WinNUT.Lbl_VRTime.Text}</source>
         </trans-unit>
         <trans-unit id="$this.Text" translate="yes" xml:space="preserve">
           <source>Extinction In Progress</source>
-          <target state="translated">Löschen gestartet</target>
+          <target state="translated">Stoppvorgang von WinNUT eingeleitet</target>
         </trans-unit>
         <trans-unit id="$this.Localizable" translate="no" extype="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" extradata="metadata" xml:space="preserve">
           <source>True</source>
@@ -3676,9 +3695,7 @@ Remaining Time : {WinNUT.Lbl_VRTime.Text}</source>
           <source>WinNUT has been upgraded to a new Settings and Preferences system, and must use that going forward. Items leftover from the previous system have been deteceted in your user Registry hive. Select the actions below that you would like to have performed on the old preferences. If you wish to take no action, select Cancel and the default settings will be used. This message will not be displayed again as long as the new program data remains intact.
 
 </source>
-          <target state="new">WinNUT has been upgraded to a new Settings and Preferences system, and must use that going forward. Items leftover from the previous system have been deteceted in your user Registry hive. Select the actions below that you would like to have performed on the old preferences. If you wish to take no action, select Cancel and the default settings will be used. This message will not be displayed again as long as the new program data remains intact.
-
-</target>
+          <target state="translated">WinNUT wurde auf ein neues System für die Einstellungen umgestellt und wird dieses in Zukunft verwenden. In der Registry wurden Einstellungen des vorherigen Systems gefunden. Wählen Sie unten die Aktionen aus, die Sie für diese alten Einstellungen durchführen möchten. Wenn Sie keine Maßnahmen ergreifen möchten, wählen Sie Abbrechen. Daraufhin werden die Standardeinstellungen verwendet. Diese Meldung wird nicht mehr angezeigt, solange die neuen Einstellungen intakt sind.</target>
         </trans-unit>
         <trans-unit id="OK_Button.Anchor" translate="yes" extype="System.Windows.Forms.AnchorStyles, System.Windows.Forms" xml:space="preserve">
           <source>Right</source>
@@ -3726,7 +3743,7 @@ Remaining Time : {WinNUT.Lbl_VRTime.Text}</source>
         </trans-unit>
         <trans-unit id="Cancel_Button.Text" translate="yes" xml:space="preserve">
           <source>Cancel</source>
-          <target state="new">Cancel</target>
+          <target state="translated">Abbrechen</target>
         </trans-unit>
         <trans-unit id="ImportSettingsCheckBox.AutoSize" translate="yes" extype="System.Boolean, mscorlib" xml:space="preserve">
           <source>True</source>
@@ -3750,11 +3767,11 @@ Remaining Time : {WinNUT.Lbl_VRTime.Text}</source>
         </trans-unit>
         <trans-unit id="ImportSettingsCheckBox.Text" translate="yes" xml:space="preserve">
           <source>Import</source>
-          <target state="new">Import</target>
+          <target state="translated">Importieren</target>
         </trans-unit>
         <trans-unit id="ImportSettingsCheckBox.ToolTip" translate="yes" xml:space="preserve">
           <source>The previous preferences will be imported from the Registry and into the new Settings system.</source>
-          <target state="new">The previous preferences will be imported from the Registry and into the new Settings system.</target>
+          <target state="translated">Die bisherigen Einstellungen werden aus der Registry importiert und in das neue System für die Einstellungen importiert.</target>
         </trans-unit>
         <trans-unit id="DeleteSettingsCheckBox.AutoSize" translate="yes" extype="System.Boolean, mscorlib" xml:space="preserve">
           <source>True</source>
@@ -3778,11 +3795,11 @@ Remaining Time : {WinNUT.Lbl_VRTime.Text}</source>
         </trans-unit>
         <trans-unit id="DeleteSettingsCheckBox.Text" translate="yes" xml:space="preserve">
           <source>Delete</source>
-          <target state="new">Delete</target>
+          <target state="translated">Löschen</target>
         </trans-unit>
         <trans-unit id="DeleteSettingsCheckBox.ToolTip" translate="yes" xml:space="preserve">
           <source>The previous preferences will be deleted from the Registry.</source>
-          <target state="new">The previous preferences will be deleted from the Registry.</target>
+          <target state="translated">Die bisherigen Einstellungen werden aus der Registry entfernt.</target>
         </trans-unit>
         <trans-unit id="PrevSettngsGroupBox.Anchor" translate="yes" extype="System.Windows.Forms.AnchorStyles, System.Windows.Forms" xml:space="preserve">
           <source>Top, Left, Right</source>
@@ -3814,7 +3831,7 @@ Remaining Time : {WinNUT.Lbl_VRTime.Text}</source>
         </trans-unit>
         <trans-unit id="BackupSettingsCheckbox.ToolTip" translate="yes" xml:space="preserve">
           <source>The previous settings will be exported to a file.</source>
-          <target state="new">The previous settings will be exported to a file.</target>
+          <target state="translated">Die bisherigen Einstellungen werden in eine Datei exportiert.</target>
         </trans-unit>
         <trans-unit id="PrevSettngsGroupBox.Location" translate="yes" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
           <source>6, 122</source>
@@ -3834,7 +3851,7 @@ Remaining Time : {WinNUT.Lbl_VRTime.Text}</source>
         </trans-unit>
         <trans-unit id="PrevSettngsGroupBox.Text" translate="yes" xml:space="preserve">
           <source>Previous Settings</source>
-          <target state="new">Previous Settings</target>
+          <target state="translated">Bisherige Einstellungen</target>
         </trans-unit>
         <trans-unit id="buttonPanel.Dock" translate="yes" extype="System.Windows.Forms.DockStyle, System.Windows.Forms" xml:space="preserve">
           <source>Bottom</source>
@@ -3902,7 +3919,7 @@ Remaining Time : {WinNUT.Lbl_VRTime.Text}</source>
         </trans-unit>
         <trans-unit id="$this.Text" translate="yes" xml:space="preserve">
           <source>Migrate to New Settings Format</source>
-          <target state="new">Migrate to New Settings Format</target>
+          <target state="translated">Auf das neue Einstellungsformat migrieren</target>
         </trans-unit>
         <trans-unit id="UpgradePrefsDialogModelBindingSource.TrayLocation" translate="yes" extype="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" extradata="metadata" xml:space="preserve">
           <source>488, 17</source>
@@ -4023,7 +4040,7 @@ Remaining Time : {WinNUT.Lbl_VRTime.Text}</source>
         </trans-unit>
         <trans-unit id="Close_Btn.Text" translate="yes" xml:space="preserve">
           <source>Close</source>
-          <target state="new">Close</target>
+          <target state="translated">Schließen</target>
         </trans-unit>
         <trans-unit id="$this.AutoScaleDimensions" translate="yes" extype="System.Drawing.SizeF, System.Drawing" xml:space="preserve">
           <source>6, 13</source>
@@ -4039,7 +4056,7 @@ Remaining Time : {WinNUT.Lbl_VRTime.Text}</source>
         </trans-unit>
         <trans-unit id="$this.Text" translate="yes" xml:space="preserve">
           <source>Update Available</source>
-          <target state="new">Update Available</target>
+          <target state="translated">Update verfügbar</target>
         </trans-unit>
         <trans-unit id="$this.Localizable" translate="yes" extype="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" extradata="metadata" xml:space="preserve">
           <source>True</source>
@@ -4075,7 +4092,7 @@ Remaining Time : {WinNUT.Lbl_VRTime.Text}</source>
         </trans-unit>
         <trans-unit id="VisitPageButton.Text" translate="yes" xml:space="preserve">
           <source>Visit Page</source>
-          <target state="new">Visit Page</target>
+          <target state="translated">Seite aufrufen</target>
         </trans-unit>
         <trans-unit id="ButtonsPanel.Location" translate="yes" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
           <source>349, 423</source>
@@ -4115,7 +4132,7 @@ Remaining Time : {WinNUT.Lbl_VRTime.Text}</source>
         </trans-unit>
         <trans-unit id="DownloadProgressPanelLabel.Text" translate="yes" xml:space="preserve">
           <source>Downloading update...</source>
-          <target state="new">Downloading update...</target>
+          <target state="translated">Lade Update herunter...</target>
         </trans-unit>
         <trans-unit id="DownloadProgressPanel.Location" translate="yes" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
           <source>12, 366</source>
