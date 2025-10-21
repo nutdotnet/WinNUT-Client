@@ -31,7 +31,7 @@
     <value>Einstellungen</value>
   </data>
   <data name="Menu_About.Text" xml:space="preserve">
-    <value>Impressum</value>
+    <value>Über WinNUT</value>
   </data>
   <data name="Menu_Update.Text" xml:space="preserve">
     <value>Auf Update prüfen</value>
@@ -46,7 +46,7 @@
     <value>Auf Update prüfen</value>
   </data>
   <data name="Menu_Sys_About.Text" xml:space="preserve">
-    <value>Impressum</value>
+    <value>Über WinNUT</value>
   </data>
   <data name="Menu_Sys_Exit.Text" xml:space="preserve">
     <value>Beenden</value>
@@ -58,13 +58,13 @@
     <value>Seriennummer:</value>
   </data>
   <data name="Lbl_Name.Text" xml:space="preserve">
-    <value>Name :</value>
+    <value>Name:</value>
   </data>
   <data name="Lbl_Mfr.Text" xml:space="preserve">
     <value>Hersteller:</value>
   </data>
   <data name="Lbl_RTime.Text" xml:space="preserve">
-    <value>Verbleibende Zeit :</value>
+    <value>Verbleibende Zeit:</value>
   </data>
   <data name="Lbl_BL.Text" xml:space="preserve">
     <value>USV-Akkuladung niedrig</value>
@@ -102,8 +102,14 @@
   <data name="ManageOldPrefsToolStripMenuItem.Size" xml:space="preserve" type="System.Drawing.Size, System.Drawing">
     <value>177, 22</value>
   </data>
+  <data name="ManageOldPrefsToolStripMenuItem.Text" xml:space="preserve">
+    <value>Alte Einstellungen verwalten...</value>
+  </data>
   <data name="Menu_Connect.Size" xml:space="preserve" type="System.Drawing.Size, System.Drawing">
     <value>180, 22</value>
+  </data>
+  <data name="Menu_Connect.Text" xml:space="preserve">
+    <value>Verbinden</value>
   </data>
   <data name="AG_InV.Text" xml:space="preserve" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value></value>
@@ -128,6 +134,9 @@
   </data>
   <data name="Menu_Persist.Size" xml:space="preserve" type="System.Drawing.Size, System.Drawing">
     <value>180, 22</value>
+  </data>
+  <data name="Menu_Persist.Text" xml:space="preserve">
+    <value>Automatische Wiederverbindung</value>
   </data>
   <data name="Menu_Disconnect.Enabled" xml:space="preserve" type="System.Boolean, mscorlib">
     <value>False</value>

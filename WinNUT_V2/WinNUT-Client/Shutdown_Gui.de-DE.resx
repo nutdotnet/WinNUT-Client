@@ -13,15 +13,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Grace_Button.Text" xml:space="preserve">
-    <value>Verzögerungszeit</value>
+    <value>Zusätzliche manuelle Verzögerungszeit vor dem Ausführen der Stopp-Aktion</value>
   </data>
   <data name="ShutDown_Btn.Text" xml:space="preserve">
     <value>Sofortiges Herunterfahren</value>
   </data>
   <data name="lbl_UPSStatus.Text" xml:space="preserve">
-    <value>Akkuladungladung: {WinNUT.UPS_BattCh} Verbleibende Zeit: {WinNUT.Lbl_VRTime.Text}</value>
+    <value>Akkuladung: {WinNUT.UPS_BattCh}
+Verbleibende Zeit: {WinNUT.Lbl_VRTime.Text}</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Löschen gestartet</value>
+    <value>Stoppvorgang von WinNUT eingeleitet</value>
   </data>
 </root>

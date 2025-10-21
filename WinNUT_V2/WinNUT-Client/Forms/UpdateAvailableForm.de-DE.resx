@@ -57,11 +57,17 @@
   <data name="Close_Btn.TabIndex" xml:space="preserve" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
+  <data name="Close_Btn.Text" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
   <data name="$this.AutoScaleDimensions" xml:space="preserve" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
   </data>
   <data name="$this.StartPosition" xml:space="preserve" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Update verfügbar</value>
   </data>
   <metadata name="$this.Localizable" xml:space="preserve" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -86,6 +92,9 @@
   </data>
   <data name="VisitPageButton.TabIndex" xml:space="preserve" type="System.Int32, mscorlib">
     <value>5</value>
+  </data>
+  <data name="VisitPageButton.Text" xml:space="preserve">
+    <value>Seite aufrufen</value>
   </data>
   <data name="ButtonsPanel.Location" xml:space="preserve" type="System.Drawing.Point, System.Drawing">
     <value>349, 423</value>
@@ -113,6 +122,9 @@
   </data>
   <data name="DownloadProgressPanelLabel.TabIndex" xml:space="preserve" type="System.Int32, mscorlib">
     <value>0</value>
+  </data>
+  <data name="DownloadProgressPanelLabel.Text" xml:space="preserve">
+    <value>Lade Update herunter...</value>
   </data>
   <data name="DownloadProgressPanel.Location" xml:space="preserve" type="System.Drawing.Point, System.Drawing">
     <value>12, 366</value>

@@ -49,7 +49,7 @@
     <value>Eingangsfrequenz</value>
   </data>
   <data name="Lbl_PowerF.Text" xml:space="preserve">
-    <value>Netzfrequenz.</value>
+    <value>Netzfrequenz</value>
   </data>
   <data name="Lbl_InputV.Text" xml:space="preserve">
     <value>Eingangsspannung</value>
@@ -85,7 +85,7 @@
     <value>Minimiert starten</value>
   </data>
   <data name="CB_Systray.Text" xml:space="preserve">
-    <value>Auf Systray minimieren</value>
+    <value>In den Systray minimieren</value>
   </data>
   <data name="Tab_Miscellanous.Text" xml:space="preserve">
     <value>Verschiedenes</value>
@@ -103,22 +103,22 @@
     <value>Ruhezustand</value>
   </data>
   <data name="Cb_ImmediateStop.Text" xml:space="preserve">
-    <value>Sofortige Stopp-Aktion</value>
+    <value>Stoppvorgang sofort einleiten</value>
   </data>
   <data name="Lbl_GraceTime.Text" xml:space="preserve">
-    <value>Verzögerung vor Herunterfahren (Sek.)</value>
+    <value>Manuelle Verzögerung während Stoppvorgang (Sek.)</value>
   </data>
   <data name="Lbl_Delay_Stop.Text" xml:space="preserve">
-    <value>Verzögerung vor dem Herunterfahren (Sek.)</value>
+    <value>Verzögerung vor der Stopp-Aktion (Sek.)</value>
   </data>
   <data name="Lbl_StopType.Text" xml:space="preserve">
-    <value>Art des Stopps</value>
+    <value>Auszuführende Stopp-Aktion</value>
   </data>
   <data name="Lbl_BattLimit_Time.Text" xml:space="preserve">
-    <value>Herunterfahren wenn Laufzeit niedriger als (Sek.)</value>
+    <value>Herunterfahren, wenn Laufzeit niedriger als (Sek.)</value>
   </data>
   <data name="Lbl_BattLimit_Load.Text" xml:space="preserve">
-    <value>Herunterfahren wenn Akkuladung weniger als</value>
+    <value>Herunterfahren, wenn Akkuladung geringer als</value>
   </data>
   <data name="Tab_Shutdown.Text" xml:space="preserve">
     <value>Optionen zum Herunterfahren</value>
@@ -163,43 +163,54 @@
     <value>Optionen</value>
   </data>
   <data name="Tb_UPS_Name.ToolTip" xml:space="preserve">
-    <value>Name der zu überwachenden USV. Wertebereich: Name der auf dem NUT-Server konfigurierten USV.</value>
+    <value>Name der zu überwachenden USV.
+Wertebereich: Name der auf dem NUT-Server konfigurierten USV.</value>
   </data>
   <data name="Tb_Port.ToolTip" xml:space="preserve">
-    <value>NUT-Server Portnummer (Standard = 3493). Wertebereich: Numerischer Wert von 1 bis 65535.</value>
+    <value>NUT-Server Portnummer (Standard = 3493).
+Wertebereich: Numerischer Wert von 1 bis 65535.</value>
   </data>
   <data name="Tb_Server_IP.ToolTip" xml:space="preserve">
-    <value>NUT-Serveradresse. Wertebereich: IPV4 / IPV6 / FQDN-Adresse.</value>
+    <value>Adresse des NUT-Servers.
+Wertebereich: IPV4 / IPV6 / FQDN-Adresse.</value>
   </data>
   <data name="Cb_Reconnect.ToolTip" xml:space="preserve">
     <value>Automatische Verbindung / Wiederverbindung aktivieren</value>
   </data>
   <data name="Cbx_Freq_Input.ToolTip" xml:space="preserve">
-    <value>Legt die Eingangsfrequenz fest wenn dieser Wert nicht von der USV geliefert wird.</value>
+    <value>Legt die Eingangsfrequenz fest, wenn dieser Wert nicht von der USV geliefert wird.</value>
   </data>
   <data name="Tb_BattV_Max.ToolTip" xml:space="preserve">
-    <value>Maximale Akkuspannung. Wertebereich: Numerischer Wert von 0 bis 100.</value>
+    <value>Maximale Akkuspannung.
+Wertebereich: Numerischer Wert von 0 bis 100.</value>
   </data>
   <data name="Tb_OutV_Max.ToolTip" xml:space="preserve">
-    <value>Maximale Ausgangsspannung. Wertebereich: Numerischer Wert von 0 bis 999.</value>
+    <value>Maximale Ausgangsspannung.
+Wertebereich: Numerischer Wert von 0 bis 999.</value>
   </data>
   <data name="Tb_InF_Max.ToolTip" xml:space="preserve">
-    <value>Maximale Eingangsfrequenz. Wertebereich: Numerischer Wert von 0 bis 100.</value>
+    <value>Maximale Eingangsfrequenz.
+Wertebereich: Numerischer Wert von 0 bis 100.</value>
   </data>
   <data name="Tb_BattV_Min.ToolTip" xml:space="preserve">
-    <value>Minimale Akkuspannung. Wertebereich: Numerischer Wert von 0 bis 100.</value>
+    <value>Minimale Akkuspannung.
+Wertebereich: Numerischer Wert von 0 bis 100.</value>
   </data>
   <data name="Tb_OutV_Min.ToolTip" xml:space="preserve">
-    <value>Minimale Ausgangsspannung. Wertebereich: Numerischer Wert von 0 bis 999.</value>
+    <value>Minimale Ausgangsspannung.
+Wertebereich: Numerischer Wert von 0 bis 999.</value>
   </data>
   <data name="Tb_InF_Min.ToolTip" xml:space="preserve">
-    <value>Minimale Eingangsfrequenz. Wertebereich: Numerischer Wert von 0 bis 100.</value>
+    <value>Minimale Eingangsfrequenz.
+Wertebereich: Numerischer Wert von 0 bis 100.</value>
   </data>
   <data name="Tb_InV_Max.ToolTip" xml:space="preserve">
-    <value>Maximale Eingangsspannung. Wertebereich: Numerischer Wert von 0 bis 999.</value>
+    <value>Maximale Eingangsspannung.
+Wertebereich: Numerischer Wert von 0 bis 999.</value>
   </data>
   <data name="Tb_InV_Min.ToolTip" xml:space="preserve">
-    <value>Minimale Eingangsspannung. Wertebereich: Numerischer Wert von 0 bis 999.</value>
+    <value>Minimale Eingangsspannung.
+Wertebereich: Numerischer Wert von 0 bis 999.</value>
   </data>
   <data name="Cbx_LogLevel.ToolTip" xml:space="preserve">
     <value>Detailstufe des Logs.</value>
@@ -213,11 +224,14 @@
   <data name="Lbl_LevelLog.ToolTip" xml:space="preserve">
     <value>Detailstufe für die Logdatei</value>
   </data>
+  <data name="CB_Use_Logfile.ToolTip" xml:space="preserve">
+    <value>Protokollierungs-Ereignisse in eine Datei schreiben.</value>
+  </data>
   <data name="CB_Start_W_Win.ToolTip" xml:space="preserve">
     <value>Startet WinNUT beim Start von Windows.</value>
   </data>
   <data name="CB_Close_Tray.ToolTip" xml:space="preserve">
-    <value>Ins Systray minimieren anstatt zu schliessen.</value>
+    <value>Ins Systray minimieren, anstatt zu schliessen.</value>
   </data>
   <data name="CB_Start_Mini.ToolTip" xml:space="preserve">
     <value>Startet WinNUT minimiert.</value>
@@ -226,28 +240,34 @@
     <value>In Taskleiste oder Systray minimieren.</value>
   </data>
   <data name="Tb_GraceTime.ToolTip" xml:space="preserve">
-    <value>Limit für zusätzliche Verzögerung. Wertebereich: Numerischer Wert von 0 bis 3600.</value>
+    <value>Limit für zusätzliche Verzögerung.
+Wertebereich: Numerischer Wert von 0 bis 3600.</value>
   </data>
   <data name="Cb_ExtendTime.ToolTip" xml:space="preserve">
-    <value>USV-Name</value>
+    <value>Zusätzliche Zeit für das Herunterfahren erlauben.
+Hinweis:
+Diese zusätzliche Zeit kann über die Verfügbarkeit der USV hinausgehen - MIT VORSICHT VERWENDEN !!!</value>
   </data>
   <data name="Tb_Delay_Stop.ToolTip" xml:space="preserve">
-    <value>Prozedurverzögerung bei Verzögerung stoppen. Wertebereich: Numerischer Wert von 0 bis 3600.</value>
+    <value>Stoppvorgang bei Verzögerung unterbrechen.
+Wertebereich: Numerischer Wert von 0 bis 3600.</value>
   </data>
   <data name="Cbx_TypeStop.ToolTip" xml:space="preserve">
-    <value>Art des Stopps am Ende des Stoppvorgangs.</value>
+    <value>Art der Stopp-Aktion am Ende des Stoppvorgangs.</value>
   </data>
   <data name="Cb_ImmediateStop.ToolTip" xml:space="preserve">
-    <value>Startet das Herunterfahren sofort oder zeitgesteuert.</value>
+    <value>Führt die Stopp-Aktion sofort oder zeitgesteuert aus.</value>
   </data>
   <data name="Tb_BattLimit_Time.ToolTip" xml:space="preserve">
-    <value>Unteres Backup-Zeitlimit welches das Herunterfahren auslöst. Wertebereich: Numerischer Wert von 0 bis 3600.</value>
+    <value>Unteres Backup-Zeitlimit, welches das Herunterfahren auslöst.
+Wertebereich: Numerischer Wert von 0 bis 3600.</value>
   </data>
   <data name="Tb_BattLimit_Load.ToolTip" xml:space="preserve">
-    <value>Untergrenze des Akkustands der den Abschaltvorgang auslöst. Wertebereich: Numerischer Wert von 0 bis 100.</value>
+    <value>Untergrenze des Akkuladestands, welcher den Abschaltvorgang auslöst.
+Wertebereich: Numerischer Wert von 0 bis 100.</value>
   </data>
   <data name="Cbx_Branch_Update.ToolTip" xml:space="preserve">
-    <value>Bei der Versionsüberprüfung den stabilen oder Entwicklungszweig verwenden.</value>
+    <value>Bei der Updateprüfung den stabilen oder den Entwicklungszweig verwenden.</value>
   </data>
   <data name="Cbx_Delay_Verif.ToolTip" xml:space="preserve">
     <value>Häufigkeit der Überprüfung.</value>
@@ -262,7 +282,7 @@
     <value>Verbindungskennung des NUT-Servers</value>
   </data>
   <data name="Label3.Text" xml:space="preserve">
-    <value>Anmeldeinformationen des NUT-Server (Leer lassen wenn nicht erforderlich)</value>
+    <value>Anmeldeinformationen des NUT-Server (Leer, wenn nicht nötig)</value>
   </data>
   <data name="Lbl_Pwd_Nut.Text" xml:space="preserve">
     <value>Passwort</value>
@@ -274,7 +294,7 @@
     <value>Herunterfahren bei FSD-Signal des NUT</value>
   </data>
   <data name="CB_Follow_FSD.ToolTip" xml:space="preserve">
-    <value>Gibt an ob ein Herunterfahren durchgeführt werden soll wenn der NUT-Server ein erzwungenes Herunterfahren signalisiert (FSD = Force ShutDown).</value>
+    <value>Gibt an, ob ein Herunterfahren durchgeführt werden soll, wenn der NUT-Server ein erzwungenes Herunterfahren signalisiert (FSD = Force ShutDown).</value>
   </data>
   <data name="Cbx_Freq_Input.Margin" xml:space="preserve" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 6, 3, 3</value>
@@ -306,6 +326,9 @@
   <data name="pollingIntervalUnitLabel.TabIndex" xml:space="preserve" type="System.Int32, mscorlib">
     <value>20</value>
   </data>
+  <data name="pollingIntervalUnitLabel.Text" xml:space="preserve">
+    <value>Sekunden</value>
+  </data>
   <data name="pollingIntervalValue.Location" xml:space="preserve" type="System.Drawing.Point, System.Drawing">
     <value>154, 100</value>
   </data>
@@ -314,6 +337,9 @@
   </data>
   <data name="pollingIntervalValue.TabIndex" xml:space="preserve" type="System.Int32, mscorlib">
     <value>19</value>
+  </data>
+  <data name="pollingIntervalValue.ToolTip" xml:space="preserve">
+    <value>Wie häufig WinNUT die Daten vom NUT-Server aktualisiert.</value>
   </data>
   <data name="Btn_Apply.Enabled" xml:space="preserve" type="System.Boolean, mscorlib">
     <value>False</value>

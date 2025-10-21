@@ -98,13 +98,13 @@
     <value>Autorise un temps supplémentaire</value>
   </data>
   <data name="Cbx_TypeStop.Items" xml:space="preserve">
-    <value>Mise à l'arrêt</value>
+    <value>Arrêter</value>
   </data>
   <data name="Cbx_TypeStop.Items1" xml:space="preserve">
-    <value>Mise en Veille</value>
+    <value>Mettre en Veille</value>
   </data>
   <data name="Cbx_TypeStop.Items2" xml:space="preserve">
-    <value>Mise en Veille Prolongée</value>
+    <value>Mettre en Veille Prolongée</value>
   </data>
   <data name="Cb_ImmediateStop.Text" xml:space="preserve">
     <value>Action d'arrêt Immediate</value>

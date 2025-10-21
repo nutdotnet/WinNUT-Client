@@ -42,6 +42,9 @@
   <data name="IntroMessage.TabIndex" xml:space="preserve" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
+  <data name="IntroMessage.Text" xml:space="preserve">
+    <value>WinNUT wurde auf ein neues System für die Einstellungen umgestellt und wird dieses in Zukunft verwenden. In der Registry wurden Einstellungen des vorherigen Systems gefunden. Wählen Sie unten die Aktionen aus, die Sie für diese alten Einstellungen durchführen möchten. Wenn Sie keine Maßnahmen ergreifen möchten, wählen Sie Abbrechen. Daraufhin werden die Standardeinstellungen verwendet. Diese Meldung wird nicht mehr angezeigt, solange die neuen Einstellungen intakt sind.</value>
+  </data>
   <data name="OK_Button.Anchor" xml:space="preserve" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Right</value>
   </data>
@@ -72,6 +75,9 @@
   <data name="Cancel_Button.TabIndex" xml:space="preserve" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
+  <data name="Cancel_Button.Text" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
   <data name="ImportSettingsCheckBox.AutoSize" xml:space="preserve" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -87,6 +93,12 @@
   <data name="ImportSettingsCheckBox.TabIndex" xml:space="preserve" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
+  <data name="ImportSettingsCheckBox.Text" xml:space="preserve">
+    <value>Importieren</value>
+  </data>
+  <data name="ImportSettingsCheckBox.ToolTip" xml:space="preserve">
+    <value>Die bisherigen Einstellungen werden aus der Registry importiert und in das neue System für die Einstellungen importiert.</value>
+  </data>
   <data name="DeleteSettingsCheckBox.AutoSize" xml:space="preserve" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -101,6 +113,12 @@
   </data>
   <data name="DeleteSettingsCheckBox.TabIndex" xml:space="preserve" type="System.Int32, mscorlib">
     <value>6</value>
+  </data>
+  <data name="DeleteSettingsCheckBox.Text" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="DeleteSettingsCheckBox.ToolTip" xml:space="preserve">
+    <value>Die bisherigen Einstellungen werden aus der Registry entfernt.</value>
   </data>
   <data name="PrevSettngsGroupBox.Anchor" xml:space="preserve" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -120,6 +138,9 @@
   <data name="BackupSettingsCheckbox.TabIndex" xml:space="preserve" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
+  <data name="BackupSettingsCheckbox.ToolTip" xml:space="preserve">
+    <value>Die bisherigen Einstellungen werden in eine Datei exportiert.</value>
+  </data>
   <data name="PrevSettngsGroupBox.Location" xml:space="preserve" type="System.Drawing.Point, System.Drawing">
     <value>6, 122</value>
   </data>
@@ -131,6 +152,9 @@
   </data>
   <data name="PrevSettngsGroupBox.TabIndex" xml:space="preserve" type="System.Int32, mscorlib">
     <value>7</value>
+  </data>
+  <data name="PrevSettngsGroupBox.Text" xml:space="preserve">
+    <value>Bisherige Einstellungen</value>
   </data>
   <data name="buttonPanel.Dock" xml:space="preserve" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Bottom</value>
@@ -179,6 +203,9 @@
   </data>
   <data name="$this.StartPosition" xml:space="preserve" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Auf das neue Einstellungsformat migrieren</value>
   </data>
   <metadata name="UpgradePrefsDialogModelBindingSource.TrayLocation" xml:space="preserve" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>488, 17</value>

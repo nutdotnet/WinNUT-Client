@@ -13,16 +13,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Lbl_D.Text" xml:space="preserve">
-    <value>Beschreibung :</value>
+    <value>Beschreibung:</value>
   </data>
   <data name="Lbl_V.Text" xml:space="preserve">
-    <value>Value :</value>
+    <value>Wert:</value>
   </data>
   <data name="Lbl_Name.Text" xml:space="preserve">
-    <value>Name :</value>
+    <value>Name:</value>
   </data>
   <data name="GB1.Text" xml:space="preserve">
-    <value>Item Properties</value>
+    <value>Element-Eigenschaften</value>
   </data>
   <data name="Btn_Reload.Text" xml:space="preserve">
     <value>Neu laden</value>
