@@ -157,9 +157,6 @@
    <setting name="IsFirstRun" serializeAs="String">
     <value>True</value>
    </setting>
-   <setting name="IsMSIToCOUpgradeInProgress" serializeAs="String">
-    <value>False</value>
-   </setting>
   </WinNUT_Client.My.MySettings>
  </userSettings>
 </configuration>
