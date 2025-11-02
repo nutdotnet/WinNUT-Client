@@ -3699,6 +3699,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_D81FFB3C87D14E34A7B2333B7770A7E7"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_D88A04F096FD56873EEC8F97D8578C9E"
         "OwnerKey" = "8:_D20AE0448FA041DB8F5DD65C05E507C1"
         "MsmSig" = "8:_UNDEFINED"
@@ -4954,12 +4960,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_CB7240238DDFA669FCF3046E48D0A447"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_E8BB0E2A241C1023B684B55FEB5B745F"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -4973,6 +4973,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_D20AE0448FA041DB8F5DD65C05E507C1"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_CB7240238DDFA669FCF3046E48D0A447"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -9459,26 +9465,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_761987FA7717402DB92207F177F3DB49"
-            {
-            "SourcePath" = "8:..\\..\\COPYING"
-            "TargetName" = "8:COPYING"
-            "Tag" = "8:"
-            "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_76C124487B58F9503C60B5679A43F43E"
             {
             "AssemblyRegister" = "3:1"
@@ -11873,6 +11859,26 @@
             "Register" = "3:1"
             "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D81FFB3C87D14E34A7B2333B7770A7E7"
+            {
+            "SourcePath" = "8:..\\..\\LICENSE.txt"
+            "TargetName" = "8:LICENSE.txt"
+            "Tag" = "8:"
+            "Folder" = "8:_7A1917372AF14D75845D775AAEB7CD48"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D88A04F096FD56873EEC8F97D8578C9E"
