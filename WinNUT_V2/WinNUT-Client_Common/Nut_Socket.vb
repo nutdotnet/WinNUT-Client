@@ -35,7 +35,7 @@ Public Class Nut_Socket
     ''' </summary>
     Private streamInUse As Boolean
 
-    Public Event Socket_Broken(ex As NutException)
+    Public Event Socket_Broken()
 
     Public Sub New(Nut_Config As Nut_Parameter, ByRef logger As Logger)
         LogFile = logger
@@ -122,9 +122,10 @@ Public Class Nut_Socket
     ''' <summary>
     ''' Perform various functions necessary to disconnect the socket from the NUT server.
     ''' </summary>
-    ''' <param name="forceful">Skip sending the LOGOUT command to the NUT server. Unknown effects.</param>
-    Public Sub Disconnect(Optional forceful = False)
-        If IsLoggedIn AndAlso Not forceful Then
+    ''' <param name="skipLogout">Do not send the LOGOUT command to the NUT server. Unknown effects.</param>
+    Public Sub Disconnect(Optional skipLogout = False)
+        If IsLoggedIn AndAlso Not skipLogout Then
+            ' TODO: Move to new subroutine.
             Query_Data("LOGOUT")
         End If
 
@@ -138,46 +139,10 @@ Public Class Nut_Socket
             ReaderStream.Dispose()
         End If
 
-        If NutStream IsNot Nothing Then
-            NutStream.Dispose()
-        End If
-
         If client IsNot Nothing Then
             client.Close()
         End If
     End Sub
-
-    ''' <summary>
-    ''' Parse and enumerate a NUT protocol response.
-    ''' </summary>
-    ''' <param name="Data">The raw response given from a query.</param>
-    ''' <returns></returns>
-    Private Function EnumResponse(Data As String) As NUTResponse
-        Dim Response As NUTResponse
-        ' Remove hyphens to prepare for parsing.
-        Dim SanitisedString = UCase(Data.Replace("-", String.Empty))
-        ' Break the response down so we can get specifics.
-        Dim SplitString = SanitisedString.Split(" "c)
-
-        Select Case SplitString(0)
-            Case "OK", "VAR", "DESC", "UPS"
-                Response = NUTResponse.OK
-            Case "BEGIN"
-                Response = NUTResponse.BEGINLIST
-            Case "END"
-                Response = NUTResponse.ENDLIST
-            Case "ERR"
-                Response = DirectCast([Enum].Parse(GetType(NUTResponse), SplitString(1)), NUTResponse)
-            Case "NETWORK", "1.0", "1.1", "1.2", "1.3"
-                'In case of "VER" or "NETVER" Query
-                Response = NUTResponse.OK
-            Case Else
-                ' We don't recognize the response, throw an error.
-                Response = NUTResponse.NORESPONSE
-                'Throw New Exception("Unknown response from NUT server: " & Response)
-        End Select
-        Return Response
-    End Function
 
     ''' <summary>
     ''' Attempt to send a query to the NUT server, and do some basic parsing.
@@ -188,43 +153,59 @@ Public Class Nut_Socket
     ''' call is in progress.</exception>
     ''' <exception cref="NutException">Thrown when the NUT server returns an error or unexpected response.</exception>
     Function Query_Data(Query_Msg As String) As Transaction
-        Dim Response As NUTResponse
-        Dim DataResult As String
-        Dim finalTransaction As Transaction
+        If Not ConnectionStatus Then
+            Throw New InvalidOperationException("Attempted to send query " & Query_Msg & " while disconnected.")
+        End If
 
         If streamInUse Then
-            Throw New InvalidOperationException("Attempted to query " & Query_Msg & " while stream is in use.")
+            Throw New InvalidOperationException("Attempted to send query " & Query_Msg & " while stream is in use.")
         End If
 
-        If ConnectionStatus Then
+        Try
             streamInUse = True
+            WriterStream.WriteLine(Query_Msg)
+            WriterStream.Flush()
+        Catch
+            Throw
+        Finally
+            streamInUse = False
+        End Try
 
-            Try
-                WriterStream.WriteLine(Query_Msg & vbCr)
-                WriterStream.Flush()
-            Catch
-                Throw
-            Finally
-                streamInUse = False
-            End Try
+        Dim responseEnum = NUTResponse.EMPTY
+        Dim response = ReaderStream.ReadLine()
 
-            DataResult = Trim(ReaderStream.ReadLine())
-            Response = EnumResponse(DataResult)
-            finalTransaction = New Transaction(Query_Msg, DataResult, Response)
-
-            ' Handle error conditions
-            If DataResult = Nothing OrElse DataResult.StartsWith("ERR") Then
-                ' TODO: Does null dataresult really mean an error condition?
-                ' https://stackoverflow.com/a/6523010/530172
-                'Disconnect(True, True)
-                'RaiseEvent Socket_Broken(New NutException(Query_Msg, Nothing))
-                Throw New NutException(finalTransaction)
-            End If
+        If String.IsNullOrEmpty(response) Then
+            ' End of stream reached, likely server terminated connection.
+            Disconnect(True)
+            RaiseEvent Socket_Broken()
         Else
-            Throw New InvalidOperationException("Attempted to send query while disconnected.")
+            Dim parseResponse = response.Trim().ToUpper().Split(" "c) ' TODO: Is Trim unnecessary?
+
+            Select Case parseResponse(0)
+                Case "OK", "VAR", "DESC", "UPS"
+                    responseEnum = NUTResponse.OK
+                Case "BEGIN"
+                    responseEnum = NUTResponse.BEGINLIST
+                Case "END"
+                    responseEnum = NUTResponse.ENDLIST
+                Case "NETWORK", "1.0", "1.1", "1.2", "1.3"
+                    'In case of "VER" or "NETVER" Query
+                    responseEnum = NUTResponse.OK
+                Case "ERR"
+                    responseEnum = DirectCast([Enum].Parse(GetType(NUTResponse),
+                                                parseResponse(1).Replace("-", String.Empty)), NUTResponse)
+                Case Else
+                    responseEnum = NUTResponse.UNRECOGNIZED
+            End Select
         End If
 
-        Return finalTransaction
+        Dim transaction = New Transaction(Query_Msg, response, responseEnum)
+
+        If responseEnum = NUTResponse.OK OrElse responseEnum = NUTResponse.BEGINLIST OrElse responseEnum = NUTResponse.ENDLIST Then
+            Return transaction
+        End If
+
+        Throw New NutException(transaction)
     End Function
 
     Public Function Query_List_Datas(Query_Msg As String) As List(Of UPS_List_Datas)
@@ -351,12 +332,4 @@ Public Class Nut_Socket
             Throw New NutException(Nut_Query)
         End If
     End Function
-
-    Private Sub Event_WatchDog(sender As Object, e As EventArgs)
-        Dim Nut_Query = Query_Data("")
-        If Nut_Query.ResponseType = NUTResponse.NORESPONSE Then
-            Disconnect(True)
-            RaiseEvent Socket_Broken(New NutException(Nut_Query))
-        End If
-    End Sub
 End Class

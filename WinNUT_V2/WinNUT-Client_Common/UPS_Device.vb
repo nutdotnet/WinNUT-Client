@@ -429,7 +429,6 @@ Public Class UPS_Device
         Catch Excep As Exception
             LogFile.LogTracing("Something went wrong in Retrieve_UPS_Datas:", LogLvl.LOG_ERROR, Me)
             LogFile.LogException(Excep, Me)
-            Socket_Broken()
         End Try
     End Sub
 
@@ -481,12 +480,10 @@ Public Class UPS_Device
                                 Continue For
                             End If
                         End If
-
                     Case Else
-                        LogFile.LogTracing("Error with " & varName & ", trying next", LogLvl.LOG_WARNING, Me)
-                        ' Continue to next variable
-                        Continue For
+                        Throw
                 End Select
+
             Catch ex As Exception
                 LogFile.LogTracing("Exception for variable " & varName & ": " & ex.Message & ", trying next", LogLvl.LOG_WARNING, Me)
                 ' Continue to next variable
