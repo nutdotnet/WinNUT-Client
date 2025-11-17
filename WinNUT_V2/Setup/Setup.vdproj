@@ -11493,7 +11493,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WinNUT-Client_Common, Version=2.3.9437.23053, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:WinNUT-Client_Common, Version=2.3.9452.20427, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_CB7240238DDFA669FCF3046E48D0A447"
@@ -12898,15 +12898,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:WinNUT Client"
-        "ProductCode" = "8:{B9A7F3F9-64DD-4410-93E3-2412DC81D593}"
-        "PackageCode" = "8:{A93AB7E7-7F77-471E-B065-B8E608F9EC24}"
+        "ProductCode" = "8:{6753705B-3438-4DCE-ADC5-2483FBFDF880}"
+        "PackageCode" = "8:{ED16C7CF-DA04-4DA1-8BBD-00B5F85B43A3}"
         "UpgradeCode" = "8:{7EA17151-76E7-4E29-8F6A-621C1B4144C2}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:2.3.9437"
+        "ProductVersion" = "8:2.3.9452"
         "Manufacturer" = "8:NUTDotNet"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://github.com/nutdotnet/WinNUT-Client/discussions"
