@@ -446,6 +446,7 @@ Public Class WinNUT
         UpdateIcon_NotifyIcon()
         LogFile.LogTracing("Update Icon", LogLvl.LOG_DEBUG, Me)
         RaiseEvent UpdateBatteryState("Lost Connect")
+        UpdateMainMenuState()
     End Sub
 
     ''' <summary>
