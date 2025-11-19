@@ -555,6 +555,60 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Save UPS Data to File.
+        '''</summary>
+        Public ReadOnly Property List_Var_Gui__SaveFile_Caption() As String
+            Get
+                Return ResourceManager.GetString("List_Var_Gui__SaveFile_Caption", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Error encountered when saving UPS data to file: {0}.
+        '''</summary>
+        Public ReadOnly Property List_Var_Gui__SaveFileError_Text() As String
+            Get
+                Return ResourceManager.GetString("List_Var_Gui__SaveFileError_Text", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Successfully saved UPS data to file: {0}.
+        '''</summary>
+        Public ReadOnly Property List_Var_Gui__SaveFileSuccess() As String
+            Get
+                Return ResourceManager.GetString("List_Var_Gui__SaveFileSuccess", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Clipboard Error.
+        '''</summary>
+        Public ReadOnly Property List_Var_Gui__SetCpbTextError_Caption() As String
+            Get
+                Return ResourceManager.GetString("List_Var_Gui__SetCpbTextError_Caption", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Error encountered when copying UPS data to the Clipboard: {0}.
+        '''</summary>
+        Public ReadOnly Property List_Var_Gui__SetCpbTextError_Text() As String
+            Get
+                Return ResourceManager.GetString("List_Var_Gui__SetCpbTextError_Text", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Successfully copied UPS data to the Clipboard..
+        '''</summary>
+        Public ReadOnly Property List_Var_Gui__SetCpbTextSuccess() As String
+            Get
+                Return ResourceManager.GetString("List_Var_Gui__SetCpbTextSuccess", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to WinNut Preferences Changed.
         '''</summary>
         Public ReadOnly Property Log_Str_01() As String

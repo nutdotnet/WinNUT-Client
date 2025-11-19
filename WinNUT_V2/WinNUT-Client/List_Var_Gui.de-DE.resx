@@ -27,9 +27,6 @@
   <data name="Btn_Reload.Text" xml:space="preserve">
     <value>Neu laden</value>
   </data>
-  <data name="Btn_Clear.Text" xml:space="preserve">
-    <value>Leeren</value>
-  </data>
   <data name="Btn_Close.Text" xml:space="preserve">
     <value>Schließen</value>
   </data>
@@ -39,4 +36,25 @@
   <data name="$this.Text" xml:space="preserve">
     <value>Liste der USV-Variablen</value>
   </data>
+  <data name="Btn_Clip.TextImageRelation" xml:space="preserve" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>ImageBeforeText</value>
+  </data>
+  <data name="Btn_Save.Location" xml:space="preserve" type="System.Drawing.Point, System.Drawing">
+    <value>197, 300</value>
+  </data>
+  <data name="Btn_Save.Size" xml:space="preserve" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="Btn_Save.TabIndex" xml:space="preserve" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="Btn_Save.TextImageRelation" xml:space="preserve" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>ImageBeforeText</value>
+  </data>
+  <metadata name="ToolTip.TrayLocation" xml:space="preserve" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>168, 17</value>
+  </metadata>
+  <metadata name="$this.TrayHeight" xml:space="preserve" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>62</value>
+  </metadata>
 </root>

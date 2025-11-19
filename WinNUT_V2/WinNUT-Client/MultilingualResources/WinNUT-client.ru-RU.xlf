@@ -158,8 +158,8 @@ Remaining Time : {WinNUT.Lbl_VRTime.Text}</source>
           <target state="final">250, 15</target>
         </trans-unit>
         <trans-unit id="Lbl_D_Value.TabIndex" translate="no" extype="System.Int32, mscorlib" xml:space="preserve">
-          <source>5</source>
-          <target state="final">5</target>
+          <source>3</source>
+          <target state="final">3</target>
         </trans-unit>
         <trans-unit id="Lbl_V_Value.AutoSize" translate="no" extype="System.Boolean, mscorlib" xml:space="preserve">
           <source>True</source>
@@ -178,8 +178,8 @@ Remaining Time : {WinNUT.Lbl_VRTime.Text}</source>
           <target state="final">250, 15</target>
         </trans-unit>
         <trans-unit id="Lbl_V_Value.TabIndex" translate="no" extype="System.Int32, mscorlib" xml:space="preserve">
-          <source>4</source>
-          <target state="final">4</target>
+          <source>2</source>
+          <target state="final">2</target>
         </trans-unit>
         <trans-unit id="Lbl_N_Value.AutoSize" translate="no" extype="System.Boolean, mscorlib" xml:space="preserve">
           <source>True</source>
@@ -198,8 +198,8 @@ Remaining Time : {WinNUT.Lbl_VRTime.Text}</source>
           <target state="final">250, 15</target>
         </trans-unit>
         <trans-unit id="Lbl_N_Value.TabIndex" translate="no" extype="System.Int32, mscorlib" xml:space="preserve">
-          <source>3</source>
-          <target state="final">3</target>
+          <source>1</source>
+          <target state="final">1</target>
         </trans-unit>
         <trans-unit id="Lbl_D.AutoSize" translate="no" extype="System.Boolean, mscorlib" xml:space="preserve">
           <source>True</source>
@@ -270,28 +270,12 @@ Remaining Time : {WinNUT.Lbl_VRTime.Text}</source>
           <target state="final">75, 23</target>
         </trans-unit>
         <trans-unit id="Btn_Reload.TabIndex" translate="no" extype="System.Int32, mscorlib" xml:space="preserve">
-          <source>2</source>
-          <target state="final">2</target>
+          <source>4</source>
+          <target state="final">4</target>
         </trans-unit>
         <trans-unit id="Btn_Reload.Text" translate="yes" xml:space="preserve">
           <source>Reload</source>
           <target state="final">Обновить</target>
-        </trans-unit>
-        <trans-unit id="Btn_Clear.Location" translate="no" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
-          <source>102, 300</source>
-          <target state="final">102, 300</target>
-        </trans-unit>
-        <trans-unit id="Btn_Clear.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
-          <source>75, 23</source>
-          <target state="final">75, 23</target>
-        </trans-unit>
-        <trans-unit id="Btn_Clear.TabIndex" translate="no" extype="System.Int32, mscorlib" xml:space="preserve">
-          <source>3</source>
-          <target state="final">3</target>
-        </trans-unit>
-        <trans-unit id="Btn_Clear.Text" translate="yes" xml:space="preserve">
-          <source>Clear</source>
-          <target state="final">Очистить</target>
         </trans-unit>
         <trans-unit id="Btn_Close.Location" translate="no" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
           <source>289, 300</source>
@@ -302,16 +286,16 @@ Remaining Time : {WinNUT.Lbl_VRTime.Text}</source>
           <target state="final">75, 23</target>
         </trans-unit>
         <trans-unit id="Btn_Close.TabIndex" translate="no" extype="System.Int32, mscorlib" xml:space="preserve">
-          <source>4</source>
-          <target state="final">4</target>
+          <source>7</source>
+          <target state="final">7</target>
         </trans-unit>
         <trans-unit id="Btn_Close.Text" translate="yes" xml:space="preserve">
           <source>Close</source>
           <target state="final">Закрыть</target>
         </trans-unit>
         <trans-unit id="Btn_Clip.Location" translate="no" extype="System.Drawing.Point, System.Drawing" xml:space="preserve">
-          <source>197, 300</source>
-          <target state="final">197, 300</target>
+          <source>102, 300</source>
+          <target state="final">102, 300</target>
         </trans-unit>
         <trans-unit id="Btn_Clip.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
           <source>75, 23</source>
@@ -344,6 +328,54 @@ Remaining Time : {WinNUT.Lbl_VRTime.Text}</source>
         <trans-unit id="$this.Localizable" translate="no" extype="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" extradata="metadata" xml:space="preserve">
           <source>True</source>
           <target state="final">True</target>
+        </trans-unit>
+        <trans-unit id="Btn_Clip.TextImageRelation" translate="yes" xml:space="preserve" extype="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+          <source>ImageBeforeText</source>
+          <target state="needs-review-translation">ImageBeforeText</target>
+        </trans-unit>
+        <trans-unit id="Btn_Clip.ToolTip" translate="yes" xml:space="preserve">
+          <source>Copy all information to the Clipboard.</source>
+          <target state="new">Copy all information to the Clipboard.</target>
+        </trans-unit>
+        <trans-unit id="Btn_Save.Location" translate="yes" xml:space="preserve" extype="System.Drawing.Point, System.Drawing">
+          <source>197, 300</source>
+          <target state="needs-review-translation">197, 300</target>
+        </trans-unit>
+        <trans-unit id="Btn_Save.Size" translate="yes" xml:space="preserve" extype="System.Drawing.Size, System.Drawing">
+          <source>75, 23</source>
+          <target state="needs-review-translation">75, 23</target>
+        </trans-unit>
+        <trans-unit id="Btn_Save.TabIndex" translate="yes" xml:space="preserve" extype="System.Int32, mscorlib">
+          <source>6</source>
+          <target state="needs-review-translation">6</target>
+        </trans-unit>
+        <trans-unit id="Btn_Save.Text" translate="yes" xml:space="preserve">
+          <source>Save</source>
+          <target state="new">Save</target>
+        </trans-unit>
+        <trans-unit id="Btn_Save.TextImageRelation" translate="yes" xml:space="preserve" extype="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+          <source>ImageBeforeText</source>
+          <target state="needs-review-translation">ImageBeforeText</target>
+        </trans-unit>
+        <trans-unit id="Btn_Save.ToolTip" translate="yes" xml:space="preserve">
+          <source>Save all information to a file.</source>
+          <target state="new">Save all information to a file.</target>
+        </trans-unit>
+        <trans-unit id="ToolTip.TrayLocation" translate="yes" xml:space="preserve" extype="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" extradata="metadata">
+          <source>168, 17</source>
+          <target state="needs-review-translation">168, 17</target>
+        </trans-unit>
+        <trans-unit id="$this.TrayHeight" translate="yes" xml:space="preserve" extype="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" extradata="metadata">
+          <source>62</source>
+          <target state="needs-review-translation">62</target>
+        </trans-unit>
+        <trans-unit id="Btn_Reload.ToolTip" translate="yes" xml:space="preserve">
+          <source>Reloads all information from the UPS.</source>
+          <target state="new">Reloads all information from the UPS.</target>
+        </trans-unit>
+        <trans-unit id="Btn_Close.ToolTip" translate="yes" xml:space="preserve">
+          <source>Close this form.</source>
+          <target state="new">Close this form.</target>
         </trans-unit>
       </group>
     </body>
@@ -706,6 +738,36 @@ Please correct the error, or cancel the upgrade dialog to continue with the defa
         <trans-unit id="saveHS" translate="yes" xml:space="preserve" extype="System.Resources.ResXFileRef, System.Windows.Forms">
           <source>..\Resources\saveHS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</source>
           <target state="needs-review-translation">..\Resources\saveHS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</target>
+        </trans-unit>
+        <trans-unit id="List_Var_Gui__SaveFileError_Text" translate="yes" xml:space="preserve">
+          <source>Error encountered when saving UPS data to file: {0}</source>
+          <target state="new">Error encountered when saving UPS data to file: {0}</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Alert the user to an error that occurred while saving to a file, puncuated to indicate that the error will follow.</note>
+        </trans-unit>
+        <trans-unit id="List_Var_Gui__SaveFileSuccess" translate="yes" xml:space="preserve">
+          <source>Successfully saved UPS data to file: {0}</source>
+          <target state="new">Successfully saved UPS data to file: {0}</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Notify the user that the UPS data was successfully saved to a file, and provide the location.</note>
+        </trans-unit>
+        <trans-unit id="List_Var_Gui__SaveFile_Caption" translate="yes" xml:space="preserve">
+          <source>Save UPS Data to File</source>
+          <target state="new">Save UPS Data to File</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Title of Forms relating to saving the UPS data to a file.</note>
+        </trans-unit>
+        <trans-unit id="List_Var_Gui__SetCpbTextError_Caption" translate="yes" xml:space="preserve">
+          <source>Clipboard Error</source>
+          <target state="new">Clipboard Error</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Title of the error notification window that displays when an error is encountered setting the clipboard text.</note>
+        </trans-unit>
+        <trans-unit id="List_Var_Gui__SetCpbTextError_Text" translate="yes" xml:space="preserve">
+          <source>Error encountered when copying UPS data to the Clipboard: {0}</source>
+          <target state="new">Error encountered when copying UPS data to the Clipboard: {0}</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Alert the user that there was a problem copying the UPS data to the clipboard, punctuated to indicate that the error will follow.</note>
+        </trans-unit>
+        <trans-unit id="List_Var_Gui__SetCpbTextSuccess" translate="yes" xml:space="preserve">
+          <source>Successfully copied UPS data to the Clipboard.</source>
+          <target state="new">Successfully copied UPS data to the Clipboard.</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Notify the user that the UPS data was copied to their Clipboard successfully.</note>
         </trans-unit>
       </group>
     </body>

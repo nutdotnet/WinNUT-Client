@@ -274,6 +274,30 @@ Remaining Time : {1}</value>
   <data name="internetconnection" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\internetconnection.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="List_Var_Gui__SaveFileError_Text" xml:space="preserve">
+    <value>Error encountered when saving UPS data to file: {0}</value>
+    <comment>Alert the user to an error that occurred while saving to a file, puncuated to indicate that the error will follow.</comment>
+  </data>
+  <data name="List_Var_Gui__SaveFileSuccess" xml:space="preserve">
+    <value>Successfully saved UPS data to file: {0}</value>
+    <comment>Notify the user that the UPS data was successfully saved to a file, and provide the location.</comment>
+  </data>
+  <data name="List_Var_Gui__SaveFile_Caption" xml:space="preserve">
+    <value>Save UPS Data to File</value>
+    <comment>Title of Forms relating to saving the UPS data to a file.</comment>
+  </data>
+  <data name="List_Var_Gui__SetCpbTextError_Caption" xml:space="preserve">
+    <value>Clipboard Error</value>
+    <comment>Title of the error notification window that displays when an error is encountered setting the clipboard text.</comment>
+  </data>
+  <data name="List_Var_Gui__SetCpbTextError_Text" xml:space="preserve">
+    <value>Error encountered when copying UPS data to the Clipboard: {0}</value>
+    <comment>Alert the user that there was a problem copying the UPS data to the clipboard, punctuated to indicate that the error will follow.</comment>
+  </data>
+  <data name="List_Var_Gui__SetCpbTextSuccess" xml:space="preserve">
+    <value>Successfully copied UPS data to the Clipboard.</value>
+    <comment>Notify the user that the UPS data was copied to their Clipboard successfully.</comment>
+  </data>
   <data name="LogCheckingForUpdate" xml:space="preserve">
     <value>Checking for update...</value>
     <comment>Inform the user that WinNUT is checking for an update.</comment>
