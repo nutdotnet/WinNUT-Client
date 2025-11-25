@@ -218,13 +218,6 @@
   <data name="disconnect2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\disconnect2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Frm_Main_Str_01" xml:space="preserve">
-    <value>Old ups.ini imported
-Ini File Moved to {0}.old</value>
-  </data>
-  <data name="Frm_Main_Str_02" xml:space="preserve">
-    <value>Old ups.ini imported</value>
-  </data>
   <data name="Frm_Main_Str_03" xml:space="preserve">
     <value>Reconnection In Progress</value>
   </data>
@@ -304,6 +297,10 @@ Remaining Time : {1}</value>
   </data>
   <data name="Log_Str_12" xml:space="preserve">
     <value>Stop condition imposed by the NUT server</value>
+  </data>
+  <data name="Log_Str_ErrorDecrypting" xml:space="preserve">
+    <value>Error loading encrypted Settings (username/password)</value>
+    <comment>Short log string to alert the user that there was an error loading encrypted Settings, and give examples of what those Settings were.</comment>
   </data>
   <data name="ManageOldPrefsToolstripMenuItem_Disabled_TooltipText" xml:space="preserve">
     <value>Old preferences were not detected in your system.</value>

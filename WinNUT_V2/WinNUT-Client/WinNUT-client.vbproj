@@ -124,6 +124,7 @@
     <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />

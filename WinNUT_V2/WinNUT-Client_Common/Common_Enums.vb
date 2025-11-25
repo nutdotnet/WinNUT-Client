@@ -31,8 +31,6 @@ End Enum
 
 'Define Resource Str
 Public Enum AppResxStr
-    STR_MAIN_OLDINI_RENAMED
-    STR_MAIN_OLDINI
     STR_MAIN_RECONNECT
     STR_MAIN_NOTCONN
     STR_MAIN_CONN

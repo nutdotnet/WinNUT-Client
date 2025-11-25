@@ -15,12 +15,6 @@
   <data name="App_Event_Str_01" xml:space="preserve">
     <value>應用程式關閉於</value>
   </data>
-  <data name="Frm_Main_Str_01" xml:space="preserve">
-    <value>已匯入舊的 ups.ini， ini 檔案已重新命名為 {0}.old</value>
-  </data>
-  <data name="Frm_Main_Str_02" xml:space="preserve">
-    <value>匯入舊的 ups.ini</value>
-  </data>
   <data name="Frm_Main_Str_03" xml:space="preserve">
     <value>正在重新連線</value>
   </data>

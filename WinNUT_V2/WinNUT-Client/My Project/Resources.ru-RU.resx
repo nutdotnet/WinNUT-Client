@@ -15,12 +15,6 @@
   <data name="App_Event_Str_01" xml:space="preserve">
     <value>Программное отключение в</value>
   </data>
-  <data name="Frm_Main_Str_01" xml:space="preserve">
-    <value>Старая версия ups.ini перемещена в {0}.old</value>
-  </data>
-  <data name="Frm_Main_Str_02" xml:space="preserve">
-    <value>Старая версия ups.ini импортирована</value>
-  </data>
   <data name="Frm_Main_Str_03" xml:space="preserve">
     <value>Переподключение в процессе</value>
   </data>

@@ -389,25 +389,6 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Old ups.ini imported
-        '''Ini File Moved to {0}.old.
-        '''</summary>
-        Public ReadOnly Property Frm_Main_Str_01() As String
-            Get
-                Return ResourceManager.GetString("Frm_Main_Str_01", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized string similar to Old ups.ini imported.
-        '''</summary>
-        Public ReadOnly Property Frm_Main_Str_02() As String
-            Get
-                Return ResourceManager.GetString("Frm_Main_Str_02", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
         '''  Looks up a localized string similar to Reconnection In Progress.
         '''</summary>
         Public ReadOnly Property Frm_Main_Str_03() As String
@@ -631,6 +612,15 @@ Namespace My.Resources
         Public ReadOnly Property Log_Str_12() As String
             Get
                 Return ResourceManager.GetString("Log_Str_12", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Error loading encrypted Settings (username/password).
+        '''</summary>
+        Public ReadOnly Property Log_Str_ErrorDecrypting() As String
+            Get
+                Return ResourceManager.GetString("Log_Str_ErrorDecrypting", resourceCulture)
             End Get
         End Property
         

@@ -15,13 +15,6 @@
   <data name="App_Event_Str_01" xml:space="preserve">
     <value>应用程序被关闭于</value>
   </data>
-  <data name="Frm_Main_Str_01" xml:space="preserve">
-    <value>导入了旧的 ups.ini
-Ini 文件重命名为 {0}.old</value>
-  </data>
-  <data name="Frm_Main_Str_02" xml:space="preserve">
-    <value>导入了旧的 ups.ini</value>
-  </data>
   <data name="Frm_Main_Str_03" xml:space="preserve">
     <value>重连中</value>
   </data>

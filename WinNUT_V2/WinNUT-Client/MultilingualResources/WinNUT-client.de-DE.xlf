@@ -1715,15 +1715,6 @@ Remaining Time : {1}</source>
           <target state="translated">Akkuladung: {0}
 Verbleibende Zeit: {1}</target>
         </trans-unit>
-        <trans-unit id="Frm_Main_Str_01" translate="yes" xml:space="preserve">
-          <source>Old ups.ini imported
-Ini File Moved to {0}.old</source>
-          <target state="translated">Alte ups.ini importiert INI-Datei nach {0}.old verschoben</target>
-        </trans-unit>
-        <trans-unit id="Frm_Main_Str_02" translate="yes" xml:space="preserve">
-          <source>Old ups.ini imported</source>
-          <target state="final">Alte ups.ini importiert</target>
-        </trans-unit>
         <trans-unit id="Frm_Main_Str_03" translate="yes" xml:space="preserve">
           <source>Reconnection In Progress</source>
           <target state="final">Wiederverbindung läuft</target>
@@ -1922,6 +1913,11 @@ Bitte beheben Sie den Fehler oder brechen Sie den Aktualisierungsdialog ab, um m
           <target state="translated">Updateprüfung läuft...</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Inform the user that WinNUT is checking for an update.</note>
         </trans-unit>
+        <trans-unit id="Log_Str_ErrorDecrypting" translate="yes" xml:space="preserve">
+          <source>Error loading encrypted Settings (username/password)</source>
+          <target state="new">Error loading encrypted Settings (username/password)</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Short log string to alert the user that there was an error loading encrypted Settings, and give examples of what those Settings were.</note>
+        </trans-unit>
       </group>
     </body>
   </file>
@@ -1936,8 +1932,8 @@ Bitte beheben Sie den Fehler oder brechen Sie den Aktualisierungsdialog ab, um m
           <target state="final">248, 17</target>
         </trans-unit>
         <trans-unit id="Menu_UPS_Var.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
-          <source>180, 22</source>
-          <target state="final">180, 22</target>
+          <source>177, 22</source>
+          <target state="final">177, 22</target>
         </trans-unit>
         <trans-unit id="Menu_UPS_Var.Text" translate="yes" xml:space="preserve">
           <source>UPS Variable</source>
@@ -1960,8 +1956,8 @@ Bitte beheben Sie den Fehler oder brechen Sie den Aktualisierungsdialog ab, um m
           <target state="final">Datei</target>
         </trans-unit>
         <trans-unit id="Menu_Disconnect.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
-          <source>180, 22</source>
-          <target state="final">180, 22</target>
+          <source>133, 22</source>
+          <target state="final">133, 22</target>
         </trans-unit>
         <trans-unit id="Menu_Disconnect.Text" translate="yes" xml:space="preserve">
           <source>Disconnect</source>
@@ -3204,8 +3200,9 @@ Bitte beheben Sie den Fehler oder brechen Sie den Aktualisierungsdialog ab, um m
           <target state="new"></target>
         </trans-unit>
         <trans-unit id="Menu_Connect.Size" translate="yes" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
-          <source>180, 22</source>
+          <source>133, 22</source>
           <target state="needs-review-translation">180, 22</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="Menu_Connect.Text" translate="yes" xml:space="preserve">
           <source>Connect</source>
@@ -3236,12 +3233,14 @@ Bitte beheben Sie den Fehler oder brechen Sie den Aktualisierungsdialog ab, um m
           <target state="needs-review-translation"></target>
         </trans-unit>
         <trans-unit id="ToolStripSeparator1.Size" translate="yes" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
-          <source>177, 6</source>
+          <source>130, 6</source>
           <target state="needs-review-translation">177, 6</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="Menu_Persist.Size" translate="yes" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
-          <source>180, 22</source>
+          <source>133, 22</source>
           <target state="needs-review-translation">180, 22</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="Menu_Persist.Text" translate="yes" xml:space="preserve">
           <source>Persist</source>
