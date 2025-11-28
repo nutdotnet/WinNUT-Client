@@ -4,6 +4,8 @@ Imports System.Net.Sockets
 Public Class Nut_Socket
 
     Private Const TIMEOUT_MS = 5000
+    Private ReadOnly NUT_CHARENCODING As Text.Encoding = Text.Encoding.ASCII
+
 #Region "Properties"
     Public ReadOnly Property ConnectionStatus As Boolean
         Get
@@ -64,8 +66,8 @@ Public Class Nut_Socket
             }
 
             NutStream = client.GetStream()
-            ReaderStream = New StreamReader(NutStream)
-            WriterStream = New StreamWriter(NutStream)
+            ReaderStream = New StreamReader(NutStream, NUT_CHARENCODING)
+            WriterStream = New StreamWriter(NutStream, NUT_CHARENCODING)
 
             LogFile.LogTracing("Connection established and streams ready.", LogLvl.LOG_NOTICE, Me)
 
