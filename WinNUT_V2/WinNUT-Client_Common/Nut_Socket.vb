@@ -3,6 +3,7 @@ Imports System.Net.Sockets
 
 Public Class Nut_Socket
 
+    Private Const TIMEOUT_MS = 5000
 #Region "Properties"
     Public ReadOnly Property ConnectionStatus As Boolean
         Get
@@ -56,7 +57,12 @@ Public Class Nut_Socket
         Try
             LogFile.LogTracing(String.Format("Attempting TCP socket connection to {0}:{1}...", Host, Port), LogLvl.LOG_NOTICE, Me)
 
-            client = New TcpClient(Host, Port)
+            client = New TcpClient(Host, Port) With
+            {
+                .SendTimeout = TIMEOUT_MS,
+                .ReceiveTimeout = TIMEOUT_MS
+            }
+
             NutStream = client.GetStream()
             ReaderStream = New StreamReader(NutStream)
             WriterStream = New StreamWriter(NutStream)
