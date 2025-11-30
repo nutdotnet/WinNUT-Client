@@ -1,6 +1,10 @@
 ﻿Imports System.IO
 Imports System.Net.Sockets
 
+''' <summary>
+''' Manages low-level interaction with an endpoint communicating in the NUT protocol (upsd).
+''' Passes up most encountered exceptions, while resetting its state if necessary.
+''' </summary>
 Public Class Nut_Socket
 
     Private Const TIMEOUT_MS = 5000
@@ -74,12 +78,10 @@ Public Class Nut_Socket
             LogFile.LogTracing("Gathering basic info about the NUT server...", LogLvl.LOG_DEBUG, Me)
 
             Try
+                'Response: Network UPS Tools upsd 2.8.1 - https://www.networkupstools.org/
                 Dim Nut_Query = Query_Data("VER")
-
-                If Nut_Query.ResponseType = NUTResponse.OK Then
-                    _NUTVersion = (Nut_Query.RawResponse.Split(" "c))(4)
-                    LogFile.LogTracing("Server version: " & NUTVersion, LogLvl.LOG_NOTICE, Me)
-                End If
+                _NUTVersion = Nut_Query.RawResponse
+                LogFile.LogTracing("Server version: " & NUTVersion, LogLvl.LOG_NOTICE, Me)
             Catch nutEx As NutException
                 LogFile.LogTracing("Error retrieving server version.", LogLvl.LOG_WARNING, Me)
                 LogFile.LogException(nutEx, Me)
