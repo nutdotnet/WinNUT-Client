@@ -86,6 +86,12 @@ Namespace OldParams
             End Get
         End Property
 
+        Public Shared ReadOnly Property ParamsExist As Boolean
+            Get
+                Return RegistryKeyRoot IsNot Nothing
+            End Get
+        End Property
+
         ''' <summary>
         ''' Load parameters from the Windows User Registry Hive.
         ''' </summary>

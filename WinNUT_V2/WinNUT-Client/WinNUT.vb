@@ -1,4 +1,5 @@
-﻿Imports WinNUT_Client_Common
+﻿Imports System.Configuration
+Imports WinNUT_Client_Common
 
 Public Class WinNUT
 #Region "Properties"
@@ -7,12 +8,6 @@ Public Class WinNUT
         Set(Value As Boolean)
             WinNUT_Crashed = Value
         End Set
-    End Property
-
-    Private ReadOnly Property OldPrefsExist As Boolean
-        Get
-            Return OldParams.WinNUT_Params.RegistryKeyRoot IsNot Nothing
-        End Get
     End Property
 
     Private ReadOnly Property IsUPSConnected As Boolean
@@ -167,18 +162,8 @@ Public Class WinNUT
         LogFile.LogTracing("Update Icon at Startup", LogLvl.LOG_DEBUG, Me)
         ' Start_Tray_Icon = Nothing
 
-        ' TODO: Move below code to a dedicated onsettingsloaded method.
-        ApplyApplicationPreferences()
         UpdateMainMenuState()
 
-        ' If this is the first time WinNUT has been launched with the Settings system, check if old preferences exist
-        ' and prompt the user to upgrade.
-        If My.Settings.IsFirstRun AndAlso OldPrefsExist Then
-            LogFile.LogTracing("Previous preferences data detected in the Registry.", LogLvl.LOG_NOTICE, Me,
-                               My.Resources.DetectedPreviousPrefsData)
-
-            RunRegPrefsUpgrade()
-        End If
 
         AddHandler UpdateController.UpdateCheckCompleted, AddressOf OnCheckForUpdateCompleted
         'Run Update
@@ -316,7 +301,7 @@ Public Class WinNUT
     Private Sub UpdateMainMenuState()
         Menu_Persist.Checked = My.Settings.NUT_AutoReconnect
 
-        If OldParams.WinNUT_Params.RegistryKeyRoot IsNot Nothing Then
+        If OldParams.WinNUT_Params.ParamsExist Then
             ManageOldPrefsToolStripMenuItem.Enabled = True
             ManageOldPrefsToolStripMenuItem.ToolTipText = My.Resources.ManageOldPrefsToolstripMenuItem_Enabled_TooltipText
         Else

@@ -1,28 +1,13 @@
-﻿' WinNUT-Client is a NUT windows client for monitoring your ups hooked up to your favorite linux server.
-' Copyright (C) 2019-2021 Gawindx (Decaux Nicolas)
-'
-' This program is free software: you can redistribute it and/or modify it under the terms of the
-' GNU General Public License as published by the Free Software Foundation, either version 3 of the
-' License, or any later version.
-'
-' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
-
-Imports System.Configuration
-Imports System.Deployment.Application
+﻿Imports System.Configuration
 Imports System.Globalization
 Imports System.IO
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Newtonsoft.Json
 Imports WinNUT_Client_Common
+Imports WinNUT_Client_Common.OldParams
 
 Namespace My
-    ' Les événements suivants sont disponibles pour MyApplication :
-    ' Startup : Déclenché au démarrage de l'application avant la création du formulaire de démarrage.
-    ' Shutdown : Déclenché après la fermeture de tous les formulaires de l'application.  Cet événement n'est pas déclenché si l'application se termine de façon anormale.
-    ' UnhandledException : Déclenché si l'application rencontre une exception non gérée.
-    ' StartupNextInstance : Déclenché lors du lancement d'une application à instance unique et si cette application est déjà active. 
-    ' NetworkAvailabilityChanged : Déclenché quand la connexion réseau est connectée ou déconnectée.
     Partial Friend Class MyApplication
         ' Default culture for output so logs can be shared with the project.
         Private Shared ReadOnly DEF_CULTURE_INFO As CultureInfo = CultureInfo.InvariantCulture
@@ -43,20 +28,28 @@ Namespace My
             ' AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf AppDomainUnhandledException
 
             Init_Globals()
-            LogFile.LogTracing(String.Format("{0} v{1} starting up.", My.Application.Info.ProductName, My.Application.Info.Version),
+            LogFile.LogTracing(String.Format("{0} v{1} starting up.", Application.Info.ProductName, Application.Info.Version),
                            LogLvl.LOG_NOTICE, Me)
             ' LogFile.LogTracing($"DataDirectory: { ApplicationDeployment.CurrentDeployment.DataDirectory }", LogLvl.LOG_NOTICE, Me)
 
-            ' If first run indicated by Settings, attempt upgrade in case older version is present.
-            ' Only necessary when deploying MSI. Remove once using pure ClickOnce.
+            ' Starting without previous settings. May be new installation or MSI upgrade.
             If Settings.IsFirstRun Then
                 Try
+                    ' Handle MSI upgrade scenario.
                     Settings.Upgrade()
                     LogFile.LogTracing("Settings upgrade completed without exception.", LogLvl.LOG_NOTICE, Me)
                 Catch ex As ConfigurationErrorsException
                     LogFile.LogTracing("Error encountered while trying to upgrade Settings:", LogLvl.LOG_ERROR, Me)
                     LogFile.LogException(ex, Me)
                 End Try
+
+                ' If Settings still appear new, check if old Registry preferences are leftover.
+                If Settings.IsFirstRun AndAlso WinNUT_Params.ParamsExist Then
+                    LogFile.LogTracing("Previous preferences data detected in the Registry.", LogLvl.LOG_NOTICE, Me,
+                               Resources.DetectedPreviousPrefsData)
+
+                    Forms.UpgradePrefsDialog.ShowDialog()
+                End If
 
                 Settings.IsFirstRun = False
                 Settings.Save()
