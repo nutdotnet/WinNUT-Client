@@ -163,6 +163,7 @@ Public Class WinNUT
         ' Start_Tray_Icon = Nothing
 
         UpdateMainMenuState()
+        ReInitDisplayValues()
 
 
         AddHandler UpdateController.UpdateCheckCompleted, AddressOf OnCheckForUpdateCompleted
