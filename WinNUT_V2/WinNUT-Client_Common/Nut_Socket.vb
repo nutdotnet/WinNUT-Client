@@ -60,9 +60,9 @@ Public Class Nut_Socket
             Throw New InvalidOperationException("Host and Port must be specified to connect.")
         End If
 
-        Try
-            LogFile.LogTracing(String.Format("Attempting TCP socket connection to {0}:{1}...", Host, Port), LogLvl.LOG_NOTICE, Me)
+        LogFile.LogTracing(String.Format("Attempting TCP socket connection to {0}:{1}...", Host, Port), LogLvl.LOG_NOTICE, Me)
 
+        Try
             client = New TcpClient(Host, Port) With
             {
                 .SendTimeout = TIMEOUT_MS,
@@ -74,7 +74,6 @@ Public Class Nut_Socket
             WriterStream = New StreamWriter(NutStream, NUT_CHARENCODING)
 
             LogFile.LogTracing("Connection established and streams ready.", LogLvl.LOG_NOTICE, Me)
-
             LogFile.LogTracing("Gathering basic info about the NUT server...", LogLvl.LOG_DEBUG, Me)
 
             Try
@@ -89,21 +88,20 @@ Public Class Nut_Socket
 
             Try
                 Dim Nut_Query = Query_Data("NETVER")
-
-                If Nut_Query.ResponseType = NUTResponse.OK Then
-                    _NetVersion = Nut_Query.RawResponse
-                    LogFile.LogTracing("Protocol version: " & NetVersion, LogLvl.LOG_NOTICE, Me)
-                End If
+                _NetVersion = Nut_Query.RawResponse
+                LogFile.LogTracing("Protocol version: " & NetVersion, LogLvl.LOG_NOTICE, Me)
             Catch nutEx As NutException
                 LogFile.LogTracing("Error retrieving protocol version.", LogLvl.LOG_WARNING, Me)
                 LogFile.LogException(nutEx, Me)
             End Try
-
-            LogFile.LogTracing("Completed gathering basic info about NUT server.", LogLvl.LOG_DEBUG, Me)
-        Catch Excep As Exception
+        Catch ex As Exception
+            LogFile.LogTracing("Error connecting socket.", LogLvl.LOG_DEBUG, Me)
+            LogFile.LogException(ex, Me)
             Disconnect(True)
-            Throw ' Pass exception on up to UPS
+            Throw
         End Try
+
+        LogFile.LogTracing("Completed gathering basic info about NUT server.", LogLvl.LOG_DEBUG, Me)
     End Sub
 
     Public Sub Login()
@@ -155,13 +153,34 @@ Public Class Nut_Socket
     End Sub
 
     ''' <summary>
-    ''' Attempt to send a query to the NUT server, and do some basic parsing.
+    ''' React to a hard error while using the underlying Socket, and make sure this object is left in a consistent state.
+    ''' </summary>
+    ''' <exception cref="Exception">Any exception <see cref="Query_Data(String)"/> can throw.</exception>
+    ''' <param name="ex"></param>
+    Private Sub OnSocketBroken(ex As Exception)
+        LogFile.LogTracing("Socket breaking.", LogLvl.LOG_DEBUG, Me)
+        Disconnect(True)
+        RaiseEvent Socket_Broken()
+        If ex IsNot Nothing Then
+            LogFile.LogException(ex, Me)
+            Throw ex
+        End If
+    End Sub
+
+
+    ''' <summary>
+    ''' Synchronously send a query to the NUT server and collect the response. This method will throw all exceptions,
+    ''' including NUT protocol (ERR) responses.
     ''' </summary>
     ''' <param name="Query_Msg">The query to be sent to the server, within specifications of the NUT protocol.</param>
     ''' <returns>The full <see cref="Transaction"/> of this function call.</returns>
     ''' <exception cref="InvalidOperationException">Thrown when calling this function while disconnected, or another
     ''' call is in progress.</exception>
     ''' <exception cref="NutException">Thrown when the NUT server returns an error or unexpected response.</exception>
+    ''' <exception cref="ObjectDisposedException"></exception>
+    ''' <exception cref="IOException">Attempted to read or write to a stream in an invalid state. </exception>
+    ''' <exception cref="EndOfStreamException">An empty response was encountered, meaning the end of the stream.
+    ''' This likely indicates that the server closed the connection.</exception>
     Function Query_Data(Query_Msg As String) As Transaction
         If Not ConnectionStatus Then
             Throw New InvalidOperationException("Attempted to send query " & Query_Msg & " while disconnected.")
@@ -175,47 +194,52 @@ Public Class Nut_Socket
             streamInUse = True
             WriterStream.WriteLine(Query_Msg)
             WriterStream.Flush()
-        Catch
-            Throw
+        Catch ex As Exception
+            LogFile.LogTracing("Error writing to Stream.", LogLvl.LOG_ERROR, Me)
+            OnSocketBroken(ex)
         Finally
             streamInUse = False
         End Try
 
-        Dim responseEnum = NUTResponse.EMPTY
-        Dim response = ReaderStream.ReadLine()
+        Dim response As String = Nothing
+        Dim responseEnum As NUTResponse
+        Dim splitResponse As String() = Nothing
+
+        Try
+            response = ReaderStream.ReadLine()
+        Catch ex As Exception
+            LogFile.LogTracing("Error reading from Stream.", LogLvl.LOG_ERROR, Me)
+            OnSocketBroken(ex)
+        End Try
 
         If String.IsNullOrEmpty(response) Then
             ' End of stream reached, likely server terminated connection.
-            Disconnect(True)
-            RaiseEvent Socket_Broken()
+            OnSocketBroken(New EndOfStreamException("Server terminated connection."))
         Else
-            Dim parseResponse = response.Trim().ToUpper().Split(" "c) ' TODO: Is Trim unnecessary?
+            splitResponse = response.Split({" "c}, 4)
 
-            Select Case parseResponse(0)
+            Select Case splitResponse(0)
                 Case "OK", "VAR", "DESC", "UPS"
                     responseEnum = NUTResponse.OK
                 Case "BEGIN"
                     responseEnum = NUTResponse.BEGINLIST
                 Case "END"
                     responseEnum = NUTResponse.ENDLIST
-                Case "NETWORK", "1.0", "1.1", "1.2", "1.3"
+                Case "Network", "1.0", "1.1", "1.2", "1.3"
                     'In case of "VER" or "NETVER" Query
                     responseEnum = NUTResponse.OK
                 Case "ERR"
                     responseEnum = DirectCast([Enum].Parse(GetType(NUTResponse),
-                                                parseResponse(1).Replace("-", String.Empty)), NUTResponse)
+                                            splitResponse(1).Replace("-", String.Empty)), NUTResponse)
+                    LogFile.LogTracing($"Parsed error response: { responseEnum }", LogLvl.LOG_DEBUG, Me)
+                    Throw New NutException(New Transaction(Query_Msg, response, responseEnum, splitResponse))
                 Case Else
-                    responseEnum = NUTResponse.UNRECOGNIZED
+                    LogFile.LogTracing($"Unrecognized response while parsing: { response }", LogLvl.LOG_ERROR, Me)
+                    Throw New NutException(New Transaction(Query_Msg, response, NUTResponse.UNRECOGNIZED, splitResponse))
             End Select
         End If
 
-        Dim transaction = New Transaction(Query_Msg, response, responseEnum)
-
-        If responseEnum = NUTResponse.OK OrElse responseEnum = NUTResponse.BEGINLIST OrElse responseEnum = NUTResponse.ENDLIST Then
-            Return transaction
-        End If
-
-        Throw New NutException(transaction)
+        Return New Transaction(Query_Msg, response, responseEnum, splitResponse)
     End Function
 
     Public Function Query_List_Datas(Query_Msg As String) As List(Of UPS_List_Datas)
