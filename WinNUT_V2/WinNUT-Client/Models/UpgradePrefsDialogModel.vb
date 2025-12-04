@@ -203,7 +203,6 @@ Namespace Models
             Else
                 LogFile.LogTracing("Exiting out of upgrade dialog.", LogLvl.LOG_NOTICE, Me)
                 _parentForm.DialogResult = DialogResult.Cancel
-                My.Settings.UpgradePrefsCompleted = True
                 _parentForm.Close()
             End If
         End Sub
@@ -268,8 +267,6 @@ Namespace Models
             End If
 
             ProgressPercent = 100
-
-            My.Settings.UpgradePrefsCompleted = True
             _parentForm.Close()
         End Sub
 

@@ -173,7 +173,7 @@ Public Class WinNUT
 
         ' If this is the first time WinNUT has been launched with the Settings system, check if old preferences exist
         ' and prompt the user to upgrade.
-        If Not My.Settings.UpgradePrefsCompleted AndAlso OldPrefsExist Then
+        If My.Settings.IsFirstRun AndAlso OldPrefsExist Then
             LogFile.LogTracing("Previous preferences data detected in the Registry.", LogLvl.LOG_NOTICE, Me,
                                My.Resources.DetectedPreviousPrefsData)
 
