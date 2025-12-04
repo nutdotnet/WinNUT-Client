@@ -174,7 +174,7 @@ Public Class WinNUT
 
         AddHandler Microsoft.Win32.SystemEvents.PowerModeChanged, AddressOf SystemEvents_PowerModeChanged
         AddHandler RequestConnect, AddressOf UPS_Connect
-        AddHandler My.Settings.PropertyChanged, AddressOf SettingsPropertyChanged
+        AddHandler My.Settings.SettingChanging, AddressOf SettingChanging
 
         LogFile.LogTracing("WinNUT Form completed Load.", LogLvl.LOG_NOTICE, Me)
     End Sub
@@ -210,6 +210,7 @@ Public Class WinNUT
 
     ''' <summary>
     ''' Final step in loading the main form for the first time.
+    ''' "The Shown event is _only_ raised the first time a form is displayed"
     ''' </summary>
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
@@ -292,8 +293,8 @@ Public Class WinNUT
 
 #End Region
 
-    Private Sub SettingsPropertyChanged(sender As Object, e As System.ComponentModel.PropertyChangedEventArgs)
-        LogFile.LogTracing("SettingsPropertyChanged: " & e.PropertyName, LogLvl.LOG_DEBUG, Me)
+    Private Sub SettingChanging(sender As Object, e As SettingChangingEventArgs)
+        LogFile.LogTracing("SettingChanging: " & e.SettingName, LogLvl.LOG_DEBUG, Me)
 
         UpdateMainMenuState()
     End Sub
@@ -800,13 +801,6 @@ Public Class WinNUT
         ' Apply logging subsystem configuration
         LogFile.IsWritingToFile = My.Settings.LG_LogToFile
         LogFile.LogLevelValue = My.Settings.LG_LogLevel
-
-        ' Validate interval value because it's been incorrectly stored in older versions.
-        If My.Settings.NUT_PollIntervalMsec <= 0 Then
-            LogFile.LogTracing("Incorrect value of " & My.Settings.NUT_PollIntervalMsec &
-                               " for Poll Delay/Interval, resetting to default.", LogLvl.LOG_ERROR, Me)
-            My.Settings.NUT_PollIntervalMsec = My.MySettings.Default.NUT_PollIntervalMsec
-        End If
 
         If autoReconnect Then
             UPS_Connect()

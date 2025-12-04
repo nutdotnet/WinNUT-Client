@@ -26,7 +26,7 @@ Namespace My
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
             ' Uncomment below and comment out Handles line for _UnhandledException sub when debugging unhandled exceptions.
             ' AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf AppDomainUnhandledException
-
+            AddHandler Settings.SettingsLoaded, AddressOf OnSettingsFirstLoaded
             Init_Globals()
             LogFile.LogTracing(String.Format("{0} v{1} starting up.", Application.Info.ProductName, Application.Info.Version),
                            LogLvl.LOG_NOTICE, Me)
@@ -188,6 +188,33 @@ Namespace My
 
         Private Sub Close_Button_Click(sender As Object, e As EventArgs)
             CrashBug_Form.Close()
+        End Sub
+
+        ''' <summary>
+        ''' Handles validation of Settings when loaded.
+        ''' </summary>
+        ''' <param name="sender"></param>
+        ''' <param name="e"></param>
+        Private Sub OnSettingsFirstLoaded(sender As Object, e As SettingsLoadedEventArgs)
+            LogFile.LogTracing("OnSettingsFirstLoaded event raised.", LogLvl.LOG_DEBUG, Me)
+
+            ' Verify that encrypted data can be decrypted
+            Try
+                Settings.NUT_Username?.ToString()
+            Catch ex As Exception
+                LogFile.LogTracing("Error attempting to decrypt encrypted data. Resetting to defaults.",
+                                   LogLvl.LOG_ERROR, Me, Resources.Log_Str_ErrorDecrypting)
+                LogFile.LogException(ex, Me)
+
+                Settings.NUT_Username = New SerializedProtectedString()
+                Settings.NUT_Password = New SerializedProtectedString()
+            End Try
+
+            If Not Settings.NUT_PollIntervalMsec > 0 Then
+                LogFile.LogTracing("Incorrect value of " & Settings.NUT_PollIntervalMsec &
+                               " for Poll Delay/Interval, resetting to default.", LogLvl.LOG_ERROR, Me)
+                Settings.NUT_PollIntervalMsec = MySettings.Default.NUT_PollIntervalMsec
+            End If
         End Sub
     End Class
 End Namespace
