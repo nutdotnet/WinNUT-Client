@@ -1899,15 +1899,15 @@ Please correct the error, or cancel the upgrade dialog to continue with the defa
           <target state="new">Unavailable</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Indicate that a variable is unavailable</note>
         </trans-unit>
-        <trans-unit id="RepeatHS" translate="yes" xml:space="preserve" extype="System.Resources.ResXFileRef, System.Windows.Forms">
+        <trans-unit id="RepeatHS" translate="yes" extype="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
           <source>..\Resources\RepeatHS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</source>
           <target state="needs-review-translation">..\Resources\RepeatHS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</target>
         </trans-unit>
-        <trans-unit id="disconnect2" translate="yes" xml:space="preserve" extype="System.Resources.ResXFileRef, System.Windows.Forms">
+        <trans-unit id="disconnect2" translate="yes" extype="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
           <source>..\Resources\disconnect2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</source>
           <target state="needs-review-translation">..\Resources\disconnect2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</target>
         </trans-unit>
-        <trans-unit id="internetconnection" translate="yes" xml:space="preserve" extype="System.Resources.ResXFileRef, System.Windows.Forms">
+        <trans-unit id="internetconnection" translate="yes" extype="System.Resources.ResXFileRef, System.Windows.Forms" xml:space="preserve">
           <source>..\Resources\internetconnection.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</source>
           <target state="needs-review-translation">..\Resources\internetconnection.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</target>
         </trans-unit>
@@ -3202,62 +3202,59 @@ Please correct the error, or cancel the upgrade dialog to continue with the defa
           <source></source>
           <target state="new"></target>
         </trans-unit>
-        <trans-unit id="Menu_Connect.Size" translate="yes" xml:space="preserve" extype="System.Drawing.Size, System.Drawing">
+        <trans-unit id="Menu_Connect.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
           <source>133, 22</source>
-          <target state="needs-review-translation">180, 22</target>
-          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
+          <target state="final">133, 22</target>
         </trans-unit>
         <trans-unit id="Menu_Connect.Text" translate="yes" xml:space="preserve">
           <source>Connect</source>
           <target state="new">Connect</target>
         </trans-unit>
-        <trans-unit id="AG_InV.Text" translate="yes" xml:space="preserve" extype="System.Resources.ResXNullRef, System.Windows.Forms">
+        <trans-unit id="AG_InV.Text" translate="yes" extype="System.Resources.ResXNullRef, System.Windows.Forms" xml:space="preserve">
           <source></source>
           <target state="needs-review-translation"></target>
         </trans-unit>
-        <trans-unit id="AG_OutV.Text" translate="yes" xml:space="preserve" extype="System.Resources.ResXNullRef, System.Windows.Forms">
+        <trans-unit id="AG_OutV.Text" translate="yes" extype="System.Resources.ResXNullRef, System.Windows.Forms" xml:space="preserve">
           <source></source>
           <target state="needs-review-translation"></target>
         </trans-unit>
-        <trans-unit id="AG_BattCh.Text" translate="yes" xml:space="preserve" extype="System.Resources.ResXNullRef, System.Windows.Forms">
+        <trans-unit id="AG_BattCh.Text" translate="yes" extype="System.Resources.ResXNullRef, System.Windows.Forms" xml:space="preserve">
           <source></source>
           <target state="needs-review-translation"></target>
         </trans-unit>
-        <trans-unit id="AG_Load.Text" translate="yes" xml:space="preserve" extype="System.Resources.ResXNullRef, System.Windows.Forms">
+        <trans-unit id="AG_Load.Text" translate="yes" extype="System.Resources.ResXNullRef, System.Windows.Forms" xml:space="preserve">
           <source></source>
           <target state="needs-review-translation"></target>
         </trans-unit>
-        <trans-unit id="AG_BattV.Text" translate="yes" xml:space="preserve" extype="System.Resources.ResXNullRef, System.Windows.Forms">
+        <trans-unit id="AG_BattV.Text" translate="yes" extype="System.Resources.ResXNullRef, System.Windows.Forms" xml:space="preserve">
           <source></source>
           <target state="needs-review-translation"></target>
         </trans-unit>
-        <trans-unit id="AG_InF.Text" translate="yes" xml:space="preserve" extype="System.Resources.ResXNullRef, System.Windows.Forms">
+        <trans-unit id="AG_InF.Text" translate="yes" extype="System.Resources.ResXNullRef, System.Windows.Forms" xml:space="preserve">
           <source></source>
           <target state="needs-review-translation"></target>
         </trans-unit>
-        <trans-unit id="ToolStripSeparator1.Size" translate="yes" xml:space="preserve" extype="System.Drawing.Size, System.Drawing">
+        <trans-unit id="ToolStripSeparator1.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
           <source>130, 6</source>
-          <target state="needs-review-translation">177, 6</target>
-          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
+          <target state="final">130, 6</target>
         </trans-unit>
-        <trans-unit id="Menu_Persist.Size" translate="yes" xml:space="preserve" extype="System.Drawing.Size, System.Drawing">
+        <trans-unit id="Menu_Persist.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
           <source>133, 22</source>
-          <target state="needs-review-translation">180, 22</target>
-          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
+          <target state="final">133, 22</target>
         </trans-unit>
         <trans-unit id="Menu_Persist.Text" translate="yes" xml:space="preserve">
           <source>Persist</source>
           <target state="new">Persist</target>
         </trans-unit>
-        <trans-unit id="Menu_Disconnect.Enabled" translate="yes" xml:space="preserve" extype="System.Boolean, mscorlib">
+        <trans-unit id="Menu_Disconnect.Enabled" translate="yes" extype="System.Boolean, mscorlib" xml:space="preserve">
           <source>False</source>
           <target state="needs-review-translation">False</target>
         </trans-unit>
-        <trans-unit id="$this.ImeMode" translate="yes" xml:space="preserve" extype="System.Windows.Forms.ImeMode, System.Windows.Forms">
+        <trans-unit id="$this.ImeMode" translate="yes" extype="System.Windows.Forms.ImeMode, System.Windows.Forms" xml:space="preserve">
           <source>NoControl</source>
           <target state="needs-review-translation">NoControl</target>
         </trans-unit>
-        <trans-unit id="Menu_UPS_Var.Enabled" translate="yes" xml:space="preserve" extype="System.Boolean, mscorlib">
+        <trans-unit id="Menu_UPS_Var.Enabled" translate="yes" extype="System.Boolean, mscorlib" xml:space="preserve">
           <source>False</source>
           <target state="needs-review-translation">False</target>
         </trans-unit>

@@ -36,13 +36,13 @@ Partial Class WinNUT
         Me.Main_Menu = New System.Windows.Forms.MenuStrip()
         Me.Menu_File = New System.Windows.Forms.ToolStripMenuItem()
         Me.Menu_UPS_Var = New System.Windows.Forms.ToolStripMenuItem()
-        Me.Menu_Quit = New System.Windows.Forms.ToolStripMenuItem()
         Me.ManageOldPrefsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Menu_Quit = New System.Windows.Forms.ToolStripMenuItem()
         Me.Menu_Connection = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Menu_Persist = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.Menu_Connect = New System.Windows.Forms.ToolStripMenuItem()
         Me.Menu_Disconnect = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.Menu_Persist = New System.Windows.Forms.ToolStripMenuItem()
         Me.Menu_Settings = New System.Windows.Forms.ToolStripMenuItem()
         Me.Menu_Help = New System.Windows.Forms.ToolStripMenuItem()
         Me.Menu_About = New System.Windows.Forms.ToolStripMenuItem()
@@ -68,25 +68,25 @@ Partial Class WinNUT
         Me.Lbl_OB = New System.Windows.Forms.Label()
         Me.Lbl_OL = New System.Windows.Forms.Label()
         Me.GB_InV_Dial = New System.Windows.Forms.GroupBox()
+        Me.AG_InV = New WinNUT_Client.Controls.UPSVarGauge()
         Me.Lbl_InV_Dial = New System.Windows.Forms.Label()
         Me.GB_OutV_Dial = New System.Windows.Forms.GroupBox()
+        Me.AG_OutV = New WinNUT_Client.Controls.UPSVarGauge()
         Me.Lbl_OutV_Dial = New System.Windows.Forms.Label()
         Me.GB_BattCh_Dial = New System.Windows.Forms.GroupBox()
         Me.PBox_Battery_State = New System.Windows.Forms.PictureBox()
         Me.Lbl_BattCh_Dial = New System.Windows.Forms.Label()
+        Me.AG_BattCh = New WinNUT_Client.Controls.UPSVarGauge()
         Me.GB_Load_Dial = New System.Windows.Forms.GroupBox()
+        Me.AG_Load = New WinNUT_Client.Controls.UPSVarGauge()
         Me.Lbl_Load_Dial = New System.Windows.Forms.Label()
         Me.GB_BattV_Dial = New System.Windows.Forms.GroupBox()
+        Me.AG_BattV = New WinNUT_Client.Controls.UPSVarGauge()
         Me.Lbl_BattV_Dial = New System.Windows.Forms.Label()
         Me.GB_InF_Dial = New System.Windows.Forms.GroupBox()
+        Me.AG_InF = New WinNUT_Client.Controls.UPSVarGauge()
         Me.Lbl_InF_Dial = New System.Windows.Forms.Label()
         Me.CB_CurrentLog = New System.Windows.Forms.ComboBox()
-        Me.AG_InF = New WinNUT_Client.Controls.UPSVarGauge()
-        Me.AG_InV = New WinNUT_Client.Controls.UPSVarGauge()
-        Me.AG_BattV = New WinNUT_Client.Controls.UPSVarGauge()
-        Me.AG_Load = New WinNUT_Client.Controls.UPSVarGauge()
-        Me.AG_OutV = New WinNUT_Client.Controls.UPSVarGauge()
-        Me.AG_BattCh = New WinNUT_Client.Controls.UPSVarGauge()
         Me.ContextMenu_Systray.SuspendLayout()
         Me.Main_Menu.SuspendLayout()
         Me.GB_Status.SuspendLayout()
@@ -162,22 +162,35 @@ Partial Class WinNUT
         resources.ApplyResources(Me.Menu_UPS_Var, "Menu_UPS_Var")
         Me.Menu_UPS_Var.Name = "Menu_UPS_Var"
         '
-        'Menu_Quit
-        '
-        Me.Menu_Quit.Name = "Menu_Quit"
-        resources.ApplyResources(Me.Menu_Quit, "Menu_Quit")
-        '
         'ManageOldPrefsToolStripMenuItem
         '
         resources.ApplyResources(Me.ManageOldPrefsToolStripMenuItem, "ManageOldPrefsToolStripMenuItem")
         Me.ManageOldPrefsToolStripMenuItem.Image = Global.WinNUT_Client.My.Resources.Resources.regedit_exe_14_100_0
         Me.ManageOldPrefsToolStripMenuItem.Name = "ManageOldPrefsToolStripMenuItem"
         '
+        'Menu_Quit
+        '
+        Me.Menu_Quit.Name = "Menu_Quit"
+        resources.ApplyResources(Me.Menu_Quit, "Menu_Quit")
+        '
         'Menu_Connection
         '
         Me.Menu_Connection.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Menu_Persist, Me.ToolStripSeparator1, Me.Menu_Connect, Me.Menu_Disconnect})
         Me.Menu_Connection.Name = "Menu_Connection"
         resources.ApplyResources(Me.Menu_Connection, "Menu_Connection")
+        '
+        'Menu_Persist
+        '
+        Me.Menu_Persist.Checked = Global.WinNUT_Client.My.MySettings.Default.NUT_AutoReconnect
+        Me.Menu_Persist.CheckOnClick = True
+        Me.Menu_Persist.Image = Global.WinNUT_Client.My.Resources.Resources.RepeatHS
+        Me.Menu_Persist.Name = "Menu_Persist"
+        resources.ApplyResources(Me.Menu_Persist, "Menu_Persist")
+        '
+        'ToolStripSeparator1
+        '
+        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+        resources.ApplyResources(Me.ToolStripSeparator1, "ToolStripSeparator1")
         '
         'Menu_Connect
         '
@@ -190,19 +203,6 @@ Partial Class WinNUT
         resources.ApplyResources(Me.Menu_Disconnect, "Menu_Disconnect")
         Me.Menu_Disconnect.Image = Global.WinNUT_Client.My.Resources.Resources.disconnect2
         Me.Menu_Disconnect.Name = "Menu_Disconnect"
-        '
-        'ToolStripSeparator1
-        '
-        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        resources.ApplyResources(Me.ToolStripSeparator1, "ToolStripSeparator1")
-        '
-        'Menu_Persist
-        '
-        Me.Menu_Persist.Checked = Global.WinNUT_Client.My.MySettings.Default.NUT_AutoReconnect
-        Me.Menu_Persist.CheckOnClick = True
-        Me.Menu_Persist.Image = Global.WinNUT_Client.My.Resources.Resources.RepeatHS
-        Me.Menu_Persist.Name = "Menu_Persist"
-        resources.ApplyResources(Me.Menu_Persist, "Menu_Persist")
         '
         'Menu_Settings
         '
@@ -380,114 +380,6 @@ Partial Class WinNUT
         Me.GB_InV_Dial.Name = "GB_InV_Dial"
         Me.GB_InV_Dial.TabStop = False
         '
-        'Lbl_InV_Dial
-        '
-        resources.ApplyResources(Me.Lbl_InV_Dial, "Lbl_InV_Dial")
-        Me.Lbl_InV_Dial.Name = "Lbl_InV_Dial"
-        '
-        'GB_OutV_Dial
-        '
-        resources.ApplyResources(Me.GB_OutV_Dial, "GB_OutV_Dial")
-        Me.GB_OutV_Dial.Controls.Add(Me.AG_OutV)
-        Me.GB_OutV_Dial.Controls.Add(Me.Lbl_OutV_Dial)
-        Me.GB_OutV_Dial.Name = "GB_OutV_Dial"
-        Me.GB_OutV_Dial.TabStop = False
-        '
-        'Lbl_OutV_Dial
-        '
-        resources.ApplyResources(Me.Lbl_OutV_Dial, "Lbl_OutV_Dial")
-        Me.Lbl_OutV_Dial.Name = "Lbl_OutV_Dial"
-        '
-        'GB_BattCh_Dial
-        '
-        resources.ApplyResources(Me.GB_BattCh_Dial, "GB_BattCh_Dial")
-        Me.GB_BattCh_Dial.Controls.Add(Me.PBox_Battery_State)
-        Me.GB_BattCh_Dial.Controls.Add(Me.Lbl_BattCh_Dial)
-        Me.GB_BattCh_Dial.Controls.Add(Me.AG_BattCh)
-        Me.GB_BattCh_Dial.Name = "GB_BattCh_Dial"
-        Me.GB_BattCh_Dial.TabStop = False
-        '
-        'PBox_Battery_State
-        '
-        resources.ApplyResources(Me.PBox_Battery_State, "PBox_Battery_State")
-        Me.PBox_Battery_State.Name = "PBox_Battery_State"
-        Me.PBox_Battery_State.TabStop = False
-        '
-        'Lbl_BattCh_Dial
-        '
-        resources.ApplyResources(Me.Lbl_BattCh_Dial, "Lbl_BattCh_Dial")
-        Me.Lbl_BattCh_Dial.Name = "Lbl_BattCh_Dial"
-        '
-        'GB_Load_Dial
-        '
-        resources.ApplyResources(Me.GB_Load_Dial, "GB_Load_Dial")
-        Me.GB_Load_Dial.Controls.Add(Me.AG_Load)
-        Me.GB_Load_Dial.Controls.Add(Me.Lbl_Load_Dial)
-        Me.GB_Load_Dial.Name = "GB_Load_Dial"
-        Me.GB_Load_Dial.TabStop = False
-        '
-        'Lbl_Load_Dial
-        '
-        resources.ApplyResources(Me.Lbl_Load_Dial, "Lbl_Load_Dial")
-        Me.Lbl_Load_Dial.Name = "Lbl_Load_Dial"
-        '
-        'GB_BattV_Dial
-        '
-        resources.ApplyResources(Me.GB_BattV_Dial, "GB_BattV_Dial")
-        Me.GB_BattV_Dial.Controls.Add(Me.AG_BattV)
-        Me.GB_BattV_Dial.Controls.Add(Me.Lbl_BattV_Dial)
-        Me.GB_BattV_Dial.Name = "GB_BattV_Dial"
-        Me.GB_BattV_Dial.TabStop = False
-        '
-        'Lbl_BattV_Dial
-        '
-        resources.ApplyResources(Me.Lbl_BattV_Dial, "Lbl_BattV_Dial")
-        Me.Lbl_BattV_Dial.Name = "Lbl_BattV_Dial"
-        '
-        'GB_InF_Dial
-        '
-        resources.ApplyResources(Me.GB_InF_Dial, "GB_InF_Dial")
-        Me.GB_InF_Dial.Controls.Add(Me.AG_InF)
-        Me.GB_InF_Dial.Controls.Add(Me.Lbl_InF_Dial)
-        Me.GB_InF_Dial.Name = "GB_InF_Dial"
-        Me.GB_InF_Dial.TabStop = False
-        '
-        'Lbl_InF_Dial
-        '
-        resources.ApplyResources(Me.Lbl_InF_Dial, "Lbl_InF_Dial")
-        Me.Lbl_InF_Dial.Name = "Lbl_InF_Dial"
-        '
-        'CB_CurrentLog
-        '
-        Me.CB_CurrentLog.FormattingEnabled = True
-        resources.ApplyResources(Me.CB_CurrentLog, "CB_CurrentLog")
-        Me.CB_CurrentLog.Name = "CB_CurrentLog"
-        '
-        'AG_InF
-        '
-        Me.AG_InF.BaseArcRadius = 45
-        Me.AG_InF.BaseArcWidth = 5
-        Me.AG_InF.GradientOrientation = WinNUT_Client.Controls.UPSVarGauge.GradientOrientationEnum.BottomToTop
-        Me.AG_InF.GradientType = WinNUT_Client.Controls.UPSVarGauge.GradientTypeEnum.RedGreen
-        resources.ApplyResources(Me.AG_InF, "AG_InF")
-        Me.AG_InF.MaxValue = 100
-        Me.AG_InF.MinValue = 0
-        Me.AG_InF.Name = "AG_InF"
-        Me.AG_InF.NeedleRadius = 32
-        Me.AG_InF.ScaleLinesInterInnerRadius = 40
-        Me.AG_InF.ScaleLinesInterOuterRadius = 48
-        Me.AG_InF.ScaleLinesMajorInnerRadius = 40
-        Me.AG_InF.ScaleLinesMajorOuterRadius = 48
-        Me.AG_InF.ScaleLinesMinorInnerRadius = 42
-        Me.AG_InF.ScaleLinesMinorOuterRadius = 48
-        Me.AG_InF.ScaleNumbersFormat = Nothing
-        Me.AG_InF.ScaleNumbersRadius = 60
-        Me.AG_InF.UnitValue1 = WinNUT_Client.Controls.UPSVarGauge.UnitValueEnum.Hertz
-        Me.AG_InF.UnitValue2 = WinNUT_Client.Controls.UPSVarGauge.UnitValueEnum.None
-        Me.AG_InF.Value = 0!
-        Me.AG_InF.Value1 = 0!
-        Me.AG_InF.Value2 = 0!
-        '
         'AG_InV
         '
         Me.AG_InV.BaseArcRadius = 45
@@ -513,55 +405,18 @@ Partial Class WinNUT
         Me.AG_InV.Value1 = 0!
         Me.AG_InV.Value2 = 0!
         '
-        'AG_BattV
+        'Lbl_InV_Dial
         '
-        Me.AG_BattV.BaseArcRadius = 45
-        Me.AG_BattV.BaseArcWidth = 5
-        Me.AG_BattV.GradientOrientation = WinNUT_Client.Controls.UPSVarGauge.GradientOrientationEnum.BottomToTop
-        Me.AG_BattV.GradientType = WinNUT_Client.Controls.UPSVarGauge.GradientTypeEnum.RedGreen
-        resources.ApplyResources(Me.AG_BattV, "AG_BattV")
-        Me.AG_BattV.MaxValue = 100
-        Me.AG_BattV.MinValue = 0
-        Me.AG_BattV.Name = "AG_BattV"
-        Me.AG_BattV.NeedleRadius = 32
-        Me.AG_BattV.ScaleLinesInterInnerRadius = 40
-        Me.AG_BattV.ScaleLinesInterOuterRadius = 48
-        Me.AG_BattV.ScaleLinesMajorInnerRadius = 40
-        Me.AG_BattV.ScaleLinesMajorOuterRadius = 48
-        Me.AG_BattV.ScaleLinesMinorInnerRadius = 42
-        Me.AG_BattV.ScaleLinesMinorOuterRadius = 48
-        Me.AG_BattV.ScaleNumbersFormat = Nothing
-        Me.AG_BattV.ScaleNumbersRadius = 60
-        Me.AG_BattV.UnitValue1 = WinNUT_Client.Controls.UPSVarGauge.UnitValueEnum.Volts
-        Me.AG_BattV.UnitValue2 = WinNUT_Client.Controls.UPSVarGauge.UnitValueEnum.None
-        Me.AG_BattV.Value = 0!
-        Me.AG_BattV.Value1 = 0!
-        Me.AG_BattV.Value2 = 0!
+        resources.ApplyResources(Me.Lbl_InV_Dial, "Lbl_InV_Dial")
+        Me.Lbl_InV_Dial.Name = "Lbl_InV_Dial"
         '
-        'AG_Load
+        'GB_OutV_Dial
         '
-        Me.AG_Load.BaseArcRadius = 45
-        Me.AG_Load.BaseArcWidth = 5
-        Me.AG_Load.GradientOrientation = WinNUT_Client.Controls.UPSVarGauge.GradientOrientationEnum.RightToLeft
-        Me.AG_Load.GradientType = WinNUT_Client.Controls.UPSVarGauge.GradientTypeEnum.RedGreen
-        resources.ApplyResources(Me.AG_Load, "AG_Load")
-        Me.AG_Load.MaxValue = 100
-        Me.AG_Load.MinValue = 0
-        Me.AG_Load.Name = "AG_Load"
-        Me.AG_Load.NeedleRadius = 32
-        Me.AG_Load.ScaleLinesInterInnerRadius = 40
-        Me.AG_Load.ScaleLinesInterOuterRadius = 48
-        Me.AG_Load.ScaleLinesMajorInnerRadius = 40
-        Me.AG_Load.ScaleLinesMajorOuterRadius = 48
-        Me.AG_Load.ScaleLinesMinorInnerRadius = 42
-        Me.AG_Load.ScaleLinesMinorOuterRadius = 48
-        Me.AG_Load.ScaleNumbersFormat = Nothing
-        Me.AG_Load.ScaleNumbersRadius = 60
-        Me.AG_Load.UnitValue1 = WinNUT_Client.Controls.UPSVarGauge.UnitValueEnum.Percent
-        Me.AG_Load.UnitValue2 = WinNUT_Client.Controls.UPSVarGauge.UnitValueEnum.Watts
-        Me.AG_Load.Value = 0!
-        Me.AG_Load.Value1 = 0!
-        Me.AG_Load.Value2 = 0!
+        resources.ApplyResources(Me.GB_OutV_Dial, "GB_OutV_Dial")
+        Me.GB_OutV_Dial.Controls.Add(Me.AG_OutV)
+        Me.GB_OutV_Dial.Controls.Add(Me.Lbl_OutV_Dial)
+        Me.GB_OutV_Dial.Name = "GB_OutV_Dial"
+        Me.GB_OutV_Dial.TabStop = False
         '
         'AG_OutV
         '
@@ -588,6 +443,31 @@ Partial Class WinNUT
         Me.AG_OutV.Value1 = 0!
         Me.AG_OutV.Value2 = 0!
         '
+        'Lbl_OutV_Dial
+        '
+        resources.ApplyResources(Me.Lbl_OutV_Dial, "Lbl_OutV_Dial")
+        Me.Lbl_OutV_Dial.Name = "Lbl_OutV_Dial"
+        '
+        'GB_BattCh_Dial
+        '
+        resources.ApplyResources(Me.GB_BattCh_Dial, "GB_BattCh_Dial")
+        Me.GB_BattCh_Dial.Controls.Add(Me.PBox_Battery_State)
+        Me.GB_BattCh_Dial.Controls.Add(Me.Lbl_BattCh_Dial)
+        Me.GB_BattCh_Dial.Controls.Add(Me.AG_BattCh)
+        Me.GB_BattCh_Dial.Name = "GB_BattCh_Dial"
+        Me.GB_BattCh_Dial.TabStop = False
+        '
+        'PBox_Battery_State
+        '
+        resources.ApplyResources(Me.PBox_Battery_State, "PBox_Battery_State")
+        Me.PBox_Battery_State.Name = "PBox_Battery_State"
+        Me.PBox_Battery_State.TabStop = False
+        '
+        'Lbl_BattCh_Dial
+        '
+        resources.ApplyResources(Me.Lbl_BattCh_Dial, "Lbl_BattCh_Dial")
+        Me.Lbl_BattCh_Dial.Name = "Lbl_BattCh_Dial"
+        '
         'AG_BattCh
         '
         Me.AG_BattCh.BaseArcRadius = 45
@@ -612,6 +492,127 @@ Partial Class WinNUT
         Me.AG_BattCh.Value = 0!
         Me.AG_BattCh.Value1 = 0!
         Me.AG_BattCh.Value2 = 0!
+        '
+        'GB_Load_Dial
+        '
+        resources.ApplyResources(Me.GB_Load_Dial, "GB_Load_Dial")
+        Me.GB_Load_Dial.Controls.Add(Me.AG_Load)
+        Me.GB_Load_Dial.Controls.Add(Me.Lbl_Load_Dial)
+        Me.GB_Load_Dial.Name = "GB_Load_Dial"
+        Me.GB_Load_Dial.TabStop = False
+        '
+        'AG_Load
+        '
+        Me.AG_Load.BaseArcRadius = 45
+        Me.AG_Load.BaseArcWidth = 5
+        Me.AG_Load.GradientOrientation = WinNUT_Client.Controls.UPSVarGauge.GradientOrientationEnum.RightToLeft
+        Me.AG_Load.GradientType = WinNUT_Client.Controls.UPSVarGauge.GradientTypeEnum.RedGreen
+        resources.ApplyResources(Me.AG_Load, "AG_Load")
+        Me.AG_Load.MaxValue = 100
+        Me.AG_Load.MinValue = 0
+        Me.AG_Load.Name = "AG_Load"
+        Me.AG_Load.NeedleRadius = 32
+        Me.AG_Load.ScaleLinesInterInnerRadius = 40
+        Me.AG_Load.ScaleLinesInterOuterRadius = 48
+        Me.AG_Load.ScaleLinesMajorInnerRadius = 40
+        Me.AG_Load.ScaleLinesMajorOuterRadius = 48
+        Me.AG_Load.ScaleLinesMinorInnerRadius = 42
+        Me.AG_Load.ScaleLinesMinorOuterRadius = 48
+        Me.AG_Load.ScaleNumbersFormat = Nothing
+        Me.AG_Load.ScaleNumbersRadius = 60
+        Me.AG_Load.UnitValue1 = WinNUT_Client.Controls.UPSVarGauge.UnitValueEnum.Percent
+        Me.AG_Load.UnitValue2 = WinNUT_Client.Controls.UPSVarGauge.UnitValueEnum.Watts
+        Me.AG_Load.Value = 0!
+        Me.AG_Load.Value1 = 0!
+        Me.AG_Load.Value2 = 0!
+        '
+        'Lbl_Load_Dial
+        '
+        resources.ApplyResources(Me.Lbl_Load_Dial, "Lbl_Load_Dial")
+        Me.Lbl_Load_Dial.Name = "Lbl_Load_Dial"
+        '
+        'GB_BattV_Dial
+        '
+        resources.ApplyResources(Me.GB_BattV_Dial, "GB_BattV_Dial")
+        Me.GB_BattV_Dial.Controls.Add(Me.AG_BattV)
+        Me.GB_BattV_Dial.Controls.Add(Me.Lbl_BattV_Dial)
+        Me.GB_BattV_Dial.Name = "GB_BattV_Dial"
+        Me.GB_BattV_Dial.TabStop = False
+        '
+        'AG_BattV
+        '
+        Me.AG_BattV.BaseArcRadius = 45
+        Me.AG_BattV.BaseArcWidth = 5
+        Me.AG_BattV.GradientOrientation = WinNUT_Client.Controls.UPSVarGauge.GradientOrientationEnum.BottomToTop
+        Me.AG_BattV.GradientType = WinNUT_Client.Controls.UPSVarGauge.GradientTypeEnum.RedGreen
+        resources.ApplyResources(Me.AG_BattV, "AG_BattV")
+        Me.AG_BattV.MaxValue = 100
+        Me.AG_BattV.MinValue = 0
+        Me.AG_BattV.Name = "AG_BattV"
+        Me.AG_BattV.NeedleRadius = 32
+        Me.AG_BattV.ScaleLinesInterInnerRadius = 40
+        Me.AG_BattV.ScaleLinesInterOuterRadius = 48
+        Me.AG_BattV.ScaleLinesMajorInnerRadius = 40
+        Me.AG_BattV.ScaleLinesMajorOuterRadius = 48
+        Me.AG_BattV.ScaleLinesMinorInnerRadius = 42
+        Me.AG_BattV.ScaleLinesMinorOuterRadius = 48
+        Me.AG_BattV.ScaleNumbersFormat = Nothing
+        Me.AG_BattV.ScaleNumbersRadius = 60
+        Me.AG_BattV.UnitValue1 = WinNUT_Client.Controls.UPSVarGauge.UnitValueEnum.Volts
+        Me.AG_BattV.UnitValue2 = WinNUT_Client.Controls.UPSVarGauge.UnitValueEnum.None
+        Me.AG_BattV.Value = 0!
+        Me.AG_BattV.Value1 = 0!
+        Me.AG_BattV.Value2 = 0!
+        '
+        'Lbl_BattV_Dial
+        '
+        resources.ApplyResources(Me.Lbl_BattV_Dial, "Lbl_BattV_Dial")
+        Me.Lbl_BattV_Dial.Name = "Lbl_BattV_Dial"
+        '
+        'GB_InF_Dial
+        '
+        resources.ApplyResources(Me.GB_InF_Dial, "GB_InF_Dial")
+        Me.GB_InF_Dial.Controls.Add(Me.AG_InF)
+        Me.GB_InF_Dial.Controls.Add(Me.Lbl_InF_Dial)
+        Me.GB_InF_Dial.Name = "GB_InF_Dial"
+        Me.GB_InF_Dial.TabStop = False
+        '
+        'AG_InF
+        '
+        Me.AG_InF.BaseArcRadius = 45
+        Me.AG_InF.BaseArcWidth = 5
+        Me.AG_InF.GradientOrientation = WinNUT_Client.Controls.UPSVarGauge.GradientOrientationEnum.BottomToTop
+        Me.AG_InF.GradientType = WinNUT_Client.Controls.UPSVarGauge.GradientTypeEnum.RedGreen
+        resources.ApplyResources(Me.AG_InF, "AG_InF")
+        Me.AG_InF.MaxValue = 100
+        Me.AG_InF.MinValue = 0
+        Me.AG_InF.Name = "AG_InF"
+        Me.AG_InF.NeedleRadius = 32
+        Me.AG_InF.ScaleLinesInterInnerRadius = 40
+        Me.AG_InF.ScaleLinesInterOuterRadius = 48
+        Me.AG_InF.ScaleLinesMajorInnerRadius = 40
+        Me.AG_InF.ScaleLinesMajorOuterRadius = 48
+        Me.AG_InF.ScaleLinesMinorInnerRadius = 42
+        Me.AG_InF.ScaleLinesMinorOuterRadius = 48
+        Me.AG_InF.ScaleNumbersFormat = Nothing
+        Me.AG_InF.ScaleNumbersRadius = 60
+        Me.AG_InF.UnitValue1 = WinNUT_Client.Controls.UPSVarGauge.UnitValueEnum.Hertz
+        Me.AG_InF.UnitValue2 = WinNUT_Client.Controls.UPSVarGauge.UnitValueEnum.None
+        Me.AG_InF.Value = 0!
+        Me.AG_InF.Value1 = 0!
+        Me.AG_InF.Value2 = 0!
+        '
+        'Lbl_InF_Dial
+        '
+        resources.ApplyResources(Me.Lbl_InF_Dial, "Lbl_InF_Dial")
+        Me.Lbl_InF_Dial.Name = "Lbl_InF_Dial"
+        '
+        'CB_CurrentLog
+        '
+        Me.CB_CurrentLog.CausesValidation = False
+        Me.CB_CurrentLog.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        resources.ApplyResources(Me.CB_CurrentLog, "CB_CurrentLog")
+        Me.CB_CurrentLog.Name = "CB_CurrentLog"
         '
         'WinNUT
         '
@@ -712,9 +713,9 @@ Partial Class WinNUT
     Friend WithEvents GB_InF_Dial As GroupBox
     Friend WithEvents AG_InF As WinNUT_Client.Controls.UPSVarGauge
     Friend WithEvents Lbl_InF_Dial As Label
-    Friend WithEvents CB_CurrentLog As ComboBox
     Friend WithEvents PBox_Battery_State As PictureBox
     Friend WithEvents ManageOldPrefsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
     Friend WithEvents Menu_Persist As ToolStripMenuItem
+    Private WithEvents CB_CurrentLog As ComboBox
 End Class

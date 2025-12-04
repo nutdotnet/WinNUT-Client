@@ -3199,10 +3199,9 @@ Bitte beheben Sie den Fehler oder brechen Sie den Aktualisierungsdialog ab, um m
           <source></source>
           <target state="new"></target>
         </trans-unit>
-        <trans-unit id="Menu_Connect.Size" translate="yes" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
+        <trans-unit id="Menu_Connect.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
           <source>133, 22</source>
-          <target state="needs-review-translation">180, 22</target>
-          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
+          <target state="final">133, 22</target>
         </trans-unit>
         <trans-unit id="Menu_Connect.Text" translate="yes" xml:space="preserve">
           <source>Connect</source>
@@ -3232,15 +3231,13 @@ Bitte beheben Sie den Fehler oder brechen Sie den Aktualisierungsdialog ab, um m
           <source></source>
           <target state="needs-review-translation"></target>
         </trans-unit>
-        <trans-unit id="ToolStripSeparator1.Size" translate="yes" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
+        <trans-unit id="ToolStripSeparator1.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
           <source>130, 6</source>
-          <target state="needs-review-translation">177, 6</target>
-          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
+          <target state="final">130, 6</target>
         </trans-unit>
-        <trans-unit id="Menu_Persist.Size" translate="yes" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
+        <trans-unit id="Menu_Persist.Size" translate="no" extype="System.Drawing.Size, System.Drawing" xml:space="preserve">
           <source>133, 22</source>
-          <target state="needs-review-translation">180, 22</target>
-          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
+          <target state="final">133, 22</target>
         </trans-unit>
         <trans-unit id="Menu_Persist.Text" translate="yes" xml:space="preserve">
           <source>Persist</source>
