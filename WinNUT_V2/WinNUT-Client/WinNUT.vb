@@ -165,6 +165,10 @@ Public Class WinNUT
         UpdateMainMenuState()
         ReInitDisplayValues()
 
+        ' Prepare visual log combo box
+        For Each line In LogFile.DisplayedLogs
+            AddLogLine(line)
+        Next
 
         AddHandler UpdateController.UpdateCheckCompleted, AddressOf OnCheckForUpdateCompleted
         'Run Update
@@ -179,6 +183,30 @@ Public Class WinNUT
 
         LogFile.LogTracing("WinNUT Form completed Load.", LogLvl.LOG_NOTICE, Me)
     End Sub
+
+#Region "Debug menu"
+#If DEBUG Then
+    Private Sub TestFillAndTrim()
+        For i = LogFile.DisplayedLogs.Count To Logger.MAX_DISPLAYED_LOGS + 3
+            LogFile.LogTracing("Test logging line " & i, LogLvl.LOG_DEBUG, Me, "Test logging line " & i)
+        Next
+    End Sub
+
+    Private Sub InsertDebugMenuOnLoad(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim testFillAndTrimCommand As New ToolStripMenuItem("Test Fill and Trim")
+        AddHandler testFillAndTrimCommand.Click, AddressOf TestFillAndTrim
+
+        Dim logDisplaySubmenu As New ToolStripMenuItem("LogDisplay")
+        logDisplaySubmenu.DropDownItems.Add(testFillAndTrimCommand)
+
+        Dim debugMenu As New ToolStripMenuItem("Debug")
+        debugMenu.DropDownItems.Add(logDisplaySubmenu)
+        Main_Menu.Items.Add(debugMenu)
+
+        LogFile.LogTracing("Inserted debug menu to Main_Menu.", LogLvl.LOG_DEBUG, Me, "Debug Menu enabled.")
+    End Sub
+#End If
+#End Region
 
     ''' <summary>
     ''' Second-to-last step in loading the Form. "Occurs when the form is activated in code or by the user."
@@ -917,19 +945,19 @@ Public Class WinNUT
         lvgForm.Show()
     End Sub
 
-    Public Sub Update_InstantLog(sender As Object) Handles LogFile.NewData
-        Dim Message As String = LogFile.CurrentLogData
-        Static Dim Event_Id = 1
-        LogFile.LogTracing("New Log to CB_Current Log : " & Message, LogLvl.LOG_DEBUG, sender.ToString)
-        Message = "[Id " & Event_Id & ": " & Format(Now, "General Date") & "] " & Message
-        Event_Id += 1
-        CB_CurrentLog.Items.Insert(0, Message)
-        CB_CurrentLog.SelectedIndex = 0
-        If CB_CurrentLog.Items.Count > 10 Then
-            For i = 10 To (CB_CurrentLog.Items.Count - 1) Step 1
-                CB_CurrentLog.Items.Remove(i)
-            Next
+    Private Sub AddLogLine(logLine As String) Handles LogFile.DisplayedLogsLineAdded
+        If Not CB_CurrentLog.Items.Contains(logLine) Then
+            ' Invert insertions so latest items appear at the top.
+            CB_CurrentLog.Items.Insert(0, logLine)
+            CB_CurrentLog.SelectedIndex = 0
+        Else
+            LogFile.LogTracing("Attempted to add duplicate item to CB_CurrentLog: " & logLine, LogLvl.LOG_ERROR, Me)
         End If
+    End Sub
+
+    Private Sub TrimLogLine(removedLine As String) Handles LogFile.DisplayedLogsTrimmed
+        LogFile.LogTracing("Receiving event to trim end of displayed logs list.", LogLvl.LOG_DEBUG, Me)
+        CB_CurrentLog.Items.Remove(removedLine)
     End Sub
 
     Private Sub HandleUPSStatusChange(sender As UPS_Device, newStatuses As UPS_States) Handles UPS_Device.StatusesChanged

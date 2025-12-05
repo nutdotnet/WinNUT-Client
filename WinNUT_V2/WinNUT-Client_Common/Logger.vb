@@ -16,6 +16,7 @@ Imports Microsoft.VisualBasic.Logging
 Public Class Logger
 #Region "Constants/Shared"
     Private Const LOG_FILE_CREATION_SCHEDULE = LogFileCreationScheduleOption.Daily
+    Public Const MAX_DISPLAYED_LOGS = 50
 
     ' Set TEST_RELEASE_DIRS in the custom compiler constants dialog for file storage to behave like release.
 #If DEBUG AndAlso Not TEST_RELEASE_DIRS Then
@@ -32,15 +33,17 @@ Public Class Logger
 #Region "Private/backing values"
 
     Private LogFile As FileLogTraceListener
-    Private L_CurrentLogData As String
     Private LastEventsList As New List(Of Object)
+    Private _displayedLogs As New Queue(Of String)(MAX_DISPLAYED_LOGS)
+    Private _displayedLogsCounter As Integer = 0 ' As incrementing when a new displayed log is added.
     Private _DateTimeFormatInfo As DateTimeFormatInfo = DEFAULT_DATETIMEFORMAT
 
 #End Region
 
     Public LogLevelValue As LogLvl
 
-    Public Event NewData(sender As Object)
+    Public Event DisplayedLogsLineAdded(newLine As String)
+    Public Event DisplayedLogsTrimmed(removedLine As String)
 
 #Region "Properties"
 
@@ -56,15 +59,14 @@ Public Class Logger
         End Set
     End Property
 
-    Public Property CurrentLogData() As String
+    ''' <summary>
+    ''' Friendly log messages that are intended to be displayed to the user.
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property DisplayedLogs As Queue(Of String)
         Get
-            Dim Tmp_Data = L_CurrentLogData
-            L_CurrentLogData = Nothing
-            Return Tmp_Data
+            Return _displayedLogs
         End Get
-        Set(Value As String)
-            L_CurrentLogData = Value
-        End Set
     End Property
 
     Public ReadOnly Property LastEvents() As List(Of Object)
@@ -220,10 +222,20 @@ Public Class Logger
             LogFile.WriteLine(FinalMsg)
         End If
 
-        'If LvlError = LogLvl.LOG_NOTICE Then
+        ' Insert new log message for display to the user, and prune old ones.
         If LogToDisplay IsNot Nothing Then
-            L_CurrentLogData = LogToDisplay
-            RaiseEvent NewData(sender)
+            If _displayedLogs.Count >= MAX_DISPLAYED_LOGS Then
+                Dim removedLog = _displayedLogs.Dequeue()
+                LogTracing($"Removed log from displayed logs collection: { removedLog }", LogLvl.LOG_DEBUG, Me)
+                RaiseEvent DisplayedLogsTrimmed(removedLog)
+            End If
+
+            _displayedLogsCounter += 1
+            Dim newLogLine = String.Format("[{0}][{1}] {2}", _displayedLogsCounter,
+                                           String.Format(Now, "General Date"), LogToDisplay)
+            _displayedLogs.Enqueue(newLogLine)
+            LogTracing("Added new line to displayed logs collection: " & newLogLine, LogLvl.LOG_DEBUG, Me)
+            RaiseEvent DisplayedLogsLineAdded(newLogLine)
         End If
     End Sub
 
