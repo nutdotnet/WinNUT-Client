@@ -362,6 +362,16 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
+        Public ReadOnly Property CopyHS() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("CopyHS", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
         Public ReadOnly Property Delete_LogFile_24x24() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Delete_LogFile_24x24", resourceCulture)
@@ -526,6 +536,60 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Save UPS Data to File.
+        '''</summary>
+        Public ReadOnly Property List_Var_Gui__SaveFile_Caption() As String
+            Get
+                Return ResourceManager.GetString("List_Var_Gui__SaveFile_Caption", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Error encountered when saving UPS data to file: {0}.
+        '''</summary>
+        Public ReadOnly Property List_Var_Gui__SaveFileError_Text() As String
+            Get
+                Return ResourceManager.GetString("List_Var_Gui__SaveFileError_Text", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Successfully saved UPS data to file: {0}.
+        '''</summary>
+        Public ReadOnly Property List_Var_Gui__SaveFileSuccess() As String
+            Get
+                Return ResourceManager.GetString("List_Var_Gui__SaveFileSuccess", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Clipboard Error.
+        '''</summary>
+        Public ReadOnly Property List_Var_Gui__SetCpbTextError_Caption() As String
+            Get
+                Return ResourceManager.GetString("List_Var_Gui__SetCpbTextError_Caption", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Error encountered when copying UPS data to the Clipboard: {0}.
+        '''</summary>
+        Public ReadOnly Property List_Var_Gui__SetCpbTextError_Text() As String
+            Get
+                Return ResourceManager.GetString("List_Var_Gui__SetCpbTextError_Text", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Successfully copied UPS data to the Clipboard..
+        '''</summary>
+        Public ReadOnly Property List_Var_Gui__SetCpbTextSuccess() As String
+            Get
+                Return ResourceManager.GetString("List_Var_Gui__SetCpbTextSuccess", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to WinNut Preferences Changed.
         '''</summary>
         Public ReadOnly Property Log_Str_01() As String
@@ -667,6 +731,16 @@ Namespace My.Resources
         Public ReadOnly Property RepeatHS() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("RepeatHS", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Public ReadOnly Property saveHS() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("saveHS", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

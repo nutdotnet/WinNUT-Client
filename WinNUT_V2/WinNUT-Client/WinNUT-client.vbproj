@@ -249,6 +249,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="List_Var_Gui.resx">
       <DependentUpon>List_Var_Gui.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="List_Var_Gui.ru-RU.resx">
       <DependentUpon>List_Var_Gui.vb</DependentUpon>
@@ -490,6 +491,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\internetconnection.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CopyHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\saveHS.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.ResxResources.targets" Label="MultilingualAppToolkit" Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\v$(MultilingualAppToolkitVersion)\Microsoft.Multilingual.ResxResources.targets')" />

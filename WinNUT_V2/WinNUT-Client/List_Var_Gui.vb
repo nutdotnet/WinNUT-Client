@@ -1,13 +1,4 @@
-﻿' WinNUT-Client is a NUT windows client for monitoring your ups hooked up to your favorite linux server.
-' Copyright (C) 2019-2021 Gawindx (Decaux Nicolas)
-'
-' This program is free software: you can redistribute it and/or modify it under the terms of the
-' GNU General Public License as published by the Free Software Foundation, either version 3 of the
-' License, or any later version.
-'
-' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
-
-Imports WinNUT_Client_Common
+﻿Imports WinNUT_Client_Common
 
 Public Class List_Var_Gui
     Private List_Var_Datas As List(Of UPS_List_Datas)
@@ -76,12 +67,7 @@ Public Class List_Var_Gui
             Next
         Next
     End Sub
-    Private Sub Btn_Clear_Click(sender As Object, e As EventArgs) Handles Btn_Clear.Click
-        TView_UPSVar.CollapseAll()
-        Lbl_N_Value.Text = ""
-        Lbl_V_Value.Text = ""
-        Lbl_D_Value.Text = ""
-    End Sub
+
     Private Function FindNodeByValue(ByVal value As String, ByVal nodes As TreeNodeCollection) As TreeNode
         For Each n As TreeNode In nodes
             If n.Text = value Then
@@ -148,17 +134,73 @@ Public Class List_Var_Gui
         End If
     End Sub
 
-    Private Sub Btn_Clip_Click(sender As Object, e As EventArgs) Handles Btn_Clip.Click
-        LogFile.LogTracing("Export TreeView To Clipboard", LogLvl.LOG_DEBUG, Me)
-        Dim ToClipBoard As String = Nothing
+    Private Function SerializeUPSData() As String
+        LogFile.LogTracing("Serializing UPS data to String.", LogLvl.LOG_DEBUG, Me)
+        Dim sb As New Text.StringBuilder()
+
         With WinNUT.UPS_Device.UPS_Datas
-            ToClipBoard = My.Settings.NUT_UPSName & " (" & .Mfr & "/" & .Model & "/" & .Firmware & ")" & vbNewLine
+            sb.AppendLine(UPSDevice.Name & " (" & .Mfr & "/" & .Model & "/" & .Firmware & ")")
         End With
+
         For Each LDatas In List_Var_Datas
-            ToClipBoard &= LDatas.VarKey & " (" & LDatas.VarDesc & ") : " & LDatas.VarValue & vbNewLine
+            sb.AppendLine(LDatas.VarKey & " (" & LDatas.VarDesc & ") : " & LDatas.VarValue)
         Next
-        My.Computer.Clipboard.SetText(ToClipboard)
+
+        LogFile.LogTracing("Successfully built serialized string, length: " & sb.Length, LogLvl.LOG_DEBUG, Me)
+        Return sb.ToString()
+    End Function
+
+    Private Sub Btn_Clip_Click(sender As Object, e As EventArgs) Handles Btn_Clip.Click
+        LogFile.LogTracing("Copy TreeView To Clipboard", LogLvl.LOG_DEBUG, Me)
+
+        Try
+            Clipboard.SetText(SerializeUPSData)
+            LogFile.LogTracing("Successfully copied UPS information to the Clipboard.", LogLvl.LOG_NOTICE, Me,
+                                My.Resources.List_Var_Gui__SetCpbTextSuccess)
+
+        Catch ex As Exception
+            Dim frmtdError = String.Format(My.Resources.List_Var_Gui__SetCpbTextError_Text, ex.Message)
+            LogFile.LogTracing("Exception encountered while attempting to set Clipboard text.", LogLvl.LOG_ERROR, Me,
+                            frmtdError)
+            LogFile.LogException(ex, Me)
+            MessageBox.Show(frmtdError, My.Resources.List_Var_Gui__SetCpbTextError_Caption,
+                            MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
+
+    Private Sub Btn_Save_Click(sender As Object, e As EventArgs) Handles Btn_Save.Click
+        LogFile.LogTracing("Export TreeView To File", LogLvl.LOG_DEBUG, Me)
+
+        Dim sfd As New SaveFileDialog With {
+            .Filter = "Text files|*.txt|All files|*.*",
+            .InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+            .Title = My.Resources.List_Var_Gui__SaveFile_Caption
+        }
+        Dim dialogRes = sfd.ShowDialog()
+
+        If dialogRes = DialogResult.OK AndAlso sfd.FileName <> String.Empty Then
+            LogFile.LogTracing("User completed SaveFileDialog, path: " & sfd.FileName, LogLvl.LOG_NOTICE, Me)
+            Try
+                Using sw As New IO.StreamWriter(sfd.OpenFile())
+                    sw.Write(SerializeUPSData)
+                    sw.Close()
+                    LogFile.LogTracing("File saved successfully.", LogLvl.LOG_NOTICE, Me,
+                                        String.Format(My.Resources.List_Var_Gui__SaveFileSuccess, sfd.FileName))
+                End Using
+
+            Catch ex As Exception
+                Dim frmtdError = String.Format(My.Resources.List_Var_Gui__SaveFileError_Text, ex.Message)
+                LogFile.LogTracing("Exception encountered while saving UPS data to a file.", LogLvl.LOG_ERROR, Me,
+                                    frmtdError)
+                LogFile.LogException(ex, Me)
+                MessageBox.Show(frmtdError, My.Resources.List_Var_Gui__SaveFile_Caption,
+                                MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        Else
+            LogFile.LogTracing("SaveFileDialog was not accepted.", LogLvl.LOG_NOTICE, Me)
+        End If
+    End Sub
+
     Function GetChildren(parentNode As TreeNode) As List(Of String)
         Dim nodes As List(Of String) = New List(Of String)
         GetAllChildren(parentNode, nodes)

@@ -59,10 +59,16 @@ Public Class Transaction
     ''' <returns></returns>
     Public ReadOnly Property RawResponse As String
 
-    Public Sub New(query As String, rawResponse As String, responseType As NUTResponse)
+    ''' <summary>
+    ''' A <see cref="RawResponse"/> that has been split around the delimeter character (space)
+    ''' </summary>
+    Public ReadOnly Property SplitResponse As String()
+
+    Public Sub New(query As String, response As String, responseType As NUTResponse, Optional splitResponse As String() = Nothing)
         Me.Query = query
-        Me.RawResponse = rawResponse
+        RawResponse = response
         Me.ResponseType = responseType
+        Me.SplitResponse = splitResponse
     End Sub
 End Class
 
@@ -72,17 +78,8 @@ Public Class NutException
     Public ReadOnly Property LastTransaction As Transaction
 
     ''' <summary>
-    ''' Raise a NutException that resulted from either an error as part of the NUT protocol, or a general error during
-    ''' the query.
+    ''' Raise an exception that resulted from a defined error in the NUT protocol.
     ''' </summary>
-    ''' <param name="protocolError"></param>
-    ''' <param name="queryResponse"></param>
-    Public Sub New(query As String, protocolError As NUTResponse, queryResponse As String,
-                   Optional innerException As Exception = Nothing)
-        MyBase.New(Nothing, innerException)
-        LastTransaction = New Transaction(query, queryResponse, protocolError)
-    End Sub
-
     Public Sub New(transaction As Transaction)
         MyBase.New(String.Format("{0} ({1})" & vbNewLine & "Query: {2}", transaction.ResponseType,
                                    transaction.RawResponse, transaction.Query))

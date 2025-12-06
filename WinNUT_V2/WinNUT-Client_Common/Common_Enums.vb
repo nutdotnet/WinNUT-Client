@@ -59,7 +59,6 @@ End Enum
 
 ' Define possible responses according to NUT protcol v1.2
 Public Enum NUTResponse
-    EMPTY
     UNRECOGNIZED
     OK
     VAR

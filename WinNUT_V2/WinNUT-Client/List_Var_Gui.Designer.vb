@@ -33,10 +33,11 @@ Partial Class List_Var_Gui
         Me.Lbl_V = New System.Windows.Forms.Label()
         Me.Lbl_Name = New System.Windows.Forms.Label()
         Me.Btn_Reload = New System.Windows.Forms.Button()
-        Me.Btn_Clear = New System.Windows.Forms.Button()
         Me.Btn_Close = New System.Windows.Forms.Button()
         Me.Timer_Update_List = New System.Windows.Forms.Timer(Me.components)
         Me.Btn_Clip = New System.Windows.Forms.Button()
+        Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
+        Me.Btn_Save = New System.Windows.Forms.Button()
         Me.GB1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -96,18 +97,14 @@ Partial Class List_Var_Gui
         '
         resources.ApplyResources(Me.Btn_Reload, "Btn_Reload")
         Me.Btn_Reload.Name = "Btn_Reload"
+        Me.ToolTip.SetToolTip(Me.Btn_Reload, resources.GetString("Btn_Reload.ToolTip"))
         Me.Btn_Reload.UseVisualStyleBackColor = True
-        '
-        'Btn_Clear
-        '
-        resources.ApplyResources(Me.Btn_Clear, "Btn_Clear")
-        Me.Btn_Clear.Name = "Btn_Clear"
-        Me.Btn_Clear.UseVisualStyleBackColor = True
         '
         'Btn_Close
         '
         resources.ApplyResources(Me.Btn_Close, "Btn_Close")
         Me.Btn_Close.Name = "Btn_Close"
+        Me.ToolTip.SetToolTip(Me.Btn_Close, resources.GetString("Btn_Close.ToolTip"))
         Me.Btn_Close.UseVisualStyleBackColor = True
         '
         'Timer_Update_List
@@ -116,17 +113,27 @@ Partial Class List_Var_Gui
         '
         'Btn_Clip
         '
+        Me.Btn_Clip.Image = Global.WinNUT_Client.My.Resources.Resources.CopyHS
         resources.ApplyResources(Me.Btn_Clip, "Btn_Clip")
         Me.Btn_Clip.Name = "Btn_Clip"
+        Me.ToolTip.SetToolTip(Me.Btn_Clip, resources.GetString("Btn_Clip.ToolTip"))
         Me.Btn_Clip.UseVisualStyleBackColor = True
+        '
+        'Btn_Save
+        '
+        Me.Btn_Save.Image = Global.WinNUT_Client.My.Resources.Resources.saveHS
+        resources.ApplyResources(Me.Btn_Save, "Btn_Save")
+        Me.Btn_Save.Name = "Btn_Save"
+        Me.ToolTip.SetToolTip(Me.Btn_Save, resources.GetString("Btn_Save.ToolTip"))
+        Me.Btn_Save.UseVisualStyleBackColor = True
         '
         'List_Var_Gui
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.Btn_Save)
         Me.Controls.Add(Me.Btn_Clip)
         Me.Controls.Add(Me.Btn_Close)
-        Me.Controls.Add(Me.Btn_Clear)
         Me.Controls.Add(Me.Btn_Reload)
         Me.Controls.Add(Me.GB1)
         Me.Controls.Add(Me.TView_UPSVar)
@@ -148,8 +155,9 @@ Partial Class List_Var_Gui
     Friend WithEvents Lbl_V As Label
     Friend WithEvents Lbl_Name As Label
     Friend WithEvents Btn_Reload As Button
-    Friend WithEvents Btn_Clear As Button
     Friend WithEvents Btn_Close As Button
     Friend WithEvents Timer_Update_List As Timer
     Friend WithEvents Btn_Clip As Button
+    Friend WithEvents ToolTip As ToolTip
+    Private WithEvents Btn_Save As Button
 End Class
