@@ -1920,6 +1920,7 @@ Please correct the error, or cancel the upgrade dialog to continue with the defa
           <source>Error loading encrypted Settings (username/password)</source>
           <target state="new">Error loading encrypted Settings (username/password)</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Short log string to alert the user that there was an error loading encrypted Settings, and give examples of what those Settings were.</note>
+        </trans-unit>
         <trans-unit id="CopyHS" translate="yes" xml:space="preserve" extype="System.Resources.ResXFileRef, System.Windows.Forms">
           <source>..\Resources\CopyHS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</source>
           <target state="needs-review-translation">..\Resources\CopyHS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</target>
