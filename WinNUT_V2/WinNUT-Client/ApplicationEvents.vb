@@ -21,12 +21,11 @@ Namespace My
 
         Private SensitiveProperties As List(Of String) = New List(Of String)({"NUT_ServerAddress", "NUT_ServerPort", "NUT_UPSName",
                                                            "NUT_Username", "NUT_Password"})
-        Private crashReportData As String
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
-            ' Uncomment below and comment out Handles line for _UnhandledException sub when debugging unhandled exceptions.
-            ' AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf AppDomainUnhandledException
+            AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf AppDomainUnhandledException
             AddHandler Settings.SettingsLoaded, AddressOf OnSettingsFirstLoaded
+
             Init_Globals()
             LogFile.LogTracing(String.Format("{0} v{1} starting up.", Application.Info.ProductName, Application.Info.Version),
                            LogLvl.LOG_NOTICE, Me)
@@ -59,11 +58,16 @@ Namespace My
         End Sub
 
         Private Sub AppDomainUnhandledException(sender As Object, e As System.UnhandledExceptionEventArgs)
+            LogFile.LogTracing("AppDomainUnhandledException", LogLvl.LOG_ERROR, Me)
             MyApplication_UnhandledException(sender, New UnhandledExceptionEventArgs(False, e.ExceptionObject))
         End Sub
 
+        Private caughtException As Exception
         Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
+            LogFile.LogTracing("UnhandledException", LogLvl.LOG_ERROR, Me)
+            WinNUT.HasCrashed = True
             e.ExitApplication = False
+            caughtException = e.Exception
 
             With Msg_Crash
                 .Location = New Point(6, 6)
@@ -114,17 +118,14 @@ Namespace My
                 .Controls.Add(BtnGenerate)
             End With
 
-            crashReportData = GenerateCrashReport(e.Exception)
-
             AddHandler BtnClose.Click, AddressOf Application.Close_Button_Click
             AddHandler BtnGenerate.Click, AddressOf Application.Generate_Button_Click
 
             CrashBug_Form.Show()
             CrashBug_Form.BringToFront()
-            WinNUT.HasCrashed = True
         End Sub
 
-        Private Function GenerateCrashReport(ex As Exception) As String
+        Private Function GenerateCrashReport() As String
             Dim jsonSerializerSettings As New JsonSerializerSettings()
             jsonSerializerSettings.Culture = DEF_CULTURE_INFO
             jsonSerializerSettings.Formatting = Formatting.Indented
@@ -158,7 +159,7 @@ Namespace My
 #Region "Exceptions"
             reportStream.WriteLine("==== Exception ====")
             reportStream.WriteLine()
-            reportStream.WriteLine(Regex.Unescape(JsonConvert.SerializeObject(ex, jsonSerializerSettings)))
+            reportStream.WriteLine(Regex.Unescape(JsonConvert.SerializeObject(caughtException, jsonSerializerSettings)))
             reportStream.WriteLine()
 #End Region
 
@@ -173,12 +174,13 @@ Namespace My
 
         Private Sub Generate_Button_Click(sender As Object, e As EventArgs)
             Dim logFileName = "CrashReport_" + Date.Now.ToString("s").Replace(":", ".") + ".txt"
+            Dim generatedReport = GenerateCrashReport()
 
-            Computer.Clipboard.SetText(crashReportData)
+            Computer.Clipboard.SetText(generatedReport)
 
             Directory.CreateDirectory(CRASHBUG_OUTPUT_PATH)
             Dim CrashLog_Report = New StreamWriter(Path.Combine(CRASHBUG_OUTPUT_PATH, logFileName))
-            CrashLog_Report.WriteLine(crashReportData)
+            CrashLog_Report.WriteLine(generatedReport)
             CrashLog_Report.Close()
 
             ' Open an Explorer window to the crash log.
