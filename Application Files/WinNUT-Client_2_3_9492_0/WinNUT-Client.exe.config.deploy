@@ -49,9 +49,6 @@
 	</system.diagnostics>
  <userSettings>
   <WinNUT_Client.My.MySettings>
-   <setting name="UpgradePrefsCompleted" serializeAs="String">
-    <value>False</value>
-   </setting>
    <setting name="StartWithWindows" serializeAs="String">
     <value>False</value>
    </setting>
