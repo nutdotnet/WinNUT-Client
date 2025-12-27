@@ -105,9 +105,6 @@
   <data name="ManageOldPrefsToolStripMenuItem.Text" xml:space="preserve">
     <value>管理旧设置...</value>
   </data>
-  <data name="Menu_Connect.Size" xml:space="preserve" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
   <data name="AG_InV.Text" xml:space="preserve" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value></value>
   </data>
@@ -125,12 +122,6 @@
   </data>
   <data name="AG_InF.Text" xml:space="preserve" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value></value>
-  </data>
-  <data name="ToolStripSeparator1.Size" xml:space="preserve" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
-  </data>
-  <data name="Menu_Persist.Size" xml:space="preserve" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
   </data>
   <data name="Menu_Disconnect.Enabled" xml:space="preserve" type="System.Boolean, mscorlib">
     <value>False</value>

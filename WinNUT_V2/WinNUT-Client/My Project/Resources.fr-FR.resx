@@ -19,13 +19,6 @@
     <value>Charge Batterie : {0}
 Temps restant : {1}</value>
   </data>
-  <data name="Frm_Main_Str_01" xml:space="preserve">
-    <value>Ancien Fichier "ups.ini" importé
-Fichier Ini déplacé vers {0}.old</value>
-  </data>
-  <data name="Frm_Main_Str_02" xml:space="preserve">
-    <value>Ancien Fichier "ups.ini" importé</value>
-  </data>
   <data name="Frm_Main_Str_03" xml:space="preserve">
     <value>Reconnexion en cours</value>
   </data>

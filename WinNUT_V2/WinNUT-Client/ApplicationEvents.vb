@@ -1,14 +1,4 @@
-﻿' WinNUT-Client is a NUT windows client for monitoring your ups hooked up to your favorite linux server.
-' Copyright (C) 2019-2021 Gawindx (Decaux Nicolas)
-'
-' This program is free software: you can redistribute it and/or modify it under the terms of the
-' GNU General Public License as published by the Free Software Foundation, either version 3 of the
-' License, or any later version.
-'
-' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
-
-Imports System.Configuration
-Imports System.Deployment.Application
+﻿Imports System.Configuration
 Imports System.Globalization
 Imports System.IO
 Imports System.Text.RegularExpressions
@@ -17,16 +7,9 @@ Imports Newtonsoft.Json
 Imports WinNUT_Client_Common
 
 Namespace My
-    ' Les événements suivants sont disponibles pour MyApplication :
-    ' Startup : Déclenché au démarrage de l'application avant la création du formulaire de démarrage.
-    ' Shutdown : Déclenché après la fermeture de tous les formulaires de l'application.  Cet événement n'est pas déclenché si l'application se termine de façon anormale.
-    ' UnhandledException : Déclenché si l'application rencontre une exception non gérée.
-    ' StartupNextInstance : Déclenché lors du lancement d'une application à instance unique et si cette application est déjà active. 
-    ' NetworkAvailabilityChanged : Déclenché quand la connexion réseau est connectée ou déconnectée.
     Partial Friend Class MyApplication
         ' Default culture for output so logs can be shared with the project.
         Private Shared ReadOnly DEF_CULTURE_INFO As CultureInfo = CultureInfo.InvariantCulture
-        Private Shared ReadOnly CRASHBUG_OUTPUT_PATH = System.Windows.Forms.Application.LocalUserAppDataPath
 
         Private CrashBug_Form As New Form
         Private BtnClose As New Button
@@ -36,27 +19,38 @@ Namespace My
 
         Private SensitiveProperties As List(Of String) = New List(Of String)({"NUT_ServerAddress", "NUT_ServerPort", "NUT_UPSName",
                                                            "NUT_Username", "NUT_Password"})
-        Private crashReportData As String
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
-            ' Uncomment below and comment out Handles line for _UnhandledException sub when debugging unhandled exceptions.
-            ' AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf AppDomainUnhandledException
-
-            Init_Globals()
-            LogFile.LogTracing(String.Format("{0} v{1} starting up.", My.Application.Info.ProductName, My.Application.Info.Version),
+            LogFile.LogTracing(String.Format("{0} v{1} starting up.", ProgramName, ProgramVersion),
                            LogLvl.LOG_NOTICE, Me)
-            ' LogFile.LogTracing($"DataDirectory: { ApplicationDeployment.CurrentDeployment.DataDirectory }", LogLvl.LOG_NOTICE, Me)
+            LogFile.LogTracing("Data storage path: " & DataDirectory, LogLvl.LOG_NOTICE, Me)
 
-            ' If first run indicated by Settings, attempt upgrade in case older version is present.
-            ' Only necessary when deploying MSI. Remove once using pure ClickOnce.
+            AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf AppDomainUnhandledException
+            AddHandler Settings.SettingsLoaded, AddressOf OnSettingsFirstLoaded
+            AddHandler Settings.PropertyChanged, AddressOf OnPropertyChanged
+
+            LogFile.LogTracing("Event handlers configured.", LogLvl.LOG_DEBUG, Me)
+
+            ApplyLoggingSettings()
+
+            ' Starting without previous settings. May be new installation or MSI upgrade.
             If Settings.IsFirstRun Then
                 Try
+                    ' Handle MSI upgrade scenario.
                     Settings.Upgrade()
                     LogFile.LogTracing("Settings upgrade completed without exception.", LogLvl.LOG_NOTICE, Me)
                 Catch ex As ConfigurationErrorsException
                     LogFile.LogTracing("Error encountered while trying to upgrade Settings:", LogLvl.LOG_ERROR, Me)
                     LogFile.LogException(ex, Me)
                 End Try
+
+                ' If Settings still appear new, check if old Registry preferences are leftover.
+                If Settings.IsFirstRun AndAlso OldParams.WinNUT_Params.ParamsExist Then
+                    LogFile.LogTracing("Previous preferences data detected in the Registry.", LogLvl.LOG_NOTICE, Me,
+                               Resources.DetectedPreviousPrefsData)
+
+                    Forms.UpgradePrefsDialog.ShowDialog()
+                End If
 
                 Settings.IsFirstRun = False
                 Settings.Save()
@@ -66,11 +60,17 @@ Namespace My
         End Sub
 
         Private Sub AppDomainUnhandledException(sender As Object, e As System.UnhandledExceptionEventArgs)
+            LogFile.LogTracing("AppDomainUnhandledException", LogLvl.LOG_ERROR, Me)
             MyApplication_UnhandledException(sender, New UnhandledExceptionEventArgs(False, e.ExceptionObject))
         End Sub
 
+        Private caughtException As Exception
         Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
+            LogFile.LogTracing("UnhandledException", LogLvl.LOG_ERROR, Me)
+            WinNUT.HasCrashed = True
+            WinNUT.Hide()
             e.ExitApplication = False
+            caughtException = e.Exception
 
             With Msg_Crash
                 .Location = New Point(6, 6)
@@ -121,17 +121,14 @@ Namespace My
                 .Controls.Add(BtnGenerate)
             End With
 
-            crashReportData = GenerateCrashReport(e.Exception)
-
             AddHandler BtnClose.Click, AddressOf Application.Close_Button_Click
             AddHandler BtnGenerate.Click, AddressOf Application.Generate_Button_Click
 
             CrashBug_Form.Show()
             CrashBug_Form.BringToFront()
-            WinNUT.HasCrashed = True
         End Sub
 
-        Private Function GenerateCrashReport(ex As Exception) As String
+        Private Function GenerateCrashReport() As String
             Dim jsonSerializerSettings As New JsonSerializerSettings()
             jsonSerializerSettings.Culture = DEF_CULTURE_INFO
             jsonSerializerSettings.Formatting = Formatting.Indented
@@ -165,7 +162,7 @@ Namespace My
 #Region "Exceptions"
             reportStream.WriteLine("==== Exception ====")
             reportStream.WriteLine()
-            reportStream.WriteLine(Regex.Unescape(JsonConvert.SerializeObject(ex, jsonSerializerSettings)))
+            reportStream.WriteLine(Regex.Unescape(JsonConvert.SerializeObject(caughtException, jsonSerializerSettings)))
             reportStream.WriteLine()
 #End Region
 
@@ -180,21 +177,66 @@ Namespace My
 
         Private Sub Generate_Button_Click(sender As Object, e As EventArgs)
             Dim logFileName = "CrashReport_" + Date.Now.ToString("s").Replace(":", ".") + ".txt"
+            Dim generatedReport = GenerateCrashReport()
 
-            Computer.Clipboard.SetText(crashReportData)
+            Computer.Clipboard.SetText(generatedReport)
 
-            Directory.CreateDirectory(CRASHBUG_OUTPUT_PATH)
-            Dim CrashLog_Report = New StreamWriter(Path.Combine(CRASHBUG_OUTPUT_PATH, logFileName))
-            CrashLog_Report.WriteLine(crashReportData)
+            Dim CrashLog_Report = New StreamWriter(Path.Combine(DataDirectory, logFileName))
+            CrashLog_Report.WriteLine(generatedReport)
             CrashLog_Report.Close()
 
             ' Open an Explorer window to the crash log.
-            Process.Start(CRASHBUG_OUTPUT_PATH)
+            Process.Start(DataDirectory)
             End
         End Sub
 
         Private Sub Close_Button_Click(sender As Object, e As EventArgs)
             CrashBug_Form.Close()
+        End Sub
+
+        ''' <summary>
+        ''' Handles validation of Settings when loaded.
+        ''' </summary>
+        ''' <param name="sender"></param>
+        ''' <param name="e"></param>
+        Private Sub OnSettingsFirstLoaded(sender As Object, e As SettingsLoadedEventArgs)
+            LogFile.LogTracing("OnSettingsFirstLoaded event raised.", LogLvl.LOG_DEBUG, Me)
+
+            ' Verify that encrypted data can be decrypted
+            Try
+                Settings.NUT_Username?.ToString()
+            Catch ex As Exception
+                LogFile.LogTracing("Error attempting to decrypt encrypted data. Resetting to defaults.",
+                                   LogLvl.LOG_ERROR, Me, Resources.Log_Str_ErrorDecrypting)
+                LogFile.LogException(ex, Me)
+
+                Settings.NUT_Username = New SerializedProtectedString()
+                Settings.NUT_Password = New SerializedProtectedString()
+            End Try
+
+            If Not Settings.NUT_PollIntervalMsec > 0 Then
+                LogFile.LogTracing("Incorrect value of " & Settings.NUT_PollIntervalMsec &
+                               " for Poll Delay/Interval, resetting to default.", LogLvl.LOG_ERROR, Me)
+                Settings.NUT_PollIntervalMsec = MySettings.Default.NUT_PollIntervalMsec
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' Raised when any Settings property is changed through a set accessor, or when reloaded/reset.
+        ''' </summary>
+        ''' <param name="sender"></param>
+        ''' <param name="e"></param>
+        Private Sub OnPropertyChanged(sender As Object, e As ComponentModel.PropertyChangedEventArgs)
+            LogFile.LogTracing("Handling OnPropertyChanged for " & e.PropertyName, LogLvl.LOG_DEBUG, Me)
+            If e.PropertyName = "LG_LogToFile" OrElse e.PropertyName = "LG_LogLevel" Then
+                LogFile.LogTracing("Settings property changed for logging subsystem, updating...", LogLvl.LOG_DEBUG, Me)
+                ApplyLoggingSettings()
+            End If
+        End Sub
+
+        Private Sub ApplyLoggingSettings()
+            LogFile.IsWritingToFile = Settings.LG_LogToFile
+            LogFile.LogLevelValue = Settings.LG_LogLevel
         End Sub
     End Class
 End Namespace

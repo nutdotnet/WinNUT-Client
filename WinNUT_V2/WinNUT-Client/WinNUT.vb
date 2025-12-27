@@ -1,4 +1,5 @@
-﻿Imports WinNUT_Client_Common
+﻿Imports System.ComponentModel
+Imports WinNUT_Client_Common
 
 Public Class WinNUT
 #Region "Properties"
@@ -7,18 +8,6 @@ Public Class WinNUT
         Set(Value As Boolean)
             WinNUT_Crashed = Value
         End Set
-    End Property
-
-    Private ReadOnly Property OldPrefsExist As Boolean
-        Get
-            Return OldParams.WinNUT_Params.RegistryKeyRoot IsNot Nothing
-        End Get
-    End Property
-
-    Private ReadOnly Property IsUPSConnected As Boolean
-        Get
-            Return UPS_Device IsNot Nothing AndAlso UPS_Device.IsConnected
-        End Get
     End Property
 
 #End Region
@@ -71,8 +60,6 @@ Public Class WinNUT
 
     Private Sub WinNUT_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Add Main Gui's Strings
-        StrLog.Insert(AppResxStr.STR_MAIN_OLDINI_RENAMED, My.Resources.Frm_Main_Str_01)
-        StrLog.Insert(AppResxStr.STR_MAIN_OLDINI, My.Resources.Frm_Main_Str_02)
         StrLog.Insert(AppResxStr.STR_MAIN_RECONNECT, My.Resources.Frm_Main_Str_03)
         StrLog.Insert(AppResxStr.STR_MAIN_NOTCONN, My.Resources.Frm_Main_Str_05)
         StrLog.Insert(AppResxStr.STR_MAIN_CONN, My.Resources.Frm_Main_Str_06)
@@ -169,18 +156,13 @@ Public Class WinNUT
         LogFile.LogTracing("Update Icon at Startup", LogLvl.LOG_DEBUG, Me)
         ' Start_Tray_Icon = Nothing
 
-        ' TODO: Move below code to a dedicated onsettingsloaded method.
-        ApplyApplicationPreferences()
         UpdateMainMenuState()
+        ReInitDisplayValues()
 
-        ' If this is the first time WinNUT has been launched with the Settings system, check if old preferences exist
-        ' and prompt the user to upgrade.
-        If Not My.Settings.UpgradePrefsCompleted AndAlso OldPrefsExist Then
-            LogFile.LogTracing("Previous preferences data detected in the Registry.", LogLvl.LOG_NOTICE, Me,
-                               My.Resources.DetectedPreviousPrefsData)
-
-            RunRegPrefsUpgrade()
-        End If
+        ' Prepare visual log combo box
+        For Each line In LogFile.DisplayedLogs
+            AddLogLine(line)
+        Next
 
         AddHandler UpdateController.UpdateCheckCompleted, AddressOf OnCheckForUpdateCompleted
         'Run Update
@@ -191,10 +173,35 @@ Public Class WinNUT
 
         AddHandler Microsoft.Win32.SystemEvents.PowerModeChanged, AddressOf SystemEvents_PowerModeChanged
         AddHandler RequestConnect, AddressOf UPS_Connect
-        AddHandler My.Settings.PropertyChanged, AddressOf SettingsPropertyChanged
+        AddHandler My.Settings.PropertyChanged, AddressOf OnPropertyChanged
+        AddHandler Pref_Gui.SavedPreferences, AddressOf ResetUIState
 
         LogFile.LogTracing("WinNUT Form completed Load.", LogLvl.LOG_NOTICE, Me)
     End Sub
+
+#Region "Debug menu"
+#If DEBUG Then
+    Private Sub TestFillAndTrim()
+        For i = LogFile.DisplayedLogs.Count To Logger.MAX_DISPLAYED_LOGS + 3
+            LogFile.LogTracing("Test logging line " & i, LogLvl.LOG_DEBUG, Me, "Test logging line " & i)
+        Next
+    End Sub
+
+    Private Sub InsertDebugMenuOnLoad(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim testFillAndTrimCommand As New ToolStripMenuItem("Test Fill and Trim")
+        AddHandler testFillAndTrimCommand.Click, AddressOf TestFillAndTrim
+
+        Dim logDisplaySubmenu As New ToolStripMenuItem("LogDisplay")
+        logDisplaySubmenu.DropDownItems.Add(testFillAndTrimCommand)
+
+        Dim debugMenu As New ToolStripMenuItem("Debug")
+        debugMenu.DropDownItems.Add(logDisplaySubmenu)
+        Main_Menu.Items.Add(debugMenu)
+
+        LogFile.LogTracing("Inserted debug menu to Main_Menu.", LogLvl.LOG_DEBUG, Me, "Debug Menu enabled.")
+    End Sub
+#End If
+#End Region
 
     ''' <summary>
     ''' Second-to-last step in loading the Form. "Occurs when the form is activated in code or by the user."
@@ -227,6 +234,7 @@ Public Class WinNUT
 
     ''' <summary>
     ''' Final step in loading the main form for the first time.
+    ''' "The Shown event is _only_ raised the first time a form is displayed"
     ''' </summary>
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
@@ -309,16 +317,15 @@ Public Class WinNUT
 
 #End Region
 
-    Private Sub SettingsPropertyChanged(sender As Object, e As System.ComponentModel.PropertyChangedEventArgs)
-        LogFile.LogTracing("SettingsPropertyChanged: " & e.PropertyName, LogLvl.LOG_DEBUG, Me)
-
-        UpdateMainMenuState()
+    Private Sub OnPropertyChanged(sender As Object, e As PropertyChangedEventArgs)
+        If e.PropertyName = "NUT_AutoReconnect" Then
+            LogFile.LogTracing("Handling OnPropertyChanged for " & e.PropertyName, LogLvl.LOG_DEBUG, Me)
+            UpdateMainMenuState()
+        End If
     End Sub
 
     Private Sub UpdateMainMenuState()
-        Menu_Persist.Checked = My.Settings.NUT_AutoReconnect
-
-        If OldParams.WinNUT_Params.RegistryKeyRoot IsNot Nothing Then
+        If OldParams.WinNUT_Params.ParamsExist Then
             ManageOldPrefsToolStripMenuItem.Enabled = True
             ManageOldPrefsToolStripMenuItem.ToolTipText = My.Resources.ManageOldPrefsToolstripMenuItem_Enabled_TooltipText
         Else
@@ -326,15 +333,10 @@ Public Class WinNUT
             ManageOldPrefsToolStripMenuItem.ToolTipText = My.Resources.ManageOldPrefsToolstripMenuItem_Disabled_TooltipText
         End If
 
-        If IsUPSConnected OrElse (UPS_Device IsNot Nothing AndAlso UPS_Device.IsReconnecting) Then
-            Menu_Connect.Enabled = False
-            Menu_Disconnect.Enabled = True
-            Menu_UPS_Var.Enabled = True
-        Else
-            Menu_Connect.Enabled = True
-            Menu_Disconnect.Enabled = False
-            Menu_UPS_Var.Enabled = False
-        End If
+        Menu_Persist.Checked = My.Settings.NUT_AutoReconnect
+        Menu_UPS_Var.Enabled = If(UPS_Device?.IsConnected, False)
+        Menu_Disconnect.Enabled = If(UPS_Device?.IsConnected, False) OrElse If(UPS_Device?.IsReconnecting, False)
+        Menu_Connect.Enabled = Not Menu_Disconnect.Enabled
     End Sub
 
     Private Sub SystemEvents_PowerModeChanged(sender As Object, e As Microsoft.Win32.PowerModeChangedEventArgs)
@@ -356,15 +358,6 @@ Public Class WinNUT
         End Select
     End Sub
 
-    Private Sub RunRegPrefsUpgrade()
-        LogFile.LogTracing("Starting Upgrade dialog.", LogLvl.LOG_NOTICE, Me)
-        Dim upPrefsDg As New Forms.UpgradePrefsDialog()
-        upPrefsDg.ShowDialog()
-
-        UpdateMainMenuState()
-        ApplyApplicationPreferences()
-    End Sub
-
     Private Sub UPS_Connect(Optional retryOnConnFailure = False)
         Dim Nut_Config As Nut_Parameter
         LogFile.LogTracing("Client UPS_Connect subroutine beginning.", LogLvl.LOG_NOTICE, Me)
@@ -379,6 +372,7 @@ Public Class WinNUT
         UPS_Device = New UPS_Device(Nut_Config, LogFile, My.Settings.NUT_PollIntervalMsec, My.Settings.CAL_FreqInNom)
         AddHandler UPS_Device.EncounteredNUTException, AddressOf HandleNUTException
         UPS_Device.Connect_UPS(retryOnConnFailure)
+        UpdateMainMenuState()
     End Sub
 
     ''' <summary>
@@ -469,25 +463,9 @@ Public Class WinNUT
         Application.Exit()
     End Sub
 
-    Private Sub Menu_Settings_Click(sender As Object, e As EventArgs) Handles Menu_Settings.Click
-        LogFile.LogTracing("Open Pref Gui From Menu", LogLvl.LOG_DEBUG, Me)
-        AddHandler Pref_Gui.SavedPreferences, AddressOf ApplyApplicationPreferences
-        Pref_Gui.Activate()
-        Pref_Gui.Visible = True
-        HasFocus = False
-    End Sub
-
     Private Sub Menu_Sys_Exit_Click(sender As Object, e As EventArgs) Handles Menu_Sys_Exit.Click
         LogFile.LogTracing("Close WinNut From Systray", LogLvl.LOG_DEBUG, Me)
         Application.Exit()
-    End Sub
-
-    Private Sub Menu_Sys_Settings_Click(sender As Object, e As EventArgs) Handles Menu_Sys_Settings.Click
-        LogFile.LogTracing("Open Pref Gui From Systray", LogLvl.LOG_DEBUG, Me)
-        AddHandler Pref_Gui.SavedPreferences, AddressOf ApplyApplicationPreferences
-        Pref_Gui.Activate()
-        Pref_Gui.Visible = True
-        HasFocus = False
     End Sub
 
     Private Sub NotifyIcon_MouseClick(sender As Object, e As MouseEventArgs) Handles NotifyIcon.MouseClick, NotifyIcon.MouseDoubleClick
@@ -800,36 +778,28 @@ Public Class WinNUT
         UPS_Connect()
     End Sub
 
+    Private Sub OpenPrefsForm() Handles Menu_Sys_Settings.Click, Menu_Settings.Click
+        LogFile.LogTracing("Opening Prefs form...", LogLvl.LOG_NOTICE, Me)
+        Pref_Gui.ShowDialog()
+    End Sub
+
     ''' <summary>
-    ''' Apply settings and preferences to WinNUT, whether or not they have changed.
+    ''' Reset the UI by cycling the connection if already connected and reinitialize display values.
     ''' </summary>
-    Public Sub ApplyApplicationPreferences()
-        LogFile.LogTracing("Beginning ApplyApplicationPreferences subroutine.", LogLvl.LOG_DEBUG, Me)
+    Public Sub ResetUIState()
+        LogFile.LogTracing("Beginning ResetUIState subroutine.", LogLvl.LOG_DEBUG, Me)
         Dim autoReconnect = False
 
         If (UPS_Device IsNot Nothing) AndAlso UPS_Device.IsConnected Then
             autoReconnect = True
             UPSDisconnect()
-        Else
-            ReInitDisplayValues()
         End If
 
-        ' Apply logging subsystem configuration
-        LogFile.IsWritingToFile = My.Settings.LG_LogToFile
-        LogFile.LogLevelValue = My.Settings.LG_LogLevel
-
-        ' Validate interval value because it's been incorrectly stored in older versions.
-        If My.Settings.NUT_PollIntervalMsec <= 0 Then
-            LogFile.LogTracing("Incorrect value of " & My.Settings.NUT_PollIntervalMsec &
-                               " for Poll Delay/Interval, resetting to default.", LogLvl.LOG_ERROR, Me)
-            My.Settings.NUT_PollIntervalMsec = My.MySettings.Default.NUT_PollIntervalMsec
-        End If
+        ReInitDisplayValues()
 
         If autoReconnect Then
             UPS_Connect()
         End If
-
-        LogFile.LogTracing("WinNut Preferences Applied.", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_LOG_PREFS))
     End Sub
 
     Private Sub UpdateIcon_NotifyIcon()
@@ -939,19 +909,19 @@ Public Class WinNUT
         lvgForm.Show()
     End Sub
 
-    Public Sub Update_InstantLog(sender As Object) Handles LogFile.NewData
-        Dim Message As String = LogFile.CurrentLogData
-        Static Dim Event_Id = 1
-        LogFile.LogTracing("New Log to CB_Current Log : " & Message, LogLvl.LOG_DEBUG, sender.ToString)
-        Message = "[Id " & Event_Id & ": " & Format(Now, "General Date") & "] " & Message
-        Event_Id += 1
-        CB_CurrentLog.Items.Insert(0, Message)
-        CB_CurrentLog.SelectedIndex = 0
-        If CB_CurrentLog.Items.Count > 10 Then
-            For i = 10 To (CB_CurrentLog.Items.Count - 1) Step 1
-                CB_CurrentLog.Items.Remove(i)
-            Next
+    Private Sub AddLogLine(logLine As String) Handles LogFile.DisplayedLogsLineAdded
+        If Not CB_CurrentLog.Items.Contains(logLine) Then
+            ' Invert insertions so latest items appear at the top.
+            CB_CurrentLog.Items.Insert(0, logLine)
+            CB_CurrentLog.SelectedIndex = 0
+        Else
+            LogFile.LogTracing("Attempted to add duplicate item to CB_CurrentLog: " & logLine, LogLvl.LOG_ERROR, Me)
         End If
+    End Sub
+
+    Private Sub TrimLogLine(removedLine As String) Handles LogFile.DisplayedLogsTrimmed
+        LogFile.LogTracing("Receiving event to trim end of displayed logs list.", LogLvl.LOG_DEBUG, Me)
+        CB_CurrentLog.Items.Remove(removedLine)
     End Sub
 
     Private Sub HandleUPSStatusChange(sender As UPS_Device, newStatuses As UPS_States) Handles UPS_Device.StatusesChanged
@@ -1030,7 +1000,9 @@ Public Class WinNUT
     End Sub
 
     Private Sub ManageOldPrefsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ManageOldPrefsToolStripMenuItem.Click
-        RunRegPrefsUpgrade()
+        LogFile.LogTracing("Launching UpgradePrefsDialog from ToolStripMenu.", LogLvl.LOG_NOTICE, Me)
+        UPSDisconnect()
+        Forms.UpgradePrefsDialog.ShowDialog()
     End Sub
 
     Private Sub Menu_Update_Click(sender As Object, e As EventArgs) Handles Menu_Update.Click

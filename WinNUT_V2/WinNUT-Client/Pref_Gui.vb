@@ -74,7 +74,7 @@ Public Class Pref_Gui
             RaiseEvent SavedPreferences()
 
             SetLogControlsStatus()
-            LogFile.LogTracing("Preferences Saved", LogLvl.LOG_NOTICE, Me)
+            LogFile.LogTracing("WinNut Preferences Saved.", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_LOG_PREFS))
 
             PrefsModified = False
         Catch e As Exception

@@ -201,9 +201,8 @@ Namespace Models
                 LogFile.LogTracing("Requesting cancellation of upgradeWorker.", LogLvl.LOG_NOTICE, Me)
                 upgradeWorker.CancelAsync()
             Else
-                LogFile.LogTracing("Exiting out of upgrade dialog.", LogLvl.LOG_NOTICE, Me)
+                LogFile.LogTracing("Exiting out of upgrade dialog.", LogLvl.LOG_NOTICE, Me, My.Resources.UpgradePrefsDialog_Cancelled)
                 _parentForm.DialogResult = DialogResult.Cancel
-                My.Settings.UpgradePrefsCompleted = True
                 _parentForm.Close()
             End If
         End Sub
@@ -263,13 +262,11 @@ Namespace Models
 
             If e.Cancelled Then
                 ProgressPercent = 0
-                LogFile.LogTracing("Upgrade work was cancelled.", LogLvl.LOG_WARNING, Me, My.Resources.UpgradePrefsDialog_Cancelled)
+                LogFile.LogTracing("Upgrade work was cancelled.", LogLvl.LOG_WARNING, Me)
                 Return
             End If
 
             ProgressPercent = 100
-
-            My.Settings.UpgradePrefsCompleted = True
             _parentForm.Close()
         End Sub
 
