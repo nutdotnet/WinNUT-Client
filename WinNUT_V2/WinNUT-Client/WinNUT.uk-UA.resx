@@ -123,9 +123,6 @@
   <data name="Menu_Disconnect.Enabled" xml:space="preserve" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="$this.ImeMode" xml:space="preserve" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="Menu_UPS_Var.Enabled" xml:space="preserve" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>

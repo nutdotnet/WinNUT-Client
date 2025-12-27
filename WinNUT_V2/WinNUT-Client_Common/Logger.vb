@@ -202,9 +202,7 @@ Public Class Logger
         Dim FinalMsg = FormatLogLine(message, LvlError, sender)
 
         ' Always write log messages to the attached debug messages window.
-#If DEBUG Then
-        Debug.WriteLine(FinalMsg)
-#End If
+        Trace.WriteLine(FinalMsg)
 
         'Create Event in EventList in case of crash for generate Report
         If LastEventsList.Count >= MaxEvents Then

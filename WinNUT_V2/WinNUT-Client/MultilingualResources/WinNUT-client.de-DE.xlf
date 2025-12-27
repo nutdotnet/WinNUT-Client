@@ -3285,10 +3285,6 @@ Bitte beheben Sie den Fehler oder brechen Sie den Aktualisierungsdialog ab, um m
           <source>False</source>
           <target state="needs-review-translation">False</target>
         </trans-unit>
-        <trans-unit id="$this.ImeMode" translate="yes" extype="System.Windows.Forms.ImeMode, System.Windows.Forms" xml:space="preserve">
-          <source>NoControl</source>
-          <target state="needs-review-translation">NoControl</target>
-        </trans-unit>
         <trans-unit id="Menu_UPS_Var.Enabled" translate="yes" extype="System.Boolean, mscorlib" xml:space="preserve">
           <source>False</source>
           <target state="needs-review-translation">False</target>
