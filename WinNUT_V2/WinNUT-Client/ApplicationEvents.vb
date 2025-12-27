@@ -5,13 +5,11 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Newtonsoft.Json
 Imports WinNUT_Client_Common
-Imports WinNUT_Client_Common.OldParams
 
 Namespace My
     Partial Friend Class MyApplication
         ' Default culture for output so logs can be shared with the project.
         Private Shared ReadOnly DEF_CULTURE_INFO As CultureInfo = CultureInfo.InvariantCulture
-        Private Shared ReadOnly CRASHBUG_OUTPUT_PATH = System.Windows.Forms.Application.LocalUserAppDataPath
 
         Private CrashBug_Form As New Form
         Private BtnClose As New Button
@@ -23,13 +21,17 @@ Namespace My
                                                            "NUT_Username", "NUT_Password"})
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+            LogFile.LogTracing(String.Format("{0} v{1} starting up.", ProgramName, ProgramVersion),
+                           LogLvl.LOG_NOTICE, Me)
+            LogFile.LogTracing("Data storage path: " & DataDirectory, LogLvl.LOG_NOTICE, Me)
+
             AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf AppDomainUnhandledException
             AddHandler Settings.SettingsLoaded, AddressOf OnSettingsFirstLoaded
+            AddHandler Settings.PropertyChanged, AddressOf OnPropertyChanged
 
-            Init_Globals()
-            LogFile.LogTracing(String.Format("{0} v{1} starting up.", Application.Info.ProductName, Application.Info.Version),
-                           LogLvl.LOG_NOTICE, Me)
-            ' LogFile.LogTracing($"DataDirectory: { ApplicationDeployment.CurrentDeployment.DataDirectory }", LogLvl.LOG_NOTICE, Me)
+            LogFile.LogTracing("Event handlers configured.", LogLvl.LOG_DEBUG, Me)
+
+            ApplyLoggingSettings()
 
             ' Starting without previous settings. May be new installation or MSI upgrade.
             If Settings.IsFirstRun Then
@@ -43,7 +45,7 @@ Namespace My
                 End Try
 
                 ' If Settings still appear new, check if old Registry preferences are leftover.
-                If Settings.IsFirstRun AndAlso WinNUT_Params.ParamsExist Then
+                If Settings.IsFirstRun AndAlso OldParams.WinNUT_Params.ParamsExist Then
                     LogFile.LogTracing("Previous preferences data detected in the Registry.", LogLvl.LOG_NOTICE, Me,
                                Resources.DetectedPreviousPrefsData)
 
@@ -66,6 +68,7 @@ Namespace My
         Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
             LogFile.LogTracing("UnhandledException", LogLvl.LOG_ERROR, Me)
             WinNUT.HasCrashed = True
+            WinNUT.Hide()
             e.ExitApplication = False
             caughtException = e.Exception
 
@@ -178,13 +181,12 @@ Namespace My
 
             Computer.Clipboard.SetText(generatedReport)
 
-            Directory.CreateDirectory(CRASHBUG_OUTPUT_PATH)
-            Dim CrashLog_Report = New StreamWriter(Path.Combine(CRASHBUG_OUTPUT_PATH, logFileName))
+            Dim CrashLog_Report = New StreamWriter(Path.Combine(DataDirectory, logFileName))
             CrashLog_Report.WriteLine(generatedReport)
             CrashLog_Report.Close()
 
             ' Open an Explorer window to the crash log.
-            Process.Start(CRASHBUG_OUTPUT_PATH)
+            Process.Start(DataDirectory)
             End
         End Sub
 
@@ -217,6 +219,24 @@ Namespace My
                                " for Poll Delay/Interval, resetting to default.", LogLvl.LOG_ERROR, Me)
                 Settings.NUT_PollIntervalMsec = MySettings.Default.NUT_PollIntervalMsec
             End If
+        End Sub
+
+        ''' <summary>
+        ''' Raised when any Settings property is changed through a set accessor, or when reloaded/reset.
+        ''' </summary>
+        ''' <param name="sender"></param>
+        ''' <param name="e"></param>
+        Private Sub OnPropertyChanged(sender As Object, e As ComponentModel.PropertyChangedEventArgs)
+            LogFile.LogTracing("Handling OnPropertyChanged for " & e.PropertyName, LogLvl.LOG_DEBUG, Me)
+            If e.PropertyName = "LG_LogToFile" OrElse e.PropertyName = "LG_LogLevel" Then
+                LogFile.LogTracing("Settings property changed for logging subsystem, updating...", LogLvl.LOG_DEBUG, Me)
+                ApplyLoggingSettings()
+            End If
+        End Sub
+
+        Private Sub ApplyLoggingSettings()
+            LogFile.IsWritingToFile = Settings.LG_LogToFile
+            LogFile.LogLevelValue = Settings.LG_LogLevel
         End Sub
     End Class
 End Namespace

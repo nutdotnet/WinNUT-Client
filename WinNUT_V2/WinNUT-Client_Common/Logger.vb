@@ -1,30 +1,18 @@
-﻿' WinNUT-Client is a NUT windows client for monitoring your ups hooked up to your favorite linux server.
-' Copyright (C) 2019-2021 Gawindx (Decaux Nicolas)
-'
-' This program is free software: you can redistribute it and/or modify it under the terms of the
-' GNU General Public License as published by the Free Software Foundation, either version 3 of the
-' License, or any later version.
-'
-' This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
-
-Imports System.Globalization
+﻿Imports System.Globalization
 Imports System.IO
 Imports System.Text
-Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.Logging
 
 Public Class Logger
 #Region "Constants/Shared"
     Private Const LOG_FILE_CREATION_SCHEDULE = LogFileCreationScheduleOption.Daily
+    Private Const SUBDIRECTORY = "Logs"
     Public Const MAX_DISPLAYED_LOGS = 50
 
-    ' Set TEST_RELEASE_DIRS in the custom compiler constants dialog for file storage to behave like release.
-#If DEBUG AndAlso Not TEST_RELEASE_DIRS Then
+#If DEBUG Then
     Private Shared ReadOnly DEFAULT_DATETIMEFORMAT = DateTimeFormatInfo.InvariantInfo
-    Private Shared ReadOnly DEFAULT_LOCATION = Application.StartupPath
 #Else
     Private Shared ReadOnly DEFAULT_DATETIMEFORMAT = DateTimeFormatInfo.CurrentInfo
-    Private Shared ReadOnly DEFAULT_LOCATION = Application.LocalUserAppDataPath
 #End If
 
     Private ReadOnly TEventCache As New TraceEventCache()
@@ -85,8 +73,8 @@ Public Class Logger
             Return LogFile IsNot Nothing
         End Get
         Set(value As Boolean)
-            If value <> (LogFile IsNot Nothing) Then
-                If value = True Then
+            If value <> IsWritingToFile Then
+                If value Then
                     InitializeLogFile()
                 Else
                     TerminateLogFile()
@@ -96,14 +84,15 @@ Public Class Logger
     End Property
 
     ''' <summary>
-    ''' Get the filesystem location of the <see cref="LogFile"/> object, or the folder where it would be stored.
+    ''' Get the full path of the <see cref="LogFile"/> object's log file.
     ''' </summary>
-    Public ReadOnly Property LogFilePath() As String
+    ''' <exception cref="InvalidOperationException">
+    Public ReadOnly Property LogFilePath As String
         Get
             If IsWritingToFile Then
                 Return LogFile.FullLogFileName
             Else
-                Return DEFAULT_LOCATION
+                Throw New InvalidOperationException("Log file has not been created.")
             End If
         End Get
     End Property
@@ -127,22 +116,28 @@ Public Class Logger
 #Region "Log file management"
 
     ''' <summary>
-    ''' Instantiates a new <see cref="FileLogTraceListener"/> at a the desired location, and outputs the
-    ''' <see cref="LastEvents"/> buffer into the file before synchronizing with write calls.
+    ''' Instantiates a new <see cref="FileLogTraceListener"/> with a location that's determined by a pre-defined
+    ''' algorithm. The <see cref="LastEvents"/> buffer is written into the file before synchronizing with write calls.
     ''' </summary>
-    ''' <param name="baseDataFolder">Desired location to initiate the log file. If unspecified,
-    ''' then a default location is used.</param>
-    Public Sub InitializeLogFile(Optional baseDataFolder As String = Nothing)
-        LogFile = New FileLogTraceListener() With {
-            .TraceOutputOptions = TraceOptions.DateTime Or TraceOptions.ProcessId,
-            .Append = True,
-            .AutoFlush = True,
-            .LogFileCreationSchedule = LOG_FILE_CREATION_SCHEDULE,
-            .CustomLocation = If(baseDataFolder Is Nothing, DEFAULT_LOCATION, baseDataFolder),
-            .Location = LogFileLocation.Custom
-        }
+    Private Sub InitializeLogFile()
+        LogTracing("InitializeLogFile called...", LogLvl.LOG_DEBUG, Me)
 
-        LogTracing($"Init log file: { LogFilePath }", LogLvl.LOG_NOTICE, Me)
+        Try
+            LogFile = New FileLogTraceListener() With {
+                .TraceOutputOptions = TraceOptions.DateTime Or TraceOptions.ProcessId,
+                .Append = True,
+                .AutoFlush = True,
+                .LogFileCreationSchedule = LOG_FILE_CREATION_SCHEDULE,
+                .CustomLocation = Path.Combine({DataDirectory, SUBDIRECTORY}),
+                .Location = LogFileLocation.Custom
+            }
+
+            ' Calling the trace sub will also cause it to try to write to the log file, validating it.
+            LogTracing($"Attempt init log file: { LogFilePath }", LogLvl.LOG_NOTICE, Me)
+        Catch ex As Exception
+            TerminateLogFile()
+            LogException(ex, Me)
+        End Try
 
         If LastEventsList.Count > 0 Then
             ' Fill new file with the LastEventsList buffer
@@ -153,7 +148,7 @@ Public Class Logger
             Next
         End If
 
-        LogFile.WriteLine("==== Begin Live Log ====")
+        LogFile.WriteLine("==== Begin Live Log ====" & Environment.NewLine)
     End Sub
 
     ''' <summary>

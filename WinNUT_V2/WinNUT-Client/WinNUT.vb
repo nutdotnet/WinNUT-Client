@@ -1,4 +1,4 @@
-﻿Imports System.Configuration
+﻿Imports System.ComponentModel
 Imports WinNUT_Client_Common
 
 Public Class WinNUT
@@ -8,12 +8,6 @@ Public Class WinNUT
         Set(Value As Boolean)
             WinNUT_Crashed = Value
         End Set
-    End Property
-
-    Private ReadOnly Property IsUPSConnected As Boolean
-        Get
-            Return UPS_Device IsNot Nothing AndAlso UPS_Device.IsConnected
-        End Get
     End Property
 
 #End Region
@@ -179,7 +173,8 @@ Public Class WinNUT
 
         AddHandler Microsoft.Win32.SystemEvents.PowerModeChanged, AddressOf SystemEvents_PowerModeChanged
         AddHandler RequestConnect, AddressOf UPS_Connect
-        AddHandler My.Settings.SettingChanging, AddressOf SettingChanging
+        AddHandler My.Settings.PropertyChanged, AddressOf OnPropertyChanged
+        AddHandler Pref_Gui.SavedPreferences, AddressOf ResetUIState
 
         LogFile.LogTracing("WinNUT Form completed Load.", LogLvl.LOG_NOTICE, Me)
     End Sub
@@ -322,15 +317,14 @@ Public Class WinNUT
 
 #End Region
 
-    Private Sub SettingChanging(sender As Object, e As SettingChangingEventArgs)
-        LogFile.LogTracing("SettingChanging: " & e.SettingName, LogLvl.LOG_DEBUG, Me)
-
-        UpdateMainMenuState()
+    Private Sub OnPropertyChanged(sender As Object, e As PropertyChangedEventArgs)
+        If e.PropertyName = "NUT_AutoReconnect" Then
+            LogFile.LogTracing("Handling OnPropertyChanged for " & e.PropertyName, LogLvl.LOG_DEBUG, Me)
+            UpdateMainMenuState()
+        End If
     End Sub
 
     Private Sub UpdateMainMenuState()
-        Menu_Persist.Checked = My.Settings.NUT_AutoReconnect
-
         If OldParams.WinNUT_Params.ParamsExist Then
             ManageOldPrefsToolStripMenuItem.Enabled = True
             ManageOldPrefsToolStripMenuItem.ToolTipText = My.Resources.ManageOldPrefsToolstripMenuItem_Enabled_TooltipText
@@ -339,15 +333,10 @@ Public Class WinNUT
             ManageOldPrefsToolStripMenuItem.ToolTipText = My.Resources.ManageOldPrefsToolstripMenuItem_Disabled_TooltipText
         End If
 
-        If IsUPSConnected OrElse (UPS_Device IsNot Nothing AndAlso UPS_Device.IsReconnecting) Then
-            Menu_Connect.Enabled = False
-            Menu_Disconnect.Enabled = True
-            Menu_UPS_Var.Enabled = True
-        Else
-            Menu_Connect.Enabled = True
-            Menu_Disconnect.Enabled = False
-            Menu_UPS_Var.Enabled = False
-        End If
+        Menu_Persist.Checked = My.Settings.NUT_AutoReconnect
+        Menu_UPS_Var.Enabled = If(UPS_Device?.IsConnected, False)
+        Menu_Disconnect.Enabled = If(UPS_Device?.IsConnected, False) OrElse If(UPS_Device?.IsReconnecting, False)
+        Menu_Connect.Enabled = Not Menu_Disconnect.Enabled
     End Sub
 
     Private Sub SystemEvents_PowerModeChanged(sender As Object, e As Microsoft.Win32.PowerModeChangedEventArgs)
@@ -369,15 +358,6 @@ Public Class WinNUT
         End Select
     End Sub
 
-    Private Sub RunRegPrefsUpgrade()
-        LogFile.LogTracing("Starting Upgrade dialog.", LogLvl.LOG_NOTICE, Me)
-        Dim upPrefsDg As New Forms.UpgradePrefsDialog()
-        upPrefsDg.ShowDialog()
-
-        UpdateMainMenuState()
-        ApplyApplicationPreferences()
-    End Sub
-
     Private Sub UPS_Connect(Optional retryOnConnFailure = False)
         Dim Nut_Config As Nut_Parameter
         LogFile.LogTracing("Client UPS_Connect subroutine beginning.", LogLvl.LOG_NOTICE, Me)
@@ -392,6 +372,7 @@ Public Class WinNUT
         UPS_Device = New UPS_Device(Nut_Config, LogFile, My.Settings.NUT_PollIntervalMsec, My.Settings.CAL_FreqInNom)
         AddHandler UPS_Device.EncounteredNUTException, AddressOf HandleNUTException
         UPS_Device.Connect_UPS(retryOnConnFailure)
+        UpdateMainMenuState()
     End Sub
 
     ''' <summary>
@@ -482,25 +463,9 @@ Public Class WinNUT
         Application.Exit()
     End Sub
 
-    Private Sub Menu_Settings_Click(sender As Object, e As EventArgs) Handles Menu_Settings.Click
-        LogFile.LogTracing("Open Pref Gui From Menu", LogLvl.LOG_DEBUG, Me)
-        AddHandler Pref_Gui.SavedPreferences, AddressOf ApplyApplicationPreferences
-        Pref_Gui.Activate()
-        Pref_Gui.Visible = True
-        HasFocus = False
-    End Sub
-
     Private Sub Menu_Sys_Exit_Click(sender As Object, e As EventArgs) Handles Menu_Sys_Exit.Click
         LogFile.LogTracing("Close WinNut From Systray", LogLvl.LOG_DEBUG, Me)
         Application.Exit()
-    End Sub
-
-    Private Sub Menu_Sys_Settings_Click(sender As Object, e As EventArgs) Handles Menu_Sys_Settings.Click
-        LogFile.LogTracing("Open Pref Gui From Systray", LogLvl.LOG_DEBUG, Me)
-        AddHandler Pref_Gui.SavedPreferences, AddressOf ApplyApplicationPreferences
-        Pref_Gui.Activate()
-        Pref_Gui.Visible = True
-        HasFocus = False
     End Sub
 
     Private Sub NotifyIcon_MouseClick(sender As Object, e As MouseEventArgs) Handles NotifyIcon.MouseClick, NotifyIcon.MouseDoubleClick
@@ -813,29 +778,28 @@ Public Class WinNUT
         UPS_Connect()
     End Sub
 
+    Private Sub OpenPrefsForm() Handles Menu_Sys_Settings.Click, Menu_Settings.Click
+        LogFile.LogTracing("Opening Prefs form...", LogLvl.LOG_NOTICE, Me)
+        Pref_Gui.ShowDialog()
+    End Sub
+
     ''' <summary>
-    ''' Apply settings and preferences to WinNUT, whether or not they have changed.
+    ''' Reset the UI by cycling the connection if already connected and reinitialize display values.
     ''' </summary>
-    Public Sub ApplyApplicationPreferences()
-        LogFile.LogTracing("Beginning ApplyApplicationPreferences subroutine.", LogLvl.LOG_DEBUG, Me)
+    Public Sub ResetUIState()
+        LogFile.LogTracing("Beginning ResetUIState subroutine.", LogLvl.LOG_DEBUG, Me)
         Dim autoReconnect = False
 
         If (UPS_Device IsNot Nothing) AndAlso UPS_Device.IsConnected Then
             autoReconnect = True
             UPSDisconnect()
-        Else
-            ReInitDisplayValues()
         End If
 
-        ' Apply logging subsystem configuration
-        LogFile.IsWritingToFile = My.Settings.LG_LogToFile
-        LogFile.LogLevelValue = My.Settings.LG_LogLevel
+        ReInitDisplayValues()
 
         If autoReconnect Then
             UPS_Connect()
         End If
-
-        LogFile.LogTracing("WinNut Preferences Applied.", LogLvl.LOG_NOTICE, Me, StrLog.Item(AppResxStr.STR_LOG_PREFS))
     End Sub
 
     Private Sub UpdateIcon_NotifyIcon()
@@ -1036,7 +1000,9 @@ Public Class WinNUT
     End Sub
 
     Private Sub ManageOldPrefsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ManageOldPrefsToolStripMenuItem.Click
-        RunRegPrefsUpgrade()
+        LogFile.LogTracing("Launching UpgradePrefsDialog from ToolStripMenu.", LogLvl.LOG_NOTICE, Me)
+        UPSDisconnect()
+        Forms.UpgradePrefsDialog.ShowDialog()
     End Sub
 
     Private Sub Menu_Update_Click(sender As Object, e As EventArgs) Handles Menu_Update.Click
