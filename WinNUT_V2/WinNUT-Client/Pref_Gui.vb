@@ -25,6 +25,8 @@ Public Class Pref_Gui
         Try
             LogFile.LogTracing("Save Parameters.", LogLvl.LOG_DEBUG, Me)
             My.Settings.NUT_ServerAddress = Tb_Server_IP.Text
+            My.Settings.CAL_PowerFactor = CDbl(Tb_Cal_PowerFactor.Value)
+            My.Settings.CAL_ApparentPowerNom = CInt(Tb_Cal_ApparentPowerNom.Value)
             My.Settings.NUT_ServerPort = CInt(Tb_Port.Text)
             My.Settings.NUT_UPSName = Tb_UPS_Name.Text
             My.Settings.NUT_PollIntervalMsec = CInt(pollingIntervalValue.Value * 1000D)
@@ -303,6 +305,14 @@ Public Class Pref_Gui
     Private Sub Pref_Gui_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Icon = WinNUT.Icon
         LogFile.LogTracing("Load Pref Gui", LogLvl.LOG_DEBUG, Me)
+        Try
+            Tb_Cal_PowerFactor.Value = CDbl(My.Settings.CAL_PowerFactor)
+        Catch
+        End Try
+        Try
+            Tb_Cal_ApparentPowerNom.Value = CInt(My.Settings.CAL_ApparentPowerNom)
+        Catch
+        End Try
     End Sub
 
     ''' <summary>

@@ -369,6 +369,13 @@ Public Class WinNUT
                                        My.Settings.NUT_UPSName,
                                        My.Settings.NUT_AutoReconnect)
 
+        ' Apply user-tunable watt-calculation knobs from My.Settings before
+        ' instantiating the device. These are shared via UPS_Device.RuntimeConfig
+        ' because UPS_Device lives in the Common assembly where My.Settings is
+        ' not available.
+        UPS_Device.RuntimeConfig.PowerFactor = My.Settings.CAL_PowerFactor
+        UPS_Device.RuntimeConfig.ApparentPowerNomVA = My.Settings.CAL_ApparentPowerNom
+
         UPS_Device = New UPS_Device(Nut_Config, LogFile, My.Settings.NUT_PollIntervalMsec, My.Settings.CAL_FreqInNom)
         AddHandler UPS_Device.EncounteredNUTException, AddressOf HandleNUTException
         UPS_Device.Connect_UPS(retryOnConnFailure)

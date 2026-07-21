@@ -8,7 +8,25 @@ Imports System.Windows.Forms
 Public Class UPS_Device
 #Region "Statics/Defaults"
     Private ReadOnly INVARIANT_CULTURE = CultureInfo.InvariantCulture
-    Private Const POWER_FACTOR = 0.8
+    Private Const POWER_FACTOR_DEFAULT = 0.95
+    Private Const APPARENT_POWER_DEFAULT = 2400
+
+    ' Shared configuration holder. The Client project sets this once
+    ' before instantiating UPS_Device, so the Common assembly does not
+    ' need to reference My.Settings (which is scoped to the Client
+    ' project only).
+    Public NotInheritable Class RuntimeConfig
+        Public Shared PowerFactor As Double = POWER_FACTOR_DEFAULT
+        Public Shared ApparentPowerNomVA As Integer = APPARENT_POWER_DEFAULT
+    End Class
+
+    Private ReadOnly Property POWER_FACTOR As Double
+        Get
+            Dim pf = RuntimeConfig.PowerFactor
+            If pf <= 0.0 OrElse pf > 1.0 Then Return POWER_FACTOR_DEFAULT
+            Return pf
+        End Get
+    End Property
 
     ' How many milliseconds to wait before the Reconnect routine tries again.
     Private Const DEFAULT_RECONNECT_WAIT_MS As Double = 5000
@@ -353,8 +371,13 @@ Public Class UPS_Device
                                     parsedValue = Single.Parse(GetUPSVar("output.realpower"), INVARIANT_CULTURE)
 
                                 Case PowerMethod.RPNomLoadPct
-                                    parsedValue = Double.Parse(GetUPSVar("ups.realpower.nominal"), INVARIANT_CULTURE)
-                                    parsedValue *= UPS_Datas.UPS_Value.Load / 100.0
+                                    Dim rpNom As Double
+                                    Try
+                                        rpNom = Double.Parse(GetUPSVar("ups.realpower.nominal"), INVARIANT_CULTURE)
+                                    Catch
+                                        rpNom = Config.ApparentPowerNomVA
+                                    End Try
+                                    parsedValue = rpNom * UPS_Datas.UPS_Value.Load / 100.0
 
                                 Case PowerMethod.InputNomVALoadPct
                                     Dim nomCurrent = Double.Parse(GetUPSVar("input.current.nominal"), INVARIANT_CULTURE)
