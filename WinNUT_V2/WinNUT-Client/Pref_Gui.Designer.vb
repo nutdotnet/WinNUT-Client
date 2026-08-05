@@ -28,6 +28,16 @@ Partial Class Pref_Gui
         Me.Tab_Connexion = New System.Windows.Forms.TabPage()
         Me.pollingIntervalUnitLabel = New System.Windows.Forms.Label()
         Me.pollingIntervalValue = New System.Windows.Forms.NumericUpDown()
+
+        Me.Tb_Cal_PowerFactor.DecimalPlaces = 2
+        Me.Tb_Cal_PowerFactor.Minimum = New Decimal(New Integer() {200, 0, 0, 0})
+        Me.Tb_Cal_PowerFactor.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.Tb_Cal_PowerFactor.Value = New Decimal(New Integer() {950, 0, 0, 131072})
+
+        Me.Tb_Cal_ApparentPowerNom.DecimalPlaces = 0
+        Me.Tb_Cal_ApparentPowerNom.Minimum = New Decimal(New Integer() {0, 0, 0, 0})
+        Me.Tb_Cal_ApparentPowerNom.Maximum = New Decimal(New Integer() {100000, 0, 0, 0})
+        Me.Tb_Cal_ApparentPowerNom.Value = New Decimal(New Integer() {2400, 0, 0, 0})
         Me.Tb_Pwd_Nut = New System.Windows.Forms.TextBox()
         Me.Tb_Login_Nut = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -44,6 +54,10 @@ Partial Class Pref_Gui
         Me.Tab_Calibrage = New System.Windows.Forms.TabPage()
         Me.Cbx_Freq_Input = New System.Windows.Forms.ComboBox()
         Me.Tb_BattV_Max = New System.Windows.Forms.TextBox()
+        Me.Tb_Cal_PowerFactor = New System.Windows.Forms.NumericUpDown()
+        Me.Tb_Cal_ApparentPowerNom = New System.Windows.Forms.NumericUpDown()
+        Me.Lbl_PowerFactor = New System.Windows.Forms.Label()
+        Me.Lbl_ApparentPowerNom = New System.Windows.Forms.Label()
         Me.Tb_OutV_Max = New System.Windows.Forms.TextBox()
         Me.Tb_InF_Max = New System.Windows.Forms.TextBox()
         Me.Tb_BattV_Min = New System.Windows.Forms.TextBox()
@@ -236,6 +250,10 @@ Partial Class Pref_Gui
         Me.Tab_Calibrage.Controls.Add(Me.Tb_InV_Min)
         Me.Tab_Calibrage.Controls.Add(Me.Lbl_Maxi)
         Me.Tab_Calibrage.Controls.Add(Me.Lbl_Mini)
+        Me.Tab_Calibrage.Controls.Add(Me.Lbl_PowerFactor)
+        Me.Tab_Calibrage.Controls.Add(Me.Tb_Cal_PowerFactor)
+        Me.Tab_Calibrage.Controls.Add(Me.Lbl_ApparentPowerNom)
+        Me.Tab_Calibrage.Controls.Add(Me.Tb_Cal_ApparentPowerNom)
         Me.Tab_Calibrage.Controls.Add(Me.Lbl_BattV)
         Me.Tab_Calibrage.Controls.Add(Me.Lbl_LoadUPS)
         Me.Tab_Calibrage.Controls.Add(Me.Lbl_OutputV)
